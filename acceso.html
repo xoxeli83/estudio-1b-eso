@@ -52,7 +52,7 @@ const form=(sel,fn)=>{const f=$(sel);f.addEventListener('submit',async e=>{e.pre
 /* ---------- Sin sesión ---------- */
 function entrar(aviso){
  pinta(`<section><h1>Entrar</h1>${aviso?`<p class="ok">${esc(aviso)}</p>`:''}<form id="f"><label>Correo<input name="e" type="email" autocomplete="username" required></label><label>Contraseña<input name="p" type="password" autocomplete="current-password" required></label><p class="err" role="alert"></p><button class="go" type="submit">Entrar</button></form><button class="link" id="ol">He olvidado la contraseña</button></section>
- <section><h2>¿Eres padre, madre o tutor?</h2><p>Crea tu cuenta y da de alta a tu hijo o hija con su correo. Podrás ver su estudio y decidir cuándo juega.</p><button class="alt" id="al">Crear cuenta de familia</button></section>
+ <section><h2>¿Eres padre, madre o tutor?</h2><p>Crea tu cuenta y da de alta a tu hijo o hija con su correo. Podrás ver su estudio y decidir cuándo juega.</p><button class="alt" id="al">Crear cuenta de familia</button><a class="alt" href="guia-familias.html">Ver la guía paso a paso</a></section>
  <section><h2>¿Eres alumno y no tienes contraseña?</h2><p>Pide a tu padre o tu madre que te dé de alta. Te llegará un correo. <b>Para estudiar no hace falta cuenta</b>: <a href="index.html">ir a las asignaturas</a>.</p></section>`);
  form('#f',async d=>{const {error}=await sb.auth.signInWithPassword({email:d.get('e').trim(),password:d.get('p')});if(error)throw error;await ruta();});
  $('#ol').onclick=olvido;$('#al').onclick=alta;
@@ -94,7 +94,7 @@ async function panel(q,aviso){
  ${d.pendientes.length?`<h2>Esperando a que abran el correo</h2>${d.pendientes.map(p=>`<div class="pen"><div><b>${esc(p.apodo)}</b><br><span class="sm">${esc(p.email)}</span></div><button class="alt mini" data-r="${esc(p.email)}" data-ap="${esc(p.apodo)}">Reenviar</button><button class="link" data-x="${esc(p.email)}">Cancelar</button></div>`).join('')}`:''}</section>
  <section><h2>Dar de alta a tu hijo o hija</h2><p>Escribe <b>su correo</b>, no el tuyo. Le llegará un mensaje para crear su contraseña. Hasta entonces no podrá jugar ni crear su muñeco. Estudiar siempre puede.</p>
  <form id="f"><label>Correo del niño o la niña<input name="e" type="email" required autocomplete="off"></label><label>Apodo inventado, nunca su nombre real<input name="n" maxlength="14" autocomplete="off"></label><details><summary>Ya jugaba antes con un apodo</summary><label>Su clave personal, la que ve en Liga<input name="k" maxlength="20" autocomplete="off"></label><p class="sm">Si la pones, no hace falta apodo: conserva sus estrellas y premios.</p></details><p class="err" role="alert"></p><button class="go" type="submit">Enviarle el correo</button></form></section>
- <p class="pie"><a href="como-funciona.html">Cómo funciona</a> · <button class="link" id="s">Salir</button></p>`);
+ <p class="pie"><a href="guia-familias.html">Guía para familias</a> · <a href="como-funciona.html">Cómo funciona</a> · <button class="link" id="s">Salir</button></p>`);
  $('#s').onclick=async()=>{await sb.auth.signOut();entrar();};
  a.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>detalle(q,b.dataset.h));
  a.querySelectorAll('[data-x]').forEach(b=>b.onclick=async()=>{await rpc('f_invitacion_borrar',{p_email:b.dataset.x}).catch(()=>{});panel(q);});
