@@ -611,7 +611,7 @@ let G_mem=null;
 const gDef=()=>({stars:0,edit:G_START,fresh:[],fichas:3,fichaT:0,juegoBest:0,sub:{},st:{ok:{},days:[],best:null,first:null},av:{shape:'r',skin:0,eyes:'puntos',mouth:'sonrisa',nose:'no',hair:'corto',hc:0,glass:'no',acc:'no'}});
 const G_FMAX=3,G_FPASO=2*3600*1000,G_FESP=3600*1000;
 function gGana(g){if(g.fBloq&&Date.now()<g.fBloq)g.fRes=Math.min(G_FMAX,(g.fRes||0)+1);else g.fichas=Math.min(G_FMAX,g.fichas+1);}
-function gFichas(g){const now=Date.now();if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas<=0&&!g.fBloq){g.fichas=0;g.fBloq=now+G_FESP;g.fRes=0;gSave(g);}if(g.fBloq){if(now<g.fBloq)return g;g.fichas=Math.min(G_FMAX,Math.max(1,g.fRes||0));g.fBloq=0;g.fRes=0;g.fichaT=now;gSave(g);}if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
+function gFichas(g){const now=Date.now();if(g.prueba){g.fichas=G_FMAX;g.fBloq=0;g.fRes=0;return g;}if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas<=0&&!g.fBloq){g.fichas=0;g.fBloq=now+G_FESP;g.fRes=0;gSave(g);}if(g.fBloq){if(now<g.fBloq)return g;g.fichas=Math.min(G_FMAX,Math.max(1,g.fRes||0));g.fBloq=0;g.fRes=0;g.fichaT=now;gSave(g);}if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
 function gLoad(){try{const r=localStorage.getItem(G_KEY);if(r){const j=JSON.parse(r),d=gDef();return gFichas(Object.assign(d,j,{av:Object.assign(d.av,j.av),st:Object.assign(d.st,j.st)}));}}catch(e){}return gFichas(G_mem||gDef());}
 function gSave(g){G_mem=g;try{localStorage.setItem(G_KEY,JSON.stringify(g));}catch(e){}}
 const C_K='#1b1b22',C_W='#ffffff',C_Y='#ffd21f',C_R='#d9352b',C_B='#1e88e5',C_V='#5e35b1',C_GR='#7a8794';
@@ -691,11 +691,11 @@ const TRACKS=[
  {id:'plastica',sub:'Plástica',slot:'fondo',t:'Fondo',bg:true,items:[['cielo','🌤️','Ceo','#bfe3ff'],['selva','🌴','Selva','#b7e8a8'],['noche','🌃','Noche','#2b2f6b'],['arcoiris','🌈','Arcoíris','#ffd6f0']]},
  {id:'ef',sub:'Educación Física',slot:'deporte',t:'Deporte',x:88,y:128,s:22,items:[['balon','⚽','Balón'],['basket','🏀','Baloncesto'],['patines','🛼','Patines'],['copa','🏆','Copa']]}
 ];
-const gSubStars=(g,id)=>(g.sub&&g.sub[id])||0;
+const gSubStars=(g,id)=>g.prueba?999:((g.sub&&g.sub[id])||0);
 const G_ORDER=['eyes:grandes','hair:flequillo','mouth:lengua','glass:redondas','acc:pajarita','nose:punto','eyes:guino','hair:pinchos','glass:sol','acc:gorra','mouth:abierta','nose:grande','hair:largo','acc:auri','eyes:enfado','glass:tresd','acc:parche','hair:cresta','mouth:dientes','nose:cerdo','acc:pendiente','eyes:sueno','hair:mono','glass:monoculo','acc:bufanda','mouth:colmillos','hair:coleta','acc:antena','eyes:robot','glass:antifaz','nose:payaso','acc:casco','hair:afro','mouth:bigote','acc:cuernos','glass:visor','acc:rayos','eyes:estrella','acc:mago','acc:capa'];
 const G_FREE={eyes:['puntos'],mouth:['sonrisa','recta'],nose:['no'],hair:['no','corto'],glass:['no'],acc:['no']};
 const gCost=key=>{const i=G_ORDER.indexOf(key);return i<0?0:5+i*8;};
-const gHas=(p,id,g)=>G_FREE[p].includes(id)||g.stars>=gCost(p+':'+id);
+const gHas=(p,id,g)=>g.prueba||G_FREE[p].includes(id)||g.stars>=gCost(p+':'+id);
 function gRects(list,av,hair,rx){
   const col=c=>c==='H'?hair:c==='S'?gShade(gSkin(av)):c;
   return list.map(r=>r[4]==='none'
@@ -719,7 +719,7 @@ function avatarSVG(av,size){
 }
 /* Estrellas: nunca bajan */
 function gAward(n,time){
-  const g=gLoad(),before=g.stars;g.stars+=n;
+  const g=gLoad();if(g.prueba)return;const before=g.stars;g.stars+=n;
   if(time){g.edit=Math.min(G_CAP,g.edit+time);gGana(g);}
   const sj=typeof window!=='undefined'&&window.G_SUBJ;
   if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
@@ -938,7 +938,7 @@ function openGame(onClose){
   function menu(){
     const g=gLoad();
     cancelAnimationFrame(raf);st=null;
-    if(ligaOn()&&!g.liga){o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2><div class="jg-empty"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><button class="lg-go" id="jg-id">Identificarme</button></div>`;o.querySelector('#jg-x').onclick=close;o.querySelector('#jg-id').onclick=()=>openLeague(menu);return;}
+    if(ligaOn()&&!g.liga&&!g.prueba){o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2><div class="jg-empty"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><button class="lg-go" id="jg-id">Identificarme</button></div>`;o.querySelector('#jg-x').onclick=close;o.querySelector('#jg-id').onclick=()=>openLeague(menu);return;}
     o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2>
       <div class="jg-hero">${avatarSVG(g.av,90)}<div><div class="av-st">🎮 ${g.fichas} de 3 fichas</div><div class="av-next">${g.fichas>0&&g.fichas<3?`Otra ficha en ${espera(g)}, o terminando una misión. `:''}Tu récord: ${g.juegoBest}</div></div></div>
       <p>Salta con <kbd class="jg-k">espacio</kbd> o tocando la pantalla. Cuanto más mantengas, más alto saltas. Poco a poco va más rápido y cambias de mundo: día, atardecer, noche, lava y espacio.</p>
@@ -947,7 +947,7 @@ function openGame(onClose){
     const b=o.querySelector('#jg-go');if(b){b.onclick=start;b.focus({preventScroll:true});}
   }
   function start(){
-    const g=gLoad();if(g.fichas<=0||(ligaOn()&&!g.liga))return menu();
+    const g=gLoad();if(g.fichas<=0||(ligaOn()&&!g.liga&&!g.prueba))return menu();
     g.fichas--;gSave(g);SND.musica();
     o.innerHTML=`<div class="jg-box"><button id="jg-son" aria-label="Activar o quitar el sonido" style="float:right;font-size:20px;border:0;background:none;cursor:pointer;min-width:44px;min-height:44px">${SND.icono()}</button><div class="jg-score"><span id="jg-s">0</span><span class="jg-best">Récord ${g.juegoBest}</span></div><canvas id="jg-c" width="${W}" height="${H}" aria-label="Juego: pulsa espacio o toca para saltar"></canvas><p class="jg-hint">Espacio o toca para saltar</p></div>`;
     o.querySelector('#jg-son').onclick=e=>{SND.alterna();e.currentTarget.textContent=SND.icono();};
@@ -1027,7 +1027,7 @@ function openGame(onClose){
   }
   function over(){
     st.dead=true;cancelAnimationFrame(raf);SND.sfx('choque');
-    const pts=puntos(),g=gLoad(),rec=pts>g.juegoBest;
+    const pts=puntos(),g=gLoad(),rec=!g.prueba&&pts>g.juegoBest;
     if(rec){g.juegoBest=pts;gSave(g);if(typeof ligaSubirJuego==='function')ligaSubirJuego();}
     const div=document.createElement('div');div.className='jg-over';
     div.innerHTML=`<h2>${rec?'¡Récord nuevo!':'¡Choque!'}</h2><div class="big" style="font-size:52px;font-weight:700">${pts}</div><p>Has llegado a: ${st.mundo.n}. ${rec?'Has mejorado tu marca.':`Tu récord sigue en ${g.juegoBest}.`} Te ${g.fichas===1?'queda 1 ficha':'quedan '+g.fichas+' fichas'}.</p>${g.fichas>0?'<button class="lg-go" id="jg-re">Otra partida (1 ficha)</button>':`<p><b>Podrás volver a jugar dentro de ${espera(g)}.</b></p>`}<button class="lg-x" id="jg-m">Salir</button>`;

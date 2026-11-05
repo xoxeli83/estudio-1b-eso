@@ -285,7 +285,7 @@ let G_mem=null;
 const gDef=()=>({stars:0,edit:G_START,fresh:[],fichas:3,fichaT:0,juegoBest:0,sub:{},st:{ok:{},days:[],best:null,first:null},av:{shape:'r',skin:0,eyes:'puntos',mouth:'sonrisa',nose:'no',hair:'corto',hc:0,glass:'no',acc:'no'}});
 const G_FMAX=3,G_FPASO=2*3600*1000,G_FESP=3600*1000;
 function gGana(g){if(g.fBloq&&Date.now()<g.fBloq)g.fRes=Math.min(G_FMAX,(g.fRes||0)+1);else g.fichas=Math.min(G_FMAX,g.fichas+1);}
-function gFichas(g){const now=Date.now();if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas<=0&&!g.fBloq){g.fichas=0;g.fBloq=now+G_FESP;g.fRes=0;gSave(g);}if(g.fBloq){if(now<g.fBloq)return g;g.fichas=Math.min(G_FMAX,Math.max(1,g.fRes||0));g.fBloq=0;g.fRes=0;g.fichaT=now;gSave(g);}if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
+function gFichas(g){const now=Date.now();if(g.prueba){g.fichas=G_FMAX;g.fBloq=0;g.fRes=0;return g;}if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas<=0&&!g.fBloq){g.fichas=0;g.fBloq=now+G_FESP;g.fRes=0;gSave(g);}if(g.fBloq){if(now<g.fBloq)return g;g.fichas=Math.min(G_FMAX,Math.max(1,g.fRes||0));g.fBloq=0;g.fRes=0;g.fichaT=now;gSave(g);}if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
 function gLoad(){try{const r=localStorage.getItem(G_KEY);if(r){const j=JSON.parse(r),d=gDef();return gFichas(Object.assign(d,j,{av:Object.assign(d.av,j.av),st:Object.assign(d.st,j.st)}));}}catch(e){}return gFichas(G_mem||gDef());}
 function gSave(g){G_mem=g;try{localStorage.setItem(G_KEY,JSON.stringify(g));}catch(e){}}
 const C_K='#1b1b22',C_W='#ffffff',C_Y='#ffd21f',C_R='#d9352b',C_B='#1e88e5',C_V='#5e35b1',C_GR='#7a8794';
@@ -365,11 +365,11 @@ const TRACKS=[
  {id:'plastica',sub:'Plástica',slot:'fondo',t:'Fondo',bg:true,items:[['cielo','🌤️','Ceo','#bfe3ff'],['selva','🌴','Selva','#b7e8a8'],['noche','🌃','Noche','#2b2f6b'],['arcoiris','🌈','Arcoíris','#ffd6f0']]},
  {id:'ef',sub:'Educación Física',slot:'deporte',t:'Deporte',x:88,y:128,s:22,items:[['balon','⚽','Balón'],['basket','🏀','Baloncesto'],['patines','🛼','Patines'],['copa','🏆','Copa']]}
 ];
-const gSubStars=(g,id)=>(g.sub&&g.sub[id])||0;
+const gSubStars=(g,id)=>g.prueba?999:((g.sub&&g.sub[id])||0);
 const G_ORDER=['eyes:grandes','hair:flequillo','mouth:lengua','glass:redondas','acc:pajarita','nose:punto','eyes:guino','hair:pinchos','glass:sol','acc:gorra','mouth:abierta','nose:grande','hair:largo','acc:auri','eyes:enfado','glass:tresd','acc:parche','hair:cresta','mouth:dientes','nose:cerdo','acc:pendiente','eyes:sueno','hair:mono','glass:monoculo','acc:bufanda','mouth:colmillos','hair:coleta','acc:antena','eyes:robot','glass:antifaz','nose:payaso','acc:casco','hair:afro','mouth:bigote','acc:cuernos','glass:visor','acc:rayos','eyes:estrella','acc:mago','acc:capa'];
 const G_FREE={eyes:['puntos'],mouth:['sonrisa','recta'],nose:['no'],hair:['no','corto'],glass:['no'],acc:['no']};
 const gCost=key=>{const i=G_ORDER.indexOf(key);return i<0?0:5+i*8;};
-const gHas=(p,id,g)=>G_FREE[p].includes(id)||g.stars>=gCost(p+':'+id);
+const gHas=(p,id,g)=>g.prueba||G_FREE[p].includes(id)||g.stars>=gCost(p+':'+id);
 function gRects(list,av,hair,rx){
   const col=c=>c==='H'?hair:c==='S'?gShade(gSkin(av)):c;
   return list.map(r=>r[4]==='none'
@@ -393,7 +393,7 @@ function avatarSVG(av,size){
 }
 /* Estrellas: nunca bajan */
 function gAward(n,time){
-  const g=gLoad(),before=g.stars;g.stars+=n;
+  const g=gLoad();if(g.prueba)return;const before=g.stars;g.stars+=n;
   if(time){g.edit=Math.min(G_CAP,g.edit+time);gGana(g);}
   const sj=typeof window!=='undefined'&&window.G_SUBJ;
   if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
@@ -648,7 +648,7 @@ const CIRC=[
 const BOTS=[['Turbo','coche','#2d7ff9'],['Chispa','base','#22b573'],['Nube','bici','#f28c28'],['Zeta','patin','#b14ee6'],['Rayo','nave','#f04f6b']];
 const $=(s,r=document)=>r.querySelector(s);const app=$('#app');
 function datos(g){g.carrera=Object.assign({sel:{c:'entreno',v:'base',a:['bola']},best:{},gana:0,tickets:0,pin:null,nuevo:0},g.carrera||{});return g.carrera;}
-const vehOk=(g,x)=>x.su?gSubStars(g,x.su)>=x.s:(datos(g).tickets>=x.t);
+const vehOk=(g,x)=>g.prueba?true:x.su?gSubStars(g,x.su)>=x.s:(datos(g).tickets>=x.t);
 const atkOk=(g,k)=>!ATK[k].su||gSubStars(g,ATK[k].su)>=10;
 const circOk=(g,c)=>!c.su||gSubStars(g,c.su)>=5;
 const hash=s=>{let h=7;for(const c of 'cr-1b'+s)h=(h*31+c.charCodeAt(0))>>>0;return h;};
@@ -1380,7 +1380,7 @@ function correr(C,V,sel,prueba,net){
  const ku=e=>{if(e.key==='ArrowLeft'){teclas.L=0;syncS();}else if(e.key==='ArrowRight'){teclas.R=0;syncS();}};
  addEventListener('keydown',kd);addEventListener('keyup',ku);
  const salir=()=>{finS();clearInterval(netT);vivo=false;cancelAnimationFrame(raf);removeEventListener('keydown',kd);removeEventListener('keyup',ku);removeEventListener('resize',fit);if(G3){G3.salir();document.body.classList.remove('cr-3d');}};
- function finJuego(){if(!vivo)return;salir();const g=gLoad(),D=datos(g),t=+st.timer.toFixed(1),rec=!prueba&&(!D.best[C.id]||t<D.best[C.id]);if(rec)D.best[C.id]=t;if(st.pos===1&&!prueba)D.gana++;gSave(g);
+ function finJuego(){if(!vivo)return;salir();const g=gLoad(),D=datos(g),t=+st.timer.toFixed(1),rec=!prueba&&!g.prueba&&(!D.best[C.id]||t<D.best[C.id]);if(rec)D.best[C.id]=t;if(st.pos===1&&!prueba&&!g.prueba)D.gana++;gSave(g);
   const podio=orden().slice(0,3);
   app.innerHTML=`<div class="cr-box cr-fin"><div class="cr-pos">${['🥇','🥈','🥉'][st.pos-1]||'🏁'}</div><h2>Has llegado ${st.pos}º</h2><p class="cr-c2">${C.n}</p>${net?'<div id="cr-lleg" class="cr-gift"></div>':''}<div class="cr-pod"${net?' hidden':''}>${[1,0,2].map(i=>`<div style="height:${[70,100,50][[1,0,2].indexOf(i)]}px"><b>${podio[i].nom}</b><span>${i+1}</span></div>`).join('')}</div><p>Tiempo: <b>${t} s</b>${prueba?' · (prueba de padres)':rec?' · ¡tu mejor tiempo!':` · tu mejor tiempo: ${D.best[C.id]} s`}</p><button class="cr-go" id="cr-m">Volver a elegir</button><a class="cr-link" href="index.html">Ir a estudiar y ganar más premios</a></div>`;$('#cr-m').onclick=()=>{if(net)net.cerrar();menu();};if(net){net.pintaFin=()=>{const e=$('#cr-lleg');if(!e)return;e.innerHTML='<b>Llegadas</b><br>'+net.fins.map((f,i)=>`${i+1}º ${String(f.nom).replace(/[&<>]/g,'')}: ${f.t} s`).join('<br>')+(net.fins.length<net.jug.length?'<br><small>Faltan jugadores por llegar…</small>':'');};net.pintaFin();}}
  raf=requestAnimationFrame(bucle);
@@ -1396,11 +1396,11 @@ function menu(){
  Object.keys(ATK).forEach(k=>{if(sel.a.length<3&&atkOk(g,k)&&!sel.a.includes(k))sel.a.push(k);});
  const nuevo=D.nuevo;D.nuevo=0;gSave(g);
  const espera=()=>{const m=Math.max(1,Math.ceil(((g.fBloq>Date.now()?g.fBloq:g.fichaT+G_FPASO)-Date.now())/60000));return m>=60?`${Math.floor(m/60)} h ${m%60} min`:`${m} min`;};
- if(ligaOn()&&!g.liga){app.innerHTML=`<div class="cr-box"><h1>Gran Premio 1º B</h1><div class="cr-gift"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><a class="cr-go" href="juego.html#clasificacion">Identificarme</a><p class="cr-pad"><button class="cr-link" id="cr-pad">👪 Para padres</button></p></div>`;$('#cr-pad').onclick=padres;return;}
+ if(ligaOn()&&!g.liga&&!g.prueba){app.innerHTML=`<div class="cr-box"><h1>Gran Premio 1º B</h1><div class="cr-gift"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><a class="cr-go" href="juego.html#clasificacion">Identificarme</a><p class="cr-pad"><button class="cr-link" id="cr-pad">👪 Para padres</button></p></div>`;$('#cr-pad').onclick=padres;return;}
  const actual=VEH.find(v=>v.id===sel.v),cAct=CIRC.find(c=>c.id===sel.c);
  app.innerHTML=`<div class="cr-box"><div class="cr-hero" style="background:linear-gradient(135deg,${cAct.sky[0]},${cAct.sky[1]})"><div><h1>Gran Premio 1º B</h1><p>${cAct.e} ${cAct.n}</p></div><img alt="" src="${fotoV(actual)}"></div>
  ${nuevo?`<div class="cr-gift">🎁 ¡Tus padres te han dado ${nuevo>1?nuevo+' premios':'un premio'}! Mira tus vehículos especiales.</div>`:''}
- <div class="cr-me">${avatarSVG(g.av,56)}<div><b>🎮 ${g.fichas} de 3 fichas</b><br><small>${g.fichas<=0?`Podrás jugar dentro de ${espera()}.`:g.fichas<3?`Otra ficha en ${espera()}, o terminando una misión.`:'Cada carrera usa 1 ficha.'}</small></div></div>
+ ${g.prueba?'<div class="cr-gift">🧪 <b>Modo de pruebas.</b> Todo abierto y fichas sin límite en este dispositivo. No cuenta para estrellas ni récords. <button class="cr-link" id="cr-nop">Salir del modo de pruebas</button></div>':''}<div class="cr-me">${avatarSVG(g.av,56)}<div><b>🎮 ${g.fichas} de 3 fichas</b><br><small>${g.fichas<=0?`Podrás jugar dentro de ${espera()}.`:g.fichas<3?`Otra ficha en ${espera()}, o terminando una misión.`:'Cada carrera usa 1 ficha.'}</small></div></div>
  ${g.fichas>0?'<button class="cr-go" id="cr-start">¡A correr! (1 ficha)</button><button class="cr-go cr-go2" id="cr-net">👥 Carrera con amigos</button>':`<div class="cr-gift">Te has quedado sin fichas. Podrás volver a jugar dentro de ${espera()}. Si terminas misiones mientras tanto, tendrás más fichas cuando acabe la espera.</div><a class="cr-go" href="index.html">Ir a estudiar</a>`}
  <h2>Circuito <small>con 5 ⭐ de cada asignatura se abre el suyo</small></h2><div class="cr-g cr-gc">${CIRC.map(c=>{const ok=circOk(g,c);return`<button class="cr-o cr-ci ${sel.c===c.id?'on':''} ${ok?'':'lock'}" data-c="${c.id}" ${ok?'':'disabled'} style="background:linear-gradient(160deg,${c.sky[0]},${c.sky[1]} 70%,${c.g[0]} 70%)"><span>${ok?c.e:'🔒'}</span><b>${c.n}</b><small>${ok?(D.best[c.id]?'Récord: '+D.best[c.id]+' s':'Sin récord'):'⭐ 5 en '+c.sn+' (tienes '+gSubStars(g,c.su)+')'}</small></button>`;}).join('')}</div>
  <h2>Vehículo</h2><div class="cr-g">${VEH.map(v=>{const ok=vehOk(g,v);return`<button class="cr-o ${sel.v===v.id?'on':''} ${ok?'':'lock'}" data-v="${v.id}" ${ok?'':'disabled'}>${ok?`<img alt="" src="${fotoV(v)}">`:'<span>🔒</span>'}<b>${v.n}</b><small>${ok?barras(v):(v.su?'⭐ '+v.s+' en Mates':'Premio de tus padres')}</small></button>`;}).join('')}</div>
@@ -1410,8 +1410,9 @@ function menu(){
  document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const h=gLoad();datos(h).sel.v=b.dataset.v;gSave(h);menu();});
  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const h=gLoad(),s=datos(h).sel,k=b.dataset.a;if(s.a.includes(k)){if(s.a.length>1)s.a=s.a.filter(q=>q!==k);}else{if(s.a.length>=3)s.a.shift();s.a.push(k);}gSave(h);menu();});
  $('#cr-pad').onclick=padres;
- const gn=$('#cr-net');if(gn)gn.onclick=amigos;
- const go=$('#cr-start');if(go)go.onclick=()=>{const h=gLoad();if(h.fichas<=0||(ligaOn()&&!h.liga))return menu();h.fichas--;gSave(h);const d=datos(h);correr(CIRC.find(c=>c.id===d.sel.c),VEH.find(v=>v.id===d.sel.v),d.sel.a);};
+ const gn=$('#cr-net');if(gn)gn.onclick=()=>{if(gLoad().liga)amigos();else location.href='juego.html#clasificacion';};
+ const nop=$('#cr-nop');if(nop)nop.onclick=()=>{const k=gLoad();delete k.prueba;gSave(k);menu();};
+ const go=$('#cr-start');if(go)go.onclick=()=>{const h=gLoad();if(h.fichas<=0||(ligaOn()&&!h.liga&&!h.prueba))return menu();h.fichas--;gSave(h);const d=datos(h);correr(CIRC.find(c=>c.id===d.sel.c),VEH.find(v=>v.id===d.sel.v),d.sel.a);};
 }
 const barras=v=>`Vel ${Math.round(v.v*100)} · Giro ${Math.round(v.g*100)}`;
 /* Padres: la nota no se escribe ni se guarda */
@@ -1424,7 +1425,8 @@ function padres(){
  $('#cr-ok').onclick=()=>{if(hash($('#cr-p').value.trim())===D.pin)panel();else $('#cr-e').textContent='PIN incorrecto.';};
  function panel(){const h=gLoad(),d=datos(h);caja(`<p>Después de un examen, elige si hay motivo para un premio. <b>No se escribe ni se guarda la nota, tampoco el motivo.</b> Solo se cuenta un premio más, y nadie más lo ve.</p>
   <div class="cr-g3"><button class="cr-o" data-p="1"><span>💪</span><b>Se ha esforzado</b></button><button class="cr-o" data-p="1"><span>📈</span><b>Ha mejorado</b></button><button class="cr-o" data-p="1"><span>🎓</span><b>Ha aprobado</b></button></div>
-  <p id="cr-okm" class="cr-okm"></p><p><b>Premios dados: <span id="cr-n">${d.tickets}</span>.</b> Cada premio rellena las fichas. Con 1 se abre 🦄, con 3 🏍️ y con 6 🐉.</p><h2>Probar circuitos <small>solo aquí, no gasta fichas ni cuenta récords</small></h2><div class="cr-g cr-gc">${CIRC.map(c=>`<button class="cr-o" data-pr="${c.id}"><span>${c.e}</span><b>${c.n}</b></button>`).join('')}</div>`);
+  <p id="cr-okm" class="cr-okm"></p><p><b>Premios dados: <span id="cr-n">${d.tickets}</span>.</b> Cada premio rellena las fichas. Con 1 se abre 🦄, con 3 🏍️ y con 6 🐉.</p><h2>Probar circuitos <small>solo aquí, no gasta fichas ni cuenta récords</small></h2><div class="cr-g cr-gc">${CIRC.map(c=>`<button class="cr-o" data-pr="${c.id}"><span>${c.e}</span><b>${c.n}</b></button>`).join('')}</div><h2>Modo de pruebas</h2><label class="cr-l">Clave de pruebas<input id="cr-cl" type="password" autocomplete="off"></label><p class="cr-e" id="cr-e2"></p><button class="cr-go" id="cr-clok">Activar en este dispositivo</button>`);
+  $('#cr-clok').onclick=async()=>{const e=$('#cr-e2');e.textContent='Comprobando…';try{const c=await crypto.subtle.importKey('raw',new TextEncoder().encode($('#cr-cl').value.trim()),'PBKDF2',false,['deriveBits']),sal=new Uint8Array('5aac9d555cd5664683a51d7317341409'.match(/../g).map(x=>parseInt(x,16))),b=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:sal,iterations:150000},c,256),hx=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');if(hx==='8f3e98d70228040a850fd03d747b853e3f270f877b1568583913e6a450735c4d'){const k=gLoad();k.prueba=1;gSave(k);menu();}else e.textContent='Clave incorrecta.';}catch(_){e.textContent='No se ha podido comprobar.';}};
   document.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>{const k=gLoad(),q=datos(k);correr(CIRC.find(c=>c.id===b.dataset.pr),VEH.find(v=>v.id===q.sel.v),q.sel.a,true);});
   document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const k=gLoad(),q=datos(k);q.tickets++;q.nuevo++;k.fichas=G_FMAX;k.fBloq=0;k.fRes=0;gSave(k);$('#cr-n').textContent=q.tickets;$('#cr-okm').textContent='Premio dado. Lo verá al volver a la carrera.';});}
 }
