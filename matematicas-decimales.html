@@ -166,7 +166,20 @@ label.cfg{display:block;margin:10px 0}
 .fact .en{white-space:normal}
 </style>
 </head>
-<body>
+<body><!--menu--><style>
+:root{--nf:calc(46px + env(safe-area-inset-top,0px))}
+html{padding-top:var(--nf)!important}
+#menu-fijo{position:fixed;top:0;left:0;right:0;z-index:10000;display:flex;gap:4px;box-sizing:border-box;height:var(--nf);padding:calc(4px + env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) 4px max(6px,env(safe-area-inset-left,0px));background:#1f2a5c;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#menu-fijo a{flex:1 1 auto;min-width:0;padding:0 3px;display:flex;align-items:center;justify-content:center;gap:5px;border-radius:9px;background:rgba(255,255,255,.14);color:#fff!important;font:600 13.5px/1 Verdana,"Segoe UI",system-ui,sans-serif;text-decoration:none;white-space:nowrap;overflow:hidden}
+#menu-fijo a:hover,#menu-fijo a:focus-visible{background:rgba(255,255,255,.3);outline:0}
+#menu-fijo a[aria-current]{background:#fff;color:#1f2a5c!important}
+#av-editor,#lg,#jg{top:var(--nf)!important}
+#misframe{top:var(--nf)!important;height:calc(100% - var(--nf))!important}
+.tabs,.bar{top:var(--nf)!important}
+.scrim{padding-top:calc(var(--nf) + 12px)!important}
+@media(max-width:340px){#menu-fijo a{font-size:12px;gap:3px}}
+@media print{#menu-fijo{display:none!important}html{padding-top:0!important}}
+</style><nav id="menu-fijo" aria-label="Menú"><a href="index.html" data-p="index">🏠 Inicio</a><a href="calendario.html" data-p="calendario">📅 Calendario</a><a href="juego.html" data-p="juego">🎮 Jugar</a><a href="juego.html#clasificacion" data-p="juego">🏆 Liga</a></nav><script>(function(){var p=(location.pathname.split('/').pop()||'index.html').replace('.html','');document.querySelectorAll('#menu-fijo a').forEach(function(a){if(p===a.dataset.p&&p!=='juego'){a.setAttribute('aria-current','page');}if(p==='juego'&&a.dataset.p==='juego'){a.onclick=function(e){e.preventDefault();location.href=a.getAttribute('href');location.reload();};}});})();</script><!--/menu-->
 <main id="app" aria-live="polite"></main>
 <script>
 window.G_SUBJ='matematicas';

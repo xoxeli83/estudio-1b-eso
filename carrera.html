@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Gran Premio 1º B</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#dfe6f2;color:#17203a;font-family:Lexend,Verdana,"Segoe UI",sans-serif;font-size:17px;line-height:1.35}
+.av-svg{display:block;overflow:visible}
+.cr-box{max-width:760px;margin:0 auto;padding:14px 16px 40px}.cr-box h1{font-size:28px;margin:6px 0 10px}.cr-box h2{font-size:20px;margin:18px 0 6px}.cr-box h2 small{font-weight:400;font-size:15px;color:#57617a}
+.cr-me{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:8px 12px;margin-bottom:10px}.cr-me small{color:#57617a}
+.cr-go{display:block;width:100%;text-align:center;text-decoration:none;font:inherit;font-weight:700;font-size:21px;background:#3a3ca6;color:#fff;border:0;border-radius:12px;padding:14px;min-height:58px;cursor:pointer}
+.cr-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}.cr-g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.cr-o{font:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:3px solid #c6d0e0;border-radius:12px;padding:8px 4px;min-height:104px;cursor:pointer;color:#17203a;text-align:center}.cr-o span{font-size:32px;line-height:1.15}.cr-o b{font-size:15px;line-height:1.15}.cr-o small{font-size:12px;line-height:1.2;color:#57617a}
+.cr-o.on{border-color:#17783f;background:#dcf5e4}.cr-o.lock{background:#eef1f6;color:#57617a;cursor:default}
+.cr-gift{background:#fff0d6;border-radius:12px;padding:12px;margin:8px 0;font-weight:500}.cr-link{display:block;font:inherit;background:none;border:0;color:#3a3ca6;text-decoration:underline;padding:12px 2px;margin:4px auto;cursor:pointer;text-align:center}
+.cr-l{display:block;font-weight:500;margin:10px 0}.cr-l input{display:block;width:100%;font:inherit;font-size:22px;padding:11px;border:2px solid #c6d0e0;border-radius:10px;margin-top:4px}.cr-e{color:#9a5200;font-weight:500;min-height:1.3em;margin:4px 0}.cr-okm{color:#17783f;font-weight:700;min-height:1.3em}
+.cr-j{max-width:820px;margin:0 auto;padding:8px;user-select:none;-webkit-user-select:none}#cr-c{display:block;width:100%;border-radius:12px;background:#222;touch-action:none}
+.cr-ctl{display:flex;gap:8px;margin-top:8px;touch-action:none}.cr-d{flex:1 1 0;min-height:84px;font-size:34px;border:0;border-radius:14px;background:#3a3ca6;color:#fff;cursor:pointer;touch-action:none}.cr-d:active{background:#262874}
+.cr-at{flex:1.6 1 0;display:flex;gap:6px}.cr-a{position:relative;flex:1 1 0;min-width:0;overflow:hidden;border:0;border-radius:14px;background:#fff;box-shadow:0 3px 0 #c6d0e0;cursor:pointer;touch-action:none;font:inherit;padding:0}.cr-a span{font-size:30px}.cr-a small{position:absolute;right:5px;top:3px;font-size:11px;color:#57617a}.cr-a i{position:absolute;left:0;right:0;bottom:0;background:rgba(23,32,58,.6);pointer-events:none}
+.cr-h{text-align:center;font-size:14px;color:#57617a;margin:8px}.cr-fin{text-align:center;padding-top:8vh;max-width:460px}.cr-pos{font-size:84px;line-height:1}
+body.cr-dark{background:radial-gradient(1200px 700px at 50% -10%,#2a3478,#0c1130);color:#f0f3ff;min-height:100vh}.cr-dark .cr-box h2 small{color:#aab3d6}.cr-dark .cr-me{background:rgba(255,255,255,.1);backdrop-filter:blur(4px)}.cr-dark .cr-me small{color:#c5cce8}.cr-dark .cr-o{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#fff}.cr-dark .cr-o small{color:#c5cce8}.cr-dark .cr-o img{width:84%;margin:2px 0}.cr-dark .cr-o.on{border-color:#ffd43b;background:rgba(255,212,59,.18);box-shadow:0 0 0 2px #ffd43b inset}.cr-dark .cr-o.lock{background:rgba(255,255,255,.05);color:#98a2c9}.cr-dark .cr-ci{justify-content:flex-end;min-height:128px;text-shadow:0 1px 3px #000}.cr-dark .cr-ci small{color:#fff}.cr-dark .cr-ci.lock{filter:grayscale(.75) brightness(.7)}.cr-gc{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.cr-dark .cr-go{background:linear-gradient(180deg,#ffd43b,#f59f00);color:#23150a;box-shadow:0 5px 0 #a86a00}.cr-dark .cr-link{color:#ffe08a}.cr-dark .cr-gift{background:rgba(255,212,59,.18)}.cr-dark .cr-okm{color:#7dffb0}.cr-dark .cr-e{color:#ffc078}.cr-hero{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:18px;padding:14px 18px;margin-bottom:10px;box-shadow:0 8px 24px rgba(0,0,0,.35)}.cr-hero h1{margin:0;font-size:28px;text-shadow:0 2px 6px rgba(0,0,0,.5)}.cr-hero p{margin:4px 0 0;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.6)}.cr-hero img{width:120px;flex:none}
+.cr-dark .cr-d{background:linear-gradient(180deg,#4c4fd0,#2c2e96);box-shadow:0 5px 0 #1a1b66}.cr-dark .cr-a{background:linear-gradient(180deg,#fff,#d8def2);box-shadow:0 5px 0 #7c86b5}.cr-dark .cr-h{color:#aab3d6}#cr-c{box-shadow:0 10px 30px rgba(0,0,0,.5)}.cr-pod{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin:14px 0}.cr-pod div{flex:1;max-width:110px;background:linear-gradient(180deg,#ffd43b,#b77900);border-radius:10px 10px 0 0;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:6px 2px;color:#23150a}.cr-pod b{font-size:13px;overflow-wrap:anywhere}.cr-pod span{font-size:22px;font-weight:800}.cr-c2{color:#c5cce8;margin:2px 0}
+@media(min-width:900px){.cr-d{min-height:64px}}@media(pointer:coarse){.cr-h{display:none}}
+</style></head><body><!--menu--><style>
+:root{--nf:calc(46px + env(safe-area-inset-top,0px))}
+html{padding-top:var(--nf)!important}
+#menu-fijo{position:fixed;top:0;left:0;right:0;z-index:10000;display:flex;gap:4px;box-sizing:border-box;height:var(--nf);padding:calc(4px + env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) 4px max(6px,env(safe-area-inset-left,0px));background:#1f2a5c;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#menu-fijo a{flex:1 1 auto;min-width:0;padding:0 3px;display:flex;align-items:center;justify-content:center;gap:5px;border-radius:9px;background:rgba(255,255,255,.14);color:#fff!important;font:600 13.5px/1 Verdana,"Segoe UI",system-ui,sans-serif;text-decoration:none;white-space:nowrap;overflow:hidden}
+#menu-fijo a:hover,#menu-fijo a:focus-visible{background:rgba(255,255,255,.3);outline:0}
+#menu-fijo a[aria-current]{background:#fff;color:#1f2a5c!important}
+#av-editor,#lg,#jg{top:var(--nf)!important}
+#misframe{top:var(--nf)!important;height:calc(100% - var(--nf))!important}
+.tabs,.bar{top:var(--nf)!important}
+.scrim{padding-top:calc(var(--nf) + 12px)!important}
+@media(max-width:340px){#menu-fijo a{font-size:12px;gap:3px}}
+@media print{#menu-fijo{display:none!important}html{padding-top:0!important}}
+</style><nav id="menu-fijo" aria-label="Menú"><a href="index.html" data-p="index">🏠 Inicio</a><a href="calendario.html" data-p="calendario">📅 Calendario</a><a href="juego.html" data-p="juego">🎮 Jugar</a><a href="juego.html#clasificacion" data-p="juego">🏆 Liga</a></nav><script>(function(){var p=(location.pathname.split('/').pop()||'index.html').replace('.html','');document.querySelectorAll('#menu-fijo a').forEach(function(a){if(p===a.dataset.p&&p!=='juego'){a.setAttribute('aria-current','page');}if(p==='juego'&&a.dataset.p==='juego'){a.onclick=function(e){e.preventDefault();location.href=a.getAttribute('href');location.reload();};}});})();</script><!--/menu-->
+<div id="app"></div>
+<script>
+/* Variantes: id de la pregunta -> [enunciado, respuesta correcta, incorrectas...] */
+const VAR={
+1:[['¿Dónde están los iconos de **inicio rápido**?','En la barra de tareas.','En el Panel de control.','En la papelera.','Dentro de Este equipo.'],
+['La **barra de tareas** contiene…','La barra de inicio rápido.','El Panel de control entero.','La papelera de reciclaje.','El desfragmentador.'],
+['La barra de inicio rápido **se encuentra en…**','La barra de tareas.','El menú de Paint.','El árbol del Explorador.','La ventana de la papelera.']],
+2:[['Windows funciona con ventanas e iconos. Por eso es…','De interfaz gráfica.','De solo texto.','De solo teclado.','Un programa de dibujo.'],
+['¿Qué tipo de **programa** es Windows?','Un sistema operativo.','Un navegador web.','Un programa de dibujo.','Una hoja de cálculo.'],
+['**Interfaz gráfica** significa que usamos…','Ventanas e iconos.','Solo líneas de texto.','Solo números.','Solo el micrófono.']],
+3:[['¿Desde dónde llegas a **todo el sistema**?','Desde el menú Inicio.','Desde la papelera.','Desde el reloj.','Desde Paint.'],
+['Para abrir **Inicio** pulso…','La tecla Windows.','La tecla F1.','La tecla SUPR.','La tecla ESC.'],
+['El botón con el **logo de Windows** abre…','El menú Inicio.','La papelera.','La calculadora.','El Mapa de caracteres.']],
+4:[['Una ventana **minimizada**…','Sigue abierta en la barra de tareas.','Se ha cerrado del todo.','Ha ido a la papelera.','Se ha borrado del disco.'],
+['Has minimizado Word. ¿Dónde lo **encuentras**?','En la barra de tareas.','En la papelera.','En el Panel de control.','En Este equipo.'],
+['¿**Minimizar** es lo mismo que cerrar?','No: se recupera en la barra de tareas.','Sí: el programa se cierra del todo.','Sí: se pierde todo lo escrito.','No: se va a la papelera.']],
+5:[['Haces clic con el **botón derecho**. ¿Qué sale?','El menú contextual.','La ayuda de Windows.','El administrador de tareas.','El Panel de control.'],
+['¿Con qué botón sale el **menú contextual**?','Con el derecho.','Con el izquierdo.','Con la rueda.','Con doble clic.'],
+['El menú que cambia según **dónde haces clic derecho** se llama…','Menú contextual.','Menú Inicio.','Panel de control.','Barra de tareas.']],
+6:[['Un **atajo** a un programa es un…','Acceso directo.','Formateo.','Desfragmentador.','Portapapeles.'],
+['¿Para qué sirve un **acceso directo**?','Para abrir rápido un programa.','Para borrar un programa.','Para copiar todo el disco.','Para cambiar de usuario.'],
+['Un **acceso directo** en el escritorio…','Abre rápido un programa.','Es el programa entero.','Ocupa el disco completo.','Solo sirve para imprimir.']],
+7:[['Tienes Word y Paint abiertos. ¿Cómo **saltas** de uno a otro?','ALT + TAB','CTRL + E','CTRL + X','F1'],
+['¿Qué combinación **cambia de ventana**?','ALT + TAB','CTRL + C','CTRL + V','ALT + F1'],
+['Mantienes ALT y pulsas **TAB**. ¿Qué ocurre?','Cambias de ventana.','Se apaga el equipo.','Se copia el archivo.','Se abre la ayuda.']],
+8:[['Quieres ver **dos ventanas** a la vez en Windows 11.','Las arrastras a los bordes.','Pulsas F1 y aceptas.','Las envías a la papelera.','Las copias con CTRL + C.'],
+['En Windows 10, **botón derecho en la barra de tareas** sirve para…','Ver las ventanas en paralelo.','Formatear el disco duro.','Vaciar la papelera.','Instalar fuentes nuevas.'],
+['En Windows 11, **Windows + Z** sirve para…','Elegir cómo colocar las ventanas.','Vaciar la papelera de reciclaje.','Cambiar de cuenta de usuario.','Abrir la ayuda de Windows.']],
+9:[['¿Qué hace **Windows + D**?','Muestra el escritorio.','Abre el Panel de control.','Borra el archivo.','Cierra la sesión.'],
+['Tienes muchas ventanas y quieres **ver el escritorio**.','Uso Mostrar escritorio.','Las borro una a una.','Vacío la papelera.','Formateo el disco.'],
+['**Mostrar escritorio** hace que las ventanas…','Se minimicen de golpe.','Se cierren y se borren.','Vayan a la papelera.','Cambien de color.']],
+10:[['El acceso directo del **escritorio** se abre con…','Doble clic.','Un solo clic.','Tres clics.','La tecla F1.'],
+['¿Cuál se abre con **un solo clic**?','El de inicio rápido.','El del escritorio.','El Panel de control.','El Mapa de caracteres.'],
+['¿En qué se diferencia un icono de **inicio rápido** de un acceso directo?','Se abre con un solo clic.','No se puede borrar nunca.','Solo abre carpetas.','Ocupa todo el disco.']],
+11:[['Quieres cambiar el **fondo de pantalla**.','Botón derecho en el escritorio.','CTRL + E en el escritorio.','Doble clic en la papelera.','F1 en el escritorio.'],
+['**Personalizar** aparece si hago…','Clic derecho en el escritorio.','Doble clic en el reloj.','ALT + TAB dos veces.','Clic en la papelera.'],
+['¿Por dónde empiezo para **personalizar** el escritorio?','Por el botón derecho.','Por la tecla F1.','Por la calculadora.','Por la papelera.']],
+12:[['La **resolución de pantalla** se cambia en…','Configuración de pantalla.','Configuración de la papelera.','El Mapa de caracteres.','El liberador de espacio.'],
+['Clic derecho en el escritorio. ¿Qué eliges para la **pantalla**?','Configuración de pantalla.','Formatear el escritorio.','Desfragmentar la pantalla.','Restaurar la papelera.'],
+['Para configurar la **pantalla** empiezo por…','Botón derecho en el escritorio.','Doble clic en la papelera.','ALT + TAB en la barra.','F1 en el Explorador.']],
+13:[['**ClearType** sirve para…','Leer mejor en pantalla.','Comprobar errores del disco.','Borrar archivos temporales.','Cambiar de usuario.'],
+['Las letras se ven **borrosas**. ¿Qué ajustas?','ClearType.','Paint.','Desfragmentador.','Papelera.'],
+['¿Cuál **mejora la lectura** en pantalla?','ClearType','Scandisk','Paint','Liberador']],
+14:[['Si dos personas usan el ordenador, **Documentos**…','Es distinto para cada una.','Es el mismo para las dos.','Solo lo ve el administrador.','Está en la papelera.'],
+['¿De quién es la carpeta **Documentos**?','De cada usuario.','Solo del administrador.','De todos a la vez.','Del Panel de control.'],
+['Tu hermano entra con su cuenta. Sus **documentos**…','Están en su carpeta.','Están en tu carpeta.','Están en la papelera.','Se borran al salir.']],
+15:[['Un programa **se ha colgado**. ¿Qué pulsas?','CTRL + ALT + SUPR','CTRL + ALT + C','ALT + TAB + F1','CTRL + MAYÚS + E'],
+['**CTRL + ALT + SUPR** permite abrir…','El administrador de tareas.','El Mapa de caracteres.','El liberador de espacio.','La papelera de reciclaje.'],
+['El **administrador de tareas** sirve para…','Cerrar un programa colgado.','Cambiar el fondo de pantalla.','Escribir la eñe.','Vaciar la papelera.']],
+16:[['¿Qué tecla abre la **ayuda**?','F1','F2','ESC','SUPR'],
+['¿Cómo **pides ayuda** a Windows desde el escritorio?','Pulso F1.','Pulso F2.','Pulso SUPR.','Pulso ESC.'],
+['**F1** en el escritorio abre…','La ayuda de Windows.','El Explorador.','La calculadora.','El Panel de control.']],
+17:[['A la **izquierda** del Explorador está…','El árbol de carpetas.','El Mapa de caracteres.','La calculadora.','El Panel de control.'],
+['A la **derecha** del Explorador se ve…','El contenido de la carpeta.','El reloj del sistema.','La lista de usuarios.','La ayuda de Windows.'],
+['¿Cuántas zonas principales tiene el **Explorador**?','Dos: árbol y contenido.','Una: solo contenido.','Tres: árbol, reloj y dibujo.','Cuatro: una en cada esquina.']],
+18:[['**Mi PC** ahora se llama…','Este equipo.','Mi escritorio.','Mi papelera.','Panel de control.'],
+['¿Dónde ves **todas las unidades** del ordenador?','En Este equipo.','En la papelera.','En la calculadora.','En Paint.'],
+['Para entrar en el **disco C:** voy a…','Este equipo.','Mapa de caracteres.','Liberador de espacio.','Administrador de tareas.']],
+19:[['Junto a una carpeta ves una **flechita**. Significa…','Que hay más carpetas dentro.','Que está en la papelera.','Que está oculta.','Que es un programa.'],
+['¿Qué indica el **+** en el árbol del Explorador?','Que tiene subcarpetas.','Que está comprimida.','Que está oculta.','Que es de otro usuario.'],
+['Para ver las carpetas **que hay dentro**, pulso…','La flechita (antes, el +).','La tecla F1 del teclado.','La tecla SUPR del teclado.','La papelera de reciclaje.']],
+20:[['Quiero ver el **tamaño** de cada archivo. ¿Qué vista uso?','Detalles.','Iconos grandes.','Iconos pequeños.','Miniaturas.'],
+['La vista que muestra **fecha y tamaño** es…','La de detalle.','La de miniaturas.','La de iconos grandes.','La de iconos pequeños.'],
+['**Vista de detalle**: ¿qué información da?','Extensión, fecha, tamaño…','Solo el dibujo del icono.','Solo la hora actual.','Solo el nombre del usuario.']],
+21:[['**Formatear** un pendrive hace que…','Se borre todo su contenido.','Se copie al disco duro.','Aumente su tamaño.','Se oculten sus archivos.'],
+['Clic derecho en el pendrive. ¿Qué eliges para **dejarlo vacío**?','Formatear.','Propiedades.','Expulsar.','Cambiar nombre.'],
+['¿Por dónde se **formatea** una unidad?','Botón derecho en la unidad.','Doble clic en la papelera.','Menú de la calculadora.','Panel de control: fuentes.']],
+22:[['Quiero una **carpeta nueva** en el pendrive.','Clic derecho: nuevo, carpeta.','Clic derecho: formatear.','CTRL + V: carpeta.','F1: carpeta.'],
+['En el menú contextual, **Nuevo** sirve para…','Crear una carpeta.','Formatear la unidad.','Vaciar la papelera.','Cambiar de usuario.'],
+['Después de clic derecho y **nuevo**, ¿qué eliges?','Carpeta.','Formatear.','Restaurar.','Propiedades.']],
+23:[['**MAYÚS** + clic sirve para seleccionar…','Objetos seguidos.','Objetos saltados.','Solo un objeto.','Ningún objeto.'],
+['Quiero seleccionar del archivo 1 **al 10, todos seguidos**.','Clic en el 1 y MAYÚS + clic en el 10.','Clic en el 1 y CTRL + clic en el 10.','Doble clic en el 1 y en el 10.','ALT + TAB en el 1 y en el 10.'],
+['¿Qué tecla usas para **objetos continuos**?','MAYÚS','CTRL','ALT','F1']],
+24:[['**CTRL** + clic sirve para seleccionar…','Objetos saltados.','Objetos seguidos.','Todo el disco.','Solo el primero.'],
+['Quiero el archivo 2, el 5 y **el 9**, sin los demás.','Clic y CTRL + clic en los demás.','Clic y MAYÚS + clic en el último.','Doble clic en cada uno.','ALT + TAB en cada uno.'],
+['¿Qué tecla usas para **objetos no continuos**?','CTRL','MAYÚS','ALT','F2']],
+25:[['**CTRL + E** sirve para…','Seleccionar todo.','Cortar.','Pegar.','Cambiar de ventana.'],
+['Hay 200 archivos y los quieres **todos**.','CTRL + E','CTRL + V','CTRL + X','ALT + TAB'],
+['Según los apuntes, **seleccionar todo** es…','CTRL + E','ALT + E','CTRL + T','F2']],
+26:[['**CTRL + X** sirve para…','Cortar.','Copiar.','Pegar.','Seleccionar todo.'],
+['Quieres **mover** un archivo. Primero pulsas…','CTRL + X','CTRL + E','ALT + TAB','CTRL + ALT + SUPR'],
+['Clic derecho en un archivo. ¿Qué opción es **CTRL + X**?','Cortar.','Copiar.','Pegar.','Propiedades.']],
+27:[['**CTRL + C** sirve para…','Copiar.','Cortar.','Pegar.','Buscar.'],
+['Quieres **duplicar** un archivo. Primero pulsas…','CTRL + C','CTRL + X','CTRL + E','ALT + TAB'],
+['Clic derecho. ¿Qué opción es **CTRL + C**?','Copiar.','Cortar.','Pegar.','Eliminar.']],
+28:[['**CTRL + V** sirve para…','Pegar.','Copiar.','Cortar.','Ver la ayuda.'],
+['Ya has copiado. Para **ponerlo** en otra carpeta…','CTRL + V','CTRL + C','CTRL + X','CTRL + E'],
+['Clic derecho. ¿Qué opción es **CTRL + V**?','Pegar.','Copiar.','Cortar.','Formatear.']],
+29:[['No ves si una foto es **jpg o bmp**. ¿Qué activas?','Extensiones de nombre de archivo.','Configuración de pantalla.','Configuración regional.','Selector de tamaño.'],
+['En el Explorador de Windows 11, ¿dónde están las **extensiones**?','En Ver, Mostrar.','En Inicio, Apagar.','En Papelera, Vaciar.','En Reloj, Fecha.'],
+['En Windows 10, las **extensiones** se activan en…','La pestaña Vista.','La papelera.','El reloj.','La calculadora.']],
+30:[['En **foto.jpg**, la extensión es…','jpg','foto','foto.jpg','el punto'],
+['¿Qué **dice** la extensión de un archivo?','Qué tipo es.','Quién lo hizo.','Cuánto costó.','Si tiene virus.'],
+['Windows sabe **con qué programa** abrir un archivo por…','Su extensión.','Su fecha.','Su color.','Su usuario.']],
+31:[['juego.**exe** es un archivo…','Ejecutable.','De imagen.','De texto.','Comprimido.'],
+['¿Cuál se puede **ejecutar**?','programa.exe','foto.jpg','carta.doc','fotos.zip'],
+['Un programa que se pone en marcha con **doble clic** suele ser…','EXE','JPG','DOC','ZIP']],
+e7:[['¿Qué extensión es de **imagen**?','bmp','doc','zip','exe'],['¿Cuál abrirías con **Paint**?','dibujo.bmp','carta.doc','fotos.zip','juego.exe']],
+e8:[['¿Qué extensión es de **texto**?','doc','jpg','rar','exe'],['¿Cuál es una **redacción**?','redaccion.odt','foto.bmp','todo.rar','juego.exe']],
+e9:[['¿Qué extensión es de **comprimido**?','rar','jpg','odt','exe'],['Para enviar **muchos archivos en uno**, uso…','Un zip.','Un jpg.','Un bmp.','Un doc.']],
+32:[['No encuentras un archivo. ¿Por dónde **buscas**?','Por Inicio, buscar.','Por la calculadora.','Por la papelera.','Por Paint.'],
+['¿Cuál es el camino para **buscar** un archivo?','Inicio / buscar','Papelera / vaciar','Reloj / fecha','Paint / atributos'],
+['Para encontrar **trabajo.doc**…','Lo escribo en Inicio.','Formateo el disco.','Vacío la papelera.','Abro la calculadora.']],
+33:[['¿Cuánto **espacio queda** en el pendrive? Lo miro en…','Propiedades de la unidad.','Formatear la unidad.','La calculadora.','El Mapa de caracteres.'],
+['Clic derecho en el pendrive. ¿Cuál dice su **espacio libre**?','Propiedades.','Formatear.','Expulsar.','Nuevo.'],
+['**Propiedades** de una unidad me dice…','El espacio disponible.','La hora del reloj.','El usuario del equipo.','El fondo de pantalla.']],
+34:[['¿Las carpetas pueden abrirse con **un clic**?','Sí, se puede elegir.','No, nunca.','Solo en la papelera.','Solo en Paint.'],
+['Abrir carpetas **con un solo clic** es…','Posible.','Imposible.','Solo de la papelera.','Solo del reloj.'],
+['Verdadero o falso: una carpeta puede abrirse **con un clic**.','Verdadero','Falso']],
+35:[['Desde **Este equipo** veo…','Todas las unidades.','Solo la papelera.','Solo el reloj.','Solo Paint.'],
+['¿Cómo se llama hoy **Mi PC**?','Este equipo.','Mi carpeta.','Mis carpetas.','Mis documentos.'],
+['Para abrir el **pendrive** entro en…','Este equipo.','La papelera.','La calculadora.','El Panel de control.']],
+36:[['¿Todo lo **borrado** se recupera siempre?','No siempre.','Sí, siempre.','Solo las fotos.','Solo con F1.'],
+['Si borras de un **pendrive**, normalmente…','No pasa por la papelera.','Va siempre a la papelera.','Se queda en Documentos.','Se copia al escritorio.'],
+['Al **eliminar** un archivo, la papelera…','No siempre lo guarda.','Siempre lo guarda.','Lo comprime.','Lo imprime.']],
+37:[['La casilla **Oculto** está en…','Las propiedades de la carpeta.','La papelera de reciclaje.','El menú de la calculadora.','El reloj de la barra.'],
+['Quieres que una carpeta **no se vea**.','Propiedades: oculto.','Formatear: oculto.','Papelera: oculto.','F1: oculto.'],
+['Para **ocultar** una carpeta empiezo por…','Botón derecho sobre ella.','Doble clic en la papelera.','ALT + TAB dos veces.','F1 en el escritorio.']],
+38:[['Has borrado un archivo **sin querer**. ¿Qué haces?','Lo restauro de la papelera.','Vacío la papelera.','Formateo el disco.','Pulso F1 y acepto.'],
+['**Restaurar** en la papelera hace que el archivo…','Vuelva a su sitio.','Se borre del todo.','Se comprima.','Se imprima.'],
+['¿Qué opción **devuelve** el archivo a su sitio?','Restaurar.','Vaciar.','Formatear.','Propiedades.']],
+39:[['El disco está lleno y la **papelera también**. ¿Ocupa espacio?','Sí, sigue ocupando.','No, nada.','Solo en la RAM.','Solo al apagar.'],
+['Para **liberar** el espacio de lo borrado…','Vacío la papelera.','Minimizo la papelera.','Cambio de usuario.','Abro la calculadora.'],
+['¿Lo que está en la **papelera** sigue en el disco?','Sí, sigue en el disco.','No, ya no existe.','No, está en internet.','No, está en Paint.']],
+40:[['Clic derecho en la papelera. Para **borrarlo todo**…','Vaciar papelera.','Restaurar.','Formatear.','Copiar.'],
+['**Vaciar** la papelera hace que…','Se borre de verdad.','Todo vuelva a su sitio.','Se copie al pendrive.','Se haga un zip.'],
+['¿Con qué botón del ratón se **vacía** la papelera?','Con el derecho.','Con la rueda.','Con los dos a la vez.','Con ninguno: con F1.']],
+41:[['**Propiedades** de la papelera: ¿cómo llego?','Clic derecho encima: propiedades.','Doble clic encima: restaurar.','F1 encima: ayuda.','CTRL + E encima: todo.'],
+['Clic derecho sobre la papelera. ¿Cuál enseña sus **ajustes**?','Propiedades.','Vaciar.','Abrir.','Crear acceso directo.'],
+['¿Qué botón uso para ver las **propiedades** de la papelera?','El derecho.','El izquierdo.','La rueda.','Ninguno: F1.']],
+42:[['¿Dónde elijo **cuánto ocupa** la papelera?','En sus propiedades.','En Paint.','En la calculadora.','En Este equipo.'],
+['El **selector de tamaño** de la papelera está en…','Propiedades.','Restaurar.','Vaciar.','Abrir.'],
+['Clic derecho en la papelera y **propiedades**. ¿Para qué?','Para escoger su tamaño.','Para escribir eñes.','Para dibujar algo.','Para cambiar la hora.']],
+43:[['¿Cuál es un **tipo de cuenta** actual?','Estándar.','Profesor.','Rápida.','Alumno.'],
+['En Windows 10 y 11, la cuenta de **invitado**…','Ya no está.','Es la que más manda.','Es obligatoria.','Instala programas.'],
+['La antigua cuenta **limitada** hoy se llama…','Estándar.','Administrador.','Invitado.','Profesor.']],
+44:[['Cuando cambias de usuario, **el escritorio**…','Es el de ese usuario.','Es siempre el mismo.','Desaparece para siempre.','Se formatea.'],
+['Cada usuario tiene **sus propias**…','Descargas y documentos.','Discos duros físicos.','Teclas y ratones.','Pantallas y altavoces.'],
+['Tú y tu madre con **dos cuentas**: ¿compartís escritorio?','No, cada uno el suyo.','Sí, siempre el mismo.','Solo en la papelera.','Solo el administrador.']],
+45:[['¿Qué cuenta puede **cambiar toda la configuración**?','Administrador.','Limitada.','Invitado.','Ninguna.'],
+['Quien puede **acceder a todo** es…','El administrador.','El invitado.','El usuario limitado.','Nadie.'],
+['Para **crear cuentas** nuevas hace falta ser…','Administrador.','Invitado.','Usuario limitado.','Dueño de la papelera.']],
+46:[['Con una cuenta limitada, ¿puedes **instalar** un juego?','No, no puede instalar.','Sí, todo lo que quiera.','Sí, si vacía la papelera.','Sí, pulsando F1.'],
+['¿Qué **no puede** hacer la cuenta limitada?','Instalar hardware ni software.','Abrir programas instalados.','Escribir un texto.','Usar la calculadora.'],
+['¿Cuál **usa programas pero no instala**?','Limitada.','Administrador.','Propietario.','Técnico.']],
+47:[['Para **entrar con otra cuenta**…','Inicio: cerrar sesión.','Inicio: reiniciar.','Papelera: vaciar.','Reloj: fecha.'],
+['**Cerrar sesión** sirve para…','Cambiar de usuario.','Formatear el disco.','Borrar el programa.','Apagar la pantalla.'],
+['Tu hermana quiere usar **su cuenta**. ¿Qué hacéis?','Cerrar sesión y escoger.','Formatear y empezar.','Vaciar la papelera.','Pulsar CTRL + C.']],
+48:[['Quitas un icono del **menú Inicio**. El programa…','Sigue instalado.','Se desinstala.','Va a la papelera.','Se formatea.'],
+['Un icono del **menú Inicio** es un…','Acceso directo.','Programa completo.','Archivo comprimido.','Disco duro.'],
+['Para **desinstalar** de verdad, ¿basta con borrar el icono?','No, solo borra el acceso.','Sí, desaparece todo.','Sí, si vacías la papelera.','Sí, pulsando F1.']],
+49:[['Buscas el programa en Inicio y haces clic derecho. ¿Qué eliges para **llegar a él**?','Abrir ubicación de archivo.','Formatear la unidad.','Vaciar papelera.','Configuración de pantalla.'],
+['Para poner un programa en el escritorio, eliges **Enviar a**…','Escritorio.','Papelera.','Calculadora.','Panel de control.'],
+['En **Windows 11**, «Enviar a» sale en…','Mostrar más opciones.','La ayuda de Windows.','La papelera.','El reloj.']],
+50:[['¿Dónde escribo **«panel»** para abrirlo?','En el buscador de Inicio.','En la calculadora.','En Paint.','En la papelera.'],
+['El **Panel de control** se abre hoy…','Buscándolo en Inicio.','Con CTRL + V.','Con doble clic en el reloj.','Vaciando la papelera.'],
+['¿Cómo llegas **más rápido** al Panel de control?','Lo escribo en Inicio.','Formateo el disco.','Abro Paint.','Pulso F2.']],
+51:[['Borrar sus carpetas, ¿**desinstala** bien un programa?','No: hay que ir al Panel.','Sí: es lo correcto.','Sí: con la papelera.','Sí: con Paint.'],
+['**Agregar o quitar programas** sirve para…','Desinstalar.','Cambiar la hora.','Ver las fuentes.','Escribir eñes.'],
+['¿Dónde **quitas un juego** que ya no usas?','Panel de control: programas.','Papelera de reciclaje: vaciar.','Reloj de la barra: fecha.','Paint, menú Imagen: atributos.']],
+52:[['El reloj del ordenador **va mal**. ¿Dónde lo arreglas?','En fecha y hora.','En fuentes.','En la papelera.','En el Mapa de caracteres.'],
+['Además del Panel de control, **la hora** se cambia…','Desde el reloj de la barra.','Desde la papelera.','Desde Paint.','Desde el pendrive.'],
+['**Fecha y hora** está en…','El Panel de control.','La calculadora.','La papelera.','El Explorador.']],
+53:[['Pulsas la **ñ** y sale otra cosa.','Configuración regional e idioma.','Configuración de fecha y hora.','Configuración de las fuentes.','Configuración de la papelera.'],
+['**Configuración regional y de idioma** arregla…','El teclado sin eñe ni acentos.','Un reloj que va parado.','Una papelera muy llena.','Una carpeta que está oculta.'],
+['Los **acentos** no salen bien. ¿Qué miro?','El idioma del teclado.','El tamaño de la papelera.','El modo de la calculadora.','La extensión del archivo.']],
+54:[['**Fuentes** significa…','Tipos de letra.','Tipos de archivo.','Tipos de cuenta.','Tipos de ventana.'],
+['Quieres una **letra nueva** para tu trabajo.','Panel de control: fuentes.','Panel de control: fecha.','Papelera: restaurar.','Paint: atributos.'],
+['¿Dónde ves las **letras instaladas**?','En fuentes.','En la papelera.','En la calculadora.','En el liberador.']],
+55:[['¿Con qué programa **dibujas**?','Paint.','Calculadora.','Scandisk.','Liberador.'],
+['**Paint** trabaja con imágenes de…','Mapa de bits.','Mapa de caracteres.','Mapa de carreteras.','Mapa de usuarios.'],
+['Para retocar una **imagen bmp**…','Paint.','Panel de control.','Mapa de caracteres.','Administrador de tareas.']],
+56:[['Calculas algo y quieres **pasarlo a Word**.','Copias y pegas el resultado.','Lo formateas sin más.','Lo envías a la papelera.','Lo desfragmentas.'],
+['¿Qué ventaja da la **calculadora del ordenador**?','Copiar y pegar resultados.','Dibujar en colores.','Instalar programas.','Borrar temporales.'],
+['El resultado de la **calculadora** va a otro programa con…','Copiar-pegar.','Formatear.','Restaurar.','Vaciar.']],
+57:[['¿Cuál es un **modo** de la calculadora?','Científica.','Invitada.','Comprimida.','Oculta.'],
+['Para **operaciones avanzadas**, la calculadora en modo…','Científica.','Invitada.','Pequeña.','Oculta.'],
+['La **calculadora** de Windows 10 y 11 tiene…','Varios modos.','Un solo modo.','Ningún modo.','Solo un botón.']],
+58:[['Necesitas un **símbolo raro**. ¿Qué abres?','Mapa de caracteres.','Liberador de espacio.','Administrador de tareas.','Selector de tamaño.'],
+['**Mapa de caracteres** sirve para…','Incluir símbolos especiales.','Cambiar la hora del reloj.','Vaciar la papelera.','Borrar temporales.'],
+['Ya has elegido el símbolo en el mapa. ¿Cómo lo **llevas a tu texto**?','Con copiar-pegar.','Con formatear.','Con restaurar.','Con vaciar.']],
+59:[['Los archivos están **repartidos a trozos** por el disco. Uso…','El desfragmentador.','El liberador.','La calculadora.','Paint.'],
+['¿Qué herramienta **organiza** el disco duro?','Desfragmentador.','Mapa de caracteres.','Paint.','Papelera.'],
+['**Desfragmentar** hace que los programas…','Vayan más rápido.','Se borren solos.','Cambien de nombre.','Se oculten.']],
+60:[['El disco **está casi lleno**. ¿Qué uso?','El liberador de espacio.','El Mapa de caracteres.','La calculadora.','ClearType.'],
+['El **liberador** borra…','Temporales y papelera.','Todos tus documentos.','Todos tus programas.','Las cuentas de usuario.'],
+['¿Qué herramienta **deja más sitio** en el disco?','Liberador de espacio.','Mapa de caracteres.','Configuración regional.','Mostrar escritorio.']],
+61:[['**Scandisk** sirve para…','Comprobar errores del disco.','Dibujar imágenes nuevas.','Cambiar de usuario.','Escribir la eñe.'],
+['Camino para **comprobar errores**:','Unidad, propiedades, herramientas.','Papelera, vaciar, aceptar.','Reloj, fecha, aceptar.','Paint, imagen, atributos.'],
+['El disco **da errores**. ¿Qué haces?','Comprobarlo en Herramientas.','Cambiar el fondo.','Abrir la calculadora.','Cambiar de usuario.']],
+62:[['¿Cuánta **memoria RAM** tengo? Lo miro en…','Propiedades de Este equipo.','Propiedades de la papelera.','Menú de la calculadora.','Fecha y hora.'],
+['Clic derecho en **Este equipo** y propiedades me dice…','Procesador y memoria RAM.','La hora y la fecha.','Los tipos de letra.','Lo que hay en la papelera.'],
+['¿Dónde miro **qué procesador** tengo?','Propiedades de Este equipo.','Papelera de reciclaje.','Mapa de caracteres.','Paint.']],
+63:[['Instalaste algo y el ordenador **va mal**. Para volver atrás…','Restaurar sistema.','Mapa de caracteres.','Liberador de espacio.','Mostrar escritorio.'],
+['**Restaurar sistema**, ¿borra tus documentos?','No, no se pierden.','Sí, todos.','Sí, solo fotos.','Sí, los textos.'],
+['**Restaurar sistema** devuelve el equipo a…','Una situación anterior.','Cuando se fabricó.','Una cuenta de invitado.','Una carpeta oculta.']]
+};
+/* Bonus del manual: no están en los apuntes del examen */
+const BONUS=[
+ ['b1','La barra de título de una ventana indica…','El nombre del programa.','La hora y la fecha.','El espacio libre.','El tipo de cuenta.','Está arriba del todo.'],
+ ['b2','Las barras de desplazamiento sirven para…','Moverte por el documento.','Cambiar el fondo.','Borrar el documento.','Cerrar el programa.','Están a la derecha y abajo.'],
+ ['b3','Al maximizar una ventana…','Ocupa toda la pantalla.','Se cierra del todo.','Va a la papelera.','Se copia sola.','Máximo tamaño.'],
+ ['b4','Un cuadro de diálogo sirve para…','Dar información al programa.','Dibujar una imagen.','Vaciar la papelera.','Apagar la pantalla.','El programa te pregunta y tú contestas.'],
+ ['b5','Una casilla de verificación sirve para…','Activar o desactivar opciones.','Escribir un texto largo.','Mover una ventana.','Cerrar el programa.','Marcada o sin marcar.'],
+ ['b6','Con botones de opción puedes elegir…','Solo una opción.','Todas las opciones.','Ninguna opción.','Tres opciones.','Son excluyentes.'],
+ ['b7','Tres puntos (…) tras una opción de menú indican…','Que abre un cuadro de diálogo.','Que el programa está roto.','Que se borrará algo.','Que está oculta.','Te pedirá más datos.'],
+ ['b8','Un triángulo junto a una opción de menú indica…','Que tiene un submenú.','Que hay un error.','Que está borrada.','Que es un programa.','Se despliega otro menú.'],
+ ['b9','La tecla ESC con un menú contextual abierto…','Cierra el menú.','Apaga el equipo.','Borra el archivo.','Abre la ayuda.','Escape: salir.'],
+ ['b10','CTRL + ESC sirve para…','Abrir el menú Inicio.','Cerrar la ventana.','Copiar un archivo.','Vaciar la papelera.','Igual que la tecla Windows.'],
+ ['b11','1 byte equivale a…','Un carácter.','Una página.','Una carpeta.','Un programa.','Una letra, por ejemplo.'],
+ ['b12','1 megabyte (MB) son…','1024 KB','10 KB','100 KB','1024 GB','Y 1 GB son 1024 MB.'],
+ ['b13','1 gigabyte (GB) son…','1024 MB','10 MB','100 KB','1024 TB','Cada salto, 1024.'],
+ ['b14','Al buscar, el comodín * sustituye a…','Cualquier texto.','Una sola letra.','Una carpeta.','Un usuario.','*.doc son todos los doc.'],
+ ['b15','Al buscar, el comodín ? sustituye a…','Un solo carácter.','Cualquier texto.','Una carpeta.','Un usuario.','tema?.doc encuentra tema1.doc.'],
+ ['b16','Un archivo de sólo lectura…','Se lee, pero no se modifica.','Se modifica, pero no se lee.','No se puede abrir nunca.','Está en la papelera.','Es un atributo del archivo.'],
+ ['b17','El Bloc de notas guarda archivos con extensión…','TXT','JPG','EXE','ZIP','Solo texto, sin formato.'],
+ ['b18','En Paint, MAYÚS mientras dibujas una elipse hace…','Un círculo perfecto.','Un cuadrado perfecto.','Una línea recta.','Un texto.','Y con el rectángulo, un cuadrado.'],
+ ['b19','En Paint, MAYÚS mientras dibujas un rectángulo hace…','Un cuadrado perfecto.','Un círculo perfecto.','Una línea curva.','Un texto.','Lados iguales.'],
+ ['b20','Multimedia significa…','Texto, imagen, sonido y vídeo.','Solo texto y números.','Solo copiar y pegar.','Solo cuentas de usuario.','Varios medios a la vez.'],
+ ['b21','El protector de pantalla se activa…','Cuando detecta inactividad.','Al pulsar F1.','Al vaciar la papelera.','Al copiar un archivo.','Si llevas un rato sin tocar nada.'],
+ ['b22','Arrastrar con el botón derecho…','Abre un menú al soltar.','Borra el archivo.','Formatea la unidad.','Abre la calculadora.','Eliges copiar o mover.'],
+ ['b23','Arrastrar con el izquierdo a otra unidad…','Copia el archivo.','Borra el archivo.','Formatea la unidad.','Oculta el archivo.','Dentro de la misma unidad, mueve.'],
+ ['b24','Los iconos de acceso directo llevan…','Una flecha en una esquina.','Un signo + en el centro.','Un fondo de color rojo.','Una papelera pequeña.','Fíjate en el escritorio.'],
+ ['b25','Doble clic en la barra de título…','Maximiza la ventana.','Cierra el programa.','Borra el archivo.','Abre la ayuda.','Otra vez, y vuelve a su tamaño.']
+].map(x=>({id:x[0],b:'extra',c:'g',q:x[1],a:x[2],w:x.slice(3,6),n:x[6]}));
+function pickVar(base){
+  const vs=VAR[String(base.id)];
+  if(!vs||!vs.length)return base;
+  const i=Math.floor(Math.random()*(vs.length+1));
+  if(i===vs.length)return base;
+  const c=vs[i];
+  return {id:base.id,b:base.b,c:base.c,n:base.n,q:c[0],a:c[1],w:c.slice(2)};
+}
+const gB=s=>s.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+
+/* Muñeco y estrellas: compartido por el escritorio y las misiones */
+const G_KEY='tema2.juego';
+const G_START=180,G_CAP=180;
+let G_mem=null;
+const gDef=()=>({stars:0,edit:G_START,fresh:[],fichas:3,fichaT:0,juegoBest:0,sub:{},st:{ok:{},days:[],best:null,first:null},av:{shape:'r',skin:0,eyes:'puntos',mouth:'sonrisa',nose:'no',hair:'corto',hc:0,glass:'no',acc:'no'}});
+const G_FMAX=3,G_FPASO=2*3600*1000;
+function gFichas(g){const now=Date.now();if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
+function gLoad(){try{const r=localStorage.getItem(G_KEY);if(r){const j=JSON.parse(r),d=gDef();return gFichas(Object.assign(d,j,{av:Object.assign(d.av,j.av),st:Object.assign(d.st,j.st)}));}}catch(e){}return gFichas(G_mem||gDef());}
+function gSave(g){G_mem=g;try{localStorage.setItem(G_KEY,JSON.stringify(g));}catch(e){}}
+const C_K='#1b1b22',C_W='#ffffff',C_Y='#ffd21f',C_R='#d9352b',C_B='#1e88e5',C_V='#5e35b1',C_GR='#7a8794';
+const SKINS=['#ffd9b8','#f1c27d','#d9a066','#a86f3f','#6f4526','#7ec8e3'];
+const gSkin=av=>typeof av.skin==='string'?av.skin:(SKINS[av.skin]||SKINS[0]);
+const PALETA=(()=>{const lv=[0,51,102,153,204,255],c=[];lv.forEach(r=>lv.forEach(g=>lv.forEach(b=>c.push([r,g,b]))));
+ for(let i=1;i<=16;i++){const v=Math.round(i*255/17);c.push([v,v,v]);}
+ for(let i=0;i<24;i++){const t=i/23;c.push([Math.round(255-t*150),Math.round(225-t*160),Math.round(195-t*165)]);}
+ const hsl=([r,g,b])=>{const M=Math.max(r,g,b),m=Math.min(r,g,b),d=M-m;let h=0;if(d){if(M===r)h=((g-b)/d+6)%6;else if(M===g)h=(b-r)/d+2;else h=(r-g)/d+4;}return{h:d<12?-1:Math.floor(h*2),l:M+m};};
+ return c.map(x=>({x,k:hsl(x)})).sort((a,b)=>a.k.h-b.k.h||a.k.l-b.k.l).map(o=>'#'+o.x.map(v=>v.toString(16).padStart(2,'0')).join(''));})();
+const HAIRC=['#2b1d14','#6b3e1c','#d9a441','#b5341f','#26262c','#7a4dd8','#22a6a6','#e85d9e','#eeeeee'];
+const PARTS={
+ eyes:{t:'Ojos',o:{
+  puntos:{n:'Puntos',d:[[32,44,7,7,C_K],[61,44,7,7,C_K]]},
+  grandes:{n:'Grandes',d:[[29,40,13,13,C_W],[58,40,13,13,C_W],[34,44,6,6,C_K],[63,44,6,6,C_K]]},
+  guino:{n:'Guiño',d:[[29,41,13,11,C_W],[33,44,6,6,C_K],[58,47,13,3,C_K]]},
+  enfado:{n:'Enfadados',d:[[29,38,7,3,C_K],[36,41,6,3,C_K],[58,41,6,3,C_K],[64,38,7,3,C_K],[32,46,7,6,C_K],[61,46,7,6,C_K]]},
+  sueno:{n:'Con sueño',d:[[29,47,13,3,C_K],[58,47,13,3,C_K]]},
+  robot:{n:'Robot',d:[[28,42,14,9,'#27d3e6'],[58,42,14,9,'#27d3e6'],[28,45,14,2,C_W],[58,45,14,2,C_W]]},
+  estrella:{n:'Estrellas',d:[[33,39,5,14,C_Y],[29,44,13,5,C_Y],[62,39,5,14,C_Y],[58,44,13,5,C_Y]]}}},
+ mouth:{t:'Boca',o:{
+  sonrisa:{n:'Sonrisa',d:[[38,68,24,3,C_K],[35,65,3,3,C_K],[62,65,3,3,C_K]]},
+  recta:{n:'Seria',d:[[38,68,24,3,C_K]]},
+  abierta:{n:'Abierta',d:[[39,63,22,11,'#6b1d2a'],[39,63,22,3,C_W]]},
+  lengua:{n:'Lengua',d:[[38,66,24,3,C_K],[46,69,8,8,'#e8607a']]},
+  dientes:{n:'Dientes',d:[[37,64,26,9,C_W],[37,64,26,1.5,C_K],[37,73,26,1.5,C_K],[45,64,1.5,9,C_K],[53,64,1.5,9,C_K]]},
+  colmillos:{n:'Colmillos',d:[[38,67,24,3,C_K],[41,70,4,6,C_W],[55,70,4,6,C_W]]},
+  bigote:{n:'Bigote',d:[[34,62,32,4,'H'],[30,64,6,4,'H'],[64,64,6,4,'H'],[42,70,16,3,C_K]]}}},
+ nose:{t:'Nariz',o:{
+  no:{n:'Sin nariz',d:[]},
+  punto:{n:'Pequeña',d:[[47,55,6,4,'S']]},
+  grande:{n:'Grande',d:[[47,50,6,8,'S'],[44,57,12,4,'S']]},
+  cerdo:{n:'Cerdito',d:[[43,52,14,9,'#f09aa8'],[46,55,2,3,C_K],[52,55,2,3,C_K]]},
+  payaso:{n:'Payaso',d:[[44,51,12,11,C_R]]}}},
+ hair:{t:'Pelo',o:{
+  no:{n:'Sin pelo',d:[]},
+  corto:{n:'Corto',d:[[10,10,80,18,'H'],[10,10,7,26,'H'],[83,10,7,26,'H']]},
+  flequillo:{n:'Flequillo',d:[[10,10,80,20,'H'],[10,28,34,8,'H'],[10,10,7,30,'H'],[83,10,7,30,'H']]},
+  largo:{n:'Largo',d:[[10,10,80,18,'H'],[4,14,12,66,'H'],[84,14,12,66,'H']],top:1},
+  pinchos:{n:'Pinchos',d:[[12,14,76,14,'H'],[14,4,12,14,'H'],[32,0,12,18,'H'],[50,-3,12,20,'H'],[70,4,12,14,'H']],top:1},
+  cresta:{n:'Cresta',d:[[43,-4,14,30,'H']],top:1},
+  afro:{n:'Afro',d:[[6,-2,88,28,'H'],[0,8,14,44,'H'],[86,8,14,44,'H']],top:1},
+  mono:{n:'Moño',d:[[12,12,76,16,'H'],[38,-3,24,16,'H']],top:1},
+  coleta:{n:'Coleta',d:[[12,12,76,16,'H'],[86,24,10,8,'H'],[90,30,9,30,'H']],top:1}}},
+ glass:{t:'Gafas',o:{
+  no:{n:'Sin gafas',d:[]},
+  redondas:{n:'De ver',d:[[27,40,17,15,'none',C_K],[56,40,17,15,'none',C_K],[44,45,12,2,C_K]]},
+  sol:{n:'De sol',d:[[26,41,18,12,C_K],[56,41,18,12,C_K],[44,44,12,2,C_K],[29,43,5,2,'#666'],[59,43,5,2,'#666']]},
+  tresd:{n:'3D',d:[[26,41,18,12,C_R],[56,41,18,12,'#2d9cff'],[44,44,12,2,C_K]]},
+  visor:{n:'Visor',d:[[22,41,56,12,'#ffb300'],[22,41,56,3,'#ffe082']]},
+  monoculo:{n:'Monóculo',d:[[56,39,17,16,'none','#c79a2a'],[71,54,2,24,'#c79a2a']]},
+  antifaz:{n:'Antifaz',d:[[20,38,60,17,C_K],[29,43,12,7,'#fff'],[59,43,12,7,'#fff']]}}},
+ acc:{t:'Extras',o:{
+  no:{n:'Nada',d:[]},
+  pajarita:{n:'Pajarita',d:[[36,93,11,11,C_R],[53,93,11,11,C_R],[46,96,8,6,'#8e1f18']]},
+  gorra:{n:'Gorra',d:[[12,6,76,16,C_R],[12,18,96,6,'#8e1f18']]},
+  auri:{n:'Auriculares',d:[[6,36,10,28,'#26262c'],[84,36,10,28,'#26262c'],[10,6,80,6,'#26262c'],[10,6,6,32,'#26262c'],[84,6,6,32,'#26262c']]},
+  parche:{n:'Pirata',d:[[56,40,18,15,C_K],[14,34,72,2.5,C_K]]},
+  pendiente:{n:'Pendiente',d:[[86,60,5,5,C_Y],[85,65,7,7,C_Y]]},
+  bufanda:{n:'Bufanda',d:[[20,90,60,10,C_B],[58,98,12,14,'#1565c0']]},
+  antena:{n:'Antena',d:[[48,-4,4,24,C_GR],[44,-12,12,9,C_R]]},
+  casco:{n:'Casco',d:[[10,6,80,22,C_GR],[44,6,12,22,'#aab6c2'],[10,24,80,4,'#56616c']]},
+  cuernos:{n:'Cuernos',d:[[12,6,9,16,'#efe6d0'],[79,6,9,16,'#efe6d0'],[12,-2,6,9,'#efe6d0'],[82,-2,6,9,'#efe6d0']]},
+  mago:{n:'Mago',d:[[44,-13,12,9,C_V],[36,-5,28,9,C_V],[26,3,48,12,C_V],[12,14,76,7,'#311b92'],[47,5,6,6,C_Y]]},
+  capa:{n:'Capa',back:1,d:[[4,40,92,72,'#b71c1c'],[10,90,80,22,'#8e1f18']]},
+  rayos:{n:'Rayos',d:[[2,20,6,6,C_Y],[5,26,6,6,C_Y],[92,20,6,6,C_Y],[89,26,6,6,C_Y],[2,62,6,6,C_Y],[92,62,6,6,C_Y]]}}}
+};
+const G_UMBRAL=[10,30,60,100];
+const TRACKS=[
+ {id:'matematicas',sub:'Matemáticas',slot:'veh',t:'Vehículo',x:50,y:133,s:36,items:[['patin','🛹','Monopatín'],['bici','🚲','Bici'],['coche','🏎️','Coche de carreras'],['nave','🚀','Cohete']]},
+ {id:'lengua',sub:'Lengua Castellana',slot:'baston',t:'Bastón de poder',x:110,y:68,s:34,items:[['varita','🪄','Varita'],['cristal','🔮','Bola de cristal'],['rayo','⚡','Bastón de rayo'],['estrella','🌟','Bastón estelar']]},
+ {id:'lingua-galega',sub:'Lingua Galega',slot:'mascota',t:'Mascota',x:-8,y:112,s:30,items:[['pulpo','🐙','Pulpo'],['can','🐕','Can'],['gato','🐈','Gato'],['dragon','🐉','Dragón']]},
+ {id:'ingles',sub:'Inglés',slot:'volador',t:'Compañero volador',x:-8,y:10,s:28,items:[['globo','🎈','Globo'],['cometa','🪁','Cometa'],['loro','🦜','Loro'],['ovni','🛸','Ovni']]},
+ {id:'frances',sub:'Français',slot:'merienda',t:'Merienda',x:110,y:112,s:26,items:[['croissant','🥐','Croissant'],['queso','🧀','Queso'],['tarta','🍰','Pastel'],['choco','🍫','Chocolate']]},
+ {id:'bioloxia',sub:'Bioloxía e Xeoloxía',slot:'bicho',t:'Bicho',x:110,y:12,s:26,items:[['brote','🌱','Brote'],['mariposa','🦋','Bolboreta'],['lagarto','🦎','Lagarto'],['dino','🦖','Dinosaurio']]},
+ {id:'xeografia',sub:'Xeografía e Historia',slot:'explora',t:'Explorador',x:-10,y:64,s:30,items:[['mapa','🗺️','Mapa'],['brujula','🧭','Compás'],['castillo','🏰','Castelo'],['mundo','🌍','Mundo']]},
+ {id:'plastica',sub:'Plástica',slot:'fondo',t:'Fondo',bg:true,items:[['cielo','🌤️','Ceo','#bfe3ff'],['selva','🌴','Selva','#b7e8a8'],['noche','🌃','Noche','#2b2f6b'],['arcoiris','🌈','Arcoíris','#ffd6f0']]},
+ {id:'ef',sub:'Educación Física',slot:'deporte',t:'Deporte',x:88,y:128,s:22,items:[['balon','⚽','Balón'],['basket','🏀','Baloncesto'],['patines','🛼','Patines'],['copa','🏆','Copa']]}
+];
+const gSubStars=(g,id)=>(g.sub&&g.sub[id])||0;
+const G_ORDER=['eyes:grandes','hair:flequillo','mouth:lengua','glass:redondas','acc:pajarita','nose:punto','eyes:guino','hair:pinchos','glass:sol','acc:gorra','mouth:abierta','nose:grande','hair:largo','acc:auri','eyes:enfado','glass:tresd','acc:parche','hair:cresta','mouth:dientes','nose:cerdo','acc:pendiente','eyes:sueno','hair:mono','glass:monoculo','acc:bufanda','mouth:colmillos','hair:coleta','acc:antena','eyes:robot','glass:antifaz','nose:payaso','acc:casco','hair:afro','mouth:bigote','acc:cuernos','glass:visor','acc:rayos','eyes:estrella','acc:mago','acc:capa'];
+const G_FREE={eyes:['puntos'],mouth:['sonrisa','recta'],nose:['no'],hair:['no','corto'],glass:['no'],acc:['no']};
+const gCost=key=>{const i=G_ORDER.indexOf(key);return i<0?0:5+i*8;};
+const gHas=(p,id,g)=>G_FREE[p].includes(id)||g.stars>=gCost(p+':'+id);
+function gRects(list,av,hair,rx){
+  const col=c=>c==='H'?hair:c==='S'?gShade(gSkin(av)):c;
+  return list.map(r=>r[4]==='none'
+   ?`<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" rx="${rx}" fill="rgba(255,255,255,.18)" stroke="${r[5]}" stroke-width="2.5"/>`
+   :`<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" rx="${rx}" fill="${col(r[4])}"/>`).join('');
+}
+function gShade(hex){const n=parseInt(hex.slice(1),16),f=.78;return `rgb(${Math.round((n>>16)*f)},${Math.round(((n>>8)&255)*f)},${Math.round((n&255)*f)})`;}
+let G_uid=0;
+function avatarSVG(av,size){
+  const rx=av.shape==='r'?1.5:0,skin=gSkin(av),hair=HAIRC[av.hc],id='gc'+(++G_uid);
+  const part=(p,k)=>PARTS[p].o[k]||{d:[]};
+  const acc=part('acc',av.acc),h=part('hair',av.hair);
+  const head=av.shape==='r'?`<circle cx="50" cy="54" r="36" fill="${skin}"/>`:`<rect x="14" y="18" width="72" height="72" fill="${skin}"/><rect x="14" y="84" width="72" height="6" fill="${gShade(skin)}"/>`;
+  const clip=av.shape==='r'?`<clipPath id="${id}"><circle cx="50" cy="54" r="38"/></clipPath>`:`<clipPath id="${id}"><rect x="12" y="10" width="76" height="80"/></clipPath>`;
+  const hairG=h.top?gRects(h.d,av,hair,rx):`<g clip-path="url(#${id})">${gRects(h.d,av,hair,rx)}</g>`;
+  const eq=TRACKS.filter(t=>av[t.slot]&&t.items.some(i=>i[0]===av[t.slot]));
+  const vb=eq.length?'-26 -16 152 168':'0 -14 100 126',ratio=eq.length?168/152:1.26;
+  const fondo=eq.filter(t=>t.bg).map(t=>`<rect x="-26" y="-16" width="152" height="168" rx="8" fill="${t.items.find(i=>i[0]===av[t.slot])[3]}"/>`).join('');
+  const emo=eq.filter(t=>!t.bg).map(t=>`<text x="${t.x}" y="${t.y}" font-size="${t.s}" text-anchor="middle" dominant-baseline="central">${t.items.find(i=>i[0]===av[t.slot])[1]}</text>`).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="av-svg" viewBox="${vb}" width="${size}" height="${Math.round(size*ratio)}" role="img" aria-label="Muñeco">${fondo}${clip}${acc.back?gRects(acc.d,av,hair,rx):''}${head}${hairG}${gRects(part('eyes',av.eyes).d,av,hair,rx)}${gRects(part('nose',av.nose).d,av,hair,rx)}${gRects(part('mouth',av.mouth).d,av,hair,rx)}${gRects(part('glass',av.glass).d,av,hair,rx)}${acc.back?'':gRects(acc.d,av,hair,rx)}${emo}</svg>`;
+}
+/* Estrellas: nunca bajan */
+function gAward(n,time){
+  const g=gLoad(),before=g.stars;g.stars+=n;
+  if(time){g.edit=Math.min(G_CAP,g.edit+time);g.fichas=Math.min(G_FMAX,g.fichas+1);}
+  const sj=typeof window!=='undefined'&&window.G_SUBJ;
+  if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
+    if(tr)tr.items.forEach((it,i)=>{if(b4<G_UMBRAL[i]&&g.sub[sj]>=G_UMBRAL[i]){g.fresh.push('@'+tr.id+':'+it[0]);g.av[tr.slot]=it[0];}});}
+  G_ORDER.forEach(k=>{const c=gCost(k);if(before<c&&g.stars>=c){const [p,id]=k.split(':');g.fresh.push(k);g.av[p]=id;}});
+  gSave(g);
+}
+const gStars=()=>gLoad().stars;
+const gHoy=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+function gCorrect(id){const g=gLoad();if(typeof id==='number'&&(!window.G_SUBJ||window.G_SUBJ==='tecnologia'))g.st.ok[id]=1;const h=gHoy();if(!g.st.days.includes(h)){g.st.days.push(h);g.st.days=g.st.days.slice(-60);}gSave(g);}
+function gRacha(g){let n=0;const d=new Date();for(;;){const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(g.st.days.includes(k)){n++;d.setDate(d.getDate()-1);}else{if(n===0&&k===gHoy()){d.setDate(d.getDate()-1);continue;}break;}}return n;}
+function gSim(ok){const g=gLoad();if(g.st.first===null)g.st.first=ok;g.st.best=Math.max(g.st.best??0,ok);gSave(g);}
+function gNext(g){const k=G_ORDER.find(x=>g.stars<gCost(x));if(!k)return null;const [p,id]=k.split(':');return{name:PARTS[p].o[id].n,left:gCost(k)-g.stars,part:PARTS[p].t};}
+/* Bloque de premio tras una misión o test */
+function gBanner(){
+  const g=gLoad(),fresh=g.fresh;g.fresh=[];gSave(g);if(typeof ligaSync==='function')ligaSync();
+  const names=fresh.map(k=>{const [p,id]=k.split(':');if(p[0]==='@'){const t=TRACKS.find(x=>x.id===p.slice(1));return t.t+': '+t.items.find(i=>i[0]===id)[2].toLowerCase();}return PARTS[p].t+': '+PARTS[p].o[id].n.toLowerCase();});
+  const nx=gNext(g);
+  return `<div class="av-banner">${avatarSVG(g.av,84)}<div><div class="av-st">⭐ ${g.stars}</div>${names.length?`<div class="av-new">¡Nuevo: ${names.join(', ')}!</div>`:''}<div class="av-next">🎮 ${g.fichas} de 3 fichas para el juego</div>${nx?`<div class="av-next">Te faltan ${nx.left} ⭐ para: ${nx.part.toLowerCase()}, ${nx.name.toLowerCase()}</div>`:'<div class="av-next">¡Lo tienes todo!</div>'}</div></div>`;
+}
+/* Editor con tiempo limitado: se recarga terminando misiones */
+function openAvatarEditor(onClose){
+  const TABS=[['shape','Cara'],['skin','Color cara'],['eyes','Ojos'],['mouth','Boca'],['nose','Nariz'],['hair','Pelo'],['hc','Color pelo'],['glass','Gafas'],['acc','Extras'],['premios','Premios']];
+  let tab='shape',iv=null;
+  const o=document.createElement('div');o.id='av-editor';document.body.appendChild(o);
+  const close=()=>{clearInterval(iv);o.remove();onClose&&onClose();};
+  const fmtT=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  const options=g=>{
+    if(tab==='premios')return[];
+    if(tab==='shape')return[['r','Redonda',true],['c','Cuadrada',true]].map(([id,n])=>({id,n,ok:true,set:{shape:id}}));
+    if(tab==='skin')return SKINS.map((_,i)=>({id:i,n:'',ok:true,set:{skin:i}}));
+    if(tab==='hc')return HAIRC.map((_,i)=>({id:i,n:'',ok:true,set:{hc:i,hair:g.av.hair==='no'?'corto':g.av.hair}}));
+    const P=PARTS[tab];return Object.keys(P.o).map(id=>({id,n:P.o[id].n,ok:gHas(tab,id,g),cost:gCost(tab+':'+id),set:{[tab]:id}}));
+  };
+  const draw=()=>{
+    const g=gLoad();
+    const opts=options(g);
+    const cur=g.av[tab];
+    o.innerHTML=`<div class="av-box">
+      <div class="av-head"><div class="av-big">${avatarSVG(g.av,140)}</div><div class="av-info"><div class="av-st">⭐ ${g.stars}</div><div class="av-time" id="av-t">Tiempo: ${fmtT(g.edit)}</div><button class="av-done" id="av-done">Listo</button></div></div>
+      <div class="av-tabs">${TABS.map(([k,n])=>`<button class="${k===tab?'on':''}" data-t="${k}">${n}</button>`).join('')}</div>
+      ${tab==='skin'?`<div class="av-pal" aria-label="Paleta de 256 colores">${PALETA.map(c=>`<button class="${g.av.skin===c?'on':''}" data-c="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}</div>`:''}${tab==='premios'?TRACKS.map(t=>`<h4 class="av-tr">${t.t}: ${t.sub} <small>⭐ ${gSubStars(g,t.id)}</small></h4><div class="av-prem">${t.items.map((it,i)=>{const ok=gSubStars(g,t.id)>=G_UMBRAL[i],on=g.av[t.slot]===it[0];return `<button class="av-pr ${on?'on':''} ${ok?'':'lock'}" data-sl="${t.slot}" data-it="${it[0]}" ${ok?'':'disabled'}><span>${ok?it[1]:'🔒'}</span><small>${it[2]}${ok?'':`<br>${G_UMBRAL[i]} ⭐`}</small></button>`;}).join('')}</div>`).join(''):''}<div class="av-grid">${opts.map(x=>{const prev=Object.assign({},g.av,x.set);return `<button class="av-opt ${String(cur)===String(x.id)?'on':''} ${x.ok?'':'lock'}" data-v="${x.id}" ${x.ok?'':'disabled'}>${x.ok?avatarSVG(prev,62):`<span class="av-lock">🔒</span>`}<span class="av-n">${x.n}${x.ok?'':`<br>${x.cost} ⭐`}</span></button>`;}).join('')}</div>
+    </div>`;
+    o.querySelector('#av-done').onclick=close;
+    o.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{const gg=gLoad();gg.av.skin=b.dataset.c;gSave(gg);draw();});
+    o.querySelectorAll('.av-pr:not(.lock)').forEach(b=>b.onclick=()=>{const gg=gLoad();gg.av[b.dataset.sl]=gg.av[b.dataset.sl]===b.dataset.it?null:b.dataset.it;gSave(gg);draw();});
+    o.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{tab=b.dataset.t;draw();});
+    o.querySelectorAll('.av-opt:not(.lock)').forEach(b=>b.onclick=()=>{
+      const x=opts.find(y=>String(y.id)===b.dataset.v);const gg=gLoad();Object.assign(gg.av,x.set);gSave(gg);draw();});
+  };
+  const out=()=>{o.innerHTML=`<div class="av-box av-out">${avatarSVG(gLoad().av,140)}<h2>Se acabó el tiempo del muñeco</h2><p>Terminas una misión y ganas un minuto más.</p><button class="av-done" id="av-done">Seguir</button></div>`;o.querySelector('#av-done').onclick=close;};
+  if(gLoad().edit<=0){out();return;}
+  draw();
+  iv=setInterval(()=>{const g=gLoad();g.edit=Math.max(0,g.edit-1);gSave(g);const t=document.getElementById('av-t');if(t)t.textContent='Tiempo: '+fmtT(g.edit);if(g.edit<=0){clearInterval(iv);out();}},1000);
+}
+
+/* ===== Fase 2: clasificación y duelos. Se activa al rellenar url y key ===== */
+const LIGA={url:'https://jokivxfiowvrxwllefor.supabase.co',key:'sb_publishable_5HAc9CN8Wab4n-vyEaeDaA_5hdRvYnX'};
+const ligaOn=()=>!!(LIGA.url&&LIGA.key);
+const TROFEOS={corona:{e:'👑',n:'Corona',d:[[30,3,40,12,C_Y],[30,-6,8,10,C_Y],[46,-9,8,13,C_Y],[62,-6,8,10,C_Y],[47,6,6,6,C_R]]},capa:{e:'🦸',n:'Capa de oro',back:1,d:[[3,38,94,74,'#e0a800'],[10,92,80,20,'#b58900']]},rayo:{e:'⚡',n:'Rayo',d:[[84,-8,10,14,C_Y],[78,4,12,10,C_Y],[84,12,6,14,C_Y]]}};
+function avatarConTrofeos(av,size,list){
+  const svg=avatarSVG(av,size);if(!list||!list.length)return svg;
+  const rx=av.shape==='r'?1.5:0;
+  const front=list.filter(t=>!TROFEOS[t].back).map(t=>gRects(TROFEOS[t].d,av,'#000',rx)).join('');
+  const back=list.filter(t=>TROFEOS[t].back).map(t=>gRects(TROFEOS[t].d,av,'#000',rx)).join('');
+  return svg.replace(/(<clipPath.*?<\/clipPath>)/,'$1'+back).replace('</svg>',front+'</svg>');
+}
+async function ligaRpc(fn,args){
+  const r=await fetch(LIGA.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:LIGA.key,'Content-Type':'application/json'},body:JSON.stringify(args)});
+  const j=await r.json().catch(()=>null);
+  if(!r.ok)throw new Error((j&&j.message)||'No se ha podido conectar');
+  return j;
+}
+function gEstudio(g){return Math.round(Object.keys(g.st.ok).length/63*100);}
+function ligaSync(){
+  const g=gLoad();if(!ligaOn()||!g.liga)return Promise.resolve();
+  return ligaRpc('actualizar',{p_token:g.liga.token,p_avatar:g.av,p_estrellas:g.stars,p_estudio:gEstudio(g),p_mejor:g.st.best,p_primero:g.st.first,p_racha:gRacha(g)}).catch(()=>{});
+}
+function ligaSubirJuego(){const g=gLoad();if(!ligaOn()||!g.liga||!g.juegoBest)return Promise.resolve();return ligaRpc('puntuar_juego',{p_token:g.liga.token,p_pts:g.juegoBest}).catch(()=>{});}
+function rng32(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function dueloPreguntas(seed){
+  const r=rng32(seed),ids=Object.keys(VAR).filter(k=>/^\d+$/.test(k)&&VAR[k].every(v=>v.length>=5));
+  const out=[];
+  while(out.length<5){const id=ids[Math.floor(r()*ids.length)];if(out.some(x=>x.id===id))continue;
+    const v=VAR[id][Math.floor(r()*VAR[id].length)],opts=[v[1],v[2],v[3],v[4]];
+    for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[opts[i],opts[j]]=[opts[j],opts[i]];}
+    out.push({id,q:v[0],a:v[1],opts});}
+  return out;
+}
+function openLeague(onClose){
+  const o=document.createElement('div');o.id='lg';document.body.appendChild(o);
+  let tab='estudio',data=null;
+  const close=()=>{o.remove();onClose&&onClose();};
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const showErr=(id,m)=>{const e=o.querySelector('#'+id);if(e)e.textContent=m;};
+  function join(){
+    o.innerHTML=`<div class="lg-box"><button class="lg-x" id="lg-x">Volver</button><h2>Únete a tu grupo</h2>
+      <label class="lg-l">Código del grupo<input id="lg-c" autocomplete="off" maxlength="40"></label>
+      <label class="lg-l">Tu apodo<input id="lg-a" autocomplete="off" maxlength="14"></label>
+      <p class="lg-s">Usa un apodo inventado, nunca tu nombre real.</p>
+      <label class="lg-ck"><input type="checkbox" id="lg-p"> Mi padre, madre o tutor me ha dado permiso.</label>
+      <div class="lg-err" id="lg-e" role="alert"></div><button class="lg-go" id="lg-j">Entrar</button></div>`;
+    o.querySelector('#lg-x').onclick=close;
+    o.querySelector('#lg-j').onclick=async()=>{
+      if(!o.querySelector('#lg-p').checked)return showErr('lg-e','Antes necesitas el permiso de tu padre, madre o tutor.');
+      try{const g=gLoad();const r=await ligaRpc('unirse',{p_codigo:o.querySelector('#lg-c').value.trim(),p_apodo:o.querySelector('#lg-a').value,p_avatar:g.av});
+        const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};gSave(g2);await ligaSync();load();}catch(e){showErr('lg-e',e.message);}
+    };
+  }
+  async function load(){
+    o.innerHTML='<div class="lg-box"><p>Cargando…</p></div>';
+    const g=gLoad();
+    try{await ligaSync();await ligaSubirJuego();data=await ligaRpc('clasificacion',{p_token:g.liga.token});main();}
+    catch(e){
+      if(/no encontrado/.test(e.message)){delete g.liga;gSave(g);return join();}
+      o.innerHTML=`<div class="lg-box"><h2>Ahora no hay conexión</h2><p>${esc(e.message)}</p><button class="lg-go" id="lg-x">Volver</button></div>`;o.querySelector('#lg-x').onclick=close;}
+  }
+  const COLS={estudio:['Estudio',x=>x.estudio,x=>x.estudio+' %'],estrellas:['Estrellas',x=>x.estrellas,x=>'⭐ '+x.estrellas],juego:['Juego',x=>x.juego,x=>'🎮 '+(x.juego||0)],simulacro:['Simulacro',x=>x.simulacro,x=>x.simulacro==null?'–':x.simulacro+' de 50'],mejora:['Mejora',x=>x.mejora,x=>x.mejora==null?'–':'+'+x.mejora],racha:['Días seguidos',x=>x.racha,x=>x.racha+(x.racha===1?' día':' días')]};
+  function main(){
+    const me=data.jugadores.find(x=>x.id===data.yo);
+    const trof=id=>data.trofeos.filter(t=>t.dueno===id).map(t=>t.trofeo);
+    const c=COLS[tab];
+    const rows=[...data.jugadores].sort((a,b)=>(c[1](b)??-1)-(c[1](a)??-1));
+    let pos=0,prev=null;
+    const list=rows.map((x,i)=>{const v=c[1](x)??-1;if(v!==prev){pos=i+1;prev=v;}
+      return `<div class="lg-row ${x.id===data.yo?'me':''}"><span class="lg-pos">${pos}</span>${avatarConTrofeos(Object.assign(gDef().av,x.avatar),38,trof(x.id))}<span class="lg-name">${esc(x.apodo)} ${trof(x.id).map(t=>TROFEOS[t].e).join('')}</span><b>${c[2](x)}</b></div>`;}).join('');
+    const nameOf=id=>{const j=data.jugadores.find(x=>x.id===id);return j?j.apodo:null;};
+    const cards=['corona','capa','rayo'].map(k=>{const t=data.trofeos.find(x=>x.trofeo===k);const own=t&&t.dueno===data.yo;const who=t&&nameOf(t.dueno);
+      return `<div class="lg-t"><div class="lg-te">${TROFEOS[k].e}</div><b>${TROFEOS[k].n}</b><span class="lg-s">${own?'¡Es tuyo!':who?esc(who):'Sin dueño'}</span>${own?'':`<button class="lg-mini" data-r="${k}">${who?'Retar':'Conseguir'}</button>`}</div>`;}).join('');
+    const retos=data.retos.map(r=>`<div class="lg-reto"><span>${TROFEOS[r.trofeo].e} <b>${esc(r.retador)}</b> te reta por tu ${TROFEOS[r.trofeo].n.toLowerCase()}. Tienes 48 horas.</span><button class="lg-mini" data-d="${r.id}">Defender</button></div>`).join('');
+    o.innerHTML=`<div class="lg-box"><div class="lg-top"><button class="lg-x" id="lg-x">Volver</button><div class="lg-me">${avatarConTrofeos(gLoad().av,44,trof(data.yo))}<div><b>${esc(me.apodo)}</b><div class="lg-s">Has estudiado el ${me.estudio} %</div></div></div></div>
+      ${retos}<h3>Trofeos</h3><p class="lg-s">Se ganan en duelos de 5 preguntas. Lo que has ganado con estrellas nunca se pierde.</p><div class="lg-ts">${cards}</div><div class="lg-err" id="lg-e" role="alert"></div>
+      <h3>Clasificación</h3><div class="lg-tabs">${Object.keys(COLS).map(k=>`<button class="${k===tab?'on':''}" data-k="${k}">${COLS[k][0]}</button>`).join('')}</div>${tab==='estudio'?'<p class="lg-s">Si todos estudiáis todo, todos llegáis al 100 %.</p>':''}${list}
+      <button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
+    o.querySelector('#lg-x').onclick=close;
+    o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{tab=b.dataset.k;main();});
+    o.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{try{const t=gLoad().liga.token;const r=await ligaRpc('retar',{p_token:t,p_trofeo:b.dataset.r});play(r.semilla,async p=>{const x=await ligaRpc('enviar_reto',{p_token:t,p_duelo:r.id,p_pts:p});return x.resultado==='ganado'?`¡${p} de 5! El trofeo es tuyo.`:x.resultado==='no_llega'?`${p} de 5. Hacen falta 3 aciertos para conseguirlo.`:`${p} de 5. Ahora le toca responder a tu rival.`;});}catch(e){showErr('lg-e',e.message);}});
+    o.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const r=data.retos.find(x=>x.id===b.dataset.d),t=gLoad().liga.token;play(r.semilla,async p=>{const x=await ligaRpc('enviar_defensa',{p_token:t,p_duelo:r.id,p_pts:p});return x.gane?`Has defendido el trofeo: ${x.def} a ${x.ret}.`:`Esta vez lo pierdes: ${x.def} a ${x.ret}. Puedes retarle para recuperarlo.`;});});
+    const del=o.querySelector('#lg-del');let armed=false;
+    del.onclick=async()=>{if(!armed){armed=true;del.textContent='Pulsa otra vez para borrarlo';return;}
+      try{await ligaRpc('borrar_perfil',{p_token:gLoad().liga.token});}catch(e){}const g=gLoad();delete g.liga;gSave(g);close();};
+  }
+  function play(seed,finish){
+    const qs=dueloPreguntas(seed);let i=0,pts=0;
+    const next=()=>{
+      if(i>=qs.length)return end();
+      const q=qs[i];
+      o.innerHTML=`<div class="lg-box"><p class="lg-s">Duelo: pregunta ${i+1} de 5</p><div class="lg-q">${gB(q.q)}</div>${q.opts.map((t,k)=>`<button class="lg-opt" data-o="${k}">${esc(t)}</button>`).join('')}</div>`;
+      o.querySelectorAll('.lg-opt').forEach(b=>b.onclick=()=>{const t=q.opts[+b.dataset.o],ok=t===q.a;if(ok)pts++;
+        o.querySelectorAll('.lg-opt').forEach((x,k)=>{x.disabled=true;if(q.opts[k]===q.a)x.classList.add('ok');else if(x===b)x.classList.add('no');});
+        i++;setTimeout(next,900);});
+    };
+    const end=async()=>{let m;try{m=await finish(pts);}catch(e){m=e.message;}
+      gAward(2);o.innerHTML=`<div class="lg-box lg-end"><h2>${esc(m)}</h2><button class="lg-go" id="lg-b">Ver la clasificación</button></div>`;o.querySelector('#lg-b').onclick=load;};
+    next();
+  }
+  if(gLoad().liga)load();else join();
+}
+
+
+</script>
+<script>
+/* ===== Gran Premio 1º B: versión 1, rivales controlados por la página ===== */
+(function(){
+const W=800,H=500,SEG=200,ROAD=2000,CAMH=1000,DEPTH=.84,PZ=CAMH*DEPTH,DRAW=130;
+const VEH=[
+ {id:'base',e:'🚗',n:'Coche',c:'#e0313a',f:'kart',v:1,g:1,r:1,t:0},
+ {id:'patin',e:'🛹',n:'Monopatín',c:'#2fb36d',f:'fino',v:.96,g:1.25,r:1.15,su:'matematicas',s:10},
+ {id:'bici',e:'🚲',n:'Bici',c:'#1e9bd7',f:'fino',v:.99,g:1.15,r:1.05,su:'matematicas',s:30},
+ {id:'coche',e:'🏎️',n:'Carreras',c:'#f6c319',f:'ala',v:1.07,g:.95,r:1,su:'matematicas',s:60},
+ {id:'nave',e:'🚀',n:'Cohete',c:'#8f5be8',f:'cohete',v:1.12,g:.85,r:.95,su:'matematicas',s:100},
+ {id:'uni',e:'🦄',n:'Unicornio',c:'#f06fc0',f:'ala',v:1.04,g:1.2,r:.85,t:1},
+ {id:'moto',e:'🏍️',n:'Moto',c:'#ff7a1a',f:'fino',v:1.08,g:1.1,r:.9,t:3},
+ {id:'drag',e:'🐉',n:'Dragón',c:'#14a085',f:'cohete',v:1.1,g:1.05,r:.8,t:6}
+];
+const ATK={
+ bola:{e:'🔴',n:'Bola',d:'Va recta',cd:4},
+ libro:{e:'📖',n:'Libro',d:'Busca al de delante',cd:8,su:'lengua',sn:'Lengua'},
+ divide:{e:'➗',n:'Divide',d:'Tres disparos en abanico',cd:8,su:'matematicas',sn:'Matemáticas'},
+ polbo:{e:'🐙',n:'Polbo',d:'Trampa ancha detrás',cd:8,su:'lingua-galega',sn:'Galego'},
+ ovni:{e:'🛸',n:'Ovni',d:'Va a por el primero',cd:14,su:'ingles',sn:'Inglés'},
+ crois:{e:'🥐',n:'Croissant',d:'Trampa rápida detrás',cd:5,su:'frances',sn:'Francés'},
+ abella:{e:'🐝',n:'Enjambre',d:'Persigue de lejos',cd:11,su:'bioloxia',sn:'Bioloxía'},
+ volcan:{e:'🌋',n:'Volcán',d:'Tres trampas detrás',cd:12,su:'xeografia',sn:'Xeografía'},
+ pintura:{e:'🎨',n:'Pintura',d:'Frena al de delante',cd:9,su:'plastica',sn:'Plástica'},
+ balon:{e:'⚽',n:'Balón',d:'Rebota de lado a lado',cd:6,su:'ef',sn:'Ed. Física'},
+ rayo:{e:'⚡',n:'Rayo',d:'Para a los de delante',cd:18,su:'tecnologia',sn:'Tecnología'}
+};
+/* Un circuito por asignatura. sil: silueta del fondo. gp: dibujo del suelo. fl: lo que flota en el cielo. bb: carteles. */
+const CIRC=[
+ {id:'entreno',n:'Pista de entrenamiento',e:'🏁',v:4800,sky:['#2b7fd8','#bfe6ff'],fog:'#d5eeff',g:['#58b84f','#4fa947'],r:['#62666f','#585c65'],rum:['#e23b3b','#f4f4f4'],da:'#fff',sil:'hills',sc:'#3e9a55',fl:['☁️','☁️','🌤️'],o:['🌳','🌲','🌳','🪧','🌷'],bb:['¡Adelante!','¡A estudiar!','1º B'],bc:['#3a3ca6','#fff'],
+  t:[[60,0,0],[50,3,0],[40,0,0],[60,-3,0],[50,0,0],[70,4,0],[30,0,0],[50,-2,0],[60,2,0],[40,0,0]]},
+ {id:'mates',su:'matematicas',sn:'Mates',n:'Avenida de los Números',e:'🧮',v:5100,sky:['#0f3b36','#2f7a6b'],fog:'#7fbfae',g:['#eef4ff','#e2ebfb'],gp:'grid',gc:'#9db8e8',r:['#1d4a43','#17403a'],rum:['#fff','#f6c319'],da:'#fff',sil:'bloques',sc:'#1a544c',fl:['π','√x','∑','x²','÷','%','∞','¾'],flc:'rgba(255,255,255,.75)',o:['📐','🧮','📏','➗','✖️','➕','🔢'],bb:['π ≈ 3,14','a² + b² = c²','½ + ½ = 1','¾ = 0,75','7 × 8 = 56'],bc:['#123d37','#fff'],
+  t:[[50,0,0],[40,4,10],[30,-4,-10],[60,0,30],[50,5,-30],[40,-2,0],[60,-5,20],[40,3,-20],[50,0,0]]},
+ {id:'lengua',su:'lengua',sn:'Lengua',n:'Ruta de las Letras',e:'📚',v:5100,sky:['#b77c3d','#f5dfb0'],fog:'#f7e7c6',g:['#f7eed8','#efe3c6'],gp:'renglon',gc:'#c9a877',r:['#8a5a33','#7c4f2c'],rum:['#7a1f1f','#f7eed8'],da:'#f7eed8',sil:'libros',sc:'#9c6636',fl:['A','Ñ','¿?','¡!','Z','é'],flc:'rgba(90,50,20,.6)',o:['📚','✒️','📖','📜','🖋️','📕'],bb:['sustantivo','adjetivo','verbo','La isla del tesoro'],bc:['#7a1f1f','#fff4dc'],
+  t:[[40,0,0],[60,3,20],[40,-3,-20],[50,4,0],[40,0,20],[60,-4,-20],[50,3,0],[50,-3,0],[40,0,0]]},
+ {id:'galego',su:'lingua-galega',sn:'Galego',n:'Costa Galega',e:'🐙',v:5200,sky:['#5d7f97','#c7dbe2'],fog:'#d4e4e6',g:['#3f8f5a','#378050'],r:['#74777d','#696c72'],rum:['#1f6fb2','#f4f4f4'],da:'#fff',sil:'mar',sc:'#2f7a8c',fl:['☁️','🌧️','☁️','🐦'],o:['🌲','🐚','⛪','🐙','🐄','🌊','⚓'],bb:['Ola!','Bos días!','Moitas grazas','Ata logo'],bc:['#0f5f8a','#fff'],
+  t:[[50,0,20],[60,-4,0],[40,3,-20],[50,5,10],[40,0,-10],[60,-3,30],[50,4,-30],[40,-4,0],[40,0,0]]},
+ {id:'ingles',su:'ingles',sn:'Inglés',n:'London Bridge',e:'🎡',v:5300,sky:['#39445f','#a8b4cc'],fog:'#c0c8d8',g:['#5c6470','#535b67'],r:['#3e424b','#363a43'],rum:['#c8102e','#fff'],da:'#ffd21e',sil:'londres',sc:'#2a3145',fl:['☁️','🌧️','☁️','☂️'],o:['🚌','💂','☎️','🎡','🕰️','🏰','🇬🇧'],bb:['Hello!','half past six','I can swim','She is reading','Monday'],bc:['#012169','#fff'],
+  t:[[50,0,0],[40,5,0],[40,-5,0],[60,0,20],[40,4,-20],[40,-4,0],[60,3,0],[40,-3,0],[40,0,0]]},
+ {id:'frances',su:'frances',sn:'Francés',n:'Tour de Paris',e:'🗼',v:5300,sky:['#6e4aa6','#f6b3a0'],fog:'#f7c9b6',g:['#9fc27a','#93b56f'],r:['#8c8087','#807479'],rum:['#0055a4','#ffffff'],da:'#ef4135',sil:'paris',sc:'#54407d',fl:['☁️','🎈','☁️','🕊️'],o:['🗼','🥐','🥖','🧀','🎨','🚲','🌷'],bb:['Bonjour !','Merci !','un, deux, trois','Où ? Quand ?','rouge, bleu, vert'],bc:['#0055a4','#fff'],
+  t:[[60,0,0],[50,4,10],[40,-2,-10],[50,-4,0],[40,5,20],[50,0,-20],[60,-3,0],[40,3,0],[40,0,0]]},
+ {id:'bio',su:'bioloxia',sn:'Bioloxía',n:'Selva Viva',e:'🦖',v:5400,sky:['#1f6d3f','#b5e39a'],fog:'#bfe6a8',g:['#2f7d36','#29702f'],r:['#6e5338','#634a31'],rum:['#7a4f1f','#b5e39a'],da:'#d9c58a',sil:'selva',sc:'#1b5e30',fl:['🦋','🐦','🌞','🦜'],o:['🌴','🌿','🍄','🦖','🐸','🌳','🦎','🐒'],bb:['célula','vertebrados','ecosistema','fotosíntesis'],bc:['#1b5e30','#eaffd9'],
+  t:[[40,0,20],[50,5,0],[40,-5,-20],[40,4,20],[40,-4,-20],[60,0,20],[50,5,-20],[50,-5,0],[40,0,0]]},
+ {id:'xeo',su:'xeografia',sn:'Xeografía',n:'Grecia y Exipto',e:'🏛️',v:5400,sky:['#d9772b','#fbe3a2'],fog:'#fbe6b5',g:['#e7c477','#deb966'],r:['#a58a5f','#987e55'],rum:['#1b5ea8','#fff'],da:'#fff',sil:'piramides',sc:'#b5834b',fl:['☀️','🦅','☁️'],o:['🏛️','🐫','🏺','🗿','🌴','⚱️','🏺'],bb:['Atenas','Esparta','Alexandre Magno','Zeus','Exipto'],bc:['#1b5ea8','#fff'],
+  t:[[50,0,30],[50,4,0],[40,0,-30],[60,-5,20],[40,3,-20],[50,5,0],[50,-4,20],[40,0,-20],[40,0,0]]},
+ {id:'plastica',su:'plastica',sn:'Plástica',n:'El Gran Lienzo',e:'🎨',v:5400,sky:['#7a5cf0','#ffc1dd'],fog:'#ffd9e8',g:['#fff6e6','#ffefd6'],gp:'pintura',r:['#3b3f58','#34384f'],rum:['#ff4d6d','#ffd43b'],da:'#51cf66',sil:'colinas2',sc:'#b18cf0',fl:['🎨','🖌️','☁️','🌈'],o:['🖼️','🖌️','🎨','🖍️','✏️','🌈'],bb:['forma','color','línea','textura','punto'],bc:['#e64980','#fff'],
+  t:[[40,0,0],[50,5,20],[40,-5,-20],[60,0,0],[40,5,0],[40,-5,20],[50,4,-20],[50,-3,0],[40,0,0]]},
+ {id:'tec',su:'tecnologia',sn:'Tecnología',n:'Placa Base',e:'🤖',v:5600,sky:['#050b24','#142a6e'],fog:'#16306f',g:['#0b3b2a','#093222'],gp:'pcb',gc:'#27e39a',r:['#161a2e','#111426'],rum:['#22d3ee','#a855f7'],da:'#22d3ee',sil:'servidores',sc:'#0a1c4a',fl:['01','10','💾','⚡'],flc:'rgba(80,230,190,.75)',o:['💻','🖥️','🤖','💾','🔌','⌨️','🖱️'],bb:['CPU','RAM','Windows','sistema operativo','Ctrl + C'],bc:['#0a1c4a','#22d3ee'],
+  t:[[40,0,0],[40,5,30],[30,-5,-30],[50,5,0],[30,-5,30],[60,0,-30],[40,5,0],[40,-5,0],[40,0,0]]},
+ {id:'ef',su:'ef',sn:'Ed. Física',n:'Gran Estadio',e:'🏟️',v:5600,sky:['#2174d4','#a6dcff'],fog:'#c8ecff',g:['#3ca24a','#359342'],gp:'campo',gc:'rgba(255,255,255,.55)',r:['#c9472f','#b93f29'],rum:['#fff','#2a4dd0'],da:'#fff',sil:'gradas',sc:'#55627c',fl:['☁️','🎈','⚽','☀️'],o:['⚽','🏀','🏆','🏃','🚩','🎽','🏐'],bb:['Datchball','¡Corre!','fair play','¡Gol!'],bc:['#2a4dd0','#fff'],
+  t:[[50,0,0],[60,5,0],[40,0,0],[60,5,0],[50,0,0],[40,-4,0],[40,4,0],[50,0,0]]}
+];
+const BOTS=[['Turbo','coche','#2d7ff9'],['Chispa','base','#22b573'],['Nube','bici','#f28c28'],['Zeta','patin','#b14ee6'],['Rayo','nave','#f04f6b']];
+const $=(s,r=document)=>r.querySelector(s);const app=$('#app');
+function datos(g){g.carrera=Object.assign({sel:{c:'entreno',v:'base',a:['bola']},best:{},gana:0,tickets:0,pin:null,nuevo:0},g.carrera||{});return g.carrera;}
+const vehOk=(g,x)=>x.su?gSubStars(g,x.su)>=x.s:(datos(g).tickets>=x.t);
+const atkOk=(g,k)=>!ATK[k].su||gSubStars(g,ATK[k].su)>=10;
+const circOk=(g,c)=>!c.su||gSubStars(g,c.su)>=5;
+const hash=s=>{let h=7;for(const c of 'cr-1b'+s)h=(h*31+c.charCodeAt(0))>>>0;return h;};
+const lien=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
+const FE='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",serif',FT='Lexend,Verdana,sans-serif';
+const rr=(x,a,b,w,h,r)=>{x.beginPath();x.roundRect?x.roundRect(a,b,w,h,r):x.rect(a,b,w,h);};
+const CACHE={};
+function em(e){if(CACHE[e])return CACHE[e];const c=lien(180,180),x=c.getContext('2d');x.font='130px '+FE;x.textAlign='center';x.textBaseline='middle';x.fillText(e,90,98);return CACHE[e]=c;}
+function glow(e){const k='g'+e;if(CACHE[k])return CACHE[k];const c=lien(180,180),x=c.getContext('2d');x.shadowColor='#fff';x.shadowBlur=26;x.font='110px '+FE;x.textAlign='center';x.textBaseline='middle';x.fillText(e,90,96);x.fillText(e,90,96);return CACHE[k]=c;}
+function imgAv(av){const i=new Image();try{i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(avatarSVG(av,160));}catch(e){}return i;}
+/* Vehículo visto desde atrás */
+function kart(v,col){const k='k'+v.id+(col||'');if(CACHE[k])return CACHE[k];const c=lien(320,220),x=c.getContext('2d');col=col||v.c;
+ const fino=v.f==='fino',cx=160,bw=fino?92:190,wy=132;
+ const rueda=(a,w)=>{const g=x.createLinearGradient(a,0,a+w,0);g.addColorStop(0,'#111');g.addColorStop(.5,'#3a3a3a');g.addColorStop(1,'#0b0b0b');x.fillStyle=g;rr(x,a,wy,w,74,14);x.fill();x.fillStyle='rgba(255,255,255,.08)';for(let i=0;i<6;i++)x.fillRect(a+3,wy+6+i*11,w-6,3);};
+ if(fino)rueda(cx-26,52);else{rueda(cx-132,62);rueda(cx+70,62);x.fillStyle='#2a2a2a';x.fillRect(cx-90,wy+30,180,14);}
+ const g=x.createLinearGradient(0,70,0,190);g.addColorStop(0,col);g.addColorStop(1,'#00000055');
+ x.fillStyle=col;x.beginPath();x.moveTo(cx-bw/2,186);x.lineTo(cx-bw/2+18,92);x.quadraticCurveTo(cx,74,cx+bw/2-18,92);x.lineTo(cx+bw/2,186);x.closePath();x.fill();
+ x.fillStyle=g;x.fill();
+ x.fillStyle='rgba(255,255,255,.28)';x.beginPath();x.moveTo(cx-bw/2+24,100);x.quadraticCurveTo(cx,84,cx+bw/2-24,100);x.lineTo(cx+bw/2-30,114);x.quadraticCurveTo(cx,100,cx-bw/2+30,114);x.closePath();x.fill();
+ x.fillStyle='#1b1e2b';rr(x,cx-bw*.3,150,bw*.6,30,8);x.fill();
+ x.fillStyle='#ff3b3b';if(!fino){rr(x,cx-bw/2+10,158,30,12,4);x.fill();rr(x,cx+bw/2-40,158,30,12,4);x.fill();}
+ x.fillStyle='#8d93a6';[-1,1].forEach(s=>{x.beginPath();x.arc(cx+s*(fino?14:26),190,10,0,7);x.fill();x.fillStyle='#22242e';x.beginPath();x.arc(cx+s*(fino?14:26),190,6,0,7);x.fill();x.fillStyle='#8d93a6';});
+ if(v.f==='ala'){x.fillStyle='#22242e';x.fillRect(cx-70,62,10,34);x.fillRect(cx+60,62,10,34);x.fillStyle=col;rr(x,cx-132,44,264,24,8);x.fill();x.fillStyle='rgba(255,255,255,.35)';rr(x,cx-126,47,252,6,3);x.fill();}
+ if(v.f==='cohete'){[-1,1].forEach(s=>{const a=cx+s*92;x.fillStyle='#d6d9e6';rr(x,a-20,92,40,76,14);x.fill();x.fillStyle=col;rr(x,a-20,92,40,20,8);x.fill();x.fillStyle='#ffb020';x.beginPath();x.moveTo(a-14,168);x.lineTo(a,206);x.lineTo(a+14,168);x.fill();});}
+ x.fillStyle='rgba(255,255,255,.92)';x.beginPath();x.arc(cx,124,29,0,7);x.fill();x.font='40px '+FE;x.textAlign='center';x.textBaseline='middle';x.fillText(v.e,cx,126);
+ return CACHE[k]=c;}
+/* Carteles y arcos con lo que se estudia */
+function cartel(t,bc){const k='b'+t+bc[0];if(CACHE[k])return CACHE[k];const c=lien(340,220),x=c.getContext('2d');x.fillStyle='#50545f';x.fillRect(60,120,16,100);x.fillRect(264,120,16,100);x.fillStyle='#fff';rr(x,4,4,332,136,14);x.fill();x.fillStyle=bc[0];rr(x,12,12,316,120,10);x.fill();x.fillStyle=bc[1];let f=52;x.textAlign='center';x.textBaseline='middle';do{x.font='700 '+f+'px '+FT;f-=3;}while(x.measureText(t).width>296&&f>16);x.fillText(t,170,72);return CACHE[k]=c;}
+function arco(t,C){const k='a'+t+C.id;if(CACHE[k])return CACHE[k];const c=lien(800,300),x=c.getContext('2d');x.fillStyle=C.bc[0];x.fillRect(20,20,34,280);x.fillRect(746,20,34,280);rr(x,0,10,800,84,16);x.fill();x.strokeStyle=C.bc[1];x.lineWidth=5;rr(x,7,17,786,70,12);x.stroke();x.fillStyle=C.bc[1];x.font='700 54px '+FT;x.textAlign='center';x.textBaseline='middle';x.fillText(t,400,54);return CACHE[k]=c;}
+function meta(){if(CACHE.meta)return CACHE.meta;const c=lien(800,300),x=c.getContext('2d');x.fillStyle='#222';x.fillRect(20,20,34,280);x.fillRect(746,20,34,280);for(let i=0;i<40;i++)for(let j=0;j<5;j++){x.fillStyle=(i+j)%2?'#111':'#fff';x.fillRect(i*20,12+j*17,20,17);}return CACHE.meta=c;}
+/* Fondo lejano por circuito */
+function fondo(C){if(C.bg)return C.bg;const c=lien(1600,500),x=c.getContext('2d');const g=x.createLinearGradient(0,0,0,300);g.addColorStop(0,C.sky[0]);g.addColorStop(1,C.sky[1]);x.fillStyle=g;x.fillRect(0,0,1600,500);
+ let seed=C.id.length*97+7;const R=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+ x.textAlign='center';x.textBaseline='middle';
+ for(let i=0;i<14;i++){const a=R()*1600,b=20+R()*130,e=C.fl[i%C.fl.length],s=26+R()*34;if(C.flc&&!/\p{Extended_Pictographic}/u.test(e)){x.fillStyle=C.flc;x.font='700 '+s+'px '+FT;x.fillText(e,a,b);}else{x.globalAlpha=.92;x.font=s+'px '+FE;x.fillText(e,a,b);x.globalAlpha=1;}}
+ x.fillStyle=C.sc;const base=262;const rect=(a,w,h)=>x.fillRect(a,base-h,w,h+60);
+ const curva=(amp,f,o)=>{x.beginPath();x.moveTo(0,330);for(let a=0;a<=1600;a+=8)x.lineTo(a,base-amp*(1+Math.sin(a/1600*Math.PI*2*f+o))/2-amp*.3*(1+Math.sin(a/1600*Math.PI*2*f*3+o))/2);x.lineTo(1600,330);x.fill();};
+ const s=C.sil;
+ if(s==='hills'||s==='colinas2'||s==='selva'){x.globalAlpha=.55;curva(90,3,1);x.globalAlpha=1;curva(50,5,2);if(s==='selva')for(let a=0;a<1600;a+=46){x.beginPath();x.arc(a,base-30-R()*30,26+R()*18,0,7);x.fill();}}
+ else if(s==='mar'){x.globalAlpha=.5;curva(70,2,4);x.globalAlpha=1;x.fillRect(0,base-16,1600,70);x.fillStyle='rgba(255,255,255,.5)';for(let i=0;i<30;i++)x.fillRect(R()*1600,base-12+R()*20,30+R()*40,2);}
+ else if(s==='bloques'){x.font='700 70px '+FT;for(let a=10;a<1600;a+=70){const h=30+R()*110;rect(a,60,h);x.fillStyle='rgba(255,255,255,.14)';for(let k=0;k<h-14;k+=18)x.fillRect(a+6,base-h+8+k,48,2);x.fillStyle=C.sc;}}
+ else if(s==='libros'){const cols=['#7a1f1f','#285a8a','#3f7d43','#b5832d','#5b3f8a'];for(let a=0;a<1600;){const w=26+R()*30,h=60+R()*110;x.fillStyle=cols[Math.floor(R()*5)];rect(a,w,h);x.fillStyle='rgba(255,255,255,.35)';x.fillRect(a+w*.2,base-h+10,w*.6,4);a+=w+2;}}
+ else if(s==='londres'||s==='servidores'){for(let a=0;a<1600;a+=54){const h=40+R()*100;rect(a,50,h);x.fillStyle=s==='servidores'?'#22d3ee':'#ffe08a';for(let i=0;i<h-10;i+=16)for(let j=6;j<44;j+=14)if(R()>.5)x.fillRect(a+j,base-h+6+i,6,7);x.fillStyle=C.sc;}
+  if(s==='londres'){rect(700,46,210);x.beginPath();x.moveTo(696,base-210);x.lineTo(723,base-262);x.lineTo(750,base-210);x.fill();x.fillStyle='#fff6d0';x.beginPath();x.arc(723,base-180,17,0,7);x.fill();}}
+ else if(s==='paris'){for(let a=0;a<1600;a+=70)rect(a,62,30+R()*44);for(const a of [400,1250]){x.beginPath();x.moveTo(a-60,base);x.quadraticCurveTo(a-14,base-90,a-5,base-230);x.lineTo(a+5,base-230);x.quadraticCurveTo(a+14,base-90,a+60,base);x.fill();}}
+ else if(s==='piramides'){x.globalAlpha=.75;[[250,150],[520,110],[1100,170],[1360,100]].forEach(p=>{x.beginPath();x.moveTo(p[0]-p[1]*1.2,base+6);x.lineTo(p[0],base-p[1]);x.lineTo(p[0]+p[1]*1.2,base+6);x.fill();});x.globalAlpha=1;for(let a=720;a<980;a+=36)rect(a,16,90);x.fillRect(708,base-108,284,18);}
+ else if(s==='gradas'){x.fillRect(0,base-110,1600,170);const cols=['#ff6b6b','#ffd43b','#74c0fc','#fff','#b197fc'];for(let i=0;i<900;i++){x.fillStyle=cols[i%5];x.fillRect(R()*1600,base-104+R()*100,4,4);}}
+ x.fillStyle=C.g[0];x.fillRect(0,base+40,1600,300);
+ return C.bg=c;}
+/* Circuito */
+function pista(C){const s=[];let y=0;const add=(n,cu,hi)=>{for(let i=0;i<n;i++){const e=Math.sin(Math.PI*i/n);y+=hi*e*.8;s.push({i:s.length,curve:cu*Math.min(1,e*1.6),y,spr:[]});}};
+ C.t.forEach(p=>add(Math.round(p[0]*1.6),p[1],p[2]/1.6));
+ const fin=y;s.forEach(g=>{g.y-=fin*g.i/s.length;});
+ let b=0;
+ s.forEach(g=>{const i=g.i;g.es=[];
+  if(i%5===2)g.es.push({e:C.o[(i/5|0)%C.o.length],x:(i%10===2?-1:1)*(1.48+(i*13%17)/12),z:.52+(i*7%5)/9});
+  if(i%5===4&&i%15)g.es.push({e:C.o[(i*3)%C.o.length],x:(i%10===4?1:-1)*(1.6+(i*11%13)/8),z:.46+(i*5%4)/9});
+  if(i%24===12)g.es.push({c:cartel(C.bb[(b++)%C.bb.length],C.bc),x:(i%48===12?-1:1)*1.62,z:.8,asp:340/220});
+  if(i>30&&i%90===45)g.ar=arco(C.bb[(b++)%C.bb.length],C);
+  if(i%60===30)g.pad=(i%120===30?-.4:.4);
+ });
+ s[0].ar=meta();return s;}
+function mapa(segs){let a=0,x=0,y=0;const p=[];const m=segs.reduce((q,s)=>q+s.curve,0)/segs.length;segs.forEach(s=>{a+=(s.curve-m)*.012+Math.PI*2/segs.length;x+=Math.cos(a);y+=Math.sin(a);p.push([x,y]);});const ex=x/segs.length,ey=y/segs.length;p.forEach((q,i)=>{q[0]-=ex*i;q[1]-=ey*i;});const xs=p.map(q=>q[0]),ys=p.map(q=>q[1]),mx=Math.min(...xs),Mx=Math.max(...xs),my=Math.min(...ys),My=Math.max(...ys),k=78/Math.max(Mx-mx,My-my);return p.map(q=>[(q[0]-(mx+Mx)/2)*k,(q[1]-(my+My)/2)*k]);}
+/* Carrera */
+function correr(C,V,sel){
+ document.body.classList.add('cr-dark');
+ const g0=gLoad();const segs=pista(C),N=segs.length,L=N*SEG,LAPS=3,VM=C.v,mp=mapa(segs),bg=fondo(C);
+ app.innerHTML=`<div class="cr-j"><canvas id="cr-c" aria-label="Carrera"></canvas>
+ <div class="cr-ctl"><button class="cr-d" id="cr-iz" aria-label="Izquierda">◀</button><div class="cr-at">${sel.map((k,i)=>`<button class="cr-a" data-i="${i}" aria-label="${ATK[k].n}"><span>${ATK[k].e}</span><small>${i+1}</small><i></i></button>`).join('')}</div><button class="cr-d" id="cr-de" aria-label="Derecha">▶</button></div>
+ <p class="cr-h">Flechas para girar y teclas 1, 2 y 3 para atacar. El vehículo acelera solo. Pisa las flechas ⚡ del suelo.</p></div>`;
+ const c=$('#cr-c'),x=c.getContext('2d');let K=1;
+ const fit=()=>{const a=c.getBoundingClientRect().width||W,r=Math.min(2,devicePixelRatio||1);c.width=Math.round(a*r);c.height=Math.round(a*r*H/W);K=c.width/W;};fit();addEventListener('resize',fit);
+ const me={me:1,nom:g0.liga&&g0.liga.apodo||'Tú',v0:V,ks:kart(V),av:imgAv(g0.av),d:-200,x:0,v:0,max:VM*V.v,gi:V.g,res:V.r,spin:0,safe:0,slow:0,rot:0,boost:0};
+ const cars=[me];
+ BOTS.forEach((b,i)=>{const v=VEH.find(q=>q.id===b[1]);cars.push({nom:b[0],v0:v,ks:kart(v,b[2]),av:null,d:i<2?1000-i*600:-800-(i-2)*600,x:[-.5,.5,-.2,.6,-.6][i],tx:0,v:0,max:VM*(.88+(.05*i)%.13),res:1,spin:0,safe:0,slow:0,rot:0,boost:0,t:3+Math.random()*6});});
+ if(g0.liga&&typeof ligaRpc==='function')ligaRpc('clasificacion',{p_token:g0.liga.token}).then(j=>{const yo=j.yo&&j.yo.id;(j.jugadores||[]).filter(p=>p.id!==yo).slice(0,5).forEach((p,i)=>{const k=cars[i+1];k.nom=p.apodo;k.av=imgAv(p.avatar);const v=VEH.find(q=>q.id===(p.avatar||{}).veh);if(v)k.ks=kart(v,BOTS[i][2]);});}).catch(()=>{});
+ const st={t:-3,fin:false,shots:[],traps:[],part:[],blot:0,flash:0,steer:0,lean:0,cd:sel.map(()=>0),ultDano:0,timer:0,sh:0,off:0};
+ const seg=d=>segs[Math.floor(((d%L)+L)%L/SEG)%N];
+ const burst=(X,Y,e,n)=>{for(let i=0;i<n;i++){const a=Math.random()*6.3,v=120+Math.random()*260;st.part.push({X,Y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-120,t:.7,e,s:18+Math.random()*22});}};
+ const spin=(k,t)=>{if(k.safe>0||k.spin>0)return;k.spin=t*k.res;k.safe=k.spin+2;k.v*=.1;if(k.me){st.sh=.4;burst(W/2,H-90,'💥',6);burst(W/2,H-90,'⭐',6);}};
+ const orden=()=>[...cars].sort((a,b)=>b.d-a.d);
+ const delante=(k,max)=>cars.filter(o=>o!==k&&o.d>k.d&&o.d-k.d<max).sort((a,b)=>a.d-b.d)[0];
+ const shot=(k,e,o)=>st.shots.push(Object.assign({d:k.d+250,x:k.x,v:k.v+3500,e,own:k,life:3,vx:0,tg:null,hit:'spin'},o||{}));
+ const trampa=(k,e,xx)=>st.traps.push({d:k.d-300,x:xx,e,own:k,t:0});
+ function fire(k,a){
+  if(a==='bola')shot(k,ATK.bola.e);
+  else if(a==='libro')shot(k,ATK.libro.e,{tg:delante(k,9000)});
+  else if(a==='divide'){shot(k,ATK.divide.e,{vx:-.5});shot(k,ATK.divide.e);shot(k,ATK.divide.e,{vx:.5});}
+  else if(a==='polbo'){trampa(k,ATK.polbo.e,k.x-.2);trampa(k,ATK.polbo.e,k.x+.2);}
+  else if(a==='crois')trampa(k,ATK.crois.e,k.x);
+  else if(a==='volcan'){[-.5,0,.5].forEach(o=>trampa(k,ATK.volcan.e,Math.max(-.85,Math.min(.85,k.x+o))));}
+  else if(a==='abella')shot(k,ATK.abella.e,{tg:delante(k,16000),life:5,v:k.v+3000});
+  else if(a==='ovni'){const lid=orden().find(o=>o!==k);if(lid)shot(k,ATK.ovni.e,{tg:lid,life:9,v:k.v+6000,alto:1});}
+  else if(a==='pintura')shot(k,ATK.pintura.e,{tg:delante(k,8000),hit:'pintura'});
+  else if(a==='balon')shot(k,ATK.balon.e,{vx:(Math.random()<.5?-1:1)*1.2,life:4});
+  else if(a==='rayo'){st.flash=.35;cars.forEach(o=>{if(o!==k&&o.d>k.d)spin(o,1);});}
+ }
+ const danar=(k,tipo)=>{if(tipo==='pintura'){k.slow=3;if(k.me)st.blot=2.5;}else spin(k,1.5);};
+ function step(dt){
+  st.sh=Math.max(0,st.sh-dt);
+  st.part=st.part.filter(p=>{p.t-=dt;p.X+=p.vx*dt;p.Y+=p.vy*dt;p.vy+=500*dt;return p.t>0;});
+  if(st.t<0){st.t+=dt;return;}
+  if(!st.fin)st.timer+=dt;
+  const ord=orden(),posMe=ord.indexOf(me)+1;
+  st.lean+=(st.steer-st.lean)*Math.min(1,dt*8);
+  cars.forEach(k=>{
+   k.safe=Math.max(0,k.safe-dt);k.slow=Math.max(0,k.slow-dt);k.boost=Math.max(0,k.boost-dt);
+   if(k.spin>0){k.spin-=dt;k.rot+=dt*11;k.v*=.9;if(k.spin<=0)k.rot=0;}
+   else if(k.me){
+    if(st.fin){k.v+=(VM*.5-k.v)*dt;}
+    else{const ayuda=posMe>=5?1.05:1,tope=k.max*ayuda*(k.slow>0?.68:1)*(Math.abs(k.x)>1?.5:1)*(k.boost>0?1.28:1);k.v+=(tope-k.v)*dt*(k.v>tope?2.5:k.boost>0?2:.7);
+    const pct=k.v/VM;k.x+=st.steer*dt*2.1*k.gi*Math.min(1,pct+.2);k.x-=dt*1.7*pct*seg(k.d+PZ).curve*.2;k.x=Math.max(-2,Math.min(2,k.x));
+    const s=seg(k.d);if(s.pad!==undefined&&Math.abs(k.x-s.pad)<.3&&k.boost<=0&&!st.fin){k.boost=1.3;burst(W/2,H-60,'⚡',4);}
+    if(Math.abs(k.x)>1&&Math.random()<dt*25)st.part.push({X:W/2+(Math.random()-.5)*110,Y:H-34,vx:(Math.random()-.5)*140,vy:-80-Math.random()*90,t:.45,e:'💨',s:20});}
+   }else{
+    const dif=(me.d-k.d)/8000,rub=Math.max(.93,Math.min(1.1,1+dif*.15)),tope=k.max*rub*(k.slow>0?.68:1);k.v+=(tope-k.v)*dt*.8;
+    if(Math.random()<dt*.35)k.tx=(Math.random()*1.5-.75);
+    const tr=st.traps.find(p=>p.d>k.d&&p.d-k.d<1500&&Math.abs(p.x-k.x)<.3);if(tr&&k.spin<=0)k.tx=tr.x>0?tr.x-.6:tr.x+.6;
+    k.x+=Math.max(-1,Math.min(1,k.tx-k.x))*dt*1.3;
+    k.t-=dt;if(k.t<=0&&st.timer>4&&!st.fin){k.t=7+Math.random()*9;
+     const de=delante(k,3500);const quiere=me.d>k.d&&me.d-k.d<3500;
+     if(de&&(!quiere||st.timer-st.ultDano>9)){if(quiere)st.ultDano=st.timer;shot(k,Math.random()<.5?'🔴':'📖',{tg:Math.random()<.4?de:null});}
+     else if(me.d<k.d&&k.d-me.d<3000&&st.timer-st.ultDano>9){st.ultDano=st.timer;trampa(k,'🥐',k.x);}}
+   }
+   k.d+=k.v*dt;
+  });
+  for(let i=0;i<cars.length;i++)for(let j=i+1;j<cars.length;j++){const a=cars[i],b=cars[j],dd=a.d-b.d;if(Math.abs(dd)<220&&Math.abs(a.x-b.x)<.24){const tr=dd<0?a:b;tr.v*=.96;const s=a.x<b.x?-1:1;a.x+=s*dt*.5;b.x-=s*dt*.5;}}
+  st.shots=st.shots.filter(s=>{s.d+=s.v*dt;s.life-=dt;
+   if(s.tg)s.x+=Math.max(-1,Math.min(1,(s.tg.x-s.x)*4))*dt*2;else{s.x+=s.vx*dt;if(Math.abs(s.x)>.92){s.vx=-s.vx;s.x=Math.sign(s.x)*.92;}}
+   const hit=cars.find(k=>k!==s.own&&Math.abs(k.d-s.d)<(s.v*dt+260)&&Math.abs(k.x-s.x)<(s.tg?.5:.3)&&k.safe<=0&&k.spin<=0);
+   if(hit){danar(hit,s.hit);return false;}return s.life>0;});
+  st.traps=st.traps.filter(p=>{p.t+=dt;const hit=cars.find(k=>(k!==p.own||p.t>2)&&Math.abs(k.d-p.d)<240&&Math.abs(k.x-p.x)<.26&&k.safe<=0&&k.spin<=0);if(hit){danar(hit,'spin');return false;}return p.t<40;});
+  st.cd=st.cd.map(v=>Math.max(0,v-dt*(posMe>=5?1.35:1)));st.blot=Math.max(0,st.blot-dt);st.flash=Math.max(0,st.flash-dt);
+  st.off+=(seg(me.d).curve*me.v/VM)*dt*26;
+  if(!st.fin&&me.d>=LAPS*L){st.fin=true;st.pos=posMe;burst(W/2,200,'🎉',16);setTimeout(finJuego,1800);}
+ }
+ const atacar=i=>{if(st.t<0||st.fin||me.spin>0||st.cd[i]>0)return;st.cd[i]=ATK[sel[i]].cd;fire(me,sel[i]);};
+ /* Pintar */
+ const proj=(wx,wy,wz,cx,cy,cz)=>{const tz=wz-cz,s=DEPTH/tz;return{X:W/2+s*(wx-cx)*W/2,Y:H/2+22-s*(wy-cy)*H/2,w:s*ROAD*W/2,tz};};
+ const poly=(a,b,col,k1,k2)=>{x.fillStyle=col;x.beginPath();x.moveTo(a.X+a.w*k1,a.Y+.8);x.lineTo(b.X+b.w*k1,b.Y);x.lineTo(b.X+b.w*k2,b.Y);x.lineTo(a.X+a.w*k2,a.Y+.8);x.fill();};
+ const sprite=(i,X,Y,w,h,clip)=>{const top=Y-h;if(top>=clip||w<2)return;const vis=Math.min(1,(clip-top)/h),sw=i.width||i.naturalWidth||1,sh=i.height||i.naturalHeight||1;x.drawImage(i,0,0,sw,sh*vis,X-w/2,top,w,h*vis);};
+ const tex=(t,X,Y,f,col,al)=>{x.font=f;x.textAlign=al||'center';x.lineWidth=5;x.lineJoin='round';x.strokeStyle='rgba(8,12,34,.85)';x.strokeText(t,X,Y);x.fillStyle=col;x.fillText(t,X,Y);};
+ const dibCar=(k,X,Y,w,clip)=>{const h=w*220/320;
+  x.fillStyle='rgba(0,0,0,.32)';x.beginPath();x.ellipse(X,Y-1,w*.46,w*.07,0,0,7);x.fill();
+  const hd=w*.42;const sc=k.rot?Math.cos(k.rot):1;x.save();x.translate(X,Y);x.scale(Math.abs(sc)<.15?.15:sc,1);
+  x.drawImage(k.ks,-w/2,-h,w,h);
+  if(k.av&&k.av.complete&&k.av.naturalWidth){x.drawImage(k.av,-hd/2,-h*.72-hd*.55,hd,hd);}x.restore();
+  if(k.spin>0){const i=em('💫');x.drawImage(i,X-w*.25,Y-h*1.3-w*.15,w*.5,w*.5);}
+ };
+ function draw(){
+  x.setTransform(K,0,0,K,0,0);
+  if(st.sh>0)x.translate((Math.random()-.5)*14*st.sh,(Math.random()-.5)*14*st.sh);
+  const pos=((me.d-PZ)%L+L)%L,b=Math.floor(pos/SEG),pc=(pos%SEG)/SEG,sg=segs[b],pSeg=seg(me.d),pp=((me.d%L+L)%L%SEG)/SEG,nx=segs[(pSeg.i+1)%N],py=pSeg.y+(nx.y-pSeg.y)*pp;
+  /* cielo con movimiento en curvas */
+  const of=((st.off%1600)+1600)%1600,esc=H/500;x.drawImage(bg,of,0,1600-of,500,0,0,(1600-of)*.75,H);if(of>500)x.drawImage(bg,0,0,of,500,(1600-of)*.75,0,of*.75,H);
+  const camY=py+CAMH,camX=me.x*ROAD;let cx=0,dx=-sg.curve*pc,maxy=H;
+  segs.forEach(s=>{s.spr.length=0;s.clip=H;s.P=null;s.Q=null;});
+  const lista=[],G=C.gp;
+  for(let n=0;n<DRAW;n++){const i=(b+n)%N,s=segs[i],off=(b+n>=N)?L:0,nz=segs[(i+1)%N],z1=s.i*SEG+off,z2=z1+SEG;
+   const p1=proj(-cx,s.y,z1,camX,camY,pos),p2=proj(-cx-dx,nz.y,z2,camX,camY,pos);cx+=dx;dx+=s.curve;
+   s.clip=maxy;s.P=p1;s.Q=p2;s.n=n;lista.push(s);
+   if(p1.tz<=DEPTH*2||p2.Y>=maxy)continue;
+   const a=Math.floor(s.i/3)%2,h=Math.max(1,p1.Y-p2.Y+1);x.fillStyle=C.g[a];x.fillRect(0,p2.Y,W,h);
+   if(G==='grid'||G==='pcb'||G==='campo'){x.globalAlpha=G==='pcb'?.6:.75;for(const k of [-7,-5.5,-4,-3,-2,-1.45,1.45,2,3,4,5.5,7])poly(p1,p2,C.gc,k,k+.025);x.globalAlpha=1;if(s.i%(G==='campo'?12:3)===0){x.fillStyle=C.gc;x.fillRect(0,p2.Y,W,Math.max(1,h*.14));}if(G==='pcb'&&s.i%9===0){x.fillStyle='#ffd43b';for(const k of [-3.5,-2.5,2.5,3.5])x.fillRect(p1.X+p1.w*k-p1.w*.05,p2.Y,p1.w*.1,h);}}
+   if(G==='renglon'&&s.i%2===0){x.fillStyle=C.gc;x.fillRect(0,p2.Y,W,Math.max(1,h*.12));}
+   if(G==='pintura'){const cs=['#ff6b6b','#ffd43b','#51cf66','#4dabf7','#cc5de8'];const c2=cs[(s.i/5|0)%5];for(const k of [-4.4,-2.7,1.9,3.6])if((s.i+k*3|0)%10<6)poly(p1,p2,c2,k,k+.8);}
+   poly(p1,p2,C.rum[a],-1.12,1.12);poly(p1,p2,C.r[a],-1,1);
+   poly(p1,p2,'rgba(0,0,0,.14)',-1,-.82);poly(p1,p2,'rgba(0,0,0,.14)',.82,1);
+   if(a){poly(p1,p2,C.da,-.35,-.325);poly(p1,p2,C.da,.325,.35);}
+   if(s.pad!==undefined){poly(p1,p2,'rgba(255,212,59,.95)',s.pad-.24,s.pad+.24);}
+   if(s.i<3)for(let q=0;q<8;q++)poly(p1,p2,(q+s.i)%2?'#fff':'#111',-1+q*.25,-1+(q+1)*.25);
+   const f=Math.pow(n/DRAW,2.2)*.92;if(f>.02){x.globalAlpha=f;x.fillStyle=C.fog;x.fillRect(0,p2.Y,W,h);x.globalAlpha=1;}
+   maxy=p2.Y;}
+  const zFrac=d=>((((d%L)+L)%L)%SEG)/SEG;
+  const pun=(s,k,d)=>{const f=zFrac(d),a=s.P,q=s.Q;return{X:a.X+(q.X-a.X)*f+(a.w+(q.w-a.w)*f)*k,Y:a.Y+(q.Y-a.Y)*f,w:a.w+(q.w-a.w)*f};};
+  const pon=(d,fn)=>{const s=seg(d);if(s.P)s.spr.push(fn);};
+  cars.forEach(k=>{if(!k.me)pon(k.d,s=>{const p=pun(s,k.x,k.d);if(p.w<6||s.P.tz<=PZ*.55)return;const w=Math.min(300,p.w*.21);if(p.Y-w>s.clip)return;
+    x.save();x.beginPath();x.rect(-50,-50,W+100,s.clip+50);x.clip();dibCar(k,p.X,p.Y,w,s.clip);x.restore();
+    if(w>34&&p.Y<s.clip+40)tex(k.nom,p.X,p.Y-w*1.02,'600 15px '+FT,'#fff');});});
+  st.shots.forEach(q=>pon(q.d,s=>{const p=pun(s,q.x,q.d),w=Math.max(10,p.w*.13);sprite(glow(q.e),p.X,p.Y-(q.alto?p.w*.3:p.w*.03),w,w,s.clip);}));
+  st.traps.forEach(q=>pon(q.d,s=>{const p=pun(s,q.x,q.d),w=Math.max(10,p.w*.17);sprite(glow(q.e),p.X,p.Y,w,w,s.clip);}));
+  for(let n=lista.length-1;n>=0;n--){const s=lista[n],P=s.P;if(!P||P.tz<=DEPTH*2)continue;
+   s.es.forEach(o=>{const X=P.X+P.w*o.x;if(X<-400||X>W+400)return;if(o.c){const h=P.w*o.z*.66;sprite(o.c,X,P.Y,h*o.asp,h,s.clip);}else{const h=Math.min(190,P.w*o.z);sprite(em(o.e),X,P.Y+h*.08,h,h,s.clip);}});
+   if(s.ar&&P.tz>PZ*1.25){const w=P.w*2.5;sprite(s.ar,P.X,P.Y,w,w*.375,s.clip);}
+   s.spr.forEach(f=>f(s));}
+  /* jugador */
+  const vel=me.v/VM,bote=me.v>100?Math.sin(performance.now()/55)*1.3*vel:0,PW=180,PX=W/2+st.lean*16,PY=H-14+bote;
+  x.save();x.translate(PX,PY);x.rotate(me.spin>0?0:st.lean*.08);x.translate(-PX,-PY);dibCar(me,PX,PY,PW,H);x.restore();
+  if(me.boost>0||(V.f==='cohete'&&vel>.5)){[-1,1].forEach(q=>{const f=x.createLinearGradient(0,PY-28,0,PY+14);f.addColorStop(0,'#fff6a8');f.addColorStop(1,'rgba(255,90,20,0)');x.fillStyle=f;x.beginPath();x.moveTo(PX+q*16-8,PY-28);x.lineTo(PX+q*16,PY+14+Math.random()*14);x.lineTo(PX+q*16+8,PY-28);x.fill();});}
+  if(me.safe>0&&me.spin<=0&&Math.floor(me.safe*8)%2===0){x.fillStyle='rgba(255,255,255,.22)';x.beginPath();x.arc(PX,PY-60,92,0,7);x.fill();}
+  /* líneas de velocidad */
+  if(me.boost>0){x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=2;for(let i=0;i<14;i++){const a=Math.random()*6.3,r=150+Math.random()*60;x.beginPath();x.moveTo(W/2+Math.cos(a)*r*1.5,H/2+Math.sin(a)*r);x.lineTo(W/2+Math.cos(a)*(r+90)*1.5,H/2+Math.sin(a)*(r+90));x.stroke();}}
+  st.part.forEach(p=>{x.globalAlpha=Math.min(1,p.t*2);x.drawImage(em(p.e),p.X-p.s/2,p.Y-p.s/2,p.s,p.s);x.globalAlpha=1;});
+  if(st.blot>0){x.globalAlpha=Math.min(1,st.blot);[[170,180,86,'#e64980'],[380,130,110,'#4dabf7'],[610,230,96,'#ffd43b'],[300,310,62,'#51cf66']].forEach(q=>{x.fillStyle=q[3];x.beginPath();x.arc(q[0],q[1],q[2],0,7);x.fill();});x.globalAlpha=1;}
+  if(st.flash>0){x.fillStyle=`rgba(255,255,200,${st.flash*1.8})`;x.fillRect(0,0,W,H);}
+  /* marcador */
+  x.setTransform(K,0,0,K,0,0);
+  const ord=orden(),po=ord.indexOf(me)+1,lap=Math.min(LAPS,Math.floor(Math.max(me.d,0)/L)+1);
+  const panel=(a,q,w,h)=>{x.fillStyle='rgba(8,12,34,.62)';rr(x,a,q,w,h,14);x.fill();};
+  panel(12,12,132,76);tex(po+'º',22,62,'800 50px '+FT,po===1?'#ffd43b':'#fff','left');x.fillStyle='#fff';x.font='600 13px '+FT;x.textAlign='left';x.fillText('de 6',86,46);x.fillText('Vuelta',86,66);x.fillStyle='#ffd43b';x.font='700 15px '+FT;x.fillText(lap+'/'+LAPS,86,82);
+  panel(W-152,12,140,118);x.font='700 16px '+FT;x.fillStyle='#fff';x.textAlign='right';x.fillText(st.timer.toFixed(1)+' s',W-24,34);
+  ord.slice(0,5).forEach((k,i)=>{x.font=(k.me?'700':'400')+' 13px '+FT;x.fillStyle=k.me?'#ffd43b':'#e6e9f5';x.textAlign='left';x.fillText((i+1)+'  '+k.nom.slice(0,11),W-142,54+i*16);});
+  /* minimapa */
+  x.save();x.translate(62,H-68);x.fillStyle='rgba(8,12,34,.55)';x.beginPath();x.arc(0,0,52,0,7);x.fill();x.strokeStyle='rgba(255,255,255,.85)';x.lineWidth=3;x.beginPath();mp.forEach((q,i)=>{const X=q[0]*.92,Y=q[1]*.92;i?x.lineTo(X,Y):x.moveTo(X,Y);});x.closePath();x.stroke();
+  cars.forEach(k=>{const q=mp[seg(k.d).i];x.fillStyle=k.me?'#ffd43b':'#ff6b6b';x.beginPath();x.arc(q[0]*.92,q[1]*.92,k.me?5:3,0,7);x.fill();});x.restore();
+  if(me.spin>0)tex('¡Te han dado!',W/2,140,'800 32px '+FT,'#fff');
+  if(Math.abs(me.x)>1&&!st.fin)tex('Vuelve a la carretera',W/2,140,'700 25px '+FT,'#ffd43b');
+  if(st.t<0){const n=Math.ceil(-st.t);panel(W/2-110,70,220,86);[3,2,1].forEach((q,i)=>{x.fillStyle=n<=q?'#ff3b3b':'#47202a';x.beginPath();x.arc(W/2-62+i*62,113,24,0,7);x.fill();});}
+  else if(st.timer<1&&!st.fin)tex('¡YA!',W/2,190,'900 92px '+FT,'#51cf66');
+  if(st.fin)tex('¡META!',W/2,190,'900 72px '+FT,'#ffd43b');
+  document.querySelectorAll('.cr-a').forEach((q,i)=>{const m=ATK[sel[i]].cd,v=st.cd[i];q.querySelector('i').style.height=(v/m*100)+'%';q.disabled=v>0;});
+ }
+ let raf,ult=performance.now(),vivo=true;
+ const bucle=n=>{if(!vivo)return;const dt=Math.min(.05,(n-ult)/1000);ult=n;if(!document.hidden)step(dt);draw();raf=requestAnimationFrame(bucle);};
+ const teclas={};const syncS=()=>{st.steer=(teclas.d||teclas.R?1:0)-(teclas.i||teclas.L?1:0);};
+ const hold=(el,k)=>{const on=e=>{e.preventDefault();teclas[k]=1;syncS();},off=e=>{e.preventDefault();teclas[k]=0;syncS();};el.addEventListener('pointerdown',on);['pointerup','pointercancel','pointerleave'].forEach(t=>el.addEventListener(t,off));el.addEventListener('contextmenu',e=>e.preventDefault());};
+ hold($('#cr-iz'),'i');hold($('#cr-de'),'d');
+ document.querySelectorAll('.cr-a').forEach(q=>q.addEventListener('pointerdown',e=>{e.preventDefault();atacar(+q.dataset.i);}));
+ const kd=e=>{if(e.key==='ArrowLeft'){teclas.L=1;syncS();e.preventDefault();}else if(e.key==='ArrowRight'){teclas.R=1;syncS();e.preventDefault();}else if(['1','2','3'].includes(e.key)){const i=+e.key-1;if(i<sel.length)atacar(i);}};
+ const ku=e=>{if(e.key==='ArrowLeft'){teclas.L=0;syncS();}else if(e.key==='ArrowRight'){teclas.R=0;syncS();}};
+ addEventListener('keydown',kd);addEventListener('keyup',ku);
+ const salir=()=>{vivo=false;cancelAnimationFrame(raf);removeEventListener('keydown',kd);removeEventListener('keyup',ku);removeEventListener('resize',fit);};
+ function finJuego(){if(!vivo)return;salir();const g=gLoad(),D=datos(g),t=+st.timer.toFixed(1),rec=!D.best[C.id]||t<D.best[C.id];if(rec)D.best[C.id]=t;if(st.pos===1)D.gana++;gSave(g);
+  const podio=orden().slice(0,3);
+  app.innerHTML=`<div class="cr-box cr-fin"><div class="cr-pos">${['🥇','🥈','🥉'][st.pos-1]||'🏁'}</div><h2>Has llegado ${st.pos}º</h2><p class="cr-c2">${C.n}</p><div class="cr-pod">${[1,0,2].map(i=>`<div style="height:${[70,100,50][[1,0,2].indexOf(i)]}px"><b>${podio[i].nom}</b><span>${i+1}</span></div>`).join('')}</div><p>Tiempo: <b>${t} s</b>${rec?' · ¡tu mejor tiempo!':` · tu mejor tiempo: ${D.best[C.id]} s`}</p><button class="cr-go" id="cr-m">Volver a elegir</button><a class="cr-link" href="index.html">Ir a estudiar y ganar más premios</a></div>`;$('#cr-m').onclick=menu;}
+ raf=requestAnimationFrame(bucle);
+ window.__cr={st,cars,me,step,L,LAPS,fire,draw,salir,spin};
+}
+/* Menú */
+function menu(){
+ document.body.classList.add('cr-dark');
+ const g=gLoad(),D=datos(g);const sel=D.sel;
+ if(!CIRC.find(c=>c.id===sel.c)||!circOk(g,CIRC.find(c=>c.id===sel.c)))sel.c='entreno';
+ if(!vehOk(g,VEH.find(v=>v.id===sel.v)||VEH[0]))sel.v='base';
+ sel.a=sel.a.filter(k=>ATK[k]&&atkOk(g,k));if(!sel.a.length)sel.a=['bola'];
+ const nuevo=D.nuevo;D.nuevo=0;gSave(g);
+ const espera=()=>{const m=Math.max(1,Math.ceil((g.fichaT+G_FPASO-Date.now())/60000));return m>=60?`${Math.floor(m/60)} h ${m%60} min`:`${m} min`;};
+ const actual=VEH.find(v=>v.id===sel.v),cAct=CIRC.find(c=>c.id===sel.c);
+ app.innerHTML=`<div class="cr-box"><div class="cr-hero" style="background:linear-gradient(135deg,${cAct.sky[0]},${cAct.sky[1]})"><div><h1>Gran Premio 1º B</h1><p>${cAct.e} ${cAct.n}</p></div><img alt="" src="${kart(actual).toDataURL()}"></div>
+ ${nuevo?`<div class="cr-gift">🎁 ¡Tus padres te han dado ${nuevo>1?nuevo+' premios':'un premio'}! Mira tus vehículos especiales.</div>`:''}
+ <div class="cr-me">${avatarSVG(g.av,56)}<div><b>🎮 ${g.fichas} de 3 fichas</b><br><small>${g.fichas<3?`Otra ficha en ${espera()}, o terminando una misión.`:'Cada carrera usa 1 ficha.'}</small></div></div>
+ ${g.fichas>0?'<button class="cr-go" id="cr-start">¡A correr! (1 ficha)</button>':`<div class="cr-gift">Te has quedado sin fichas. Termina una misión o vuelve en ${espera()}.</div><a class="cr-go" href="index.html">Ir a estudiar</a>`}
+ <h2>Circuito <small>con 5 ⭐ de cada asignatura se abre el suyo</small></h2><div class="cr-g cr-gc">${CIRC.map(c=>{const ok=circOk(g,c);return`<button class="cr-o cr-ci ${sel.c===c.id?'on':''} ${ok?'':'lock'}" data-c="${c.id}" ${ok?'':'disabled'} style="background:linear-gradient(160deg,${c.sky[0]},${c.sky[1]} 70%,${c.g[0]} 70%)"><span>${ok?c.e:'🔒'}</span><b>${c.n}</b><small>${ok?(D.best[c.id]?'Récord: '+D.best[c.id]+' s':'Sin récord'):'⭐ 5 en '+c.sn+' (tienes '+gSubStars(g,c.su)+')'}</small></button>`;}).join('')}</div>
+ <h2>Vehículo</h2><div class="cr-g">${VEH.map(v=>{const ok=vehOk(g,v);return`<button class="cr-o ${sel.v===v.id?'on':''} ${ok?'':'lock'}" data-v="${v.id}" ${ok?'':'disabled'}>${ok?`<img alt="" src="${kart(v).toDataURL()}">`:'<span>🔒</span>'}<b>${v.n}</b><small>${ok?barras(v):(v.su?'⭐ '+v.s+' en Mates':'Premio de tus padres')}</small></button>`;}).join('')}</div>
+ <h2>Ataques <small>elige hasta 3</small></h2><div class="cr-g">${Object.keys(ATK).map(k=>{const a=ATK[k],ok=atkOk(g,k),on=sel.a.includes(k);return`<button class="cr-o ${on?'on':''} ${ok?'':'lock'}" data-a="${k}" ${ok?'':'disabled'}><span>${ok?a.e:'🔒'}</span><b>${a.n}</b><small>${ok?a.d:'⭐ 10 en '+a.sn+' (tienes '+gSubStars(g,a.su)+')'}</small></button>`;}).join('')}</div>
+ <p class="cr-pad"><button class="cr-link" id="cr-pad">👪 Para padres</button></p></div>`;
+ document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{const h=gLoad();datos(h).sel.c=b.dataset.c;gSave(h);menu();});
+ document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const h=gLoad();datos(h).sel.v=b.dataset.v;gSave(h);menu();});
+ document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const h=gLoad(),s=datos(h).sel,k=b.dataset.a;if(s.a.includes(k)){if(s.a.length>1)s.a=s.a.filter(q=>q!==k);}else{if(s.a.length>=3)s.a.shift();s.a.push(k);}gSave(h);menu();});
+ $('#cr-pad').onclick=padres;
+ const go=$('#cr-start');if(go)go.onclick=()=>{const h=gLoad();if(h.fichas<=0)return menu();h.fichas--;gSave(h);const d=datos(h);correr(CIRC.find(c=>c.id===d.sel.c),VEH.find(v=>v.id===d.sel.v),d.sel.a);};
+}
+const barras=v=>`Vel ${Math.round(v.v*100)} · Giro ${Math.round(v.g*100)}`;
+/* Padres: la nota no se escribe ni se guarda */
+function padres(){
+ const g=gLoad(),D=datos(g);
+ const caja=(cuerpo)=>{app.innerHTML=`<div class="cr-box"><h1>👪 Para padres</h1>${cuerpo}<button class="cr-link" id="cr-v">Volver</button></div>`;$('#cr-v').onclick=menu;};
+ if(!D.pin){caja(`<p>Crea un PIN para que solo vosotros podáis dar premios. Se guarda en este dispositivo.</p><label class="cr-l">PIN nuevo (4 cifras o más)<input id="cr-p" type="password" inputmode="numeric" autocomplete="off"></label><p class="cr-e" id="cr-e"></p><button class="cr-go" id="cr-ok">Guardar PIN</button>`);
+  $('#cr-ok').onclick=()=>{const v=$('#cr-p').value.trim();if(!/^\d{4,}$/.test(v)){$('#cr-e').textContent='Usa 4 cifras o más.';return;}const h=gLoad();datos(h).pin=hash(v);gSave(h);panel();};return;}
+ caja(`<label class="cr-l">Escribe vuestro PIN<input id="cr-p" type="password" inputmode="numeric" autocomplete="off"></label><p class="cr-e" id="cr-e"></p><button class="cr-go" id="cr-ok">Entrar</button>`);
+ $('#cr-ok').onclick=()=>{if(hash($('#cr-p').value.trim())===D.pin)panel();else $('#cr-e').textContent='PIN incorrecto.';};
+ function panel(){const h=gLoad(),d=datos(h);caja(`<p>Después de un examen, elige si hay motivo para un premio. <b>No se escribe ni se guarda la nota, tampoco el motivo.</b> Solo se cuenta un premio más, y nadie más lo ve.</p>
+  <div class="cr-g3"><button class="cr-o" data-p="1"><span>💪</span><b>Se ha esforzado</b></button><button class="cr-o" data-p="1"><span>📈</span><b>Ha mejorado</b></button><button class="cr-o" data-p="1"><span>🎓</span><b>Ha aprobado</b></button></div>
+  <p id="cr-okm" class="cr-okm"></p><p><b>Premios dados: <span id="cr-n">${d.tickets}</span>.</b> Cada premio rellena las fichas. Con 1 se abre 🦄, con 3 🏍️ y con 6 🐉.</p>`);
+  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const k=gLoad(),q=datos(k);q.tickets++;q.nuevo++;k.fichas=G_FMAX;gSave(k);$('#cr-n').textContent=q.tickets;$('#cr-okm').textContent='Premio dado. Lo verá al volver a la carrera.';});}
+}
+menu();
+window.__CIRC=CIRC;window.__VEH=VEH;window.__correr=correr;
+})();
+</script></body></html>
