@@ -315,8 +315,10 @@ const gB=s=>s.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
 const G_KEY='tema2.juego';
 const G_START=180,G_CAP=180;
 let G_mem=null;
-const gDef=()=>({stars:0,edit:G_START,fresh:[],fichas:5,juegoBest:0,sub:{},st:{ok:{},days:[],best:null,first:null},av:{shape:'r',skin:0,eyes:'puntos',mouth:'sonrisa',nose:'no',hair:'corto',hc:0,glass:'no',acc:'no'}});
-function gLoad(){try{const r=localStorage.getItem(G_KEY);if(r){const j=JSON.parse(r),d=gDef();return Object.assign(d,j,{av:Object.assign(d.av,j.av),st:Object.assign(d.st,j.st)});}}catch(e){}return G_mem||gDef();}
+const gDef=()=>({stars:0,edit:G_START,fresh:[],fichas:3,fichaT:0,juegoBest:0,sub:{},st:{ok:{},days:[],best:null,first:null},av:{shape:'r',skin:0,eyes:'puntos',mouth:'sonrisa',nose:'no',hair:'corto',hc:0,glass:'no',acc:'no'}});
+const G_FMAX=3,G_FPASO=2*3600*1000;
+function gFichas(g){const now=Date.now();if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
+function gLoad(){try{const r=localStorage.getItem(G_KEY);if(r){const j=JSON.parse(r),d=gDef();return gFichas(Object.assign(d,j,{av:Object.assign(d.av,j.av),st:Object.assign(d.st,j.st)}));}}catch(e){}return gFichas(G_mem||gDef());}
 function gSave(g){G_mem=g;try{localStorage.setItem(G_KEY,JSON.stringify(g));}catch(e){}}
 const C_K='#1b1b22',C_W='#ffffff',C_Y='#ffd21f',C_R='#d9352b',C_B='#1e88e5',C_V='#5e35b1',C_GR='#7a8794';
 const SKINS=['#ffd9b8','#f1c27d','#d9a066','#a86f3f','#6f4526','#7ec8e3'];
@@ -424,7 +426,7 @@ function avatarSVG(av,size){
 /* Estrellas: nunca bajan */
 function gAward(n,time){
   const g=gLoad(),before=g.stars;g.stars+=n;
-  if(time){g.edit=Math.min(G_CAP,g.edit+time);g.fichas=Math.min(20,g.fichas+2);}
+  if(time){g.edit=Math.min(G_CAP,g.edit+time);g.fichas=Math.min(G_FMAX,g.fichas+1);}
   const sj=typeof window!=='undefined'&&window.G_SUBJ;
   if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
     if(tr)tr.items.forEach((it,i)=>{if(b4<G_UMBRAL[i]&&g.sub[sj]>=G_UMBRAL[i]){g.fresh.push('@'+tr.id+':'+it[0]);g.av[tr.slot]=it[0];}});}
@@ -442,7 +444,7 @@ function gBanner(){
   const g=gLoad(),fresh=g.fresh;g.fresh=[];gSave(g);if(typeof ligaSync==='function')ligaSync();
   const names=fresh.map(k=>{const [p,id]=k.split(':');if(p[0]==='@'){const t=TRACKS.find(x=>x.id===p.slice(1));return t.t+': '+t.items.find(i=>i[0]===id)[2].toLowerCase();}return PARTS[p].t+': '+PARTS[p].o[id].n.toLowerCase();});
   const nx=gNext(g);
-  return `<div class="av-banner">${avatarSVG(g.av,84)}<div><div class="av-st">⭐ ${g.stars}</div>${names.length?`<div class="av-new">¡Nuevo: ${names.join(', ')}!</div>`:''}<div class="av-next">🎮 ${g.fichas} ${g.fichas===1?'ficha':'fichas'} para el juego</div>${nx?`<div class="av-next">Te faltan ${nx.left} ⭐ para: ${nx.part.toLowerCase()}, ${nx.name.toLowerCase()}</div>`:'<div class="av-next">¡Lo tienes todo!</div>'}</div></div>`;
+  return `<div class="av-banner">${avatarSVG(g.av,84)}<div><div class="av-st">⭐ ${g.stars}</div>${names.length?`<div class="av-new">¡Nuevo: ${names.join(', ')}!</div>`:''}<div class="av-next">🎮 ${g.fichas} de 3 fichas para el juego</div>${nx?`<div class="av-next">Te faltan ${nx.left} ⭐ para: ${nx.part.toLowerCase()}, ${nx.name.toLowerCase()}</div>`:'<div class="av-next">¡Lo tienes todo!</div>'}</div></div>`;
 }
 /* Editor con tiempo limitado: se recarga terminando misiones */
 function openAvatarEditor(onClose){
@@ -586,27 +588,28 @@ function openLeague(onClose){
 /* ===== Juego tipo dinosaurio: el muñeco corre y salta. Las partidas se pagan con fichas ganadas estudiando ===== */
 const MUNDOS=[
  {n:'Día',d:0,cielo:['#bfe3ff','#eaf6ff'],suelo:'#5aa63c',raya:'#3f7f2a',nube:'rgba(255,255,255,.9)',estrellas:0,g:2200,salto:780,suelos:[['🐛',36,28,34],['🧱',30,34,36],['🧱🧱',62,34,36],['📦',38,40,42]],aire:['🐦']},
- {n:'Atardecer',d:150,cielo:['#ff9a62','#ffe2a8'],suelo:'#a9783a',raya:'#7d5626',nube:'rgba(255,225,200,.75)',estrellas:0,g:2200,salto:780,suelos:[['🌵',36,44,46],['🪨',40,32,38],['🌵🌵',72,44,46],['🐍',38,28,34]],aire:['🦅']},
- {n:'Noche',d:350,cielo:['#10183f','#33407a'],suelo:'#2c4a35',raya:'#1b3123',nube:'rgba(170,185,230,.25)',estrellas:60,g:2200,salto:780,suelos:[['🪦',36,42,44],['🎃',38,36,40],['🕷️',36,28,34],['🪦🪦',72,42,44]],aire:['🦇','👻']},
- {n:'Mundo de lava',d:600,cielo:['#3a0a0a','#a12a10'],suelo:'#2a1612',raya:'#ff6a1a',nube:'rgba(70,50,50,.6)',estrellas:0,g:2300,salto:800,suelos:[['🔥',36,40,42],['🌋',46,44,46],['🔥🔥',72,40,42],['🪨',40,32,38]],aire:['🐉','☄️']},
- {n:'Espacio',d:900,cielo:['#02030f','#141a3c'],suelo:'#6d7283',raya:'#494d5c',nube:'rgba(120,120,190,.18)',estrellas:90,g:1500,salto:690,suelos:[['🪨',40,32,38],['🛰️',40,40,42],['👽',36,38,40],['🪨🪨',78,32,38]],aire:['👾','🛸','☄️']}
+ {n:'Atardecer',d:800,cielo:['#ff9a62','#ffe2a8'],suelo:'#a9783a',raya:'#7d5626',nube:'rgba(255,225,200,.75)',estrellas:0,g:2200,salto:780,suelos:[['🌵',36,44,46],['🪨',40,32,38],['🌵🌵',72,44,46],['🐍',38,28,34]],aire:['🦅']},
+ {n:'Noche',d:2000,cielo:['#1c2a66','#4a5ba3'],suelo:'#3a6a4a',raya:'#2c5238',nube:'rgba(170,185,230,.25)',estrellas:60,g:2200,salto:780,suelos:[['🪦',36,42,44],['🎃',38,36,40],['🕷️',36,28,34],['🪦🪦',72,42,44]],aire:['🦇','👻']},
+ {n:'Mundo de lava',d:3500,cielo:['#5a1610','#c4502a'],suelo:'#3a221c',raya:'#7a3a20',nube:'rgba(70,50,50,.6)',estrellas:0,g:2300,salto:800,suelos:[['🔥',36,40,42],['🌋',46,44,46],['🔥🔥',72,40,42],['🪨',40,32,38]],aire:['🐉','☄️']},
+ {n:'Espacio',d:5500,cielo:['#10143a','#2c3570'],suelo:'#8a8fa0',raya:'#6f7486',nube:'rgba(120,120,190,.18)',estrellas:90,g:1500,salto:690,suelos:[['🪨',40,32,38],['🛰️',40,40,42],['👽',36,38,40],['🪨🪨',78,32,38]],aire:['👾','🛸','☄️']}
 ];
 function openGame(onClose){
   const o=document.createElement('div');o.id='jg';document.body.appendChild(o);
-  let raf=null,st=null,img=null;
+  let raf=null,st=null,img=null,fit=null;
   const W=innerWidth<600?480:800,H=260,GROUND=222,ESC=W<800?.78:1;
-  const VMIN=340*ESC,VMAX=900*ESC;
-  const CICLO=1300;
-  const close=()=>{cancelAnimationFrame(raf);removeEventListener('keydown',kd);removeEventListener('keyup',ku);o.remove();onClose&&onClose();};
+  const VMIN=260*ESC,VMAX=620*ESC;
+  const CICLO=7500;
+  const close=()=>{cancelAnimationFrame(raf);if(fit)removeEventListener('resize',fit);removeEventListener('keydown',kd);removeEventListener('keyup',ku);o.remove();onClose&&onClose();};
   const mundoDe=p=>{const q=p%CICLO;let m=MUNDOS[0];MUNDOS.forEach(x=>{if(q>=x.d)m=x;});return m;};
-  const nivel=p=>Math.min(1,p/1100);
+  const nivel=p=>Math.min(1,p/5000);
+  const espera=g=>{const m=Math.max(1,Math.ceil((g.fichaT+G_FPASO-Date.now())/60000));return m>=60?`${Math.floor(m/60)} h ${m%60} min`:`${m} min`;};
   function menu(){
     const g=gLoad();
     cancelAnimationFrame(raf);st=null;
     o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2>
-      <div class="jg-hero">${avatarSVG(g.av,90)}<div><div class="av-st">🎮 ${g.fichas} ${g.fichas===1?'ficha':'fichas'}</div><div class="av-next">Tu récord: ${g.juegoBest}</div></div></div>
-      <p>Salta con <kbd class="jg-k">espacio</kbd> o tocando la pantalla. Cuanto más mantengas, más alto saltas. Cada vez va más rápido y vas cambiando de mundo: día, atardecer, noche, lava y espacio.</p>
-      ${g.fichas>0?'<button class="lg-go" id="jg-go">Jugar (1 ficha)</button>':'<div class="jg-empty"><b>Te has quedado sin fichas.</b><br>Cada misión terminada te da 2 fichas, y cada simulacro también.</div>'}</div>`;
+      <div class="jg-hero">${avatarSVG(g.av,90)}<div><div class="av-st">🎮 ${g.fichas} de 3 fichas</div><div class="av-next">${g.fichas<3?`Otra ficha en ${espera(g)}, o terminando una misión. `:''}Tu récord: ${g.juegoBest}</div></div></div>
+      <p>Salta con <kbd class="jg-k">espacio</kbd> o tocando la pantalla. Cuanto más mantengas, más alto saltas. Poco a poco va más rápido y cambias de mundo: día, atardecer, noche, lava y espacio.</p>
+      ${g.fichas>0?'<button class="lg-go" id="jg-go">Jugar (1 ficha)</button>':'<div class="jg-empty"><b>Te has quedado sin fichas.</b><br>Termina una misión para ganar 1 ficha, o vuelve en '+espera(g)+'. Puedes guardar 3 como máximo.</div>'}</div>`;
     o.querySelector('#jg-x').onclick=close;
     const b=o.querySelector('#jg-go');if(b){b.onclick=start;b.focus({preventScroll:true});}
   }
@@ -615,10 +618,11 @@ function openGame(onClose){
     g.fichas--;gSave(g);
     o.innerHTML=`<div class="jg-box"><div class="jg-score"><span id="jg-s">0</span><span class="jg-best">Récord ${g.juegoBest}</span></div><canvas id="jg-c" width="${W}" height="${H}" aria-label="Juego: pulsa espacio o toca para saltar"></canvas><p class="jg-hint">Espacio o toca para saltar</p></div>`;
     const c=o.querySelector('#jg-c'),x=c.getContext('2d');
-    img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(avatarSVG(g.av,80));
+    const ajusta=()=>{const a=c.getBoundingClientRect().width||W,r=Math.min(3,window.devicePixelRatio||1);c.width=Math.round(a*r);c.height=Math.round(a*r*H/W);if(st)st.k=c.width/W;};fit=ajusta;addEventListener('resize',ajusta);
+    img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(avatarSVG(g.av,240));
     const estrellas=[];for(let i=0;i<90;i++)estrellas.push([Math.random()*W,Math.random()*(GROUND-20),Math.random()<.2?2:1]);
     st={x,c,y:GROUND-PH,vy:0,hold:false,on:true,obs:[],clouds:[[120,40],[300,70],[W-120,30]],estrellas,v:VMIN,dist:0,next:VMIN*1.3,t:performance.now(),dead:false,mundo:MUNDOS[0],aviso:{txt:'Día',t:1.4}};
-    window.__jg=st;window.__jgInfo={VMAX,mundoDe};
+    ajusta();window.__jg=st;window.__jgInfo={VMAX,mundoDe};
     raf=requestAnimationFrame(loop);
   }
   const PH=62,PW=44,PX=70;
@@ -631,18 +635,18 @@ function openGame(onClose){
   addEventListener('keydown',kd);addEventListener('keyup',ku);
   o.addEventListener('pointerdown',e=>{if(st&&!st.dead&&!e.target.closest('button')){e.preventDefault();press();}});o.addEventListener('pointerup',release);
   function genera(){
-    const p=puntos(),m=st.mundo,n=nivel(p),air=m.aire&&p>=120&&Math.random()<.18+.22*n;
+    const p=puntos(),m=st.mundo,n=nivel(p),air=m.aire&&p>=400&&Math.random()<.18+.22*n;
     const add=(k,x)=>st.obs.push({k,x,y:k.air?GROUND-k.alto:GROUND-k.h});
     if(air){
       /* Altos: se pasan por debajo sin saltar. Bajos: hay que saltarlos. */
-      const bajo=p>=300&&Math.random()<.5;
+      const bajo=p>=1200&&Math.random()<.5;
       const e=m.aire[Math.floor(Math.random()*m.aire.length)];
       add({e,w:38,h:30,fs:36,air:true,alto:bajo?62:116},W+20);
     }else{
       const s=m.suelos[Math.floor(Math.random()*m.suelos.length)],k={e:s[0],w:s[1],h:s[2],fs:s[3],air:false};
       add(k,W+20);
       /* A partir de cierto punto salen dos seguidos, para saltar en el momento justo */
-      if(p>=250&&Math.random()<.14+.26*n){const t=m.suelos[0],sep=k.w+st.v*.13;add({e:t[0],w:t[1],h:t[2],fs:t[3],air:false},W+20+sep);st.extra=sep+t[1];}else st.extra=0;
+      if(p>=1000&&Math.random()<.14+.26*n){const t=m.suelos[0],sep=k.w+st.v*.13;add({e:t[0],w:t[1],h:t[2],fs:t[3],air:false},W+20+sep);st.extra=sep+t[1];}else st.extra=0;
     }
     const airt=2*m.salto/m.g;
     const min=airt+.14,max=min+1.05-.8*n;
@@ -652,7 +656,7 @@ function openGame(onClose){
     if(!st||st.dead)return;
     const dt=Math.min((now-st.t)/1000,.05);st.t=now;
     const p0=puntos();
-    st.v=Math.min(VMAX,VMIN+(VMAX-VMIN)*Math.min(1,p0/1000));st.dist+=st.v*dt;
+    st.v=Math.min(VMAX,VMIN+(VMAX-VMIN)*Math.min(1,p0/6000));st.dist+=st.v*dt;
     const mu=mundoDe(puntos());if(mu!==st.mundo){st.mundo=mu;st.aviso={txt:mu.n,t:1.6};if(typeof ding==='function')try{ding(true);}catch(e){}}
     if(st.aviso)st.aviso.t-=dt;
     if(!st.on){st.vy+=st.mundo.g*dt;st.y+=st.vy*dt;if(st.y>=GROUND-PH){st.y=GROUND-PH;st.vy=0;st.on=true;}}
@@ -666,18 +670,24 @@ function openGame(onClose){
     const s=o.querySelector('#jg-s');if(s)s.textContent=puntos();
     raf=requestAnimationFrame(loop);
   }
+  const OSCURO=m=>m.estrellas||m.n==='Mundo de lava';
   function draw(){
-    const {x}=st,m=st.mundo;x.clearRect(0,0,W,H);
+    const {x}=st,m=st.mundo;x.setTransform(st.k,0,0,st.k,0,0);x.imageSmoothingQuality='high';x.clearRect(0,0,W,H);
     const sky=x.createLinearGradient(0,0,0,GROUND);sky.addColorStop(0,m.cielo[0]);sky.addColorStop(1,m.cielo[1]);x.fillStyle=sky;x.fillRect(0,0,W,H);
     if(m.estrellas){x.fillStyle='#fff';st.estrellas.slice(0,m.estrellas).forEach(([a,b,c])=>{const px=((a-st.dist*.02)%W+W)%W;x.fillRect(px,b,c,c);});}
     if(m.n==='Noche'){x.fillStyle='#f4f1c9';x.beginPath();x.arc(W-90,48,22,0,7);x.fill();x.fillStyle=m.cielo[0];x.beginPath();x.arc(W-80,42,20,0,7);x.fill();}
     if(m.n==='Atardecer'){x.fillStyle='#ffd24a';x.beginPath();x.arc(W-130,GROUND-10,44,0,7);x.fill();}
     if(m.n==='Espacio'){x.fillStyle='#d9a066';x.beginPath();x.arc(W-110,62,32,0,7);x.fill();x.strokeStyle='#f2dcae';x.lineWidth=4;x.beginPath();x.ellipse(W-110,62,52,11,-.3,0,7);x.stroke();}
     x.fillStyle=m.nube;st.clouds.forEach(([a,b])=>{x.fillRect(a,b,54,12);x.fillRect(a+10,b-8,30,8);});
-    x.fillStyle=m.suelo;x.fillRect(0,GROUND,W,H-GROUND);x.fillStyle=m.raya;
+    x.fillStyle=m.suelo;x.fillRect(0,GROUND,W,H-GROUND);x.fillStyle='rgba(255,255,255,.55)';x.fillRect(0,GROUND,W,2);x.fillStyle=m.raya;
     for(let i=0;i<W+40;i+=40){const px=i-(st.dist%40);x.fillRect(px,GROUND+8,18,4);x.fillRect(px+12,GROUND+22,10,4);}
     x.textBaseline='bottom';x.textAlign='left';
-    st.obs.forEach(b=>{x.font=b.k.fs+'px serif';x.fillStyle='#000';x.fillText(b.k.e,b.x-2,b.y+b.k.h+4);});
+    st.obs.forEach(b=>{
+      if(!b.k.air){x.fillStyle='rgba(0,0,0,.35)';x.beginPath();x.ellipse(b.x+b.k.w/2,GROUND+3,b.k.w/2+2,4,0,0,7);x.fill();}
+      x.font=b.k.fs+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",serif';x.fillStyle='#000';
+      x.save();x.shadowColor=OSCURO(m)?'#fff':'rgba(255,255,255,.95)';x.shadowBlur=9*st.k;x.fillText(b.k.e,b.x-2,b.y+b.k.h+4);x.fillText(b.k.e,b.x-2,b.y+b.k.h+4);x.restore();
+      x.fillText(b.k.e,b.x-2,b.y+b.k.h+4);
+    });
     if(img&&img.complete&&img.naturalWidth){const h=PH+10,w=h*img.naturalWidth/img.naturalHeight;x.drawImage(img,PX+PW/2-w/2,st.y-8,w,h);}else{x.fillStyle='#3a3ca6';x.fillRect(PX,st.y,PW,PH);}
     if(st.aviso&&st.aviso.t>0){x.globalAlpha=Math.min(1,st.aviso.t);x.font='700 34px Lexend,Verdana,sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillStyle=m.estrellas||m.n==='Mundo de lava'?'#fff':'#17203a';x.fillText(st.aviso.txt,W/2,70);x.globalAlpha=1;}
   }
@@ -686,7 +696,7 @@ function openGame(onClose){
     const pts=puntos(),g=gLoad(),rec=pts>g.juegoBest;
     if(rec){g.juegoBest=pts;gSave(g);if(typeof ligaSubirJuego==='function')ligaSubirJuego();}
     const div=document.createElement('div');div.className='jg-over';
-    div.innerHTML=`<h2>${rec?'¡Récord nuevo!':'¡Choque!'}</h2><div class="big" style="font-size:52px;font-weight:700">${pts}</div><p>Has llegado a: ${st.mundo.n}. ${rec?'Has mejorado tu marca.':`Tu récord sigue en ${g.juegoBest}.`} Te ${g.fichas===1?'queda 1 ficha':'quedan '+g.fichas+' fichas'}.</p>${g.fichas>0?'<button class="lg-go" id="jg-re">Otra partida (1 ficha)</button>':'<p><b>Para tener más fichas, termina una misión.</b></p>'}<button class="lg-x" id="jg-m">Salir</button>`;
+    div.innerHTML=`<h2>${rec?'¡Récord nuevo!':'¡Choque!'}</h2><div class="big" style="font-size:52px;font-weight:700">${pts}</div><p>Has llegado a: ${st.mundo.n}. ${rec?'Has mejorado tu marca.':`Tu récord sigue en ${g.juegoBest}.`} Te ${g.fichas===1?'queda 1 ficha':'quedan '+g.fichas+' fichas'}.</p>${g.fichas>0?'<button class="lg-go" id="jg-re">Otra partida (1 ficha)</button>':`<p><b>Termina una misión para ganar otra ficha, o vuelve en ${espera(g)}.</b></p>`}<button class="lg-x" id="jg-m">Salir</button>`;
     o.querySelector('.jg-box').appendChild(div);
     const re=div.querySelector('#jg-re');if(re){re.onclick=start;setTimeout(()=>re.focus({preventScroll:true}),300);}
     div.querySelector('#jg-m').onclick=menu;
