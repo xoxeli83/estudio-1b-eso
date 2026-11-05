@@ -77,6 +77,7 @@
 #jg-c{display:block;width:100%;height:auto;border-radius:12px;touch-action:none;user-select:none;cursor:pointer}
 .jg-hint{font-size:16px;color:#57617a;text-align:center;margin:8px 0}
 .jg-over{background:#fff;border-radius:14px;padding:14px 18px;margin-top:10px;text-align:center}.jg-over h2{margin:0}.jg-over p{margin:6px 0}
+#cr-son{position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:rgba(8,12,34,.62);font-size:21px;cursor:pointer}.cr-nope{opacity:.5;cursor:default;filter:grayscale(1)}.cr-mas{text-align:center;font-size:14px;color:#ffe08a;margin:6px 8px 0}
 </style></head><body><!--menu--><style>
 :root{--nf:calc(46px + env(safe-area-inset-top,0px))}
 html{padding-top:var(--nf)!important}
@@ -329,8 +330,9 @@ const G_KEY='tema2.juego';
 const G_START=180,G_CAP=180;
 let G_mem=null;
 const gDef=()=>({stars:0,edit:G_START,fresh:[],fichas:3,fichaT:0,juegoBest:0,sub:{},st:{ok:{},days:[],best:null,first:null},av:{shape:'r',skin:0,eyes:'puntos',mouth:'sonrisa',nose:'no',hair:'corto',hc:0,glass:'no',acc:'no'}});
-const G_FMAX=3,G_FPASO=2*3600*1000;
-function gFichas(g){const now=Date.now();if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
+const G_FMAX=3,G_FPASO=2*3600*1000,G_FESP=3600*1000;
+function gGana(g){if(g.fBloq&&Date.now()<g.fBloq)g.fRes=Math.min(G_FMAX,(g.fRes||0)+1);else g.fichas=Math.min(G_FMAX,g.fichas+1);}
+function gFichas(g){const now=Date.now();if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas<=0&&!g.fBloq){g.fichas=0;g.fBloq=now+G_FESP;g.fRes=0;gSave(g);}if(g.fBloq){if(now<g.fBloq)return g;g.fichas=Math.min(G_FMAX,Math.max(1,g.fRes||0));g.fBloq=0;g.fRes=0;g.fichaT=now;gSave(g);}if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
 function gLoad(){try{const r=localStorage.getItem(G_KEY);if(r){const j=JSON.parse(r),d=gDef();return gFichas(Object.assign(d,j,{av:Object.assign(d.av,j.av),st:Object.assign(d.st,j.st)}));}}catch(e){}return gFichas(G_mem||gDef());}
 function gSave(g){G_mem=g;try{localStorage.setItem(G_KEY,JSON.stringify(g));}catch(e){}}
 const C_K='#1b1b22',C_W='#ffffff',C_Y='#ffd21f',C_R='#d9352b',C_B='#1e88e5',C_V='#5e35b1',C_GR='#7a8794';
@@ -439,7 +441,7 @@ function avatarSVG(av,size){
 /* Estrellas: nunca bajan */
 function gAward(n,time){
   const g=gLoad(),before=g.stars;g.stars+=n;
-  if(time){g.edit=Math.min(G_CAP,g.edit+time);g.fichas=Math.min(G_FMAX,g.fichas+1);}
+  if(time){g.edit=Math.min(G_CAP,g.edit+time);gGana(g);}
   const sj=typeof window!=='undefined'&&window.G_SUBJ;
   if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
     if(tr)tr.items.forEach((it,i)=>{if(b4<G_UMBRAL[i]&&g.sub[sj]>=G_UMBRAL[i]){g.fresh.push('@'+tr.id+':'+it[0]);g.av[tr.slot]=it[0];}});}
@@ -598,6 +600,44 @@ function openLeague(onClose){
   if(gLoad().liga)load();else join();
 }
 
+/* ===== Sonido: música en mp3 y efectos generados por el navegador ===== */
+const SND=(()=>{const K='tema2.sonido',MUS=['Kart%20ESO.mp3','Kart%20ESO_2.mp3'];let ac=null,ma=null,nb=null,aud=null,suena=false,vivos=0;
+ const on=()=>{try{return localStorage.getItem(K)!=='0';}catch(e){return true;}};
+ const C=()=>{try{if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ac=new A();ma=ac.createGain();ma.gain.value=on()?1:0;const cp=ac.createDynamicsCompressor();ma.connect(cp);cp.connect(ac.destination);}if(ac.state==='suspended')ac.resume();return ac;}catch(e){return null;}};
+ const T=(f0,f1,d,ti,v,t0=0)=>{const c=C();if(!c||v<=0)return;const t=c.currentTime+t0,o=c.createOscillator(),g=c.createGain();o.type=ti;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.012,d/4));g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ma);o.start(t);o.stop(t+d+.02);};
+ const R=(d,v,f0,f1,t0=0,q=1)=>{const c=C();if(!c||v<=0)return;if(!nb){nb=c.createBuffer(1,c.sampleRate,c.sampleRate);const a=nb.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1;}const t=c.currentTime+t0,s=c.createBufferSource(),b=c.createBiquadFilter(),g=c.createGain();s.buffer=nb;s.loop=true;b.type='bandpass';b.Q.value=q;b.frequency.setValueAtTime(f0,t);b.frequency.exponentialRampToValueAtTime(Math.max(30,f1),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.015,d/4));g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(b);b.connect(g);g.connect(ma);s.start(t);s.stop(t+d+.02);};
+ const ART={
+  bola:v=>{T(980,170,.24,'square',.34*v);R(.14,.18*v,2600,500);},
+  libro:v=>{for(let i=0;i<4;i++)R(.07,.42*v,1500+i*500,700,i*.06,2);T(520,300,.2,'triangle',.14*v);},
+  divide:v=>{[0,.08,.16].forEach((t,i)=>{T(1250-i*170,420,.11,'sawtooth',.2*v,t);R(.09,.14*v,4200,1500,t);});},
+  polbo:v=>{T(130,460,.17,'sine',.55*v);T(210,620,.15,'sine',.36*v,.15);T(150,70,.2,'sine',.4*v,.3);},
+  ovni:v=>{for(let i=0;i<7;i++)T(650+(i%2?420:0),860+(i%2?0:420),.09,'sine',.3*v,i*.08);},
+  crois:v=>{T(760,220,.09,'triangle',.45*v);R(.08,.3*v,3000,1200,.04,3);T(420,780,.11,'sine',.24*v,.1);},
+  abella:v=>{T(190,240,.46,'sawtooth',.26*v);T(203,258,.46,'square',.13*v);},
+  volcan:v=>{T(95,34,.65,'sawtooth',.46*v);R(.7,.52*v,420,75);R(.28,.28*v,2200,450,.06);},
+  pintura:v=>{R(.17,.6*v,1700,260,0,1.6);T(330,90,.17,'sine',.42*v);R(.08,.26*v,3000,900,.14);},
+  balon:v=>{T(250,520,.1,'sine',.5*v);T(330,660,.09,'sine',.34*v,.12);T(420,800,.08,'sine',.22*v,.22);},
+  rayo:v=>{R(.1,.8*v,6500,2500,0,.7);T(1900,70,.22,'sawtooth',.46*v);R(.42,.5*v,1100,120,.05,.7);}
+ };
+ const FX={
+  cuenta:v=>T(540,540,.17,'square',.26*v),ya:v=>{T(1080,1080,.45,'square',.32*v);T(540,540,.45,'triangle',.28*v);},
+  turbo:v=>{T(190,1250,.5,'sawtooth',.28*v);R(.55,.26*v,700,4800);},
+  golpe:v=>{R(.34,.9*v,1500,110,0,.6);T(210,45,.38,'square',.56*v);[0,.1,.2].forEach((t,i)=>T(1300-i*260,820-i*180,.1,'triangle',.22*v,.14+t));},
+  impacto:v=>{R(.2,.7*v,1300,170,0,.7);T(170,55,.2,'triangle',.46*v);},
+  vuelta:v=>{T(784,784,.12,'triangle',.34*v);T(1175,1175,.24,'triangle',.34*v,.12);},
+  ultima:v=>{[523,659,784,1047,784,1047,1319].forEach((f,i)=>{const d=i>5?.5:.13;T(f,f,d,'square',.25*v,i*.13);T(f/2,f/2,d,'triangle',.28*v,i*.13);});},
+  meta:v=>{[523,659,784,1047,1319,1568].forEach((f,i)=>{T(f,f,i>4?.65:.16,'square',.25*v,i*.13);T(f/2,f/2,i>4?.65:.16,'triangle',.25*v,i*.13);});},
+  salto:v=>T(330,760,.15,'square',.2*v),choque:v=>{R(.34,.7*v,1200,100,0,.7);T(200,50,.34,'square',.42*v);}
+ };
+ const CFG={bola:['triangle',260,8,14,1500],libro:['triangle',310,12,40,1000],divide:['sawtooth',360,20,90,1900],polbo:['sine',170,5,28,900],ovni:['sine',620,6,170,1800],crois:['triangle',420,9,35,1200],abella:['sawtooth',205,31,26,1300],volcan:['sawtooth',85,7,12,500],pintura:['sine',290,10,55,900],balon:['sine',230,6,70,800],rayo:['sawtooth',760,41,130,2600]};
+ function bucle(k){const c=C();const nada={set(){},stop(){}};if(!c||vivos>=6)return nada;vivos++;const q=CFG[k]||CFG.bola,o=c.createOscillator(),l=c.createOscillator(),lg=c.createGain(),f=c.createBiquadFilter(),g=c.createGain(),p=c.createStereoPanner?c.createStereoPanner():null;o.type=q[0];o.frequency.value=q[1];l.frequency.value=q[2];lg.gain.value=q[3];l.connect(lg);lg.connect(o.frequency);f.type='lowpass';f.frequency.value=q[4];g.gain.value=.0001;o.connect(f);f.connect(g);if(p){g.connect(p);p.connect(ma);}else g.connect(ma);o.start();l.start();let fin=false;
+  return{set(v,pan){if(fin)return;const t=c.currentTime;g.gain.setTargetAtTime(Math.max(.0001,v),t,.06);if(p)p.pan.setTargetAtTime(Math.max(-1,Math.min(1,pan||0)),t,.06);},stop(){if(fin)return;fin=true;vivos--;const t=c.currentTime;g.gain.setTargetAtTime(.0001,t,.04);o.stop(t+.25);l.stop(t+.25);}};}
+ function musica(){para();C();let i=0;try{i=+localStorage.getItem(K+'.m')||0;localStorage.setItem(K+'.m',(i+1)%MUS.length);}catch(e){}const pon=()=>{if(!aud)return;aud.src=MUS[i%MUS.length];aud.playbackRate=1;const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{});};aud=new Audio();aud.preload='auto';aud.volume=.42;aud.muted=!on();aud.addEventListener('ended',()=>{i++;pon();});suena=true;pon();}
+ function para(){suena=false;if(aud){const a=aud;aud=null;let v=a.volume;const h=setInterval(()=>{v-=.07;if(v<=0){clearInterval(h);a.pause();a.removeAttribute('src');a.load();}else a.volume=v;},40);}}
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){if(aud)aud.pause();if(ac)ac.suspend();}else{if(ac)ac.resume();if(aud&&suena){const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{});}}});
+ return{on,art:(k,v=1)=>{const f=ART[k];if(f&&v>.005&&on())f(v);},sfx:(k,v=1)=>{const f=FX[k];if(f&&v>.005&&on())f(v);},bucle,musica,para,rate:r=>{if(aud)aud.playbackRate=r;},
+  alterna(){const n=!on();try{localStorage.setItem(K,n?'1':'0');}catch(e){}C();if(ma)ma.gain.value=n?1:0;if(aud)aud.muted=!n;return n;},icono:()=>on()?'🔊':'🔇',_e:()=>({ac:ac&&ac.state,vivos,src:aud&&aud.src,on:on()})};
+})();
 /* ===== Juego tipo dinosaurio: el muñeco corre y salta. Las partidas se pagan con fichas ganadas estudiando ===== */
 const MUNDOS=[
  {n:'Día',d:0,cielo:['#bfe3ff','#eaf6ff'],suelo:'#5aa63c',raya:'#3f7f2a',nube:'rgba(255,255,255,.9)',estrellas:0,g:2200,salto:780,suelos:[['🐛',36,28,34],['🧱',30,34,36],['🧱🧱',62,34,36],['📦',38,40,42]],aire:['🐦']},
@@ -612,24 +652,26 @@ function openGame(onClose){
   const W=innerWidth<600?480:800,H=260,GROUND=222,ESC=W<800?.78:1;
   const VMIN=260*ESC,VMAX=620*ESC;
   const CICLO=7500;
-  const close=()=>{cancelAnimationFrame(raf);if(fit)removeEventListener('resize',fit);removeEventListener('keydown',kd);removeEventListener('keyup',ku);o.remove();onClose&&onClose();};
+  const close=()=>{SND.para();cancelAnimationFrame(raf);if(fit)removeEventListener('resize',fit);removeEventListener('keydown',kd);removeEventListener('keyup',ku);o.remove();onClose&&onClose();};
   const mundoDe=p=>{const q=p%CICLO;let m=MUNDOS[0];MUNDOS.forEach(x=>{if(q>=x.d)m=x;});return m;};
   const nivel=p=>Math.min(1,p/5000);
-  const espera=g=>{const m=Math.max(1,Math.ceil((g.fichaT+G_FPASO-Date.now())/60000));return m>=60?`${Math.floor(m/60)} h ${m%60} min`:`${m} min`;};
+  const espera=g=>{const m=Math.max(1,Math.ceil(((g.fBloq>Date.now()?g.fBloq:g.fichaT+G_FPASO)-Date.now())/60000));return m>=60?`${Math.floor(m/60)} h ${m%60} min`:`${m} min`;};
   function menu(){
     const g=gLoad();
     cancelAnimationFrame(raf);st=null;
+    if(ligaOn()&&!g.liga){o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2><div class="jg-empty"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><button class="lg-go" id="jg-id">Identificarme</button></div>`;o.querySelector('#jg-x').onclick=close;o.querySelector('#jg-id').onclick=()=>openLeague(menu);return;}
     o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2>
-      <div class="jg-hero">${avatarSVG(g.av,90)}<div><div class="av-st">🎮 ${g.fichas} de 3 fichas</div><div class="av-next">${g.fichas<3?`Otra ficha en ${espera(g)}, o terminando una misión. `:''}Tu récord: ${g.juegoBest}</div></div></div>
+      <div class="jg-hero">${avatarSVG(g.av,90)}<div><div class="av-st">🎮 ${g.fichas} de 3 fichas</div><div class="av-next">${g.fichas>0&&g.fichas<3?`Otra ficha en ${espera(g)}, o terminando una misión. `:''}Tu récord: ${g.juegoBest}</div></div></div>
       <p>Salta con <kbd class="jg-k">espacio</kbd> o tocando la pantalla. Cuanto más mantengas, más alto saltas. Poco a poco va más rápido y cambias de mundo: día, atardecer, noche, lava y espacio.</p>
-      ${g.fichas>0?'<button class="lg-go" id="jg-go">Jugar (1 ficha)</button>':'<div class="jg-empty"><b>Te has quedado sin fichas.</b><br>Termina una misión para ganar 1 ficha, o vuelve en '+espera(g)+'. Puedes guardar 3 como máximo.</div>'}</div>`;
+      ${g.fichas>0?'<button class="lg-go" id="jg-go">Jugar (1 ficha)</button>':'<div class="jg-empty"><b>Te has quedado sin fichas.</b><br>Podrás volver a jugar dentro de '+espera(g)+'. Si terminas misiones mientras tanto, tendrás más fichas cuando acabe la espera.</div>'}</div>`;
     o.querySelector('#jg-x').onclick=close;
     const b=o.querySelector('#jg-go');if(b){b.onclick=start;b.focus({preventScroll:true});}
   }
   function start(){
-    const g=gLoad();if(g.fichas<=0)return menu();
-    g.fichas--;gSave(g);
-    o.innerHTML=`<div class="jg-box"><div class="jg-score"><span id="jg-s">0</span><span class="jg-best">Récord ${g.juegoBest}</span></div><canvas id="jg-c" width="${W}" height="${H}" aria-label="Juego: pulsa espacio o toca para saltar"></canvas><p class="jg-hint">Espacio o toca para saltar</p></div>`;
+    const g=gLoad();if(g.fichas<=0||(ligaOn()&&!g.liga))return menu();
+    g.fichas--;gSave(g);SND.musica();
+    o.innerHTML=`<div class="jg-box"><button id="jg-son" aria-label="Activar o quitar el sonido" style="float:right;font-size:20px;border:0;background:none;cursor:pointer;min-width:44px;min-height:44px">${SND.icono()}</button><div class="jg-score"><span id="jg-s">0</span><span class="jg-best">Récord ${g.juegoBest}</span></div><canvas id="jg-c" width="${W}" height="${H}" aria-label="Juego: pulsa espacio o toca para saltar"></canvas><p class="jg-hint">Espacio o toca para saltar</p></div>`;
+    o.querySelector('#jg-son').onclick=e=>{SND.alterna();e.currentTarget.textContent=SND.icono();};
     const c=o.querySelector('#jg-c'),x=c.getContext('2d');
     const ajusta=()=>{const a=c.getBoundingClientRect().width||W,r=Math.min(3,window.devicePixelRatio||1);c.width=Math.round(a*r);c.height=Math.round(a*r*H/W);if(st)st.k=c.width/W;};fit=ajusta;addEventListener('resize',ajusta);
     img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(avatarSVG(g.av,240));
@@ -640,7 +682,7 @@ function openGame(onClose){
   }
   const PH=62,PW=44,PX=70;
   const puntos=()=>Math.floor(st.dist/10);
-  function press(){if(!st||st.dead)return;st.hold=true;if(st.on){st.vy=-st.mundo.salto;st.on=false;}}
+  function press(){if(!st||st.dead)return;st.hold=true;if(st.on){st.vy=-st.mundo.salto;st.on=false;SND.sfx('salto');}}
   function release(){if(!st)return;st.hold=false;if(st.vy<-300)st.vy=-300;}
   function kd(e){if(e.code==='Escape'){if(st&&!st.dead){st.dead=true;cancelAnimationFrame(raf);}close();return;}
     if(e.code==='Space'||e.code==='ArrowUp'){if(st){e.preventDefault();if(!e.repeat)press();}}}
@@ -705,11 +747,11 @@ function openGame(onClose){
     if(st.aviso&&st.aviso.t>0){x.globalAlpha=Math.min(1,st.aviso.t);x.font='700 34px Lexend,Verdana,sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillStyle=m.estrellas||m.n==='Mundo de lava'?'#fff':'#17203a';x.fillText(st.aviso.txt,W/2,70);x.globalAlpha=1;}
   }
   function over(){
-    st.dead=true;cancelAnimationFrame(raf);
+    st.dead=true;cancelAnimationFrame(raf);SND.sfx('choque');
     const pts=puntos(),g=gLoad(),rec=pts>g.juegoBest;
     if(rec){g.juegoBest=pts;gSave(g);if(typeof ligaSubirJuego==='function')ligaSubirJuego();}
     const div=document.createElement('div');div.className='jg-over';
-    div.innerHTML=`<h2>${rec?'¡Récord nuevo!':'¡Choque!'}</h2><div class="big" style="font-size:52px;font-weight:700">${pts}</div><p>Has llegado a: ${st.mundo.n}. ${rec?'Has mejorado tu marca.':`Tu récord sigue en ${g.juegoBest}.`} Te ${g.fichas===1?'queda 1 ficha':'quedan '+g.fichas+' fichas'}.</p>${g.fichas>0?'<button class="lg-go" id="jg-re">Otra partida (1 ficha)</button>':`<p><b>Termina una misión para ganar otra ficha, o vuelve en ${espera(g)}.</b></p>`}<button class="lg-x" id="jg-m">Salir</button>`;
+    div.innerHTML=`<h2>${rec?'¡Récord nuevo!':'¡Choque!'}</h2><div class="big" style="font-size:52px;font-weight:700">${pts}</div><p>Has llegado a: ${st.mundo.n}. ${rec?'Has mejorado tu marca.':`Tu récord sigue en ${g.juegoBest}.`} Te ${g.fichas===1?'queda 1 ficha':'quedan '+g.fichas+' fichas'}.</p>${g.fichas>0?'<button class="lg-go" id="jg-re">Otra partida (1 ficha)</button>':`<p><b>Podrás volver a jugar dentro de ${espera(g)}.</b></p>`}<button class="lg-x" id="jg-m">Salir</button>`;
     o.querySelector('.jg-box').appendChild(div);
     const re=div.querySelector('#jg-re');if(re){re.onclick=start;setTimeout(()=>re.focus({preventScroll:true}),300);}
     div.querySelector('#jg-m').onclick=menu;
