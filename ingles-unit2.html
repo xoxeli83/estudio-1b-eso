@@ -792,12 +792,12 @@ function openGame(onClose){
 const pk=a=>a[Math.floor(Math.random()*a.length)];
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const others=(list,a,n=3)=>sh([...new Set(list)].filter(x=>x!==a)).slice(0,n);
-const P=items=>()=>{const[q,a,w,n]=pk(items);return{q,a,w,n};};
+const P=items=>{let b=[];return()=>{if(!b.length)b=sh(items);const[q,a,w,n]=b.pop();return{q,a,w,n};};};
 
 /* ---------- Actividades ---------- */
 const ACT=[
  ['do','an experiment','hacer un experimento',['play','read','act']],
- ['do','homework','hacer los deberes',['play','act','use']],
+ ['do','your homework','hacer los deberes',['play','act','use']],
  ['do','gymnastics','hacer gimnasia',['read','use','take']],
  ['have','lunch','comer',['play','read','use']],
  ['have','a break','hacer un descanso',['play','read','use']],
@@ -990,7 +990,7 @@ const conjM=['and','or','but'];
 const conj=()=>{const[s,a]=pk([
  ["We've got English, French ___ German.",'and'],['My school has got a gym ___ a swimming pool.','and'],['I can swim ___ I can dive.','and'],['My sister ___ my brother can swim.','and'],
  ['Is your school big ___ small?','or'],['Is the exam on Monday ___ Tuesday?','or'],['Do you walk to school ___ go by bus?','or'],['You can choose Art ___ Music, not both.','or'],
- ["I like Maths, ___ I don't like History.",'but'],["He can sing, ___ he can't dance.",'but'],["I like Art, ___ I can't draw.",'but'],["I usually walk to school, ___ today I'm on the bus.",'but']
+ ["I like Maths, ___ I don't like History.",'but'],["He can sing, ___ he can't dance.",'but'],["I like Art, ___ I can't draw.",'but'],["I usually walk to school, ___ today I'm on the bus.",'but'],['I love Maths, ___ I can\'t stand History.','but'],['My parents love pizza, ___ they don\'t like fish.','but'],['We can go to Drama club ___ Film club.','or'],['Leo is very keen on chess ___ films.','and'],['Do you have lunch at school ___ at home?','or'],['Sara loves Art ___ Music.','and']
 ]);const N={and:'and añade: y.',or:'or da a elegir: o.',but:'but contrasta: pero.'};return{q:`Completa: ~${s}~`,a,w:[...conjM.filter(x=>x!==a),'of'],n:N[a]};};
 const conjS=P([
  ['¿Qué conjunción usas para **añadir** algo?','and',['or','but','of'],'and: y.'],
@@ -1030,18 +1030,66 @@ const LEC=[
 ];
 const lectura=()=>{const[t,f,v,n]=pk(LEC);return{q:`~${TX[t]}~ **True or false?** ~${f}~`,a:v?'True':'False',w:[v?'False':'True'],n:`En el texto: «${n}»`};};
 
-const G={verb1:genVerb(f1),es1:genEs(f1),verb2:genVerb(f2),es2:genEs(f2),clubA,clubB,dayEs,dayNext,daySpell,subEs,subEn,subClue,horario,hasHave,canPos,canNeg,canQ,canShort,canEs,canUso,canOrd,canErr,canSon,adEs,adEn,adRank,adPct,advVerb,advBe,advTipo,advOrd,advEs,advNeg,advPreg,lugar:prep(LUG),tiempo:prep(TIE),frSit,frGap,frResp,conj,conjS,facEs,escr,sug,lectura};
+
+const frase=P([
+ ['~I ___ a break at eleven.~','have',['play','read','act'],'have a break.'],['~We ___ experiments in Science.~','do',['play','read','act'],'do an experiment.'],
+ ['~My friends ___ chess after school.~','play',['read','use','act'],'play chess.'],['~I ___ my homework at home.~','do',['play','act','use'],'do your homework.'],
+ ['~You can ___ a computer in ICT.~','use',['act','read','do'],'use a computer.'],['~We ___ gymnastics in PE.~','do',['read','use','take'],'do gymnastics.'],
+ ['~I ___ lunch at school.~','have',['play','read','use'],'have lunch.'],['~She can ___ in a play.~','act',['use','have','do'],'act in a play.'],
+ ['~I ___ a book at night.~','read',['play','act','do'],'read a book.'],['~We ___ an exam on Friday.~','take',['play','act','use'],'take an exam.'],
+ ['~They ___ football at lunchtime.~','play',['read','use','act'],'play football.'],['~He can ___ a musical instrument.~','play',['read','take','act'],'play a musical instrument.']
+]);
+const subSpell=P([
+ ['¿Cuál está **bien escrita**?','Geography',['Geografy','Geographi','Jeography'],'Geo-gra-phy, con ph.'],['¿Cuál está **bien escrita**?','Science',['Sciense','Sience','Scienze'],'Sci-ence.'],
+ ['¿Cuál está **bien escrita**?','Maths',['Mats','Math\'s','Mathes'],'Maths, con th y s.'],['¿Cuál está **bien escrita**?','History',['Historie','Histori','Hystory'],'His-to-ry.'],
+ ['¿Cuál está **bien escrita**?','Technology',['Tecnology','Technologie','Tecknology'],'Tech-no-lo-gy, con ch.'],['¿Cuál está **bien escrita**?','Music',['Musik','Musique','Musica'],'Mu-sic.'],
+ ['¿Cuál está **bien escrita**?','French',['Frensh','Franch','Frenche'],'French, con ch.'],['¿Cuál está **bien escrita**?','English',['Inglish','Englis','english'],'Con E mayúscula, y sh al final.'],
+ ['¿Cuál está **bien escrita**?','We have got Art on Monday.',['We have got art on monday.','we have got Art on monday.','We have got art on Monday.'],'Asignaturas y días: con mayúscula.']
+]);
+const GENTE=[['Alice','she'],['Jos','he'],['Emma','she'],['Tom','he'],['Lucy','she'],['Ben','he']];
+const TV=[['speak Spanish','Speak Spanish'],['speak French','Speak French'],['swim','Swim'],['play chess','Play chess'],['ride a bike','Ride a bike'],['cook pasta','Cook pasta'],['act in a play','Act in a play'],['use a computer','Use a computer'],['play the guitar','Play the guitar'],['do gymnastics','Do gymnastics']];
+const tabla=()=>{const[a,b]=sh(GENTE).slice(0,2).map(x=>x[0]),v=pk(TV),k=pk(['yn','ny','yy','nn','yn','ny']);
+  const cab=`~${v[1]}~: ${a} ${k[0]==='y'?'✔️':'❌'}, ${b} ${k[1]==='y'?'✔️':'❌'}. ¿Qué frase es **correcta**?`;
+  const L={yn:`${a} can ${v[0]}, but ${b} can't.`,ny:`${a} can't ${v[0]}, but ${b} can.`,yy:`${a} and ${b} can ${v[0]}.`,nn:`${a} and ${b} can't ${v[0]}.`};
+  return{q:cab,a:L[k],w:Object.keys(L).filter(x=>x!==k).map(x=>L[x]),n:'✔️ es can. ❌ es can\'t. Si son distintos, únelos con but.'};};
+const tabla2=()=>{const[n,he]=pk(GENTE),[v,u]=sh(TV).slice(0,2),q=`~${v[1]}~ ✔️ y ~${u[1]}~ ❌. Escribe sobre ${n}:`;
+  return{q,a:`${n} can ${v[0]}, but ${he} can't ${u[0]}.`,w:[`${n} can't ${v[0]}, but ${he} can ${u[0]}.`,`${n} can ${v[0]}, but ${he} don't can ${u[0]}.`,`${n} cans ${v[0]}, but ${he} can't ${u[0]}.`],n:'✔️ can. ❌ can\'t.'};};
+const canFix=()=>{const[s,t]=pk(SJ),v=pk(VB),e=v[0],l=low(s),[bad,good,o1,o2,n]=pk([
+ [`${s} cans ${e}.`,`${s} can ${e}.`,`${s} can ${v[2]}.`,`${s} can to ${e}.`,'can no lleva «s».'],
+ [`${s} can to ${e}.`,`${s} can ${e}.`,`${s} cans ${e}.`,`${s} to can ${e}.`,'Después de can no va «to».'],
+ [`${s} can ${v[2]}.`,`${s} can ${e}.`,`${s} cans ${v[2]}.`,`${s} can to ${e}.`,'Después de can, el verbo va sin «s».'],
+ [`${s} ${t?"doesn't":"don't"} can ${e}.`,`${s} can't ${e}.`,`${s} can't to ${e}.`,`${s} ${t?"doesn't":"don't"} ${e}.`,"La negativa es can't."],
+ [`${s} can't to ${e}.`,`${s} can't ${e}.`,`${s} can not to ${e}.`,`${s} ${t?"doesn't":"don't"} can ${e}.`,"Después de can't no va «to»."],
+ [`${t?'Does':'Do'} ${l} can ${e}?`,`Can ${l} ${e}?`,`Can ${l} to ${e}?`,`${s} can ${e}?`,'Para preguntar, Can va delante, sin do.']
+]);return{q:`**Corrige** la frase: ~${bad}~`,a:good,w:[o1,o2,bad].filter(x=>x!==good),n};};
+const actFix=P([
+ ['**Corrige** la frase: ~I play my homework.~','I do my homework.',['I have my homework.','I act my homework.','I play my homework.'],'do your homework.'],
+ ['**Corrige** la frase: ~We do chess after school.~','We play chess after school.',['We read chess after school.','We use chess after school.','We do chess after school.'],'play chess.'],
+ ['**Corrige** la frase: ~I play lunch at school.~','I have lunch at school.',['I read lunch at school.','I use lunch at school.','I play lunch at school.'],'have lunch.'],
+ ['**Corrige** la frase: ~She plays gymnastics.~','She does gymnastics.',['She reads gymnastics.','She uses gymnastics.','She plays gymnastics.'],'do gymnastics, con she: does.'],
+ ['**Corrige** la frase: ~They read a computer.~','They use a computer.',['They act a computer.','They take a computer.','They read a computer.'],'use a computer.'],
+ ['**Corrige** la frase: ~We have an experiment in Science.~','We do an experiment in Science.',['We play an experiment in Science.','We read an experiment in Science.','We have an experiment in Science.'],'do an experiment.'],
+ ['**Corrige** la frase: ~I study maths on monday.~','I study Maths on Monday.',['I study maths on Monday.','I study Maths on monday.','I study maths on monday.'],'Asignaturas y días: con mayúscula.']
+]);
+const OY='🔊 Escucha. ';
+const listen1=()=>{const[n,he]=pk(GENTE),[v,u]=sh(VB).slice(0,2),t=`${n} can ${v[0]}, but ${he} can't ${u[0]}.`,o=sh(VB.filter(x=>x!==v&&x!==u)).slice(0,2).map(x=>x[1]);
+  return Math.random()<.5?{q:`${OY}¿Qué **sabe** hacer ${n}?`,say:`~${t}~`,a:v[1],w:[u[1],...o],n:`El audio decía: «${t}»`}:{q:`${OY}¿Qué **no sabe** hacer ${n}?`,say:`~${t}~`,a:u[1],w:[v[1],...o],n:`El audio decía: «${t}»`};};
+const listen2=()=>{const[n,he]=pk(GENTE),v=pk(VB),y=Math.random()<.5,t=`${n} ${y?'can':"can't"} ${v[0]}.`;return{q:`${OY}¿Qué frase has oído?`,say:`~${t}~`,a:t,w:[`${n} ${y?"can't":'can'} ${v[0]}.`,`${n} ${y?'can':"can't"} ${pk(VB.filter(x=>x!==v))[0]}.`,`${he==='she'?'Tom':'Lucy'} ${y?'can':"can't"} ${v[0]}.`],n:`El audio decía: «${t}». can suena suave y can't, fuerte.`};};
+const listen3=()=>{const l=sh(LESS).slice(0,3),d=pk(DAYS.slice(0,5)),t=`On ${d} I have got ${l[0]}, then ${l[1]}, and after break I have got ${l[2]}.`,tp=pk([[`Which subject is first?`,l[0]],[`Which subject is after break?`,l[2]]]);return{q:`${OY}~${tp[0]}~`,say:`~${t} ${tp[0]}~`,a:tp[1],w:[...l.filter(x=>x!==tp[1]),pk(LESS.filter(x=>!l.includes(x)))],n:`El audio decía: «${t}»`};};
+const listen4=()=>{const x=pk(ACT),o=sh(ACT.filter(y=>y!==x)).slice(0,3),N=pk(['I','We','They']),t=`${N} usually ${x[0]} ${x[1]} after school.`;return{q:`${OY}¿Qué actividad has oído?`,say:`~${t}~`,a:`${x[0]} ${x[1]}`,w:o.map(y=>`${y[0]} ${y[1]}`),n:`El audio decía: «${t}»`};};
+
+const G={verb1:genVerb(f1),es1:genEs(f1),verb2:genVerb(f2),es2:genEs(f2),clubA,clubB,dayEs,dayNext,daySpell,subEs,subEn,subClue,horario,hasHave,canPos,canNeg,canQ,canShort,canEs,canUso,canOrd,canErr,canSon,adEs,adEn,adRank,adPct,advVerb,advBe,advTipo,advOrd,advEs,advNeg,advPreg,lugar:prep(LUG),tiempo:prep(TIE),frSit,frGap,frResp,conj,conjS,facEs,escr,sug,lectura,frase,subSpell,tabla,tabla2,canFix,actFix,listen1,listen2,listen3,listen4};
 const NOMBRES=Object.keys(G);
 const Q=NOMBRES.map((k,i)=>({id:i+1,gen:G[k],q:k,a:'',w:[],n:''}));
 const byId=Object.fromEntries(Q.map(x=>[String(x.id),x]));
-const OFFICIAL=Q;
+const OFFICIAL=Q.filter(x=>['verb1','verb2','frase','subEs','subEn','subClue','subSpell','canPos','canNeg','canQ','canShort','canErr','canFix','actFix','tabla','tabla2','listen1','listen2','listen3','listen4','conj','lectura'].includes(x.q));
 const I=k=>NOMBRES.indexOf(k)+1;
-const M=[
- {t:'Actividades con do y have',f:[['🧪','~do~: ~do an experiment~, ~do homework~, ~do gymnastics~.'],['🍽️','~have~: ~have lunch~, ~have a break~.']],q:[I('verb1'),I('es1'),I('verb1')]},
+const M0=[
+ {t:'Actividades con do y have',f:[['🧪','~do~: ~do an experiment~, ~do your homework~, ~do gymnastics~.'],['🍽️','~have~: ~have lunch~, ~have a break~.']],q:[I('verb1'),I('es1'),I('verb1')],try:'En tu cuaderno, escribe las 12 actividades: do, have, play, read, use, act y take.'},
  {t:'Actividades con otros verbos',f:[['♟️','~play~: ~play chess~, ~play football~, ~play a musical instrument~.'],['📖','~read a book~, ~use a computer~.'],['🎭','~act in a play~, ~take an exam~.']],q:[I('verb2'),I('es2'),I('verb2')]},
  {t:'Clubs del colegio',f:[['🎨','~Art~: pintar. ~Chess~: ajedrez.'],['🍳','~Cookery~: cocinar. ~Drama~: actuar.'],['🎬','~Film~: películas. ~Magazine~: una revista.'],['🔬','~Science~: experimentos. ~Sports~: deporte.']],q:[I('clubA'),I('clubB'),I('clubA')]},
  {t:'Días de la semana',f:[['📅','~Monday~, ~Tuesday~, ~Wednesday~, ~Thursday~.'],['🎉','~Friday~, ~Saturday~, ~Sunday~.'],['🔠','Siempre con **mayúscula**.'],['👀','Ojo: ~Wednesday~ se escribe con una **d** que no suena.']],q:[I('dayEs'),I('dayNext'),I('daySpell')]},
- {t:'Asignaturas',f:[['🔢','~Maths~, ~Science~, ~Technology~, ~ICT~ (informática).'],['🌍','~History~, ~Geography~, ~Citizenship~, ~Religious Studies~.'],['🗣️','~English~, ~Spanish~, ~French~, ~German~.'],['🎵','~Art~, ~Music~, ~Drama~, ~PE~ (Educación Física).']],q:[I('subEs'),I('subEn'),I('subClue'),I('subEs')]},
+ {t:'Asignaturas',f:[['🔢','~Maths~, ~Science~, ~Technology~, ~ICT~ (informática).'],['🌍','~History~, ~Geography~, ~Citizenship~, ~Religious Studies~.'],['🗣️','~English~, ~Spanish~, ~French~, ~German~.'],['🎵','~Art~, ~Music~, ~Drama~, ~PE~ (Educación Física).']],q:[I('subEs'),I('subEn'),I('subClue'),I('subSpell')],try:'En tu cuaderno, sin mirar, escribe las asignaturas en inglés. Después compruébalas en la chuleta.'},
  {t:'El horario',f:[['📋','~timetable~: horario. ~lesson~: clase.'],['🕘','~What have you got on Monday?~ ¿Qué tienes el lunes?'],['✅','~We\'ve got Maths.~ Con ~he~ y ~she~: ~has got~.'],['☕','~before break~: antes del recreo. ~after break~: después.']],q:[I('hasHave'),I('horario'),I('horario')]},
  {t:'can: decir lo que sabes hacer',f:[['💪','~I can swim.~ Sé nadar.'],['🟰','**Igual para todos**: ~she can~, nunca ~she cans~.'],['🚫','Sin **to**: nunca ~I can to swim~.'],['🚫','El verbo sin **s**: nunca ~she can swims~.']],q:[I('canPos'),I('canPos'),I('canEs')]},
  {t:"can't: lo que no sabes hacer",f:[['🙅',"~I can't swim.~ No sé nadar."],['🟰',"~can't~ es igual que ~cannot~."],['🚫',"No se usa don't: nunca ~I don't can~."]],q:[I('canNeg'),I('canNeg'),I('canErr')]},
@@ -1055,10 +1103,20 @@ const M=[
  {t:'on, at, in: cuándo',f:[['📅','~on~ + día: ~on Monday~.'],['🕘','~at~ + hora: ~at nine o\'clock~.'],['🌅','~in~ + parte del día o mes: ~in the morning~, ~in July~.']],q:[I('tiempo'),I('tiempo'),I('tiempo')]},
  {t:'En clase: preguntar',f:[['🙋','~Excuse me…~ para empezar con educación.'],['❓','~What does it mean?~ ~How do you say it in English?~'],['🔤','~How do you spell that?~'],['🐢','~Could you repeat that, please?~ ~Could you speak more slowly, please?~']],q:[I('frSit'),I('frGap'),I('frSit'),I('frGap')]},
  {t:'En clase: responder',f:[['📕','~Can I borrow your dictionary, please?~ ¿Me lo dejas?'],['😀','~Yes, of course.~ ~Sorry, I\'m using it.~'],['🤔',"~Sorry, I don't know.~ ~I'm not sure.~"],['😕',"~Sorry, I don't understand.~"]],q:[I('frResp'),I('frResp'),I('frResp')]},
- {t:'and, or, but',f:[['➕','~and~: **añade**. ~a gym and a pool~'],['🔀','~or~: **da a elegir**. ~big or small?~'],['⚡','~but~: **contrasta**. ~I can sing, but I can\'t dance.~']],q:[I('conjS'),I('conj'),I('conj'),I('conj')]},
+ {t:'and, or, but',try:'En tu cuaderno, escribe tres frases sobre tus asignaturas: una con and, otra con or y otra con but.',f:[['➕','~and~: **añade**. ~a gym and a pool~'],['🔀','~or~: **da a elegir**. ~big or small?~'],['⚡','~but~: **contrasta**. ~I can sing, but I can\'t dance.~'],['💡','~keen on~: que le encanta. ~can\'t stand~: que no soporta.']],q:[I('conjS'),I('conj'),I('conj'),I('conj')]},
  {t:'Describir tu colegio',f:[['🏫','Nombre: ~My school is called…~'],['🏊','Sitios: ~We have got a gym and a library.~'],['⚽','Qué se hace: ~You can play sports after school.~'],['💬','Opinión: ~It is small, but I like it.~']],q:[I('facEs'),I('escr'),I('escr'),I('sug')],try:'En tu cuaderno, describe tu colegio en cinco frases. Usa and, or y but, una vez cada una, y un adverbio.'},
  {t:'Leer sin miedo',f:[['👀','Lee **primero** la frase que te preguntan.'],['🔎','Busca en el texto las **palabras clave**.'],['⚠️','Fíjate en ~always~, ~usually~, ~never~ y ~can\'t~: cambian el sentido.']],q:[I('lectura'),I('lectura'),I('lectura'),I('lectura')]}
 ];
+const NUEVAS=[
+ {t:'Actividades en frases',f:[['🧩','Las palabras son: ~act~, ~do~, ~have~, ~play~, ~read~, ~take~ y ~use~.'],['✏️','Con **he** o **she**, el verbo lleva **s**: ~plays~, ~does~, ~has~.']],q:[I('frase'),I('frase'),I('frase'),I('frase')]},
+ {t:'La tabla: ✔️ y ❌',f:[['✔️','Si tiene ✔️: ~can~.'],['❌','Si tiene ❌: ~can\'t~.'],['🔗','Si son distintos, únelos con ~but~: ~Alice can speak Spanish, but Jos can\'t.~'],['👥','Si son iguales: ~Alice and Jos can swim.~']],q:[I('tabla'),I('tabla'),I('tabla2'),I('tabla')],try:'En tu cuaderno, escribe la frase: Speak French, Alice ✔️, Jos ❌. Debería salirte: Alice can speak French, but Jos can\'t speak French.'},
+ {t:'Corregir frases',f:[['🔎','Busca la **s** de más: ~She cans swim~ está mal.'],['🚫','Busca el **to**: ~I can to swim~ está mal.'],['🚫','Busca ~don\'t can~: se dice ~can\'t~.'],['🧩','Mira también el verbo: ~do your homework~, no ~play~.']],q:[I('canFix'),I('canFix'),I('actFix'),I('canFix'),I('canErr')]},
+ {t:'Listening',f:[['👂','Lee **antes** lo que te preguntan.'],['🔁','Puedes volver a oírlo con el altavoz 🔊.'],['🎯','Atiende a ~can~ y ~can\'t~, a las asignaturas y a las actividades.']],q:[I('listen1'),I('listen2'),I('listen3'),I('listen4')]}
+];
+const T=t=>[...M0,...NUEVAS].find(m=>m.t===t)||(()=>{throw t})();
+const ORDEN_EX=['Actividades con do y have','Actividades con otros verbos','Actividades en frases','Asignaturas','can: decir lo que sabes hacer',"can't: lo que no sabes hacer",'Preguntas con can','La tabla: ✔️ y ❌','Corregir frases','Listening','Leer sin miedo','and, or, but'];
+const M=[...ORDEN_EX.map(T),...M0.filter(m=>!ORDEN_EX.includes(m.t))];
+window.EX=ORDEN_EX.length;
 
 const PRAISE=['Misión hecha.','Hecha. Has llegado hasta el final.','Bien: has seguido hasta acabar.','Otra menos.','Hecha. Cada misión cuenta.'];
 const RIGHT=['✓ ¡Sí!','✓ Correcto','✓ Eso es','✓ Muy bien'];
@@ -1088,6 +1146,7 @@ function ding(ok){
     o.start();g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.25);o.stop(c.currentTime+.27);}catch(e){}
 }
 function speak(t){try{speechSynthesis.cancel();String(t).split('~').forEach((p,i)=>{const x=plain(p).trim();if(!x)return;const u=new SpeechSynthesisUtterance(x);u.lang=i%2?'en-GB':'es-ES';u.rate=i%2?.85:.95;speechSynthesis.speak(u);});}catch(e){}}
+function gOye(q){if(!q.say)return;speak(q.say);const e=document.querySelector('.q');if(e){const b=document.createElement('button');b.className='link';b.style.cssText='display:block;font-size:16px;margin-top:8px';b.textContent='No se oye: ver el texto';b.onclick=()=>{b.outerHTML='<div class="small">'+fmt(q.say)+'</div>';};e.appendChild(b);}}
 function shell(inner,{pct=null,say=null,exit=true}={}){
   app.innerHTML=`<div class="top no-print">${exit?'<button class="link" id="ex">Salir</button>':''}${pct!==null?`<div class="bar"><i style="width:${pct}%"></i></div>`:'<div style="flex:1"></div>'}${say?'<button class="say" id="say" aria-label="Leer en voz alta">🔊</button>':''}</div><div class="mid">${inner}</div>`;
   const e=document.getElementById('ex');if(e)e.onclick=home;
@@ -1103,9 +1162,10 @@ const wrongIds=()=>Object.keys(S.wrong).filter(k=>byId[k]);
 
 /* ===== Inicio: una sola cosa que hacer ===== */
 function nextAction(){
-  const i=M.findIndex((_,k)=>!S.done[k]);
-  if(i>=0)return{small:`Misión ${i+1} de ${M.length}`,title:M[i].t,sub:'Unos 2 minutos',fn:()=>ready(()=>lesson(i))};
+  const E=window.EX||M.length;const i=M.findIndex((_,k)=>k<E&&!S.done[k]);
+  if(i>=0)return{small:window.EX?`Para el examen: misión ${i+1} de ${E}`:`Misión ${i+1} de ${M.length}`,title:M[i].t,sub:'Unos 2 minutos',fn:()=>ready(()=>lesson(i))};
   if(wrongIds().length)return{small:'Repaso',title:'Lo que te costó',sub:`${Math.min(5,wrongIds().length)} preguntas`,fn:()=>ready(startReview)};
+  if(window.EX&&S.best!=null){const j=M.findIndex((_,k)=>!S.done[k]);if(j>=0)return{small:'Más de la unidad',title:M[j].t,sub:'Unos 2 minutos',fn:()=>ready(()=>lesson(j))};}
   return{small:'Último paso',title:'Simulacro de examen',sub:'30 preguntas, en 3 trozos de 10',fn:()=>ready(simIntro)};
 }
 function home(){
@@ -1171,7 +1231,7 @@ function showQ(){
   const opts=shuffle([q.a,...wro]);
   const pct=Math.round(R.pos/R.queue.length*100);
   const tag=it.rev&&R.kind==='mission'?'<div class="tag">Una de repaso</div>':it.again?'<div class="tag">Otra vez, ahora sale</div>':'';
-  shell(`${tag}<div class="q">${fmt(q.q)}</div><div class="opts" id="opts"></div><div id="fb"></div>`,{pct,say:q.q+' '+opts.map((o,i)=>`${i+1}: ${o}`).join('. ')});
+  shell(`${tag}<div class="q">${fmt(q.q)}</div><div class="opts" id="opts"></div><div id="fb"></div>`,{pct,say:q.say||(q.q+' '+opts.map((o,i)=>`${i+1}: ${o}`).join('. '))});gOye(q);
   let done=false;
   const answer=k=>{
     if(done)return;done=true;
@@ -1227,7 +1287,7 @@ function route(){
   if(S.sess.since>=S.cfg.brk){S.sess.since=0;save();return move(nextOrHome);}
   nextOrHome();
 }
-function nextOrHome(){const i=M.findIndex((_,k)=>!S.done[k]);if(i>=0)lesson(i);else home();}
+function nextOrHome(){const E=window.EX&&S.best==null?window.EX:M.length;const i=M.findIndex((_,k)=>k<E&&!S.done[k]);if(i>=0)lesson(i);else home();}
 function afterReview(){
   clearAll();gAward(3,60);const banner=gBanner();
   shell(`<h1>Repaso hecho</h1>${banner}<p class="small">${wrongIds().length?`Quedan ${wrongIds().length} para otro rato.`:'No queda ninguna pendiente.'}</p><button class="go" id="go">Seguir</button>`,{exit:false});
@@ -1263,7 +1323,7 @@ function simQ(){
   clearAll();
   if(R.pos>=R.ids.length)return simEnd();
   const q=pickVar(byId[R.ids[R.pos]]),opts=shuffle([q.a,...q.w]);window.CURQ=q;
-  shell(`<div class="tag">Pregunta ${R.pos+1} de 30</div><div class="q">${fmt(q.q)}</div><div class="opts" id="opts"></div>`,{pct:R.pos/30*100,say:q.q+' '+opts.map((o,i)=>`${i+1}: ${o}`).join('. ')});
+  shell(`<div class="tag">Pregunta ${R.pos+1} de 30</div><div class="q">${fmt(q.q)}</div><div class="opts" id="opts"></div>`,{pct:R.pos/30*100,say:q.say||(q.q+' '+opts.map((o,i)=>`${i+1}: ${o}`).join('. '))});gOye(q);
   let done=false;
   const answer=k=>{if(done)return;done=true;
     if(opts[k]===q.a){R.ok++;R.bok++;delete S.wrong[q.id];gCorrect(q.id);}else{R.miss.push(String(q.id));R.mq=R.mq||{};R.mq[q.id]=q;S.wrong[q.id]=true;}
@@ -1296,7 +1356,7 @@ function map(){
 }
 function cheat(){
   clearAll();
-  shell(`<div class="page"><h2>Chuleta de la Unit 2</h2>${fmt(`<table><tr><td><b>do / have</b></td><td>~do an experiment, do homework, do gymnastics, have lunch, have a break~</td></tr><tr><td><b>Otros verbos</b></td><td>~play chess, play football, play a musical instrument, read a book, use a computer, act in a play, take an exam~</td></tr><tr><td><b>Días</b></td><td>~Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday~, con mayúscula</td></tr><tr><td><b>Asignaturas</b></td><td>~Art, Citizenship, Drama, English, French, Geography, German, History, ICT, Maths, Music, PE, Religious Studies, Science, Spanish, Technology~</td></tr><tr><td><b>can</b></td><td>~I can swim.~ Igual para todos, sin «s» y sin «to»</td></tr><tr><td><b>can't</b></td><td>~She can't swim.~ Nunca ~don't can~</td></tr><tr><td><b>Preguntas</b></td><td>~Can you act? Yes, I can. / No, I can't.~</td></tr><tr><td><b>Usos de can</b></td><td>Habilidad: ~My dad can cook.~ Posibilidad: ~You can eat here.~</td></tr><tr><td><b>Adverbios</b></td><td>~always, usually / normally, often, sometimes, never~</td></tr><tr><td><b>Verbo normal</b></td><td>Delante: ~I always do my homework.~</td></tr><tr><td><b>Verbo to be</b></td><td>Detrás: ~Our teacher is never late.~</td></tr><tr><td><b>Negativa</b></td><td>~I don't often watch TV.~ Nunca ~don't never~</td></tr><tr><td><b>in</b></td><td>~in Australia, in a class, in a house~. También meses y partes del día</td></tr><tr><td><b>at</b></td><td>~at home, at work, at school~. También horas</td></tr><tr><td><b>on</b></td><td>~on holiday, on a farm~. También días</td></tr><tr><td><b>En clase</b></td><td>~Excuse me… / What does it mean? / How do you say it in English? / How do you spell that? / Could you repeat that, please? / Could you speak more slowly, please? / Can I borrow your dictionary, please?~</td></tr><tr><td><b>Responder</b></td><td>~Yes, of course. / Sorry, I don't know. / I'm not sure. / Sorry, I don't understand. / Sorry, I'm using it.~</td></tr><tr><td><b>Conjunciones</b></td><td>~and~ añade, ~or~ da a elegir, ~but~ contrasta</td></tr></table>`)}<button class="alt no-print" id="pr">Imprimir</button></div>`);
+  shell(`<div class="page"><h2>Chuleta de la Unit 2</h2>${fmt(`<table><tr><td><b>do / have</b></td><td>~do an experiment, do your homework, do gymnastics, have lunch, have a break~</td></tr><tr><td><b>Otros verbos</b></td><td>~play chess, play football, play a musical instrument, read a book, use a computer, act in a play, take an exam~</td></tr><tr><td><b>Días</b></td><td>~Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday~, con mayúscula</td></tr><tr><td><b>Asignaturas</b></td><td>~Art, Citizenship, Drama, English, French, Geography, German, History, ICT, Maths, Music, PE, Religious Studies, Science, Spanish, Technology~</td></tr><tr><td><b>can</b></td><td>~I can swim.~ Igual para todos, sin «s» y sin «to»</td></tr><tr><td><b>can't</b></td><td>~She can't swim.~ Nunca ~don't can~</td></tr><tr><td><b>Preguntas</b></td><td>~Can you act? Yes, I can. / No, I can't.~</td></tr><tr><td><b>Tabla</b></td><td>✔️ can, ❌ can't: ~Alice can speak Spanish, but Jos can't.~</td></tr><tr><td><b>Usos de can</b></td><td>Habilidad: ~My dad can cook.~ Posibilidad: ~You can eat here.~</td></tr><tr><td><b>Adverbios</b></td><td>~always, usually / normally, often, sometimes, never~</td></tr><tr><td><b>Verbo normal</b></td><td>Delante: ~I always do my homework.~</td></tr><tr><td><b>Verbo to be</b></td><td>Detrás: ~Our teacher is never late.~</td></tr><tr><td><b>Negativa</b></td><td>~I don't often watch TV.~ Nunca ~don't never~</td></tr><tr><td><b>in</b></td><td>~in Australia, in a class, in a house~. También meses y partes del día</td></tr><tr><td><b>at</b></td><td>~at home, at work, at school~. También horas</td></tr><tr><td><b>on</b></td><td>~on holiday, on a farm~. También días</td></tr><tr><td><b>En clase</b></td><td>~Excuse me… / What does it mean? / How do you say it in English? / How do you spell that? / Could you repeat that, please? / Could you speak more slowly, please? / Can I borrow your dictionary, please?~</td></tr><tr><td><b>Responder</b></td><td>~Yes, of course. / Sorry, I don't know. / I'm not sure. / Sorry, I don't understand. / Sorry, I'm using it.~</td></tr><tr><td><b>Conjunciones</b></td><td>~and~ añade, ~or~ da a elegir, ~but~ contrasta</td></tr></table>`)}<button class="alt no-print" id="pr">Imprimir</button></div>`);
   document.getElementById('pr').onclick=()=>window.print();
 }
 function parents(){
