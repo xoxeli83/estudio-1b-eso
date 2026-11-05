@@ -44,7 +44,8 @@ html{padding-top:var(--nf)!important}
 <li>Haz las <b>misiones</b>: una explicación breve y unas preguntas.</li>
 <li>Lo que falles volverá a salir en un <b>repaso</b>.</li>
 <li>Al final hay un <b>simulacro</b> de examen.</li></ol>
-<p>En <b>Calendario</b> están los exámenes y las tareas de la clase. Quien está en el grupo puede añadir y corregir datos, así que comprueba las fechas importantes con el profesorado.</p></section>
+<div class="ojo"><p><b>Cada pregunta dura al menos 10 segundos.</b> Puedes contestar antes, pero no pasarás a la siguiente hasta que acabe la cuenta y pulses «Siguiente». Si tardas más, no pasa nada. Y cuando una pregunta se repite, las respuestas salen en otro orden: hay que recordar qué dice la buena, no dónde estaba.</p></div>
+<p>En <b>Calendario</b> están los exámenes y las tareas de la clase. Es el mismo para todo el grupo y todos pueden añadir y corregir datos. Para verlo hay que entrar una vez en cada dispositivo, con el código del grupo o con tu clave personal. Comprueba las fechas importantes con el profesorado.</p></section>
 
 <section id="estrellas"><h2>Cómo se ganan estrellas ⭐</h2>
 <p>Las estrellas <b>nunca se pierden</b>.</p>
@@ -82,7 +83,7 @@ html{padding-top:var(--nf)!important}
 <p>Cada partida gasta 1 ficha. Puedes tener <b>3 como máximo</b>.</p>
 <ul><li>Ganas 1 ficha al terminar una misión, un repaso o un simulacro.</li>
 <li>También recuperas 1 ficha cada 2 horas.</li></ul>
-<div class="ojo"><p><b>Al gastar la última ficha hay que esperar 1 hora</b>, por mucho que estudies. Lo que estudies durante esa hora te guarda fichas para cuando acabe la espera, hasta 3. Pasada la hora tendrás al menos 1.</p></div></section>
+<div class="ojo"><p><b>Al gastar la última ficha hay que esperar 1 hora</b>, por mucho que estudies y en cualquier móvil u ordenador. Lo que estudies durante esa hora te guarda fichas para cuando acabe la espera, hasta 3. Pasada la hora tendrás al menos 1.</p></div></section>
 
 <section id="juegos"><h2>Juegos</h2>
 <p>Para jugar tienes que estar <b>identificado en el grupo</b>. Para estudiar no hace falta.</p>
@@ -106,7 +107,7 @@ html{padding-top:var(--nf)!important}
 <li>Elige un <b>apodo inventado</b>, de 3 a 14 letras o números. Nunca tu nombre real.</li>
 <li>Marca la casilla de que tu padre, madre o tutor te ha dado permiso, y pulsa <b>Entrar</b>.</li></ol>
 <div class="ojo"><p><b>El código no se comparte fuera de la clase.</b> Cualquiera que lo tenga puede entrar en el grupo.</p></div>
-<p>Tu identificación queda guardada en ese móvil u ordenador. Cada apodo solo se puede registrar una vez, y el progreso no pasa de un dispositivo a otro. Por eso lo mejor es usar siempre el mismo.</p></section>
+<h3>Tu clave personal</h3><p>Cada apodo solo se registra una vez. En <b>Liga</b> verás tu clave personal: apúntala y no se la des a nadie. Con ella entras en otro móvil u ordenador y sigues con tus fichas, estrellas y premios. El avance dentro de cada tema se queda en el dispositivo donde estudias.</p></section>
 
 <section id="liga"><h2>Liga y duelos</h2>
 <p>La clasificación tiene seis listas, para que no destaque siempre el mismo:</p>
@@ -126,19 +127,19 @@ html{padding-top:var(--nf)!important}
 
 <section id="familias"><h2>Para las familias</h2>
 <h3>Premios después de un examen</h3>
-<p>En el Gran Premio, abajo del todo, está <b>👪 Para padres</b>, protegido con un PIN que crea la familia. Se puede dar un premio por esfuerzo, mejora o aprobado. <b>Ni la nota ni el motivo se escriben o se guardan.</b> Cada premio rellena las fichas, también durante la hora de espera. El PIN y los premios se guardan solo en ese dispositivo.</p>
+<p>En el Gran Premio, abajo del todo, está <b>👪 Para padres</b>, protegido con un PIN que crea la familia y que vale para ese jugador en todos sus dispositivos. Se puede dar un premio por esfuerzo, mejora o aprobado. <b>Ni la nota ni el motivo se escriben o se guardan.</b> Cada premio rellena las fichas, también durante la hora de espera.</p>
 <h3>Qué ve el resto del grupo</h3>
 <p>El apodo, el muñeco, las estrellas, el porcentaje de estudio, los resultados de simulacro, la mejor puntuación en Salta y corre, los días seguidos y los trofeos. También quién ha añadido cada dato del calendario, por su apodo. En una carrera con amigos, los jugadores de la sala reciben en directo el apodo, el muñeco, el vehículo y la posición del coche. Esos datos de la carrera no se guardan en la base de datos.</p>
 <h3>Qué no se pide</h3>
 <p>Ni nombre real, ni correo, ni teléfono, ni contraseña, ni notas del colegio.</p>
 <h3>Dónde se guarda</h3>
-<ul><li><b>En el móvil u ordenador:</b> el progreso de cada tema, las fichas, los premios y el PIN.</li>
-<li><b>En un servicio externo (Supabase):</b> lo que ve el grupo.</li>
+<ul><li><b>En el móvil u ordenador:</b> el avance dentro de cada tema.</li>
+<li><b>En un servicio externo (Supabase):</b> lo que ve el grupo y, sin que el resto lo vea, las fichas, los premios, el PIN cifrado y la clave personal.</li>
 <li>La web se publica en GitHub Pages y carga letras y programas desde Google Fonts y jsDelivr.</li></ul>
 <h3>Borrar el perfil</h3>
 <p>En <b>Liga</b>, abajo del todo, está <b>Borrar mi perfil</b>. Quita al jugador del grupo. Hay que pulsarlo dos veces y no se puede deshacer.</p>
 <h3>A tener en cuenta</h3>
 <ul><li>Los resúmenes y las preguntas son de elaboración propia y pueden tener errores. Si veis alguno, avisad a quien coordina la web.</li>
-<li>Hace falta internet para el Gran Premio, la clasificación y el calendario. Las canciones pesan unos 5 MB cada una, a tener en cuenta con datos móviles.</li></ul></section>
+<li>Hace falta internet para jugar, para la clasificación y para el calendario. Estudiar sin conexión funciona, y las estrellas se suben al volver. Las canciones pesan unos 5 MB cada una, a tener en cuenta con datos móviles.</li></ul></section>
 <a class="vuelta" href="index.html">Volver a las asignaturas</a>
 </main></body></html>

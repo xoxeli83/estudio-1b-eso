@@ -446,7 +446,8 @@ function gAward(n,time){
   if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
     if(tr)tr.items.forEach((it,i)=>{if(b4<G_UMBRAL[i]&&g.sub[sj]>=G_UMBRAL[i]){g.fresh.push('@'+tr.id+':'+it[0]);g.av[tr.slot]=it[0];}});}
   G_ORDER.forEach(k=>{const c=gCost(k);if(before<c&&g.stars>=c){const [p,id]=k.split(':');g.fresh.push(k);g.av[p]=id;}});
-  gSave(g);
+  if(g.liga)(g.pend=g.pend||[]).push([sj||null,n,!!time]);
+  gSave(g);gFlush();
 }
 const gStars=()=>gLoad().stars;
 const gHoy=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
@@ -542,18 +543,19 @@ function openLeague(onClose){
       <label class="lg-l">Tu apodo<input id="lg-a" autocomplete="off" maxlength="14"></label>
       <p class="lg-s">Usa un apodo inventado, nunca tu nombre real.</p>
       <label class="lg-ck"><input type="checkbox" id="lg-p"> Mi padre, madre o tutor me ha dado permiso.</label>
-      <div class="lg-err" id="lg-e" role="alert"></div><button class="lg-go" id="lg-j">Entrar</button></div>`;
+      <div class="lg-err" id="lg-e" role="alert"></div><button class="lg-go" id="lg-j">Entrar</button><h3>¿Ya tienes apodo?</h3><label class="lg-l">Tu clave personal<input id="lg-k" autocomplete="off" maxlength="20"></label><div class="lg-err" id="lg-e2" role="alert"></div><button class="lg-go" id="lg-kg">Entrar con mi clave</button></div>`;
+    o.querySelector('#lg-kg').onclick=async()=>{try{const r=await ligaRpc('s_entrar',{p_clave:o.querySelector('#lg-k').value});const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};delete g2.srvOk;if(r.avatar&&r.avatar.shape)g2.av=r.avatar;gSave(g2);await gSync();load();}catch(e){showErr('lg-e2',e.message);}};
     o.querySelector('#lg-x').onclick=close;
     o.querySelector('#lg-j').onclick=async()=>{
       if(!o.querySelector('#lg-p').checked)return showErr('lg-e','Antes necesitas el permiso de tu padre, madre o tutor.');
       try{const g=gLoad();const r=await ligaRpc('unirse',{p_codigo:o.querySelector('#lg-c').value.trim(),p_apodo:o.querySelector('#lg-a').value,p_avatar:g.av});
-        const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};gSave(g2);await ligaSync();load();}catch(e){showErr('lg-e',e.message);}
+        const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};delete g2.srvOk;gSave(g2);await gSync();await ligaSync();load();}catch(e){showErr('lg-e',e.message);}
     };
   }
   async function load(){
     o.innerHTML='<div class="lg-box"><p>Cargando…</p></div>';
     const g=gLoad();
-    try{await ligaSync();await ligaSubirJuego();data=await ligaRpc('clasificacion',{p_token:g.liga.token});main();}
+    try{await gSync();await ligaSync();await ligaSubirJuego();data=await ligaRpc('clasificacion',{p_token:g.liga.token});main();}
     catch(e){
       if(/no encontrado/.test(e.message)){delete g.liga;gSave(g);return join();}
       o.innerHTML=`<div class="lg-box"><h2>Ahora no hay conexión</h2><p>${esc(e.message)}</p><button class="lg-go" id="lg-x">Volver</button></div>`;o.querySelector('#lg-x').onclick=close;}
@@ -574,7 +576,7 @@ function openLeague(onClose){
     o.innerHTML=`<div class="lg-box"><div class="lg-top"><button class="lg-x" id="lg-x">Volver</button><div class="lg-me">${avatarConTrofeos(gLoad().av,44,trof(data.yo))}<div><b>${esc(me.apodo)}</b><div class="lg-s">Has estudiado el ${me.estudio} %</div></div></div></div>
       ${retos}<h3>Trofeos</h3><p class="lg-s">Se ganan en duelos de 5 preguntas. Lo que has ganado con estrellas nunca se pierde.</p><div class="lg-ts">${cards}</div><div class="lg-err" id="lg-e" role="alert"></div>
       <h3>Clasificación</h3><div class="lg-tabs">${Object.keys(COLS).map(k=>`<button class="${k===tab?'on':''}" data-k="${k}">${COLS[k][0]}</button>`).join('')}</div>${tab==='estudio'?'<p class="lg-s">Si todos estudiáis todo, todos llegáis al 100 %.</p>':''}${list}
-      <button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
+      ${gLoad().clave?`<h3>Tu clave personal</h3><p class="lg-s"><b style="font-size:20px">${esc(gLoad().clave)}</b><br>Apúntala. Con ella entras en otro móvil u ordenador con tus fichas y estrellas. No se la des a nadie.</p>`:''}<button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
     o.querySelector('#lg-x').onclick=close;
     o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{tab=b.dataset.k;main();});
     o.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{try{const t=gLoad().liga.token;const r=await ligaRpc('retar',{p_token:t,p_trofeo:b.dataset.r});play(r.semilla,async p=>{const x=await ligaRpc('enviar_reto',{p_token:t,p_duelo:r.id,p_pts:p});return x.resultado==='ganado'?`¡${p} de 5! El trofeo es tuyo.`:x.resultado==='no_llega'?`${p} de 5. Hacen falta 3 aciertos para conseguirlo.`:`${p} de 5. Ahora le toca responder a tu rival.`;});}catch(e){showErr('lg-e',e.message);}});
@@ -587,11 +589,11 @@ function openLeague(onClose){
     const qs=dueloPreguntas(seed);let i=0,pts=0;
     const next=()=>{
       if(i>=qs.length)return end();
-      const q=qs[i];
+      const q=qs[i],t0=Date.now();
       o.innerHTML=`<div class="lg-box"><p class="lg-s">Duelo: pregunta ${i+1} de 5</p><div class="lg-q">${gB(q.q)}</div>${q.opts.map((t,k)=>`<button class="lg-opt" data-o="${k}">${esc(t)}</button>`).join('')}</div>`;
       o.querySelectorAll('.lg-opt').forEach(b=>b.onclick=()=>{const t=q.opts[+b.dataset.o],ok=t===q.a;if(ok)pts++;
         o.querySelectorAll('.lg-opt').forEach((x,k)=>{x.disabled=true;if(q.opts[k]===q.a)x.classList.add('ok');else if(x===b)x.classList.add('no');});
-        i++;setTimeout(next,900);});
+        i++;gSig(o.querySelector('.lg-box'),t0,next,'lg-go');});
     };
     const end=async()=>{let m;try{m=await finish(pts);}catch(e){m=e.message;}
       gAward(2);o.innerHTML=`<div class="lg-box lg-end"><h2>${esc(m)}</h2><button class="lg-go" id="lg-b">Ver la clasificación</button></div>`;o.querySelector('#lg-b').onclick=load;};
@@ -600,6 +602,23 @@ function openLeague(onClose){
   if(gLoad().liga)load();else join();
 }
 
+/* ===== Tiempo mínimo por pregunta y respuestas en otro orden ===== */
+const G_TMIN=10000;
+function gSigB(b,t0,nx,txt){txt=txt||'Siguiente';let hecho=false,sin=false;try{sin=!!gLoad().prueba;}catch(e){}
+  const go=()=>{if(hecho||b.disabled)return;hecho=true;nx();};
+  const tic=()=>{if(!b.isConnected)return;const r=sin?0:t0+G_TMIN-Date.now();if(r>0){b.disabled=true;b.style.opacity='.55';b.textContent=txt+' ('+Math.ceil(r/1000)+')';setTimeout(tic,Math.min(r,250));}else{b.disabled=false;b.style.opacity='';b.textContent=txt;b.focus({preventScroll:true});}};
+  b.onclick=go;tic();return go;}
+function gSig(c,t0,nx,cls){const b=document.createElement('button');b.className=cls||'go';b.type='button';c.appendChild(b);const go=gSigB(b,t0,nx);b.scrollIntoView({block:'nearest'});return go;}
+function gOrden(a,w,id){let o=[],m={};const k='gpos.'+(location.pathname.split('/').pop()||'x');try{m=JSON.parse(localStorage.getItem(k))||{};}catch(e){}
+  for(let n=0;n<12;n++){o=[a,...w];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}if(o.indexOf(a)!==m[id])break;}
+  m[id]=o.indexOf(a);try{localStorage.setItem(k,JSON.stringify(m));}catch(e){}return o;}
+
+/* ===== Fichas, estrellas y premios guardados en el servidor ===== */
+function gAplica(e){const g=gLoad(),C0=g.carrera||{},old=C0.tickets||0;g.fichas=e.fichas;g.fBloq=e.espera>0?Date.now()+e.espera*1000:0;g.fRes=e.reserva;g.fichaT=Date.now()-e.edad*1000;g.stars=e.estrellas;g.sub=e.sub||{};if(e.prueba)g.prueba=1;else delete g.prueba;g.clave=e.clave;g.carrera=Object.assign(C0,{tickets:e.tickets,pinSrv:!!e.tiene_pin,nuevo:(C0.nuevo||0)+Math.max(0,e.tickets-old)});gSave(g);return g;}
+let G_flush=false;
+async function gFlush(){const g0=gLoad();if(G_flush||!ligaOn()||!g0.liga||!g0.srvOk)return;G_flush=true;try{for(;;){const g=gLoad(),p=(g.pend||[])[0];if(!p)break;const e=await ligaRpc('s_ganar',{p_token:g.liga.token,p_sub:p[0],p_n:p[1],p_ficha:p[2]});const h=gLoad();h.pend.shift();gSave(h);if(!h.pend.length)gAplica(e);}}catch(e){}G_flush=false;}
+async function gSync(){const g=gLoad();if(!ligaOn()||!g.liga)return null;try{if(!g.srvOk){const e=await ligaRpc('s_estado',{p_token:g.liga.token,p_local:{estrellas:g.stars,sub:g.sub}});const h=gLoad();h.srvOk=1;h.pend=[];gSave(h);return gAplica(e);}await gFlush();const e=await ligaRpc('s_estado',{p_token:gLoad().liga.token,p_local:null});return (gLoad().pend||[]).length?gLoad():gAplica(e);}catch(e){if(/no encontrado/.test(e.message||'')){const h=gLoad();delete h.liga;delete h.srvOk;gSave(h);}return null;}}
+async function gGastar(){const g=gLoad();if(!ligaOn()||!g.liga)return false;if(!g.srvOk)await gSync();await gFlush();const e=await ligaRpc('s_gastar',{p_token:g.liga.token});gAplica(e);return !!e.ok;}
 /* ===== Sonido: música en mp3 y efectos generados por el navegador ===== */
 const SND=(()=>{const K='tema2.sonido',MUS=['Kart%20ESO.mp3','Kart%20ESO_2.mp3'];let ac=null,ma=null,nb=null,aud=null,suena=false,vivos=0;
  const on=()=>{try{return localStorage.getItem(K)!=='0';}catch(e){return true;}};
@@ -667,9 +686,9 @@ function openGame(onClose){
     o.querySelector('#jg-x').onclick=close;
     const b=o.querySelector('#jg-go');if(b){b.onclick=start;b.focus({preventScroll:true});}
   }
-  function start(){
-    const g=gLoad();if(g.fichas<=0||(ligaOn()&&!g.liga&&!g.prueba))return menu();
-    g.fichas--;gSave(g);SND.musica();
+  async function start(){
+    if(o.dataset.g)return;o.dataset.g=1;let okF=false;try{okF=await gGastar();}catch(e){delete o.dataset.g;const b=o.querySelector('#jg-go,#jg-re');if(b)b.textContent='Sin conexión. Inténtalo otra vez';return;}delete o.dataset.g;if(!okF)return menu();
+    const g=gLoad();SND.musica();
     o.innerHTML=`<div class="jg-box"><button id="jg-son" aria-label="Activar o quitar el sonido" style="float:right;font-size:20px;border:0;background:none;cursor:pointer;min-width:44px;min-height:44px">${SND.icono()}</button><div class="jg-score"><span id="jg-s">0</span><span class="jg-best">Récord ${g.juegoBest}</span></div><canvas id="jg-c" width="${W}" height="${H}" aria-label="Juego: pulsa espacio o toca para saltar"></canvas><p class="jg-hint">Espacio o toca para saltar</p></div>`;
     o.querySelector('#jg-son').onclick=e=>{SND.alterna();e.currentTarget.textContent=SND.icono();};
     const c=o.querySelector('#jg-c'),x=c.getContext('2d');
@@ -757,7 +776,7 @@ function openGame(onClose){
     div.querySelector('#jg-m').onclick=menu;
     const hint=o.querySelector('.jg-hint');if(hint)hint.remove();
   }
-  menu();
+  menu();gSync().then(x=>{if(x&&!st&&o.isConnected&&!document.getElementById('lg'))menu();});
 }
 
 const hub=document.getElementById('hub');
@@ -766,5 +785,5 @@ function casa(){if(location.hash)history.replaceState(null,'',location.pathname)
  hub.innerHTML=`<h1>Tu zona de juego</h1><div class="me">${avatarSVG(g.av,90)}<div><div class="av-st">⭐ ${g.stars}</div><div class="av-next">🎮 ${g.fichas} ${g.fichas===1?'ficha':'fichas'}, récord ${g.juegoBest}</div></div></div>
  <a class="b" href="carrera.html" style="display:block;text-decoration:none;color:inherit">🏁 Carrera de vehículos</a><button class="b" data-a="jugar">🎮 Jugar a saltar</button><button class="b" data-a="clasificacion">🏆 Clasificación y duelos</button><button class="b" data-a="muneco">🧑 Mi muñeco y premios</button><a class="back" href="index.html">Volver a las asignaturas</a>`;
  hub.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>OPEN[b.dataset.a](casa));}
-const h=location.hash.slice(1);casa();if(OPEN[h])OPEN[h](casa);
+const h=location.hash.slice(1);casa();if(OPEN[h])OPEN[h](casa);gSync().then(x=>{if(x&&!document.getElementById('jg')&&!document.getElementById('lg')&&!document.getElementById('av-editor'))casa();});
 </script></body></html>

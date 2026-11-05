@@ -399,7 +399,8 @@ function gAward(n,time){
   if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
     if(tr)tr.items.forEach((it,i)=>{if(b4<G_UMBRAL[i]&&g.sub[sj]>=G_UMBRAL[i]){g.fresh.push('@'+tr.id+':'+it[0]);g.av[tr.slot]=it[0];}});}
   G_ORDER.forEach(k=>{const c=gCost(k);if(before<c&&g.stars>=c){const [p,id]=k.split(':');g.fresh.push(k);g.av[p]=id;}});
-  gSave(g);
+  if(g.liga)(g.pend=g.pend||[]).push([sj||null,n,!!time]);
+  gSave(g);gFlush();
 }
 const gStars=()=>gLoad().stars;
 const gHoy=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
@@ -495,18 +496,19 @@ function openLeague(onClose){
       <label class="lg-l">Tu apodo<input id="lg-a" autocomplete="off" maxlength="14"></label>
       <p class="lg-s">Usa un apodo inventado, nunca tu nombre real.</p>
       <label class="lg-ck"><input type="checkbox" id="lg-p"> Mi padre, madre o tutor me ha dado permiso.</label>
-      <div class="lg-err" id="lg-e" role="alert"></div><button class="lg-go" id="lg-j">Entrar</button></div>`;
+      <div class="lg-err" id="lg-e" role="alert"></div><button class="lg-go" id="lg-j">Entrar</button><h3>¿Ya tienes apodo?</h3><label class="lg-l">Tu clave personal<input id="lg-k" autocomplete="off" maxlength="20"></label><div class="lg-err" id="lg-e2" role="alert"></div><button class="lg-go" id="lg-kg">Entrar con mi clave</button></div>`;
+    o.querySelector('#lg-kg').onclick=async()=>{try{const r=await ligaRpc('s_entrar',{p_clave:o.querySelector('#lg-k').value});const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};delete g2.srvOk;if(r.avatar&&r.avatar.shape)g2.av=r.avatar;gSave(g2);await gSync();load();}catch(e){showErr('lg-e2',e.message);}};
     o.querySelector('#lg-x').onclick=close;
     o.querySelector('#lg-j').onclick=async()=>{
       if(!o.querySelector('#lg-p').checked)return showErr('lg-e','Antes necesitas el permiso de tu padre, madre o tutor.');
       try{const g=gLoad();const r=await ligaRpc('unirse',{p_codigo:o.querySelector('#lg-c').value.trim(),p_apodo:o.querySelector('#lg-a').value,p_avatar:g.av});
-        const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};gSave(g2);await ligaSync();load();}catch(e){showErr('lg-e',e.message);}
+        const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};delete g2.srvOk;gSave(g2);await gSync();await ligaSync();load();}catch(e){showErr('lg-e',e.message);}
     };
   }
   async function load(){
     o.innerHTML='<div class="lg-box"><p>Cargando…</p></div>';
     const g=gLoad();
-    try{await ligaSync();await ligaSubirJuego();data=await ligaRpc('clasificacion',{p_token:g.liga.token});main();}
+    try{await gSync();await ligaSync();await ligaSubirJuego();data=await ligaRpc('clasificacion',{p_token:g.liga.token});main();}
     catch(e){
       if(/no encontrado/.test(e.message)){delete g.liga;gSave(g);return join();}
       o.innerHTML=`<div class="lg-box"><h2>Ahora no hay conexión</h2><p>${esc(e.message)}</p><button class="lg-go" id="lg-x">Volver</button></div>`;o.querySelector('#lg-x').onclick=close;}
@@ -527,7 +529,7 @@ function openLeague(onClose){
     o.innerHTML=`<div class="lg-box"><div class="lg-top"><button class="lg-x" id="lg-x">Volver</button><div class="lg-me">${avatarConTrofeos(gLoad().av,44,trof(data.yo))}<div><b>${esc(me.apodo)}</b><div class="lg-s">Has estudiado el ${me.estudio} %</div></div></div></div>
       ${retos}<h3>Trofeos</h3><p class="lg-s">Se ganan en duelos de 5 preguntas. Lo que has ganado con estrellas nunca se pierde.</p><div class="lg-ts">${cards}</div><div class="lg-err" id="lg-e" role="alert"></div>
       <h3>Clasificación</h3><div class="lg-tabs">${Object.keys(COLS).map(k=>`<button class="${k===tab?'on':''}" data-k="${k}">${COLS[k][0]}</button>`).join('')}</div>${tab==='estudio'?'<p class="lg-s">Si todos estudiáis todo, todos llegáis al 100 %.</p>':''}${list}
-      <button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
+      ${gLoad().clave?`<h3>Tu clave personal</h3><p class="lg-s"><b style="font-size:20px">${esc(gLoad().clave)}</b><br>Apúntala. Con ella entras en otro móvil u ordenador con tus fichas y estrellas. No se la des a nadie.</p>`:''}<button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
     o.querySelector('#lg-x').onclick=close;
     o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{tab=b.dataset.k;main();});
     o.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{try{const t=gLoad().liga.token;const r=await ligaRpc('retar',{p_token:t,p_trofeo:b.dataset.r});play(r.semilla,async p=>{const x=await ligaRpc('enviar_reto',{p_token:t,p_duelo:r.id,p_pts:p});return x.resultado==='ganado'?`¡${p} de 5! El trofeo es tuyo.`:x.resultado==='no_llega'?`${p} de 5. Hacen falta 3 aciertos para conseguirlo.`:`${p} de 5. Ahora le toca responder a tu rival.`;});}catch(e){showErr('lg-e',e.message);}});
@@ -540,11 +542,11 @@ function openLeague(onClose){
     const qs=dueloPreguntas(seed);let i=0,pts=0;
     const next=()=>{
       if(i>=qs.length)return end();
-      const q=qs[i];
+      const q=qs[i],t0=Date.now();
       o.innerHTML=`<div class="lg-box"><p class="lg-s">Duelo: pregunta ${i+1} de 5</p><div class="lg-q">${gB(q.q)}</div>${q.opts.map((t,k)=>`<button class="lg-opt" data-o="${k}">${esc(t)}</button>`).join('')}</div>`;
       o.querySelectorAll('.lg-opt').forEach(b=>b.onclick=()=>{const t=q.opts[+b.dataset.o],ok=t===q.a;if(ok)pts++;
         o.querySelectorAll('.lg-opt').forEach((x,k)=>{x.disabled=true;if(q.opts[k]===q.a)x.classList.add('ok');else if(x===b)x.classList.add('no');});
-        i++;setTimeout(next,900);});
+        i++;gSig(o.querySelector('.lg-box'),t0,next,'lg-go');});
     };
     const end=async()=>{let m;try{m=await finish(pts);}catch(e){m=e.message;}
       gAward(2);o.innerHTML=`<div class="lg-box lg-end"><h2>${esc(m)}</h2><button class="lg-go" id="lg-b">Ver la clasificación</button></div>`;o.querySelector('#lg-b').onclick=load;};
@@ -556,6 +558,23 @@ function openLeague(onClose){
 
 </script>
 <script>
+/* ===== Tiempo mínimo por pregunta y respuestas en otro orden ===== */
+const G_TMIN=10000;
+function gSigB(b,t0,nx,txt){txt=txt||'Siguiente';let hecho=false,sin=false;try{sin=!!gLoad().prueba;}catch(e){}
+  const go=()=>{if(hecho||b.disabled)return;hecho=true;nx();};
+  const tic=()=>{if(!b.isConnected)return;const r=sin?0:t0+G_TMIN-Date.now();if(r>0){b.disabled=true;b.style.opacity='.55';b.textContent=txt+' ('+Math.ceil(r/1000)+')';setTimeout(tic,Math.min(r,250));}else{b.disabled=false;b.style.opacity='';b.textContent=txt;b.focus({preventScroll:true});}};
+  b.onclick=go;tic();return go;}
+function gSig(c,t0,nx,cls){const b=document.createElement('button');b.className=cls||'go';b.type='button';c.appendChild(b);const go=gSigB(b,t0,nx);b.scrollIntoView({block:'nearest'});return go;}
+function gOrden(a,w,id){let o=[],m={};const k='gpos.'+(location.pathname.split('/').pop()||'x');try{m=JSON.parse(localStorage.getItem(k))||{};}catch(e){}
+  for(let n=0;n<12;n++){o=[a,...w];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}if(o.indexOf(a)!==m[id])break;}
+  m[id]=o.indexOf(a);try{localStorage.setItem(k,JSON.stringify(m));}catch(e){}return o;}
+
+/* ===== Fichas, estrellas y premios guardados en el servidor ===== */
+function gAplica(e){const g=gLoad(),C0=g.carrera||{},old=C0.tickets||0;g.fichas=e.fichas;g.fBloq=e.espera>0?Date.now()+e.espera*1000:0;g.fRes=e.reserva;g.fichaT=Date.now()-e.edad*1000;g.stars=e.estrellas;g.sub=e.sub||{};if(e.prueba)g.prueba=1;else delete g.prueba;g.clave=e.clave;g.carrera=Object.assign(C0,{tickets:e.tickets,pinSrv:!!e.tiene_pin,nuevo:(C0.nuevo||0)+Math.max(0,e.tickets-old)});gSave(g);return g;}
+let G_flush=false;
+async function gFlush(){const g0=gLoad();if(G_flush||!ligaOn()||!g0.liga||!g0.srvOk)return;G_flush=true;try{for(;;){const g=gLoad(),p=(g.pend||[])[0];if(!p)break;const e=await ligaRpc('s_ganar',{p_token:g.liga.token,p_sub:p[0],p_n:p[1],p_ficha:p[2]});const h=gLoad();h.pend.shift();gSave(h);if(!h.pend.length)gAplica(e);}}catch(e){}G_flush=false;}
+async function gSync(){const g=gLoad();if(!ligaOn()||!g.liga)return null;try{if(!g.srvOk){const e=await ligaRpc('s_estado',{p_token:g.liga.token,p_local:{estrellas:g.stars,sub:g.sub}});const h=gLoad();h.srvOk=1;h.pend=[];gSave(h);return gAplica(e);}await gFlush();const e=await ligaRpc('s_estado',{p_token:gLoad().liga.token,p_local:null});return (gLoad().pend||[]).length?gLoad():gAplica(e);}catch(e){if(/no encontrado/.test(e.message||'')){const h=gLoad();delete h.liga;delete h.srvOk;gSave(h);}return null;}}
+async function gGastar(){const g=gLoad();if(!ligaOn()||!g.liga)return false;if(!g.srvOk)await gSync();await gFlush();const e=await ligaRpc('s_gastar',{p_token:g.liga.token});gAplica(e);return !!e.ok;}
 /* ===== Sonido: música en mp3 y efectos generados por el navegador ===== */
 const SND=(()=>{const K='tema2.sonido',MUS=['Kart%20ESO.mp3','Kart%20ESO_2.mp3'];let ac=null,ma=null,nb=null,aud=null,suena=false,vivos=0;
  const on=()=>{try{return localStorage.getItem(K)!=='0';}catch(e){return true;}};
@@ -1156,9 +1175,8 @@ async function amigos(){
  async function crear(){try{sala={host:true,hostId:yo.id,c:circ(D.sel.c).id,jug:[yo]};caja('<p>Creando la sala…</p>');await abreSala(Math.random().toString(36).slice(2,10));pintaSala();anuncia();}catch(e){sala=null;aviso=e.message;pintaLobby();}}
  async function unirse(id){const s=salas.get(id);if(!s)return;try{sala={host:false,hostId:null,c:s.c,jug:[]};caja('<p>Entrando…</p>');await abreSala(id);sala.ch.send({t:'entro',j:yo});}catch(e){sala=null;aviso=e.message;pintaLobby();}}
  function salida(){const j=[...sala.jug];for(let i=j.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[j[i],j[k]]=[j[k],j[i]];}const m={t:'go',c:sala.c,h:yo.id,jug:j.map(x=>({id:x.id,nom:x.nom,v:x.v}))};sala.ch.send(m);if(lob)lob.send({t:'cerrada',id:sala.id});arranca(m);}
- function arranca(m){if(!m.jug.some(x=>x.id===yo.id))return;const s=sala;clearInterval(reloj);if(lob)lob.cerrar();lob=null;const h=gLoad(),q=datos(h);
-  if(h.fichas<=0){if(s.ch){s.ch.send({t:'salgo',id:yo.id});s.ch.cerrar();}return menu();}
-  h.fichas--;gSave(h);const net={yo:yo.id,jug:m.jug,h:m.h,t0:performance.now()+5000,send:s.ch.send,cerrar:s.ch.cerrar,on:null};s.net=net;const veh=VEH.find(v=>v.id===q.sel.v)||VEH[0];correr(circ(m.c),veh,q.sel.a,false,net);}
+ async function arranca(m){if(!m.jug.some(x=>x.id===yo.id))return;const s=sala,t0=performance.now()+5000;clearInterval(reloj);if(lob)lob.cerrar();lob=null;caja('<p>¡Preparados!</p>');let okF=false;try{okF=await gGastar();}catch(e){}if(!okF){if(s.ch){s.ch.send({t:'salgo',id:yo.id});s.ch.cerrar();}return menu();}const q=datos(gLoad());
+  const net={yo:yo.id,jug:m.jug,h:m.h,t0,send:s.ch.send,cerrar:s.ch.cerrar,on:null};s.net=net;const veh=VEH.find(v=>v.id===q.sel.v)||VEH[0];correr(circ(m.c),veh,q.sel.a,false,net);}
  function enSala(m){const s=sala;if(!s)return;if(s.net){if(s.net.on)s.net.on(m);return;}s.vivo=Date.now();
   if(s.host){if(m.t==='entro'){if(!s.jug.some(x=>x.id===m.j.id)){if(s.jug.length>=6){s.ch.send({t:'lleno',id:m.j.id});return;}s.jug.push(m.j);pintaSala();anuncia();}s.ch.send({t:'lista',jug:s.jug,h:yo.id});}
    else if(m.t==='salgo'){s.jug=s.jug.filter(x=>x.id!==m.id);pintaSala();anuncia();s.ch.send({t:'lista',jug:s.jug,h:yo.id});}}
@@ -1396,11 +1414,11 @@ function menu(){
  Object.keys(ATK).forEach(k=>{if(sel.a.length<3&&atkOk(g,k)&&!sel.a.includes(k))sel.a.push(k);});
  const nuevo=D.nuevo;D.nuevo=0;gSave(g);
  const espera=()=>{const m=Math.max(1,Math.ceil(((g.fBloq>Date.now()?g.fBloq:g.fichaT+G_FPASO)-Date.now())/60000));return m>=60?`${Math.floor(m/60)} h ${m%60} min`:`${m} min`;};
- if(ligaOn()&&!g.liga&&!g.prueba){app.innerHTML=`<div class="cr-box"><h1>Gran Premio 1º B</h1><div class="cr-gift"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><a class="cr-go" href="juego.html#clasificacion">Identificarme</a><p class="cr-pad"><button class="cr-link" id="cr-pad">👪 Para padres</button></p></div>`;$('#cr-pad').onclick=padres;return;}
+ if(ligaOn()&&!g.liga){app.innerHTML=`<div class="cr-box"><h1>Gran Premio 1º B</h1><div class="cr-gift"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><a class="cr-go" href="juego.html#clasificacion">Identificarme</a><p class="cr-pad"><button class="cr-link" id="cr-pad">👪 Para padres</button></p></div>`;$('#cr-pad').onclick=padres;return;}
  const actual=VEH.find(v=>v.id===sel.v),cAct=CIRC.find(c=>c.id===sel.c);
  app.innerHTML=`<div class="cr-box"><div class="cr-hero" style="background:linear-gradient(135deg,${cAct.sky[0]},${cAct.sky[1]})"><div><h1>Gran Premio 1º B</h1><p>${cAct.e} ${cAct.n}</p></div><img alt="" src="${fotoV(actual)}"></div>
  ${nuevo?`<div class="cr-gift">🎁 ¡Tus padres te han dado ${nuevo>1?nuevo+' premios':'un premio'}! Mira tus vehículos especiales.</div>`:''}
- ${g.prueba?'<div class="cr-gift">🧪 <b>Modo de pruebas.</b> Todo abierto y fichas sin límite en este dispositivo. No cuenta para estrellas ni récords. <button class="cr-link" id="cr-nop">Salir del modo de pruebas</button></div>':''}<div class="cr-me">${avatarSVG(g.av,56)}<div><b>🎮 ${g.fichas} de 3 fichas</b><br><small>${g.fichas<=0?`Podrás jugar dentro de ${espera()}.`:g.fichas<3?`Otra ficha en ${espera()}, o terminando una misión.`:'Cada carrera usa 1 ficha.'}</small></div></div>
+ ${g.prueba?'<div class="cr-gift">🧪 <b>Modo de pruebas.</b> Todo abierto y fichas sin límite para este jugador. No cuenta para estrellas ni récords. <button class="cr-link" id="cr-nop">Salir del modo de pruebas</button></div>':''}<div class="cr-me">${avatarSVG(g.av,56)}<div><b>🎮 ${g.fichas} de 3 fichas</b><br><small>${g.fichas<=0?`Podrás jugar dentro de ${espera()}.`:g.fichas<3?`Otra ficha en ${espera()}, o terminando una misión.`:'Cada carrera usa 1 ficha.'}</small></div></div>
  ${g.fichas>0?'<button class="cr-go" id="cr-start">¡A correr! (1 ficha)</button><button class="cr-go cr-go2" id="cr-net">👥 Carrera con amigos</button>':`<div class="cr-gift">Te has quedado sin fichas. Podrás volver a jugar dentro de ${espera()}. Si terminas misiones mientras tanto, tendrás más fichas cuando acabe la espera.</div><a class="cr-go" href="index.html">Ir a estudiar</a>`}
  <h2>Circuito <small>con 5 ⭐ de cada asignatura se abre el suyo</small></h2><div class="cr-g cr-gc">${CIRC.map(c=>{const ok=circOk(g,c);return`<button class="cr-o cr-ci ${sel.c===c.id?'on':''} ${ok?'':'lock'}" data-c="${c.id}" ${ok?'':'disabled'} style="background:linear-gradient(160deg,${c.sky[0]},${c.sky[1]} 70%,${c.g[0]} 70%)"><span>${ok?c.e:'🔒'}</span><b>${c.n}</b><small>${ok?(D.best[c.id]?'Récord: '+D.best[c.id]+' s':'Sin récord'):'⭐ 5 en '+c.sn+' (tienes '+gSubStars(g,c.su)+')'}</small></button>`;}).join('')}</div>
  <h2>Vehículo</h2><div class="cr-g">${VEH.map(v=>{const ok=vehOk(g,v);return`<button class="cr-o ${sel.v===v.id?'on':''} ${ok?'':'lock'}" data-v="${v.id}" ${ok?'':'disabled'}>${ok?`<img alt="" src="${fotoV(v)}">`:'<span>🔒</span>'}<b>${v.n}</b><small>${ok?barras(v):(v.su?'⭐ '+v.s+' en Mates':'Premio de tus padres')}</small></button>`;}).join('')}</div>
@@ -1411,26 +1429,29 @@ function menu(){
  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const h=gLoad(),s=datos(h).sel,k=b.dataset.a;if(s.a.includes(k)){if(s.a.length>1)s.a=s.a.filter(q=>q!==k);}else{if(s.a.length>=3)s.a.shift();s.a.push(k);}gSave(h);menu();});
  $('#cr-pad').onclick=padres;
  const gn=$('#cr-net');if(gn)gn.onclick=()=>{if(gLoad().liga)amigos();else location.href='juego.html#clasificacion';};
- const nop=$('#cr-nop');if(nop)nop.onclick=()=>{const k=gLoad();delete k.prueba;gSave(k);menu();};
- const go=$('#cr-start');if(go)go.onclick=()=>{const h=gLoad();if(h.fichas<=0||(ligaOn()&&!h.liga&&!h.prueba))return menu();h.fichas--;gSave(h);const d=datos(h);correr(CIRC.find(c=>c.id===d.sel.c),VEH.find(v=>v.id===d.sel.v),d.sel.a);};
+ const nop=$('#cr-nop');if(nop)nop.onclick=async()=>{try{gAplica(await ligaRpc('s_prueba_fin',{p_token:gLoad().liga.token}));menu();}catch(e){nop.textContent='Sin conexión. Inténtalo otra vez';}};
+ const go=$('#cr-start');if(go)go.onclick=async()=>{go.disabled=true;let okF=false;try{okF=await gGastar();}catch(e){go.disabled=false;go.textContent='Sin conexión. Inténtalo otra vez';return;}if(!okF)return menu();const h=gLoad();const d=datos(h);correr(CIRC.find(c=>c.id===d.sel.c),VEH.find(v=>v.id===d.sel.v),d.sel.a);};
 }
 const barras=v=>`Vel ${Math.round(v.v*100)} · Giro ${Math.round(v.g*100)}`;
 /* Padres: la nota no se escribe ni se guarda */
 function padres(){
- const g=gLoad(),D=datos(g);
  const caja=(cuerpo)=>{app.innerHTML=`<div class="cr-box"><h1>👪 Para padres</h1>${cuerpo}<a class="cr-link" href="como-funciona.html">Cómo funciona la web</a><button class="cr-link" id="cr-v">Volver</button></div>`;$('#cr-v').onclick=menu;};
- if(!D.pin){caja(`<p>Crea un PIN para que solo vosotros podáis dar premios. Se guarda en este dispositivo.</p><label class="cr-l">PIN nuevo (4 cifras o más)<input id="cr-p" type="password" inputmode="numeric" autocomplete="off"></label><p class="cr-e" id="cr-e"></p><button class="cr-go" id="cr-ok">Guardar PIN</button>`);
-  $('#cr-ok').onclick=()=>{const v=$('#cr-p').value.trim();if(!/^\d{4,}$/.test(v)){$('#cr-e').textContent='Usa 4 cifras o más.';return;}const h=gLoad();datos(h).pin=hash(v);gSave(h);panel();};return;}
- caja(`<label class="cr-l">Escribe vuestro PIN<input id="cr-p" type="password" inputmode="numeric" autocomplete="off"></label><p class="cr-e" id="cr-e"></p><button class="cr-go" id="cr-ok">Entrar</button>`);
- $('#cr-ok').onclick=()=>{if(hash($('#cr-p').value.trim())===D.pin)panel();else $('#cr-e').textContent='PIN incorrecto.';};
- function panel(){const h=gLoad(),d=datos(h);caja(`<p>Después de un examen, elige si hay motivo para un premio. <b>No se escribe ni se guarda la nota, tampoco el motivo.</b> Solo se cuenta un premio más, y nadie más lo ve.</p>
+ const g=gLoad();
+ if(!g.liga){caja('<div class="cr-gift">Este panel es de cada jugador. Primero tiene que identificarse en el grupo.</div><a class="cr-go" href="juego.html#clasificacion">Identificarse</a>');return;}
+ const tk=g.liga.token;caja('<p>Conectando…</p>');
+ gSync().then(x=>{if(!x){caja('<div class="cr-gift">Ahora no se puede conectar. Hace falta internet.</div>');return;}
+  const pide=(txt,btn,fn)=>{caja(`<p>Jugador: <b>${String(g.liga.apodo).replace(/[&<>]/g,'')}</b>. ${txt}</p><label class="cr-l">PIN<input id="cr-p" type="password" inputmode="numeric" autocomplete="off"></label><p class="cr-e" id="cr-e"></p><button class="cr-go" id="cr-ok">${btn}</button>`);$('#cr-ok').onclick=async()=>{const v=$('#cr-p').value.trim();try{await fn(v);}catch(e){$('#cr-e').textContent=e.message;}};};
+  if(!datos(gLoad()).pinSrv)pide('Cread un PIN de 4 cifras o más para que solo vosotros podáis dar premios. Vale en todos los dispositivos de este jugador.','Guardar PIN',async v=>{if(!/^\d{4,12}$/.test(v))throw new Error('Usa 4 cifras o más.');gAplica(await ligaRpc('s_pin_crear',{p_token:tk,p_pin:v}));panel(v);});
+  else pide('Escribe vuestro PIN.','Entrar',async v=>{const e=await ligaRpc('s_pin_ok',{p_token:tk,p_pin:v});if(!e.ok)throw new Error('PIN incorrecto.');gAplica(e);panel(v);});
+ });
+ function panel(pin){const d=datos(gLoad());caja(`<p>Después de un examen, elige si hay motivo para un premio. <b>No se escribe ni se guarda la nota, tampoco el motivo.</b> Solo se cuenta un premio más, y nadie más lo ve.</p>
   <div class="cr-g3"><button class="cr-o" data-p="1"><span>💪</span><b>Se ha esforzado</b></button><button class="cr-o" data-p="1"><span>📈</span><b>Ha mejorado</b></button><button class="cr-o" data-p="1"><span>🎓</span><b>Ha aprobado</b></button></div>
-  <p id="cr-okm" class="cr-okm"></p><p><b>Premios dados: <span id="cr-n">${d.tickets}</span>.</b> Cada premio rellena las fichas. Con 1 se abre 🦄, con 3 🏍️ y con 6 🐉.</p><h2>Probar circuitos <small>solo aquí, no gasta fichas ni cuenta récords</small></h2><div class="cr-g cr-gc">${CIRC.map(c=>`<button class="cr-o" data-pr="${c.id}"><span>${c.e}</span><b>${c.n}</b></button>`).join('')}</div><h2>Modo de pruebas</h2><label class="cr-l">Clave de pruebas<input id="cr-cl" type="password" autocomplete="off"></label><p class="cr-e" id="cr-e2"></p><button class="cr-go" id="cr-clok">Activar en este dispositivo</button>`);
-  $('#cr-clok').onclick=async()=>{const e=$('#cr-e2');e.textContent='Comprobando…';try{const c=await crypto.subtle.importKey('raw',new TextEncoder().encode($('#cr-cl').value.trim()),'PBKDF2',false,['deriveBits']),sal=new Uint8Array('5aac9d555cd5664683a51d7317341409'.match(/../g).map(x=>parseInt(x,16))),b=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:sal,iterations:150000},c,256),hx=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');if(hx==='8f3e98d70228040a850fd03d747b853e3f270f877b1568583913e6a450735c4d'){const k=gLoad();k.prueba=1;gSave(k);menu();}else e.textContent='Clave incorrecta.';}catch(_){e.textContent='No se ha podido comprobar.';}};
-  document.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>{const k=gLoad(),q=datos(k);correr(CIRC.find(c=>c.id===b.dataset.pr),VEH.find(v=>v.id===q.sel.v),q.sel.a,true);});
-  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const k=gLoad(),q=datos(k);q.tickets++;q.nuevo++;k.fichas=G_FMAX;k.fBloq=0;k.fRes=0;gSave(k);$('#cr-n').textContent=q.tickets;$('#cr-okm').textContent='Premio dado. Lo verá al volver a la carrera.';});}
+  <p id="cr-okm" class="cr-okm"></p><p><b>Premios dados: <span id="cr-n">${d.tickets}</span>.</b> Cada premio rellena las fichas. Con 1 se abre 🦄, con 3 🏍️ y con 6 🐉.</p><h2>Probar circuitos <small>solo aquí, no gasta fichas ni cuenta récords</small></h2><div class="cr-g cr-gc">${CIRC.map(c=>`<button class="cr-o" data-pr="${c.id}"><span>${c.e}</span><b>${c.n}</b></button>`).join('')}</div><h2>Modo de pruebas</h2><label class="cr-l">Clave de pruebas<input id="cr-cl" type="password" autocomplete="off"></label><p class="cr-e" id="cr-e2"></p><button class="cr-go" id="cr-clok">Activar para este jugador</button>`);
+  $('#cr-clok').onclick=async()=>{const e=$('#cr-e2');e.textContent='Comprobando…';try{const r=await ligaRpc('s_prueba',{p_token:tk,p_clave:$('#cr-cl').value});if(!r.ok){e.textContent='Clave incorrecta.';return;}gAplica(r);menu();}catch(_){e.textContent='No se ha podido comprobar.';}};
+  document.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>{const q=datos(gLoad());correr(CIRC.find(c=>c.id===b.dataset.pr),VEH.find(v=>v.id===q.sel.v),q.sel.a,true);});
+  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=async()=>{const m=$('#cr-okm');try{const e=await ligaRpc('s_premio',{p_token:tk,p_pin:pin});if(!e.ok){m.textContent='PIN incorrecto.';return;}gAplica(e);$('#cr-n').textContent=e.tickets;m.textContent='Premio dado. Lo verá al volver a la carrera.';}catch(x){m.textContent=x.message;}});}
 }
-menu();
+menu();gSync().then(x=>{if(x&&$('.cr-box')&&!$('.cr-fin')&&!$('#cr-p'))menu();});
 window.__tz=trazado;window.__CIRC=CIRC;window.__VEH=VEH;window.__correr=correr;
 })();
 </script></body></html>

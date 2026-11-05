@@ -177,6 +177,13 @@ button{cursor:pointer}
 
 #exportHost{position:absolute;left:-30000px;top:0;width:1587px;pointer-events:none}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+body.sin-grupo :is(.months,.export,.preview,.hint,.lists,.nav,#addBtn){display:none!important}
+#gate{max-width:560px;margin:24px auto;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+#gate h2{margin:0 0 8px;font-size:22px}#gate h3{margin:20px 0 6px;font-size:16px}#gate p{margin:0 0 10px;line-height:1.45}
+#gate input{height:44px;width:100%;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:0 12px;margin-bottom:10px}
+#gate .btn{height:44px;width:100%;justify-content:center;text-decoration:none}
+#gate a.btn{color:inherit}
+#gate .err{color:#c92a2a;font-weight:600;margin:8px 0 0}
 </style>
 
 <header class="bar">
@@ -192,6 +199,17 @@ button{cursor:pointer}
 </header>
 
 <main class="wrap">
+  <section id="gate" hidden>
+    <h2>Calendario de la clase</h2>
+    <p>Es el mismo para todo el grupo y lo podéis cambiar entre todos. Para verlo, entra una vez en cada móvil, tablet u ordenador.</p>
+    <h3>¿Ya tienes apodo?</h3>
+    <p>Escribe tu clave personal. La ves en <b>Liga</b>, en el dispositivo donde ya entraste.</p>
+    <input id="gK" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="20" placeholder="xxxx-xxxx-xxxx" aria-label="Tu clave personal">
+    <button type="button" class="btn primary" id="gKb">Entrar con mi clave</button>
+    <p class="err" id="gE" role="alert" hidden></p>
+    <h3>¿Es la primera vez?</h3>
+    <a class="btn" href="juego.html#clasificacion">Entrar con el código del grupo</a>
+  </section>
   <nav class="months" id="months" aria-label="Meses del curso"></nav>
 
   <section class="export" aria-label="Descargar para imprimir">
@@ -327,7 +345,8 @@ const saveState = document.getElementById('saveState');
 
 const LIGA={url:'https://jokivxfiowvrxwllefor.supabase.co',key:'sb_publishable_5HAc9CN8Wab4n-vyEaeDaA_5hdRvYnX'};
 let token=null;
-try{const j=JSON.parse(localStorage.getItem('tema2.juego')||'null');token=j&&j.liga&&j.liga.token||null;}catch(e){}
+const leeToken=()=>{try{const j=JSON.parse(localStorage.getItem('tema2.juego')||'null');return j&&j.liga&&j.liga.token||null;}catch(e){return null;}};
+token=leeToken();
 async function rpc(fn,args){
   const r=await fetch(LIGA.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:LIGA.key,'Content-Type':'application/json'},body:JSON.stringify(args)});
   const j=await r.json().catch(()=>null);
@@ -343,30 +362,44 @@ async function pull(){
   LS.set('cal-copia',{items,offs});
   render();
 }
-async function connect(){
-  if(!token){
-    items=LS.get('cal-items')||[];offs=LS.get('cal-offs')||[];
-    saveState.innerHTML='Solo en este navegador. <a href="juego.html#clasificacion">Entra en la clasificación</a> para ver el de la clase';
-    render();return;
-  }
-  const c=LS.get('cal-copia');if(c){items=c.items||[];offs=c.offs||[];render();}
-  try{await pull();saveState.textContent='Calendario de la clase: lo compartís entre todos';}
-  catch(e){saveState.textContent=c?'Sin conexión: esta es la última copia':'Sin conexión con el calendario';}
-  addEventListener('focus',()=>pull().catch(()=>{}));
-  setInterval(()=>{if(!document.hidden&&scrim.hidden)pull().catch(()=>{});},60000);
+const gate=document.getElementById('gate');
+function verGate(){document.body.classList.add('sin-grupo');gate.hidden=false;saveState.textContent='Entra en el grupo para verlo';}
+/* Lo apuntado antes de entrar en el grupo se pasa al calendario de la clase */
+async function subirLocal(){
+  const li=LS.get('cal-items')||[],lo=LS.get('cal-offs')||[];if(!li.length&&!lo.length)return;
+  const clave=x=>JSON.stringify([x.date||x.from,x.to||'',x.subj||'',x.kind||'',x.text||x.label||'']);
+  const ya=new Set([...items,...offs].map(clave));
+  for(const [coll,arr] of [['items',li],['off',lo]])for(const x of arr){if(ya.has(clave(x)))continue;const d=Object.assign({},x);delete d.id;try{await rpc('cal_guardar',{p_token:token,p_id:null,p_coll:coll,p_datos:d});}catch(e){if(!/válid/.test(e.message))throw e;}}
+  LS.set('cal-items',[]);LS.set('cal-offs',[]);pull.last=null;await pull();
 }
+let conectado=false;
+async function connect(){
+  if(!token){verGate();return;}
+  document.body.classList.remove('sin-grupo');gate.hidden=true;
+  const c=LS.get('cal-copia');if(c){items=c.items||[];offs=c.offs||[];render();}
+  try{await pull();await subirLocal();saveState.textContent='Calendario de la clase: lo compartís entre todos';}
+  catch(e){
+    if(/no encontrado/i.test(e.message||'')){try{const j=JSON.parse(localStorage.getItem('tema2.juego'));delete j.liga;delete j.srvOk;localStorage.setItem('tema2.juego',JSON.stringify(j));}catch(x){}token=null;localStorage.removeItem('cal-copia');verGate();return;}
+    saveState.textContent=c?'Sin conexión: esta es la última copia':'Sin conexión con el calendario';
+  }
+  if(conectado)return;conectado=true;
+  addEventListener('focus',()=>{if(token)pull().then(()=>{saveState.textContent='Calendario de la clase: lo compartís entre todos';}).catch(()=>{});});
+  setInterval(()=>{if(token&&!document.hidden&&scrim.hidden)pull().catch(()=>{});},60000);
+}
+/* Si ha entrado en el grupo en otra pestaña o al volver atrás */
+const reintenta=()=>{if(!token&&(token=leeToken()))connect();};
+addEventListener('focus',reintenta);addEventListener('pageshow',reintenta);
+document.getElementById('gKb').addEventListener('click',async()=>{
+  const e=document.getElementById('gE'),v=document.getElementById('gK').value;e.hidden=true;
+  try{const r=await rpc('s_entrar',{p_clave:v});let j={};try{j=JSON.parse(localStorage.getItem('tema2.juego'))||{};}catch(x){}
+    j.liga={token:r.token,id:r.id,apodo:r.apodo};delete j.srvOk;if(r.avatar&&r.avatar.shape)j.av=r.avatar;localStorage.setItem('tema2.juego',JSON.stringify(j));token=r.token;await connect();}
+  catch(x){e.textContent=x.message||'No se pudo entrar. Comprueba la conexión.';e.hidden=false;}
+});
 async function saveItem(coll,id,data){
-  if(token){await rpc('cal_guardar',{p_token:token,p_id:id||null,p_coll:coll,p_datos:data});await pull();return;}
-  const arr=coll==='items'?items:offs;
-  if(id){const i=arr.findIndex(x=>x.id===id);if(i>=0)arr[i]=Object.assign({id},data);}
-  else arr.push(Object.assign({id:'l'+Date.now()+Math.random().toString(36).slice(2,6)},data));
-  LS.set(coll==='items'?'cal-items':'cal-offs',arr);render();
+  await rpc('cal_guardar',{p_token:token,p_id:id||null,p_coll:coll,p_datos:data});await pull();
 }
 async function deleteItem(coll,id){
-  if(token){await rpc('cal_borrar',{p_token:token,p_id:id});await pull();return;}
-  const arr=coll==='items'?items:offs;
-  const i=arr.findIndex(x=>x.id===id);if(i>=0)arr.splice(i,1);
-  LS.set(coll==='items'?'cal-items':'cal-offs',arr);render();
+  await rpc('cal_borrar',{p_token:token,p_id:id});await pull();
 }
 
 // ---------- derived ----------
