@@ -19,7 +19,10 @@
 .cr-h{text-align:center;font-size:14px;color:#57617a;margin:8px}.cr-fin{text-align:center;padding-top:8vh;max-width:460px}.cr-pos{font-size:84px;line-height:1}
 body.cr-dark{background:radial-gradient(1200px 700px at 50% -10%,#2a3478,#0c1130);color:#f0f3ff;min-height:100vh}.cr-dark .cr-box h2 small{color:#aab3d6}.cr-dark .cr-me{background:rgba(255,255,255,.1);backdrop-filter:blur(4px)}.cr-dark .cr-me small{color:#c5cce8}.cr-dark .cr-o{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#fff}.cr-dark .cr-o small{color:#c5cce8}.cr-dark .cr-o img{width:84%;margin:2px 0}.cr-dark .cr-o.on{border-color:#ffd43b;background:rgba(255,212,59,.18);box-shadow:0 0 0 2px #ffd43b inset}.cr-dark .cr-o.lock{background:rgba(255,255,255,.05);color:#98a2c9}.cr-dark .cr-ci{justify-content:flex-end;min-height:128px;text-shadow:0 1px 3px #000}.cr-dark .cr-ci small{color:#fff}.cr-dark .cr-ci.lock{filter:grayscale(.75) brightness(.7)}.cr-gc{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.cr-dark .cr-go{background:linear-gradient(180deg,#ffd43b,#f59f00);color:#23150a;box-shadow:0 5px 0 #a86a00}.cr-dark .cr-link{color:#ffe08a}.cr-dark .cr-gift{background:rgba(255,212,59,.18)}.cr-dark .cr-okm{color:#7dffb0}.cr-dark .cr-e{color:#ffc078}.cr-hero{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:18px;padding:14px 18px;margin-bottom:10px;box-shadow:0 8px 24px rgba(0,0,0,.35)}.cr-hero h1{margin:0;font-size:28px;text-shadow:0 2px 6px rgba(0,0,0,.5)}.cr-hero p{margin:4px 0 0;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.6)}.cr-hero img{width:120px;flex:none}
 .cr-dark .cr-d{background:linear-gradient(180deg,#4c4fd0,#2c2e96);box-shadow:0 5px 0 #1a1b66}.cr-dark .cr-a{background:linear-gradient(180deg,#fff,#d8def2);box-shadow:0 5px 0 #7c86b5}.cr-dark .cr-h{color:#aab3d6}#cr-c{box-shadow:0 10px 30px rgba(0,0,0,.5)}.cr-pod{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin:14px 0}.cr-pod div{flex:1;max-width:110px;background:linear-gradient(180deg,#ffd43b,#b77900);border-radius:10px 10px 0 0;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:6px 2px;color:#23150a}.cr-pod b{font-size:13px;overflow-wrap:anywhere}.cr-pod span{font-size:22px;font-weight:800}.cr-c2{color:#c5cce8;margin:2px 0}
-@media(min-width:900px){.cr-d{min-height:64px}}@media(pointer:coarse){.cr-h{display:none}}
+#cr-joy{display:none;position:relative;flex:none;width:136px;height:136px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.1) 40%,rgba(255,255,255,.28));border:3px solid rgba(255,255,255,.45);touch-action:none;cursor:grab}#cr-joy i{position:absolute;inset:27%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#aeb8e6);box-shadow:0 4px 10px rgba(0,0,0,.5);pointer-events:none}
+.cr-ctl{justify-content:center;align-items:center}.cr-at{flex:none;gap:10px;align-items:center}.cr-dark .cr-a{flex:none;width:68px;height:68px;border-radius:50%;box-shadow:0 4px 0 #7c86b5}.cr-dark .cr-a:first-child{width:92px;height:92px;box-shadow:0 0 0 4px #ff6b6b,0 5px 0 4px #a83232}.cr-a:first-child span{font-size:42px}.cr-a small{right:50%;top:4px;transform:translateX(50%)}
+@media(pointer:coarse){.cr-h{display:none}#cr-joy{display:block;width:116px;height:116px}.cr-ctl{justify-content:space-between;padding:6px 8px}.cr-a small{display:none}.cr-at{gap:6px}.cr-dark .cr-a{width:54px;height:54px}.cr-dark .cr-a:first-child{width:78px;height:78px}.cr-a span{font-size:24px}.cr-a:first-child span{font-size:36px}}
+@media(pointer:coarse) and (orientation:landscape){.cr-j{padding:0 8px;max-width:calc((100vh - 50px)*1.6)}.cr-ctl{position:fixed;left:8px;right:8px;bottom:8px;margin:0;padding:0;pointer-events:none}.cr-ctl>*{pointer-events:auto}#cr-joy{background:rgba(255,255,255,.2)}}
 </style></head><body><!--menu--><style>
 :root{--nf:calc(46px + env(safe-area-inset-top,0px))}
 html{padding-top:var(--nf)!important}
@@ -669,8 +672,8 @@ function correr(C,V,sel){
  document.body.classList.add('cr-dark');
  const g0=gLoad();const segs=pista(C),N=segs.length,L=N*SEG,LAPS=3,VM=C.v,mp=mapa(segs),bg=fondo(C);
  app.innerHTML=`<div class="cr-j"><canvas id="cr-c" aria-label="Carrera"></canvas>
- <div class="cr-ctl"><button class="cr-d" id="cr-iz" aria-label="Izquierda">◀</button><div class="cr-at">${sel.map((k,i)=>`<button class="cr-a" data-i="${i}" aria-label="${ATK[k].n}"><span>${ATK[k].e}</span><small>${i+1}</small><i></i></button>`).join('')}</div><button class="cr-d" id="cr-de" aria-label="Derecha">▶</button></div>
- <p class="cr-h">Flechas para girar y teclas 1, 2 y 3 para atacar. El vehículo acelera solo. Pisa las flechas ⚡ del suelo.</p></div>`;
+ <div class="cr-ctl"><div id="cr-joy" role="application" aria-label="Volante"><i></i></div><div class="cr-at">${sel.map((k,i)=>`<button class="cr-a" data-i="${i}" aria-label="${ATK[k].n}"><span>${ATK[k].e}</span><small>${i+1}</small><i></i></button>`).join('')}</div></div>
+ <p class="cr-h">← → para girar y ↑ para disparar. El vehículo acelera solo. Pisa las franjas amarillas del suelo para coger turbo.</p></div>`;
  const c=$('#cr-c'),x=c.getContext('2d');let K=1;
  const fit=()=>{const a=c.getBoundingClientRect().width||W,r=Math.min(2,devicePixelRatio||1);c.width=Math.round(a*r);c.height=Math.round(a*r*H/W);K=c.width/W;};fit();addEventListener('resize',fit);
  const me={me:1,nom:g0.liga&&g0.liga.apodo||'Tú',v0:V,ks:kart(V),av:imgAv(g0.av),d:-200,x:0,v:0,max:VM*V.v,gi:V.g,res:V.r,spin:0,safe:0,slow:0,rot:0,boost:0};
@@ -815,11 +818,15 @@ function correr(C,V,sel){
  }
  let raf,ult=performance.now(),vivo=true;
  const bucle=n=>{if(!vivo)return;const dt=Math.min(.05,(n-ult)/1000);ult=n;if(!document.hidden)step(dt);draw();raf=requestAnimationFrame(bucle);};
- const teclas={};const syncS=()=>{st.steer=(teclas.d||teclas.R?1:0)-(teclas.i||teclas.L?1:0);};
- const hold=(el,k)=>{const on=e=>{e.preventDefault();teclas[k]=1;syncS();},off=e=>{e.preventDefault();teclas[k]=0;syncS();};el.addEventListener('pointerdown',on);['pointerup','pointercancel','pointerleave'].forEach(t=>el.addEventListener(t,off));el.addEventListener('contextmenu',e=>e.preventDefault());};
- hold($('#cr-iz'),'i');hold($('#cr-de'),'d');
+ const teclas={};let jx=0,jid=null;const syncS=()=>{st.steer=jx||(teclas.R?1:0)-(teclas.L?1:0);};
+ const joy=$('#cr-joy'),kn=joy.querySelector('i');
+ const jm=e=>{const r=joy.getBoundingClientRect(),R=r.width/2,dx=e.clientX-(r.left+R),dy=e.clientY-(r.top+R),a=Math.max(-1,Math.min(1,dx/(R*.7)));jx=Math.abs(a)<.1?0:a;kn.style.transform=`translate(${a*R*.62}px,${Math.max(-1,Math.min(1,dy/R))*R*.2}px)`;syncS();};
+ const jf=e=>{if(e.pointerId!==jid)return;jid=null;jx=0;kn.style.transform='';syncS();};
+ joy.addEventListener('pointerdown',e=>{e.preventDefault();jid=e.pointerId;try{joy.setPointerCapture(jid);}catch(_){}jm(e);});
+ joy.addEventListener('pointermove',e=>{if(e.pointerId===jid){e.preventDefault();jm(e);}});
+ ['pointerup','pointercancel'].forEach(t=>joy.addEventListener(t,jf));joy.addEventListener('contextmenu',e=>e.preventDefault());
  document.querySelectorAll('.cr-a').forEach(q=>q.addEventListener('pointerdown',e=>{e.preventDefault();atacar(+q.dataset.i);}));
- const kd=e=>{if(e.key==='ArrowLeft'){teclas.L=1;syncS();e.preventDefault();}else if(e.key==='ArrowRight'){teclas.R=1;syncS();e.preventDefault();}else if(['1','2','3'].includes(e.key)){const i=+e.key-1;if(i<sel.length)atacar(i);}};
+ const kd=e=>{if(e.key==='ArrowLeft'){teclas.L=1;syncS();e.preventDefault();}else if(e.key==='ArrowRight'){teclas.R=1;syncS();e.preventDefault();}else if(e.key==='ArrowUp'){e.preventDefault();if(!e.repeat){const i=st.cd.findIndex(v=>v<=0);if(i>=0)atacar(i);}}else if(['1','2','3'].includes(e.key)){const i=+e.key-1;if(i<sel.length)atacar(i);}};
  const ku=e=>{if(e.key==='ArrowLeft'){teclas.L=0;syncS();}else if(e.key==='ArrowRight'){teclas.R=0;syncS();}};
  addEventListener('keydown',kd);addEventListener('keyup',ku);
  const salir=()=>{vivo=false;cancelAnimationFrame(raf);removeEventListener('keydown',kd);removeEventListener('keyup',ku);removeEventListener('resize',fit);};
