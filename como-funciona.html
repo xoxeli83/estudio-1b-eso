@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo funciona</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#1b56b8,#4f93dc 420px,#dfe9f7 420px);color:#17203a;font:17px/1.55 Lexend,Verdana,"Segoe UI",sans-serif;padding:16px}
+main{max-width:800px;margin:0 auto}
+h1{color:#fff;font-size:36px;line-height:1.12;margin:14px 2px 6px}.sub{color:#eaf2ff;margin:0 2px 16px;font-size:18px}
+.ir{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}.ir a{background:#fff;color:#17203a;text-decoration:none;border-radius:10px;padding:8px 12px;font-size:15px;font-weight:500;box-shadow:0 3px 0 rgba(10,30,90,.3)}
+section{background:#fff;border-radius:16px;padding:18px 20px;margin:0 0 14px;box-shadow:0 3px 10px rgba(10,30,90,.13);scroll-margin-top:60px}
+h2{font-size:24px;line-height:1.2;margin:0 0 10px}h3{font-size:18px;margin:16px 0 6px}p{margin:0 0 10px}ul,ol{margin:0 0 10px;padding-left:22px}li{margin-bottom:5px}
+.tabla{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:16px;margin:4px 0 10px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #d7deea;vertical-align:top}th{background:#eef2fa;font-weight:600}
+.ojo{background:#fff4dc;border-left:5px solid #f0a020;border-radius:8px;padding:10px 14px;margin:10px 0}.ojo p:last-child{margin:0}
+.vale{background:#e3f6e8;border-left:5px solid #2d9c5a;border-radius:8px;padding:10px 14px;margin:10px 0}
+a{color:#2b2d9c}.vuelta{display:inline-block;margin:4px 2px 24px;font-weight:500}
+@media(max-width:480px){h1{font-size:29px}section{padding:15px}h2{font-size:22px}table{font-size:15px}th,td{padding:7px}}
+@media print{body{background:#fff}h1,.sub{color:#17203a}.ir,.vuelta{display:none}section{box-shadow:none;border:1px solid #ccd}}
+</style></head><body><!--menu--><style>
+:root{--nf:calc(46px + env(safe-area-inset-top,0px))}
+html{padding-top:var(--nf)!important}
+#menu-fijo{position:fixed;top:0;left:0;right:0;z-index:10000;display:flex;gap:4px;box-sizing:border-box;height:var(--nf);padding:calc(4px + env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) 4px max(6px,env(safe-area-inset-left,0px));background:#1f2a5c;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#menu-fijo a{flex:1 1 auto;min-width:0;padding:0 3px;display:flex;align-items:center;justify-content:center;gap:5px;border-radius:9px;background:rgba(255,255,255,.14);color:#fff!important;font:600 13.5px/1 Verdana,"Segoe UI",system-ui,sans-serif;text-decoration:none;white-space:nowrap;overflow:hidden}
+#menu-fijo a:hover,#menu-fijo a:focus-visible{background:rgba(255,255,255,.3);outline:0}
+#menu-fijo a[aria-current]{background:#fff;color:#1f2a5c!important}
+#av-editor,#lg,#jg{top:var(--nf)!important}
+#misframe{top:var(--nf)!important;height:calc(100% - var(--nf))!important}
+.tabs,.bar{top:var(--nf)!important}
+.scrim{padding-top:calc(var(--nf) + 12px)!important}
+@media(max-width:340px){#menu-fijo a{font-size:12px;gap:3px}}
+@media print{#menu-fijo{display:none!important}html{padding-top:0!important}}
+</style><nav id="menu-fijo" aria-label="Menú"><a href="index.html" data-p="index">🏠 Inicio</a><a href="calendario.html" data-p="calendario">📅 Calendario</a><a href="juego.html" data-p="juego">🎮 Jugar</a><a href="juego.html#clasificacion" data-p="juego">🏆 Liga</a></nav><script>(function(){var p=(location.pathname.split('/').pop()||'index.html').replace('.html','');document.querySelectorAll('#menu-fijo a').forEach(function(a){if(p===a.dataset.p&&p!=='juego'){a.setAttribute('aria-current','page');}if(p==='juego'&&a.dataset.p==='juego'){a.onclick=function(e){e.preventDefault();location.href=a.getAttribute('href');location.reload();};}});})();</script><!--/menu-->
+<main>
+<h1>Cómo funciona</h1>
+<p class="sub">Qué se consigue estudiando, cómo se juega y cómo se entra en el grupo.</p>
+<nav class="ir" aria-label="Apartados"><a href="#idea">La idea</a><a href="#estudiar">Estudiar</a><a href="#estrellas">Estrellas</a><a href="#premios">Premios</a><a href="#fichas">Fichas</a><a href="#juegos">Juegos</a><a href="#grupo">Grupo</a><a href="#liga">Liga y duelos</a><a href="#familias">Familias</a></nav>
+
+<section id="idea"><h2>La idea</h2>
+<div class="vale"><b>Estudias, ganas estrellas y fichas, y con ellas juegas y consigues premios.</b> Cuanto más estudias, más cosas abres.</div>
+<p>Es una web gratuita para repasar por asignaturas y temas, con explicaciones cortas y preguntas. La ha preparado una familia de la clase. No es una web oficial del colegio y no sustituye a los apuntes ni a lo que manda el profesorado.</p></section>
+
+<section id="estudiar"><h2>Cómo se estudia</h2>
+<ol><li>En <b>Inicio</b> elige asignatura y tema. Si pone «Próximamente», aún no tiene temas.</li>
+<li>Haz las <b>misiones</b>: una explicación breve y unas preguntas.</li>
+<li>Lo que falles volverá a salir en un <b>repaso</b>.</li>
+<li>Al final hay un <b>simulacro</b> de examen.</li></ol>
+<p>En <b>Calendario</b> están los exámenes y las tareas de la clase. Quien está en el grupo puede añadir y corregir datos, así que comprueba las fechas importantes con el profesorado.</p></section>
+
+<section id="estrellas"><h2>Cómo se ganan estrellas ⭐</h2>
+<p>Las estrellas <b>nunca se pierden</b>.</p>
+<div class="tabla"><table><thead><tr><th>Qué haces</th><th>Estrellas</th></tr></thead><tbody>
+<tr><td>Acertar una pregunta en una misión</td><td>1</td></tr>
+<tr><td>Terminar una misión por primera vez</td><td>5</td></tr>
+<tr><td>Repetir una misión ya hecha</td><td>2</td></tr>
+<tr><td>Terminar un repaso</td><td>3</td></tr>
+<tr><td>Terminar un simulacro</td><td>15</td></tr>
+<tr><td>Jugar un duelo</td><td>2</td></tr></tbody></table></div></section>
+
+<section id="premios"><h2>Qué se consigue</h2>
+<p>Con las <b>estrellas totales</b> se abren detalles de tu muñeco, como peinados y gafas. Con las estrellas de <b>cada asignatura</b> se abre todo esto:</p>
+<div class="tabla"><table><thead><tr><th>Estrellas en la asignatura</th><th>Qué se abre</th></tr></thead><tbody>
+<tr><td>5 ⭐</td><td>Su circuito del Gran Premio</td></tr>
+<tr><td>10 ⭐</td><td>Su ataque en la carrera y el primer premio del muñeco</td></tr>
+<tr><td>30, 60 y 100 ⭐</td><td>Los otros tres premios del muñeco</td></tr></tbody></table></div>
+<div class="tabla"><table><thead><tr><th>Asignatura</th><th>Circuito</th><th>Ataque</th><th>Premio</th></tr></thead><tbody>
+<tr><td>Matemáticas</td><td>Avenida de los Números</td><td>➗ Divide</td><td>Vehículo</td></tr>
+<tr><td>Lengua</td><td>Ruta de las Letras</td><td>📖 Libro</td><td>Bastón de poder</td></tr>
+<tr><td>Galego</td><td>Costa Galega</td><td>🐙 Polbo</td><td>Mascota</td></tr>
+<tr><td>Inglés</td><td>London Bridge</td><td>🛸 Ovni</td><td>Volador</td></tr>
+<tr><td>Francés</td><td>Tour de Paris</td><td>🥐 Croissant</td><td>Merienda</td></tr>
+<tr><td>Bioloxía</td><td>Selva Viva</td><td>🐝 Enjambre</td><td>Bicho</td></tr>
+<tr><td>Xeografía</td><td>Grecia y Exipto</td><td>🌋 Volcán</td><td>Explorador</td></tr>
+<tr><td>Plástica</td><td>El Gran Lienzo</td><td>🎨 Pintura</td><td>Fondo</td></tr>
+<tr><td>Tecnología</td><td>Placa Base</td><td>⚡ Rayo</td><td>Detalles del muñeco</td></tr>
+<tr><td>Ed. Física</td><td>Gran Estadio</td><td>⚽ Balón</td><td>Deporte</td></tr></tbody></table></div>
+<p>La Pista de entrenamiento y la 🔴 Bola se tienen desde el principio. En la carrera puedes llevar hasta 3 ataques.</p>
+<h3>Vehículos del Gran Premio</h3>
+<ul><li><b>Con estrellas de Matemáticas:</b> monopatín (10), bici (30), coche de carreras (60) y cohete (100).</li>
+<li><b>Con premios de tu familia:</b> unicornio (1), moto (3) y dragón (6).</li></ul></section>
+
+<section id="fichas"><h2>Fichas 🎮</h2>
+<p>Cada partida gasta 1 ficha. Puedes tener <b>3 como máximo</b>.</p>
+<ul><li>Ganas 1 ficha al terminar una misión, un repaso o un simulacro.</li>
+<li>También recuperas 1 ficha cada 2 horas.</li></ul>
+<div class="ojo"><p><b>Al gastar la última ficha hay que esperar 1 hora</b>, por mucho que estudies. Lo que estudies durante esa hora te guarda fichas para cuando acabe la espera, hasta 3. Pasada la hora tendrás al menos 1.</p></div></section>
+
+<section id="juegos"><h2>Juegos</h2>
+<p>Para jugar tienes que estar <b>identificado en el grupo</b>. Para estudiar no hace falta.</p>
+<div class="tabla"><table><thead><tr><th>Juego</th><th>En qué consiste</th></tr></thead><tbody>
+<tr><td><b>Salta y corre</b></td><td>Tu muñeco corre y salta obstáculos. Tu mejor puntuación sale en la clasificación.</td></tr>
+<tr><td><b>Gran Premio</b></td><td>Carrera de vehículos en 3D contra rivales del juego, con un circuito por asignatura.</td></tr>
+<tr><td><b>Carrera con amigos</b></td><td>El Gran Premio a la vez, cada uno desde su móvil u ordenador.</td></tr></tbody></table></div>
+<h3>Mandos del Gran Premio</h3>
+<ul><li><b>Ordenador:</b> ← → para girar, ↑ para disparar, y 1, 2, 3 para elegir ataque.</li>
+<li><b>Móvil:</b> círculo para girar y botones para disparar.</li>
+<li>El vehículo acelera solo. Las franjas amarillas del suelo dan turbo.</li>
+<li>Los juegos tienen música y sonidos, que se quitan con el botón 🔊.</li></ul>
+<h3>Carrera con amigos</h3>
+<ol><li>En el Gran Premio pulsa <b>👥 Carrera con amigos</b>.</li>
+<li>Crea una sala o entra en una de las abiertas. Caben 6 jugadores, y los puestos libres los ocupan rivales del juego.</li>
+<li>Quien creó la sala pulsa <b>¡Salir ya!</b>. Cada jugador gasta 1 ficha.</li></ol></section>
+
+<section id="grupo"><h2>Entrar en el grupo</h2>
+<ol><li>Pide el <b>código del grupo</b> a tu familia o a quien coordina la web.</li>
+<li>Entra en <b>Liga</b>, en el menú de arriba, y escribe el código.</li>
+<li>Elige un <b>apodo inventado</b>, de 3 a 14 letras o números. Nunca tu nombre real.</li>
+<li>Marca la casilla de que tu padre, madre o tutor te ha dado permiso, y pulsa <b>Entrar</b>.</li></ol>
+<div class="ojo"><p><b>El código no se comparte fuera de la clase.</b> Cualquiera que lo tenga puede entrar en el grupo.</p></div>
+<p>Tu identificación queda guardada en ese móvil u ordenador. Cada apodo solo se puede registrar una vez, y el progreso no pasa de un dispositivo a otro. Por eso lo mejor es usar siempre el mismo.</p></section>
+
+<section id="liga"><h2>Liga y duelos</h2>
+<p>La clasificación tiene seis listas, para que no destaque siempre el mismo:</p>
+<div class="tabla"><table><thead><tr><th>Lista</th><th>Qué mide</th></tr></thead><tbody>
+<tr><td>Estudio</td><td>Porcentaje trabajado. Todos podéis llegar al 100 %. De momento solo cuenta Tecnología.</td></tr>
+<tr><td>Estrellas</td><td>Estrellas totales.</td></tr>
+<tr><td>Juego</td><td>Mejor puntuación en Salta y corre.</td></tr>
+<tr><td>Simulacro</td><td>Mejor resultado en un simulacro.</td></tr>
+<tr><td>Mejora</td><td>Cuánto has subido desde tu primer simulacro.</td></tr>
+<tr><td>Días seguidos</td><td>Días consecutivos estudiando.</td></tr></tbody></table></div>
+<h3>Duelos por los trofeos</h3>
+<p>Hay tres trofeos: corona, capa y rayo. Se disputan con 5 preguntas, que de momento salen de Tecnología.</p>
+<ul><li>Un trofeo sin dueño se consigue con al menos 3 aciertos.</li>
+<li>Quien tiene un trofeo dispone de 48 horas para defenderlo. Si no responde, lo pierde.</li>
+<li>Puedes hacer 3 retos al día como máximo.</li>
+<li>Perder un duelo solo quita el trofeo, nunca estrellas ni premios.</li></ul></section>
+
+<section id="familias"><h2>Para las familias</h2>
+<h3>Premios después de un examen</h3>
+<p>En el Gran Premio, abajo del todo, está <b>👪 Para padres</b>, protegido con un PIN que crea la familia. Se puede dar un premio por esfuerzo, mejora o aprobado. <b>Ni la nota ni el motivo se escriben o se guardan.</b> Cada premio rellena las fichas, también durante la hora de espera. El PIN y los premios se guardan solo en ese dispositivo.</p>
+<h3>Qué ve el resto del grupo</h3>
+<p>El apodo, el muñeco, las estrellas, el porcentaje de estudio, los resultados de simulacro, la mejor puntuación en Salta y corre, los días seguidos y los trofeos. También quién ha añadido cada dato del calendario, por su apodo. En una carrera con amigos, los jugadores de la sala reciben en directo el apodo, el muñeco, el vehículo y la posición del coche. Esos datos de la carrera no se guardan en la base de datos.</p>
+<h3>Qué no se pide</h3>
+<p>Ni nombre real, ni correo, ni teléfono, ni contraseña, ni notas del colegio.</p>
+<h3>Dónde se guarda</h3>
+<ul><li><b>En el móvil u ordenador:</b> el progreso de cada tema, las fichas, los premios y el PIN.</li>
+<li><b>En un servicio externo (Supabase):</b> lo que ve el grupo.</li>
+<li>La web se publica en GitHub Pages y carga letras y programas desde Google Fonts y jsDelivr.</li></ul>
+<h3>Borrar el perfil</h3>
+<p>En <b>Liga</b>, abajo del todo, está <b>Borrar mi perfil</b>. Quita al jugador del grupo. Hay que pulsarlo dos veces y no se puede deshacer.</p>
+<h3>A tener en cuenta</h3>
+<ul><li>Los resúmenes y las preguntas son de elaboración propia y pueden tener errores. Si veis alguno, avisad a quien coordina la web.</li>
+<li>Hace falta internet para el Gran Premio, la clasificación y el calendario. Las canciones pesan unos 5 MB cada una, a tener en cuenta con datos móviles.</li></ul></section>
+<a class="vuelta" href="index.html">Volver a las asignaturas</a>
+</main></body></html>

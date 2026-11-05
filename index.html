@@ -68,7 +68,7 @@ const app=document.getElementById('app');
 const esc=s=>s.replace(/&/g,'&amp;');
 function list(){
   document.title='Estudio 1º B ESO';
-  app.innerHTML=`<h1>Estudio 1º B ESO</h1><nav class="top"><a href="juego.html">🎮 Jugar</a><a href="juego.html#clasificacion">🏆 Clasificación</a><a href="juego.html#muneco">🧑 Mi muñeco</a><a href="calendario.html">📅 Calendario</a><a href="padres.html">👪 Información para familias</a></nav><div class="grid">${AS.map(a=>{const n=(a.temas||[]).length;
+  app.innerHTML=`<h1>Estudio 1º B ESO</h1><nav class="top"><a href="juego.html">🎮 Jugar</a><a href="juego.html#clasificacion">🏆 Clasificación</a><a href="juego.html#muneco">🧑 Mi muñeco</a><a href="calendario.html">📅 Calendario</a><a href="como-funciona.html">ℹ️ Cómo funciona</a></nav><div class="grid">${AS.map(a=>{const n=(a.temas||[]).length;
     return `<button class="card" data-id="${a.id}">${a.a}<b>${esc(a.n)}</b><span class="${n?'on':''}">${n?n+(n===1?' tema':' temas'):'Próximamente'}</span><span class="pr">${a.premio}</span></button>`;}).join('')}</div>`;
   app.querySelectorAll('.card').forEach(b=>b.onclick=()=>{location.hash=b.dataset.id;});
   window.scrollTo(0,0);
