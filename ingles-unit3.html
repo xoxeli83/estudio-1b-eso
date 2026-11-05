@@ -556,6 +556,7 @@ function gBanner(){
 }
 /* Editor con tiempo limitado: se recarga terminando misiones */
 function openAvatarEditor(onClose){
+  {const g0=gLoad();if(ligaOn()&&!g0.liga&&!g0.prueba){const v=document.createElement('div');v.id='av-editor';v.innerHTML=`<div class="lg-box" style="max-width:520px;margin:30px auto;background:#fff;color:#17203a;padding:20px;border-radius:16px"><h2>Tu muñeco</h2><p>Para crear tu muñeco tienes que entrar con tu correo. Tu padre o tu madre te da de alta desde su cuenta. Para estudiar no hace falta.</p><a class="lg-go" style="display:block;text-align:center;text-decoration:none" href="acceso.html?volver=juego.html">Entrar con mi correo</a><button class="lg-x" id="av-v" style="position:static;margin-top:12px">Volver</button></div>`;document.body.appendChild(v);v.querySelector('#av-v').onclick=()=>{v.remove();onClose&&onClose();};return;}}
   const TABS=[['shape','Cara'],['skin','Color cara'],['eyes','Ojos'],['mouth','Boca'],['nose','Nariz'],['hair','Pelo'],['hc','Color pelo'],['glass','Gafas'],['acc','Extras'],['premios','Premios']];
   let tab='shape',iv=null;
   const o=document.createElement('div');o.id='av-editor';document.body.appendChild(o);
@@ -630,19 +631,8 @@ function openLeague(onClose){
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const showErr=(id,m)=>{const e=o.querySelector('#'+id);if(e)e.textContent=m;};
   function join(){
-    o.innerHTML=`<div class="lg-box"><button class="lg-x" id="lg-x">Volver</button><h2>Únete a tu grupo</h2>
-      <label class="lg-l">Código del grupo<input id="lg-c" autocomplete="off" maxlength="40"></label>
-      <label class="lg-l">Tu apodo<input id="lg-a" autocomplete="off" maxlength="14"></label>
-      <p class="lg-s">Usa un apodo inventado, nunca tu nombre real.</p>
-      <label class="lg-ck"><input type="checkbox" id="lg-p"> Mi padre, madre o tutor me ha dado permiso.</label>
-      <div class="lg-err" id="lg-e" role="alert"></div><button class="lg-go" id="lg-j">Entrar</button><h3>¿Ya tienes apodo?</h3><label class="lg-l">Tu clave personal<input id="lg-k" autocomplete="off" maxlength="20"></label><div class="lg-err" id="lg-e2" role="alert"></div><button class="lg-go" id="lg-kg">Entrar con mi clave</button></div>`;
-    o.querySelector('#lg-kg').onclick=async()=>{try{const r=await ligaRpc('s_entrar',{p_clave:o.querySelector('#lg-k').value});const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};delete g2.srvOk;if(r.avatar&&r.avatar.shape)g2.av=r.avatar;gSave(g2);await gSync();load();}catch(e){showErr('lg-e2',e.message);}};
+    o.innerHTML=`<div class="lg-box"><button class="lg-x" id="lg-x">Volver</button><h2>Entra para ver la Liga</h2><p class="lg-s">Tu padre o tu madre te da de alta desde su cuenta y te llega un correo para crear tu contraseña.</p><a class="lg-go" style="display:block;text-align:center;text-decoration:none" href="acceso.html?volver=juego.html">Entrar con mi correo</a></div>`;
     o.querySelector('#lg-x').onclick=close;
-    o.querySelector('#lg-j').onclick=async()=>{
-      if(!o.querySelector('#lg-p').checked)return showErr('lg-e','Antes necesitas el permiso de tu padre, madre o tutor.');
-      try{const g=gLoad();const r=await ligaRpc('unirse',{p_codigo:o.querySelector('#lg-c').value.trim(),p_apodo:o.querySelector('#lg-a').value,p_avatar:g.av});
-        const g2=gLoad();g2.liga={token:r.token,id:r.id,apodo:r.apodo};delete g2.srvOk;gSave(g2);await gSync();await ligaSync();load();}catch(e){showErr('lg-e',e.message);}
-    };
   }
   async function load(){
     o.innerHTML='<div class="lg-box"><p>Cargando…</p></div>';
@@ -668,7 +658,7 @@ function openLeague(onClose){
     o.innerHTML=`<div class="lg-box"><div class="lg-top"><button class="lg-x" id="lg-x">Volver</button><div class="lg-me">${avatarConTrofeos(gLoad().av,44,trof(data.yo))}<div><b>${esc(me.apodo)}</b><div class="lg-s">Has estudiado el ${me.estudio} %</div></div></div></div>
       ${retos}<h3>Trofeos</h3><p class="lg-s">Se ganan en duelos de 5 preguntas. Lo que has ganado con estrellas nunca se pierde.</p><div class="lg-ts">${cards}</div><div class="lg-err" id="lg-e" role="alert"></div>
       <h3>Clasificación</h3><div class="lg-tabs">${Object.keys(COLS).map(k=>`<button class="${k===tab?'on':''}" data-k="${k}">${COLS[k][0]}</button>`).join('')}</div>${tab==='estudio'?'<p class="lg-s">Si todos estudiáis todo, todos llegáis al 100 %.</p>':''}${list}
-      ${gLoad().clave?`<h3>Tu clave personal</h3><p class="lg-s"><b style="font-size:20px">${esc(gLoad().clave)}</b><br>Apúntala. Con ella entras en otro móvil u ordenador con tus fichas y estrellas. No se la des a nadie.</p>`:''}<button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
+      <button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
     o.querySelector('#lg-x').onclick=close;
     o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{tab=b.dataset.k;main();});
     o.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{try{const t=gLoad().liga.token;const r=await ligaRpc('retar',{p_token:t,p_trofeo:b.dataset.r});play(r.semilla,async p=>{const x=await ligaRpc('enviar_reto',{p_token:t,p_duelo:r.id,p_pts:p});return x.resultado==='ganado'?`¡${p} de 5! El trofeo es tuyo.`:x.resultado==='no_llega'?`${p} de 5. Hacen falta 3 aciertos para conseguirlo.`:`${p} de 5. Ahora le toca responder a tu rival.`;});}catch(e){showErr('lg-e',e.message);}});
@@ -694,6 +684,28 @@ function openLeague(onClose){
   if(gLoad().liga)load();else join();
 }
 
+/* ===== Tiempo de estudio, aciertos y progreso en el servidor ===== */
+const G_EK='gest.pend';
+const gEstudia=()=>!/(juego|carrera)\.html/.test(location.pathname);
+const gEstLee=()=>{try{return JSON.parse(localStorage.getItem(G_EK))||{};}catch(e){return {};}};
+function gEstSuma(s,p,o){if(!gEstudia())return;const k=gHoy2()+'|'+(window.G_SUBJ||'tecnologia'),m=gEstLee(),a=m[k]||[0,0,0];a[0]+=s;a[1]+=p;a[2]+=o;m[k]=a;try{localStorage.setItem(G_EK,JSON.stringify(m));}catch(e){}}
+function gHoy2(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function gNota(ok){gEstSuma(0,1,ok?1:0);}
+const gRpcK=(fn,a)=>fetch(LIGA.url+'/rest/v1/rpc/'+fn,{method:'POST',keepalive:true,headers:{apikey:LIGA.key,'Content-Type':'application/json'},body:JSON.stringify(a)});
+async function gEstEnvia(){const g=gLoad();if(!ligaOn()||!g.liga)return;const m=gEstLee(),ks=Object.keys(m);if(!ks.length)return;try{localStorage.removeItem(G_EK);}catch(e){}
+  for(const k of ks){const [dia,sub]=k.split('|'),a=m[k];try{const r=await gRpcK('s_estudio',{p_token:g.liga.token,p_dia:dia,p_sub:sub,p_seg:a[0],p_preg:a[1],p_ok:a[2]});if(!r.ok&&r.status>=500)throw 0;}catch(e){const n=gEstLee(),b=n[k]||[0,0,0];n[k]=[b[0]+a[0],b[1]+a[1],b[2]+a[2]];try{localStorage.setItem(G_EK,JSON.stringify(n));}catch(x){}}}}
+(function(){if(!gEstudia())return;let ult=Date.now();['pointerdown','keydown','touchstart','scroll'].forEach(e=>addEventListener(e,()=>{ult=Date.now();},{passive:true,capture:true}));
+  setInterval(()=>{if(document.hidden||Date.now()-ult>90000)return;if([...document.querySelectorAll('iframe')].some(f=>f.offsetWidth>0))return;gEstSuma(5,0,0);},5000);
+  setInterval(gEstEnvia,60000);addEventListener('pagehide',gEstEnvia);setTimeout(gEstEnvia,4000);})();
+let G_avT={};
+function gAvSube(k,S){const g=gLoad();if(!ligaOn()||!g.liga)return;clearTimeout(G_avT[k]);G_avT[k]=setTimeout(()=>{const M0=typeof M!=='undefined'?M.length:null;const r={titulo:document.title.slice(0,50),sub:window.G_SUBJ||'tecnologia',done:Object.keys(S.done||S.st||{}).length,total:M0,best:S.best==null?null:S.best,fallos:Object.keys(S.wrong||{}).length};gRpcK('s_avance_guardar',{p_token:g.liga.token,p_tema:k,p_datos:S,p_resumen:r}).catch(()=>{});},2500);}
+async function gAvBaja(k,S,fn){const g=gLoad();if(!ligaOn()||!g.liga)return;try{const r=await ligaRpc('s_avance_ver',{p_token:g.liga.token,p_tema:k});const d=r&&r.datos;if(!d){if(S.ts)gAvSube(k,S);return;}
+  if(d.done)S.done=Object.assign(S.done||{},d.done);if(d.seen)S.seen=Object.assign(S.seen||{},d.seen);if(d.st){S.st=S.st||{};Object.keys(d.st).forEach(i=>{S.st[i]=Math.max(S.st[i]||0,d.st[i]);});}
+  if(d.best!=null)S.best=S.best==null?d.best:Math.max(S.best,d.best);if((d.ts||0)>(S.ts||0)){if(d.wrong)S.wrong=d.wrong;if(d.sess)S.sess=d.sess;S.ts=d.ts;}
+  try{localStorage.setItem(k,JSON.stringify(S));}catch(e){}fn&&fn();gAvSube(k,S);}catch(e){}}
+function gAviso(t){const a=document.createElement('div');a.setAttribute('role','alert');a.style.cssText='position:fixed;left:50%;top:70px;transform:translateX(-50%);z-index:100000;max-width:90vw;background:#1f2a5c;color:#fff;padding:14px 18px;border-radius:12px;font:600 17px system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.35)';a.textContent=t;document.body.appendChild(a);setTimeout(()=>a.remove(),6000);}
+const G_MOT={padres:'Tu padre o tu madre tiene el juego desactivado.',horario:'Ahora no es hora de jugar. Lo ha decidido tu familia.',sin_padre:'Para jugar, tu padre o tu madre tiene que darte de alta.'};
+
 /* ===== Tiempo mínimo por pregunta y respuestas en otro orden ===== */
 const G_TMIN=10000;
 function gSigB(b,t0,nx,txt){txt=txt||'Siguiente';let hecho=false,sin=false;try{sin=!!gLoad().prueba;}catch(e){}
@@ -710,7 +722,7 @@ function gAplica(e){const g=gLoad(),C0=g.carrera||{},old=C0.tickets||0;g.fichas=
 let G_flush=false;
 async function gFlush(){const g0=gLoad();if(G_flush||!ligaOn()||!g0.liga||!g0.srvOk)return;G_flush=true;try{for(;;){const g=gLoad(),p=(g.pend||[])[0];if(!p)break;const e=await ligaRpc('s_ganar',{p_token:g.liga.token,p_sub:p[0],p_n:p[1],p_ficha:p[2]});const h=gLoad();h.pend.shift();gSave(h);if(!h.pend.length)gAplica(e);}}catch(e){}G_flush=false;}
 async function gSync(){const g=gLoad();if(!ligaOn()||!g.liga)return null;try{if(!g.srvOk){const e=await ligaRpc('s_estado',{p_token:g.liga.token,p_local:{estrellas:g.stars,sub:g.sub}});const h=gLoad();h.srvOk=1;h.pend=[];gSave(h);return gAplica(e);}await gFlush();const e=await ligaRpc('s_estado',{p_token:gLoad().liga.token,p_local:null});return (gLoad().pend||[]).length?gLoad():gAplica(e);}catch(e){if(/no encontrado/.test(e.message||'')){const h=gLoad();delete h.liga;delete h.srvOk;gSave(h);}return null;}}
-async function gGastar(){const g=gLoad();if(!ligaOn()||!g.liga)return false;if(!g.srvOk)await gSync();await gFlush();const e=await ligaRpc('s_gastar',{p_token:g.liga.token});gAplica(e);return !!e.ok;}
+async function gGastar(){const g=gLoad();if(!ligaOn()||!g.liga)return false;if(!g.srvOk)await gSync();await gFlush();const e=await ligaRpc('s_gastar',{p_token:g.liga.token});gAplica(e);if(e.motivo)gAviso(G_MOT[e.motivo]||'Ahora no se puede jugar.');return !!e.ok;}
 /* ===== Sonido: música en mp3 y efectos generados por el navegador ===== */
 const SND=(()=>{const K='tema2.sonido',MUS=['Kart%20ESO.mp3','Kart%20ESO_2.mp3'];let ac=null,ma=null,nb=null,aud=null,suena=false,vivos=0;
  const on=()=>{try{return localStorage.getItem(K)!=='0';}catch(e){return true;}};
@@ -770,7 +782,7 @@ function openGame(onClose){
   function menu(){
     const g=gLoad();
     cancelAnimationFrame(raf);st=null;
-    if(ligaOn()&&!g.liga&&!g.prueba){o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2><div class="jg-empty"><b>Para jugar tienes que identificarte.</b><br>Entra en tu grupo con el código y tu apodo. Solo hay que hacerlo una vez en cada dispositivo.</div><button class="lg-go" id="jg-id">Identificarme</button></div>`;o.querySelector('#jg-x').onclick=close;o.querySelector('#jg-id').onclick=()=>openLeague(menu);return;}
+    if(ligaOn()&&!g.liga&&!g.prueba){o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2><div class="jg-empty"><b>Para jugar tienes que entrar con tu correo.</b><br>Tu padre o tu madre te da de alta desde su cuenta. Para estudiar no hace falta.</div><a class="lg-go" style="display:block;text-align:center;text-decoration:none" href="acceso.html?volver=juego.html">Entrar con mi correo</a></div>`;o.querySelector('#jg-x').onclick=close;return;}
     o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2>
       <div class="jg-hero">${avatarSVG(g.av,90)}<div><div class="av-st">🎮 ${g.fichas} de 3 fichas</div><div class="av-next">${g.fichas>0&&g.fichas<3?`Otra ficha en ${espera(g)}, o terminando una misión. `:''}Tu récord: ${g.juegoBest}</div></div></div>
       <p>Salta con <kbd class="jg-k">espacio</kbd> o tocando la pantalla. Cuanto más mantengas, más alto saltas. Poco a poco va más rápido y cambias de mundo: día, atardecer, noche, lava y espacio.</p>
@@ -1065,7 +1077,7 @@ let BREAK_SECS=30, OPT_DELAY=800, AUTO_NEXT=1100;
 const KEY='ing.unit3.v1';
 let S={done:{},wrong:{},sess:{n:0,since:0,ts:0,ok:false},cfg:{brk:2,per:6,snd:true},best:null,lastDone:null};
 try{const r=localStorage.getItem(KEY);if(r){const j=JSON.parse(r);S=Object.assign(S,j);}}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){S.ts=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}gAvSube(KEY,S);}
 const app=document.getElementById('app');
 let keyH=null,timers=[],R=null,popIndex=null;
 const later=(f,t)=>{const id=setTimeout(f,t);timers.push(id);return id;};
@@ -1172,7 +1184,7 @@ function showQ(){
   let done=false;
   const answer=k=>{
     if(done)return;done=true;
-    const right=opts[k]===q.a;
+    const right=opts[k]===q.a;gNota(right);
     document.querySelectorAll('.opt').forEach((b,x)=>{b.disabled=true;if(opts[x]===q.a)b.classList.add('ok');else if(x===k)b.classList.add('no');else b.classList.add('fade');});
     ding(right);
     if(right){
@@ -1261,7 +1273,7 @@ function simQ(){
   shell(`<div class="tag">Pregunta ${R.pos+1} de 30</div><div class="q">${fmt(q.q)}</div><div class="opts" id="opts"></div><div id="fb"></div>`,{pct:R.pos/30*100,say:q.say||(q.q+' '+opts.map((o,i)=>`${i+1}: ${o}`).join('. '))});gOye(q);
   let done=false;
   const answer=k=>{if(done)return;done=true;
-    if(opts[k]===q.a){R.ok++;R.bok++;delete S.wrong[q.id];gCorrect(q.id);}else{R.miss.push(String(q.id));R.mq=R.mq||{};R.mq[q.id]=q;S.wrong[q.id]=true;}
+    gNota(opts[k]===q.a);if(opts[k]===q.a){R.ok++;R.bok++;delete S.wrong[q.id];gCorrect(q.id);}else{R.miss.push(String(q.id));R.mq=R.mq||{};R.mq[q.id]=q;S.wrong[q.id]=true;}
     save();document.querySelectorAll('.opt').forEach((b,x)=>{b.disabled=true;if(x===k){b.style.borderColor='var(--main)';b.style.background='var(--tint)';}else b.classList.add('fade');});
     const nx=gSig(document.getElementById('fb'),t0,()=>{R.pos++;
     if(R.pos<R.ids.length&&R.pos%10===0){const n=R.bok;R.bok=0;move(simQ,`<p style="text-align:center;font-size:24px;font-weight:700">${n} de 10 en este trozo</p>`);}
@@ -1314,7 +1326,7 @@ function parents(){
     S={done:{},wrong:{},sess:{n:0,since:0,ts:0,ok:false},cfg:S.cfg,best:null};save();home();};
 }
 document.addEventListener('keydown',e=>{if(keyH&&!e.ctrlKey&&!e.altKey&&!e.metaKey)keyH(e);});
-home();
+home();{const a0=app.innerHTML;gAvBaja(KEY,S,()=>{if(app.innerHTML===a0)home();});}
 </script>
 </body>
 </html>

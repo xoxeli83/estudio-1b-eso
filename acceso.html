@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Padres y acceso</title>
+<meta name="robots" content="noindex">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef1f8;color:#17203a;font:17px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:680px;margin:0 auto;padding:16px}section{background:#fff;border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(23,32,58,.07)}
+h1{font-size:27px;margin:4px 0 10px}h2{font-size:20px;margin:16px 0 8px}section>h2:first-child{margin-top:0}h3{font-size:17px;margin:14px 0 4px}p{margin:0 0 10px}a{color:#2b2d9c}
+label{display:block;font-weight:600;margin:0 0 12px}input:not([type=checkbox]){display:block;width:100%;height:46px;margin-top:4px;padding:0 12px;border:1px solid #c6cce0;border-radius:11px;font:inherit;font-weight:400;background:#fff;color:inherit}
+.ck{display:flex;gap:10px;align-items:flex-start;font-weight:500}.ck input{width:22px;height:22px;flex:none;margin-top:2px}
+button,.go,.alt{font:inherit;cursor:pointer}.go,.alt{display:block;width:100%;text-align:center;text-decoration:none;font-weight:700;border-radius:12px;padding:12px;margin:8px 0;min-height:48px}.go{background:#3a3ca6;color:#fff;border:0}.go:disabled{opacity:.55}.alt{background:#fff;color:#2b2d9c;border:2px solid #3a3ca6}
+.mini{width:auto;display:inline-block;padding:8px 12px;min-height:42px;margin:4px 6px 4px 0;font-size:15px}.link{background:none;border:0;color:#2b2d9c;text-decoration:underline;padding:8px 0;min-height:40px}
+.err{color:#b3261e;font-weight:600;margin:6px 0}.err:empty{display:none}.ok{background:#e3f6e8;border-left:5px solid #2d9c5a;border-radius:8px;padding:9px 12px}.sm{font-size:14.5px;color:#55607a}
+.hijo{display:grid;grid-template-columns:1fr auto;gap:0 10px;width:100%;text-align:left;background:#f4f6fc;border:1px solid #d7dcec;border-radius:12px;padding:12px 14px;margin-bottom:8px;color:inherit}.hijo b{font-size:19px}.hijo span{grid-column:1;font-size:15px}.hijo i{grid-column:2;grid-row:1/4;align-self:center;font-style:normal;font-size:26px;color:#3a3ca6}
+.pen{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-top:1px solid #e3e6f0;padding:8px 0}.pen>div{flex:1 1 180px;min-width:0;overflow-wrap:anywhere}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.kpi div{background:#f4f6fc;border-radius:12px;padding:10px 12px}.kpi b{display:block;font-size:22px}.kpi span{font-size:14px;color:#55607a}
+.barras{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;height:130px;align-items:end}.barras div{display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-width:0;text-align:center}.barras i{display:block;background:#3a3ca6;border-radius:4px 4px 0 0;min-height:2px}.barras span{font-size:11px;color:#55607a}
+.tb{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:15px}th,td{text-align:left;padding:7px 8px;border-bottom:1px solid #e3e6f0}th{font-size:13.5px;color:#55607a}
+.fila{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}.fila label{flex:1 1 130px;margin-bottom:6px}.pie{text-align:center}summary{cursor:pointer;font-weight:600;min-height:32px}
+</style></head><body><!--menu--><style>
+:root{--nf:calc(46px + env(safe-area-inset-top,0px))}
+html{padding-top:var(--nf)!important}
+#menu-fijo{position:fixed;top:0;left:0;right:0;z-index:10000;display:flex;gap:4px;box-sizing:border-box;height:var(--nf);padding:calc(4px + env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) 4px max(6px,env(safe-area-inset-left,0px));background:#1f2a5c;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#menu-fijo a{flex:1 1 auto;min-width:0;padding:0 3px;display:flex;align-items:center;justify-content:center;gap:5px;border-radius:9px;background:rgba(255,255,255,.14);color:#fff!important;font:600 13.5px/1 Verdana,"Segoe UI",system-ui,sans-serif;text-decoration:none;white-space:nowrap;overflow:hidden}
+#menu-fijo a:hover,#menu-fijo a:focus-visible{background:rgba(255,255,255,.3);outline:0}
+#menu-fijo a[aria-current]{background:#fff;color:#1f2a5c!important}
+#av-editor,#lg,#jg{top:var(--nf)!important}
+#misframe{top:var(--nf)!important;height:calc(100% - var(--nf))!important}
+.tabs,.bar{top:var(--nf)!important}
+.scrim{padding-top:calc(var(--nf) + 12px)!important}
+@media(max-width:340px){#menu-fijo a{font-size:12px;gap:3px}}
+@media print{#menu-fijo{display:none!important}html{padding-top:0!important}}
+</style><nav id="menu-fijo" aria-label="Menú"><a href="index.html" data-p="index">🏠 Inicio</a><a href="calendario.html" data-p="calendario">📅 Calendario</a><a href="juego.html" data-p="juego">🎮 Jugar</a><a href="juego.html#clasificacion" data-p="juego">🏆 Liga</a></nav><script>(function(){var p=(location.pathname.split('/').pop()||'index.html').replace('.html','');document.querySelectorAll('#menu-fijo a').forEach(function(a){if(p===a.dataset.p&&p!=='juego'){a.setAttribute('aria-current','page');}if(p==='juego'&&a.dataset.p==='juego'){a.onclick=function(e){e.preventDefault();location.href=a.getAttribute('href');location.reload();};}});})();</script><!--/menu--><main id="a" class="w" aria-live="polite"></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+'use strict';
+const LIGA={url:'https://jokivxfiowvrxwllefor.supabase.co',key:'sb_publishable_5HAc9CN8Wab4n-vyEaeDaA_5hdRvYnX'};
+const BASE=location.origin+location.pathname;
+const a=document.getElementById('a');
+const $=s=>a.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const qs=new URLSearchParams(location.search);
+const VOLVER=['calendario.html','juego.html','carrera.html'].includes(qs.get('volver'))?qs.get('volver'):null;
+const pinta=h=>{a.innerHTML=h;scrollTo(0,0);};
+if(!window.supabase){pinta('<section><h1>No se ha podido cargar</h1><p>Comprueba internet y recarga la página.</p></section>');return;}
+const sb=supabase.createClient(LIGA.url,LIGA.key,{auth:{flowType:'implicit',detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}});
+const rpc=async(f,args)=>{const {data,error}=await sb.rpc(f,args||{});if(error)throw new Error(error.message||'No se ha podido conectar');return data;};
+const trad=m=>{m=String(m||'');if(/Invalid login/i.test(m))return 'El correo o la contraseña no son correctos.';if(/not confirmed/i.test(m))return 'Falta confirmar el correo: mira tu bandeja de entrada.';if(/rate limit|too many/i.test(m))return 'Demasiados intentos seguidos. Prueba dentro de un rato.';if(/at least|Password should/i.test(m))return 'La contraseña debe tener al menos 8 caracteres.';if(/different from the old/i.test(m))return 'Elige una contraseña distinta de la anterior.';if(/not authorized/i.test(m))return 'El envío de correos aún no está activado en la web.';if(/fetch|network/i.test(m))return 'No hay conexión. Inténtalo otra vez.';return m;};
+const form=(sel,fn)=>{const f=$(sel);f.addEventListener('submit',async e=>{e.preventDefault();const er=f.querySelector('.err'),b=f.querySelector('button[type=submit]');if(er)er.textContent='';b.disabled=true;try{await fn(new FormData(f));}catch(x){if(er)er.textContent=trad(x.message);}finally{if(b.isConnected)b.disabled=false;}});};
+
+/* ---------- Sin sesión ---------- */
+function entrar(aviso){
+ pinta(`<section><h1>Entrar</h1>${aviso?`<p class="ok">${esc(aviso)}</p>`:''}<form id="f"><label>Correo<input name="e" type="email" autocomplete="username" required></label><label>Contraseña<input name="p" type="password" autocomplete="current-password" required></label><p class="err" role="alert"></p><button class="go" type="submit">Entrar</button></form><button class="link" id="ol">He olvidado la contraseña</button></section>
+ <section><h2>¿Eres padre, madre o tutor?</h2><p>Crea tu cuenta y da de alta a tu hijo o hija con su correo. Podrás ver su estudio y decidir cuándo juega.</p><button class="alt" id="al">Crear cuenta de familia</button></section>
+ <section><h2>¿Eres alumno y no tienes contraseña?</h2><p>Pide a tu padre o tu madre que te dé de alta. Te llegará un correo. <b>Para estudiar no hace falta cuenta</b>: <a href="index.html">ir a las asignaturas</a>.</p></section>`);
+ form('#f',async d=>{const {error}=await sb.auth.signInWithPassword({email:d.get('e').trim(),password:d.get('p')});if(error)throw error;await ruta();});
+ $('#ol').onclick=olvido;$('#al').onclick=alta;
+}
+function alta(){
+ pinta(`<section><h1>Crear cuenta de familia</h1><form id="f"><label>Tu correo<input name="e" type="email" autocomplete="username" required></label><label>Contraseña, de 8 caracteres o más<input name="p" type="password" minlength="8" autocomplete="new-password" required></label><label class="ck"><input name="c" type="checkbox" required> Soy padre, madre o tutor legal, y doy permiso para que mi hijo o hija use la web.</label><p class="sm">Guardamos tu correo para que puedas entrar y recuperar la contraseña. <a href="como-funciona.html#familias">Qué datos se guardan</a>.</p><p class="err" role="alert"></p><button class="go" type="submit">Crear cuenta</button></form><button class="link" id="v">Volver</button></section>`);
+ $('#v').onclick=()=>entrar();
+ form('#f',async d=>{const {data,error}=await sb.auth.signUp({email:d.get('e').trim(),password:d.get('p'),options:{emailRedirectTo:BASE}});if(error)throw error;if(data.session)return ruta();entrar('Te hemos enviado un correo. Ábrelo para confirmar la cuenta y entra después aquí.');});
+}
+function olvido(){
+ pinta(`<section><h1>Recuperar la contraseña</h1><form id="f"><label>Tu correo<input name="e" type="email" autocomplete="username" required></label><p class="err" role="alert"></p><button class="go" type="submit">Enviarme un correo</button></form><button class="link" id="v">Volver</button></section>`);
+ $('#v').onclick=()=>entrar();
+ form('#f',async d=>{const {error}=await sb.auth.resetPasswordForEmail(d.get('e').trim(),{redirectTo:BASE});if(error)throw error;entrar('Si ese correo tiene cuenta, te llegará un mensaje para crear una contraseña nueva.');});
+}
+function claveNueva(tras){
+ pinta(`<section><h1>Crea tu contraseña</h1><p>Con ella y tu correo podrás entrar en cualquier móvil, tablet u ordenador. No se la des a nadie.</p><form id="f"><label>Contraseña, de 8 caracteres o más<input name="p" type="password" minlength="8" autocomplete="new-password" required></label><p class="err" role="alert"></p><button class="go" type="submit">Guardar</button></form></section>`);
+ form('#f',async d=>{const {error}=await sb.auth.updateUser({password:d.get('p')});if(error)throw error;history.replaceState(null,'',BASE+(VOLVER?'?volver='+VOLVER:''));tras();});
+}
+
+/* ---------- Alumno ---------- */
+function guardaHijo(q){let j={};try{j=JSON.parse(localStorage.getItem('tema2.juego'))||{};}catch(e){}
+ if(!j.liga||j.liga.token!==q.token){delete j.srvOk;j.pend=[];}j.liga={token:q.token,id:q.id,apodo:q.apodo};if(q.avatar&&q.avatar.shape)j.av=q.avatar;try{localStorage.setItem('tema2.juego',JSON.stringify(j));}catch(e){}}
+function vistaHijo(q){
+ if(VOLVER){location.replace(VOLVER);return;}
+ pinta(`<section><h1>Hola, ${esc(q.apodo)}</h1>${q.habilitado?'<p class="ok">Ya puedes jugar y crear tu muñeco.</p>':'<p class="err">Tu familia tiene el juego desactivado. Puedes seguir estudiando.</p>'}<a class="go" href="juego.html">🎮 Ir a jugar</a><a class="alt" href="index.html">📚 Ir a estudiar</a><a class="alt" href="calendario.html">📅 Calendario</a><button class="link" id="s">Salir de esta cuenta</button></section>`);
+ $('#s').onclick=async()=>{let j={};try{j=JSON.parse(localStorage.getItem('tema2.juego'))||{};delete j.liga;delete j.srvOk;localStorage.setItem('tema2.juego',JSON.stringify(j));localStorage.removeItem('cal-copia');}catch(e){}await sb.auth.signOut();entrar();};
+}
+
+/* ---------- Familia ---------- */
+const min=s=>{const m=Math.round((s||0)/60);return m<60?m+' min':Math.floor(m/60)+' h '+(m%60?m%60+' min':'');};
+const pct=(o,p)=>p?Math.round(o/p*100)+' %':'—';
+const ASIG={tecnologia:'Tecnoloxía',ingles:'Inglés',frances:'Francés',matematicas:'Matemáticas',xeografia:'Xeografía e Historia',lengua:'Lengua',galego:'Galego',bioloxia:'Bioloxía',plastica:'Plástica'};
+const FECHA=d=>{const x=new Date(d);return x.toLocaleDateString('es-ES',{day:'numeric',month:'short'});};
+async function panel(q,aviso){
+ pinta('<section><p>Cargando…</p></section>');
+ let d;try{d=await rpc('f_hijos');}catch(e){pinta(`<section><p class="err">${esc(trad(e.message))}</p><button class="alt" id="r">Reintentar</button></section>`);$('#r').onclick=()=>panel(q);return;}
+ pinta(`<section><h1>Tu familia</h1><p class="sm">Cuenta: ${esc(q.email)}</p>${aviso?`<p class="ok">${esc(aviso)}</p>`:''}
+ ${d.hijos.length?d.hijos.map(h=>`<button class="hijo" data-h="${esc(h.id)}"><b>${esc(h.apodo)}</b><span>${h.habilitado?'🎮 Juego activado':'⛔ Juego desactivado'}</span><span>Hoy: ${esc(min(h.hoy))} · 7 días: ${esc(min(h.semana))}</span><i>›</i></button>`).join(''):'<p>Todavía no has dado de alta a nadie.</p>'}
+ ${d.pendientes.length?`<h2>Esperando a que abran el correo</h2>${d.pendientes.map(p=>`<div class="pen"><div><b>${esc(p.apodo)}</b><br><span class="sm">${esc(p.email)}</span></div><button class="alt mini" data-r="${esc(p.email)}" data-ap="${esc(p.apodo)}">Reenviar</button><button class="link" data-x="${esc(p.email)}">Cancelar</button></div>`).join('')}`:''}</section>
+ <section><h2>Dar de alta a tu hijo o hija</h2><p>Escribe <b>su correo</b>, no el tuyo. Le llegará un mensaje para crear su contraseña. Hasta entonces no podrá jugar ni crear su muñeco. Estudiar siempre puede.</p>
+ <form id="f"><label>Correo del niño o la niña<input name="e" type="email" required autocomplete="off"></label><label>Apodo inventado, nunca su nombre real<input name="n" maxlength="14" autocomplete="off"></label><details><summary>Ya jugaba antes con un apodo</summary><label>Su clave personal, la que ve en Liga<input name="k" maxlength="20" autocomplete="off"></label><p class="sm">Si la pones, no hace falta apodo: conserva sus estrellas y premios.</p></details><p class="err" role="alert"></p><button class="go" type="submit">Enviarle el correo</button></form></section>
+ <p class="pie"><a href="como-funciona.html">Cómo funciona</a> · <button class="link" id="s">Salir</button></p>`);
+ $('#s').onclick=async()=>{await sb.auth.signOut();entrar();};
+ a.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>detalle(q,b.dataset.h));
+ a.querySelectorAll('[data-x]').forEach(b=>b.onclick=async()=>{await rpc('f_invitacion_borrar',{p_email:b.dataset.x}).catch(()=>{});panel(q);});
+ const manda=async em=>{const {error}=await sb.auth.signInWithOtp({email:em,options:{shouldCreateUser:true,emailRedirectTo:BASE+'?nuevo=1'}});if(error)throw error;};
+ a.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{await manda(b.dataset.r);panel(q,'Correo enviado de nuevo a '+b.dataset.r+'.');}catch(e){b.disabled=false;b.textContent='No se ha podido';}});
+ form('#f',async f=>{const em=f.get('e').trim();await rpc('f_invitar',{p_email:em,p_apodo:f.get('n'),p_clave:f.get('k')||null});await manda(em);panel(q,'Correo enviado a '+em+'. Debe abrirlo y crear su contraseña.');});
+}
+async function detalle(q,id,aviso){
+ pinta('<section><p>Cargando…</p></section>');
+ let d;try{d=await rpc('f_detalle',{p_jugador:id});}catch(e){return panel(q,trad(e.message));}
+ const j=d.jugador,hoy=new Date(),dias=[];for(let i=13;i>=0;i--){const x=new Date(hoy);x.setDate(x.getDate()-i);const k=x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');dias.push(Object.assign({k,seg:0,preg:0,ok:0,n:x.getDate()},d.dias.find(y=>y.dia===k)||{}));}
+ const k7=dias.slice(-7),t=(l,c)=>l.reduce((s,y)=>s+(y[c]||0),0),mx=Math.max(600,...dias.map(y=>y.seg));
+ const H=j.horario||{};
+ pinta(`<section><button class="link" id="v">‹ Tu familia</button><h1>${esc(j.apodo)}</h1>${aviso?`<p class="ok">${esc(aviso)}</p>`:''}
+ <div class="kpi"><div><b>${esc(min(dias[13].seg))}</b><span>hoy</span></div><div><b>${esc(min(t(k7,'seg')))}</b><span>últimos 7 días</span></div><div><b>${t(k7,'preg')}</b><span>preguntas en 7 días</span></div><div><b>${pct(t(k7,'ok'),t(k7,'preg'))}</b><span>aciertos en 7 días</span></div></div>
+ <h2>Tiempo de estudio, últimas 2 semanas</h2><div class="barras" role="img" aria-label="Minutos de estudio por día">${dias.map(y=>`<div title="${esc(y.k)}: ${esc(min(y.seg))}, ${y.preg} preguntas, ${pct(y.ok,y.preg)} de aciertos"><i style="height:${Math.round(y.seg/mx*100)}%"></i><span>${y.n}</span></div>`).join('')}</div>
+ <h2>Por asignatura</h2>${d.asignaturas.length?`<div class="tb"><table><thead><tr><th>Asignatura</th><th>Tiempo</th><th>Preguntas</th><th>Aciertos</th><th>Última vez</th></tr></thead><tbody>${d.asignaturas.map(s=>`<tr><td>${esc(ASIG[s.sub]||s.sub)}</td><td>${esc(min(s.seg))}</td><td>${s.preg}</td><td>${pct(s.ok,s.preg)}</td><td>${esc(FECHA(s.ultimo))}</td></tr>`).join('')}</tbody></table></div>`:'<p class="sm">Aún no hay datos.</p>'}
+ <h2>Temas</h2>${d.temas.length?`<div class="tb"><table><thead><tr><th>Tema</th><th>Misiones</th><th>Mejor simulacro</th><th>Por repasar</th></tr></thead><tbody>${d.temas.map(x=>`<tr><td>${esc(x.r.titulo||x.tema)}</td><td>${x.r.total?esc(x.r.done)+' de '+esc(x.r.total):'—'}</td><td>${x.r.best==null?'—':esc(x.r.best)}</td><td>${x.r.fallos==null?'—':esc(x.r.fallos)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="sm">Aún no hay temas guardados.</p>'}
+ <p class="sm">⭐ ${j.estrellas} estrellas · ${j.racha||0} días seguidos · ${j.tickets} premios. Los tiempos cuentan solo mientras usa la web de estudio, y los envía su dispositivo: son orientativos.</p></section>
+ <section><h2>Juego</h2><label class="ck"><input id="hab" type="checkbox" ${j.habilitado?'checked':''}> Puede jugar</label>
+ <p>Fichas: <b id="nf">${j.fichas}</b> de 3${j.espera>0?` · espera de ${Math.ceil(j.espera/60)} min`:''}</p><div class="fila"><button class="alt mini" id="fm">− Quitar una</button><button class="alt mini" id="fp">+ Dar una</button></div>
+ <h3>Hora límite para jugar</h3><p class="sm">Vacío significa sin límite. Es la hora de España.</p><div class="fila"><label>Entre semana<input id="hl" type="time" value="${esc(H.lab||'')}"></label><label>Fin de semana<input id="hf" type="time" value="${esc(H.fin||'')}"></label></div><button class="alt mini" id="hg">Guardar horario</button></section>
+ <section><h2>Dar un premio</h2><p>Después de un examen, si hay motivo. <b>No se escribe ni se guarda la nota, tampoco el motivo.</b> Solo cuenta un premio más y rellena las fichas. Con 1 se abre 🦄, con 3 🏍️ y con 6 🐉.</p><div class="fila"><button class="alt mini" data-p>💪 Se ha esforzado</button><button class="alt mini" data-p>📈 Ha mejorado</button><button class="alt mini" data-p>🎓 Ha aprobado</button></div></section>
+ <section><details><summary>Modo de pruebas</summary><form id="fp2"><label>Clave de pruebas<input name="c" type="password" autocomplete="off"></label><p class="err" role="alert"></p><button class="alt mini" type="submit">Activar para este jugador</button></form></details></section>`);
+ $('#v').onclick=()=>panel(q);
+ const hazlo=async(f,args,msg)=>{try{await rpc(f,Object.assign({p_jugador:id},args));detalle(q,id,msg);}catch(e){detalle(q,id,trad(e.message));}};
+ $('#hab').onchange=e=>hazlo('f_habilitar',{p_si:e.target.checked},e.target.checked?'Juego activado.':'Juego desactivado.');
+ $('#fm').onclick=()=>hazlo('f_fichas',{p_delta:-1},'Ficha quitada.');
+ $('#fp').onclick=()=>hazlo('f_fichas',{p_delta:1},'Ficha dada. Si estaba en espera, ya puede jugar.');
+ $('#hg').onclick=()=>hazlo('f_horario',{p_lab:$('#hl').value,p_fin:$('#hf').value},'Horario guardado.');
+ a.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>hazlo('f_premio',{},'Premio dado. Lo verá al volver a la carrera.'));
+ form('#fp2',async f=>{const r=await rpc('f_prueba',{p_jugador:id,p_clave:f.get('c')});if(!r.ok)throw new Error('Clave incorrecta.');detalle(q,id,'Modo de pruebas activado para este jugador.');});
+}
+
+/* ---------- Inicio ---------- */
+async function ruta(){
+ pinta('<section><p>Entrando…</p></section>');
+ let q;try{q=await rpc('quien_soy');}catch(e){pinta(`<section><p class="err">${esc(trad(e.message))}</p><button class="alt" id="r">Reintentar</button></section>`);$('#r').onclick=ruta;return;}
+ if(q.rol==='hijo'){guardaHijo(q);if(qs.get('nuevo'))return claveNueva(()=>vistaHijo(q));return vistaHijo(q);}
+ panel(q);
+}
+let recup=false;
+sb.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY'){recup=true;setTimeout(()=>claveNueva(ruta),0);}});
+(async()=>{
+ const h=new URLSearchParams(location.hash.slice(1));
+ if(h.get('error')||h.get('error_description')){history.replaceState(null,'',BASE);return entrar('Ese enlace ya no vale. Si eres alumno, pide a tu padre o tu madre que te lo reenvíe. Si es de tu cuenta, entra o recupera la contraseña.');}
+ const {data}=await sb.auth.getSession();
+ if(recup)return;
+ if(data.session)ruta();else entrar();
+})();
+})();
+</script></body></html>

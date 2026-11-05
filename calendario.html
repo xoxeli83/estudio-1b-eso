@@ -201,14 +201,8 @@ body.sin-grupo :is(.months,.export,.preview,.hint,.lists,.nav,#addBtn){display:n
 <main class="wrap">
   <section id="gate" hidden>
     <h2>Calendario de la clase</h2>
-    <p>Es el mismo para todo el grupo y lo podéis cambiar entre todos. Para verlo, entra una vez en cada móvil, tablet u ordenador.</p>
-    <h3>¿Ya tienes apodo?</h3>
-    <p>Escribe tu clave personal. La ves en <b>Liga</b>, en el dispositivo donde ya entraste.</p>
-    <input id="gK" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="20" placeholder="xxxx-xxxx-xxxx" aria-label="Tu clave personal">
-    <button type="button" class="btn primary" id="gKb">Entrar con mi clave</button>
-    <p class="err" id="gE" role="alert" hidden></p>
-    <h3>¿Es la primera vez?</h3>
-    <a class="btn" href="juego.html#clasificacion">Entrar con el código del grupo</a>
+    <p>Es el mismo para todo el grupo y lo podéis cambiar entre todos. Para verlo, entra con tu correo en cada móvil, tablet u ordenador. Si aún no tienes cuenta, te da de alta tu padre o tu madre.</p>
+    <a class="btn primary" href="acceso.html?volver=calendario.html">Entrar con mi correo</a>
   </section>
   <nav class="months" id="months" aria-label="Meses del curso"></nav>
 
@@ -389,12 +383,6 @@ async function connect(){
 /* Si ha entrado en el grupo en otra pestaña o al volver atrás */
 const reintenta=()=>{if(!token&&(token=leeToken()))connect();};
 addEventListener('focus',reintenta);addEventListener('pageshow',reintenta);
-document.getElementById('gKb').addEventListener('click',async()=>{
-  const e=document.getElementById('gE'),v=document.getElementById('gK').value;e.hidden=true;
-  try{const r=await rpc('s_entrar',{p_clave:v});let j={};try{j=JSON.parse(localStorage.getItem('tema2.juego'))||{};}catch(x){}
-    j.liga={token:r.token,id:r.id,apodo:r.apodo};delete j.srvOk;if(r.avatar&&r.avatar.shape)j.av=r.avatar;localStorage.setItem('tema2.juego',JSON.stringify(j));token=r.token;await connect();}
-  catch(x){e.textContent=x.message||'No se pudo entrar. Comprueba la conexión.';e.hidden=false;}
-});
 async function saveItem(coll,id,data){
   await rpc('cal_guardar',{p_token:token,p_id:id||null,p_coll:coll,p_datos:data});await pull();
 }
