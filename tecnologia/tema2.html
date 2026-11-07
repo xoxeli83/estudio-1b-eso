@@ -1234,7 +1234,7 @@ function home(){
   clearAll();R=null;freshSession();
   const a=nextAction();
   shell(`<button class="av-home" id="av-open" aria-label="Mi muñeco">${avatarSVG(gLoad().av,52)}<b>⭐ ${gStars()}</b></button><p class="small">${a.small}</p><h1>${a.title}</h1><p class="small">${a.sub}</p>
-    <button class="go" id="go">Empezar</button>${dots()}
+    <button class="go" id="go">Empezar</button>${dots()}<a class="alt" href="test-so.html" target="_top" style="text-align:center;text-decoration:none;color:inherit">✅ Examen tipo test: 63 preguntas</a>
     <div class="foot no-print"><button class="link" id="l-map">Ver misiones</button><button class="link" id="l-che">Chuleta</button><button class="link" id="l-jg">🎮 Juego</button>${ligaOn()?'<button class="link" id="l-lg">🏆 Clasificación</button>':''}<button class="link" id="l-par">Para padres</button>${window.parent!==window?'<button class="link" id="l-desk">Volver al escritorio</button>':''}</div>`,{exit:false});
   popIndex=null;
   const g=document.getElementById('go');g.onclick=a.fn;g.focus({preventScroll:true});
@@ -2367,6 +2367,7 @@ function home(){
   <div class="icons">${icons}</div>
   <div class="deskhead">Practicar</div>
   <div class="icons">
+    <a class="icon star" href="test-so.html" style="text-decoration:none;color:inherit"><span class="pic">✅</span>Examen tipo test<br>63 preguntas</a>
     <button class="icon star" id="m-mis"><span class="pic">🚀</span>Modo misiones<br>paso a paso</button>
     <button class="icon" id="m-av">${avatarSVG(gLoad().av,44)}Mi muñeco<br>⭐ ${gStars()}</button><button class="icon" id="m-jg"><span class="pic">🎮</span>Juego<br>${gLoad().fichas} fichas</button>${ligaOn()?'<button class="icon" id="m-lg"><span class="pic">🏆</span>Clasificación<br>y duelos</button>':''}
     <button class="icon" id="m-pc"><span class="pic">💻</span>En mi ordenador<br>Windows 10 y 11</button>
