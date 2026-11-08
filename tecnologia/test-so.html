@@ -624,7 +624,7 @@ function openGame(onClose){
   let raf=null,st=null,img=null,fit=null;
   const W=innerWidth<600?480:800,H=260,GROUND=222,ESC=W<800?.78:1;
   const VMIN=270*ESC,VMAX=760*ESC;
-  const PODERES=[{id:'grande',e:'🍄',n:'¡Gigante! Rompes lo que toques',t:7},{id:'peque',e:'🐜',n:'¡Pequeñito! Cabes por debajo',t:8},{id:'x2',e:'⚡',n:'¡Velocidad x2! Puntos x2',t:5,m:2},{id:'x3',e:'⚡',n:'¡Velocidad x3! Puntos x3',t:4,m:3},{id:'x4',e:'🚀',n:'¡Velocidad x4! Puntos x4',t:3,m:4},{id:'escudo',e:'🛡️',n:'Escudo: aguanta un choque',t:12},{id:'lento',e:'🐢',n:'Cámara lenta',t:5,m:.6}];
+  const PODERES=[{id:'grande',e:'🍄',n:'¡Gigante! Rompes lo que toques',t:7},{id:'peque',e:'🐜',n:'¡Pequeñito! Cabes por debajo',t:8},{id:'x2',e:'⚡',n:'¡Turbo x2! Puntos x2',t:5,m:2,s:1.2},{id:'x3',e:'⚡',n:'¡Turbo x3! Puntos x3',t:4,m:3,s:1.5},{id:'x4',e:'🚀',n:'¡Turbo x4! Puntos x4',t:3,m:4,s:2},{id:'escudo',e:'🛡️',n:'Escudo: aguanta un choque',t:12},{id:'lento',e:'🐢',n:'Cámara lenta',t:5,m:1,s:.6}];
   const CICLO=7500;
   const close=()=>{SND.para();cancelAnimationFrame(raf);if(fit)removeEventListener('resize',fit);removeEventListener('keydown',kd);removeEventListener('keyup',ku);o.remove();onClose&&onClose();};
   const mundoDe=p=>{const q=p%CICLO;let m=MUNDOS[0];MUNDOS.forEach(x=>{if(q>=x.d)m=x;});return m;};
@@ -636,7 +636,7 @@ function openGame(onClose){
     if(ligaOn()&&!g.liga&&!g.prueba){o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2><div class="jg-empty"><b>Para jugar tienes que entrar con tu correo.</b><br>Tu padre o tu madre te da de alta desde su cuenta. Para estudiar no hace falta.</div><a class="lg-go" style="display:block;text-align:center;text-decoration:none" href="../acceso.html?volver=juego.html">Entrar con mi correo</a></div>`;o.querySelector('#jg-x').onclick=close;return;}
     o.innerHTML=`<div class="jg-box"><button class="lg-x" id="jg-x">Volver</button><h2>Salta y corre</h2>
       <div class="jg-hero">${avatarSVG(g.av,90)}<div><div class="av-st">🎮 ${g.fichas} de 3 fichas</div><div class="av-next">${g.fichas>0&&g.fichas<3?`Otra ficha en ${espera(g)}, o terminando una misión. `:''}Tu récord: ${g.juegoBest}</div></div></div>
-      <p>Salta con <kbd class="jg-k">espacio</kbd> o tocando la pantalla. Cuanto más mantengas, más alto saltas. Poco a poco va más rápido y cambias de mundo: día, atardecer, noche, lava y espacio. Antes de cambiar de mundo aparece un monstruo que te lanza cosas: unas abajo (salta) y otras arriba (no saltes). <b>Salta para coger premios</b>: 🍄 gigante, 🐜 pequeñito, ⚡ velocidad x2, x3 y 🚀 x4 (¡más puntos!), 🛡️ escudo y 🐢 cámara lenta. Cada vuelta a los mundos es más difícil.</p>
+      <p>Salta con <kbd class="jg-k">espacio</kbd> o tocando la pantalla. Cuanto más mantengas, más alto saltas. Poco a poco va más rápido y cambias de mundo: día, atardecer, noche, lava y espacio. Antes de cambiar de mundo aparece un monstruo que te lanza cosas: unas abajo (salta) y otras arriba (no saltes). <b>Salta para coger premios</b>: 🍄 gigante, 🐜 pequeñito (pasa por debajo de los pórticos 🚧; si eres normal, sáltalos), ⚡ turbo x2, x3 y 🚀 x4 (¡más puntos!), 🛡️ escudo y 🐢 cámara lenta. Cada vuelta a los mundos es más difícil.</p>
       ${g.fichas>0?'<button class="lg-go" id="jg-go">Jugar (1 ficha)</button>':'<div class="jg-empty"><b>Te has quedado sin fichas.</b><br>Podrás volver a jugar dentro de '+espera(g)+'. Si terminas misiones mientras tanto, tendrás más fichas cuando acabe la espera.</div>'}</div>`;
     o.querySelector('#jg-x').onclick=close;
     const b=o.querySelector('#jg-go');if(b){b.onclick=start;b.focus({preventScroll:true});}
@@ -668,7 +668,11 @@ function openGame(onClose){
   function genera(){
     const p=puntos(),m=st.mundo,n=nivel(p),air=m.aire&&p>=300&&Math.random()<.2+.25*n;
     const add=(k,x)=>st.obs.push({k,x,y:k.air?GROUND-k.alto:GROUND-k.h});
-    if(air){
+    const peq=st.pw&&st.pw.id==='peque';
+    if(p>=150&&Math.random()<(peq?.55:.12+.06*n)){
+      /* Pórtico: pequeñito pasa por debajo; normal lo salta */
+      add({portico:true,e:'',w:50,h:24,fs:0,air:true,alto:64},W+20);st.extra=0;
+    }else if(air){
       /* Altos: se pasan por debajo sin saltar. Bajos: hay que saltarlos. */
       const bajo=p>=1200&&Math.random()<.5;
       const e=m.aire[Math.floor(Math.random()*m.aire.length)];
@@ -687,8 +691,8 @@ function openGame(onClose){
     if(!st||st.dead)return;
     const dt=Math.min((now-st.t)/1000,.05);st.t=now;
     const p0=puntos();
-    const mult=st.pw&&st.pw.m?st.pw.m:1;
-    st.vb=Math.min(VMAX*(1+.12*vuelta()),VMIN+(VMAX-VMIN)*Math.min(1,p0/4500)+VMAX*.12*vuelta());st.v=st.vb*mult;st.dist+=st.v*dt;
+    const mult=st.pw&&st.pw.s?st.pw.s:1,pmul=st.pw&&st.pw.m?st.pw.m:1;
+    st.vb=Math.min(VMAX*(1+.12*vuelta()),VMIN+(VMAX-VMIN)*Math.min(1,p0/4500)+VMAX*.12*vuelta());st.v=st.vb*mult;st.dist+=st.v*dt;if(pmul!==mult)st.bonus+=st.v*(pmul/mult-1)*dt/10;
     if(st.pw){st.pw.t-=dt;if(st.pw.t<=0){if(st.pw.id==='grande'||st.pw.id==='peque')st.pwFin=.4;st.pw=null;}}
     const scObj=st.pw&&st.pw.id==='grande'?1.6:st.pw&&st.pw.id==='peque'?.55:1;st.sc+=(scObj-st.sc)*Math.min(1,dt*8);
     if(st.flash>0)st.flash-=dt;
@@ -708,7 +712,7 @@ function openGame(onClose){
     st.obs.forEach(b=>b.x-=(st.v+(b.vx||0))*dt);st.obs=st.obs.filter(b=>b.x+b.k.w>-10);
     st.clouds.forEach(cl=>{cl[0]-=st.v*.15*dt;if(cl[0]<-60)cl[0]=W+40;});
     const ph=PH*st.sc,pw=PW*st.sc,py=st.y+PH-ph,hx=PX+PW/2-pw/2+9*st.sc,hy=py+10*st.sc,hw=pw-18*st.sc,hh=ph-14*st.sc;
-    for(const it of st.items){if(hx<it.x+30&&hx+hw>it.x&&hy<it.y+30&&hy+hh>it.y){it.cog=true;st.pw={id:it.q.id,t:it.q.t,tot:it.q.t,m:it.q.m,e:it.q.e};st.aviso={txt:it.q.e+' '+it.q.n,t:1.8,peq:true};SND.sfx('salto');if(typeof ding==='function')try{ding(true);}catch(e){}}}
+    for(const it of st.items){if(hx<it.x+30&&hx+hw>it.x&&hy<it.y+30&&hy+hh>it.y){it.cog=true;st.pw={id:it.q.id,t:it.q.t,tot:it.q.t,m:it.q.m,s:it.q.s,e:it.q.e};st.aviso={txt:it.q.e+' '+it.q.n,t:1.8,peq:true};SND.sfx('salto');if(typeof ding==='function')try{ding(true);}catch(e){}}}
     for(const b of st.obs){if(b.roto)continue;const bx=b.x+4,by=b.y+4,bw=b.k.w-8,bh=b.k.h-6;if(hx<bx+bw&&hx+hw>bx&&hy<by+bh&&hy+hh>by){
       if(st.pw&&st.pw.id==='grande'){b.roto=true;st.bonus+=25;st.rotos.push({x:b.x,y:b.y,t:.5});continue;}
       if(st.pw&&st.pw.id==='escudo'){b.roto=true;st.pw=null;st.flash=.6;st.rotos.push({x:b.x,y:b.y,t:.5});continue;}
@@ -732,6 +736,7 @@ function openGame(onClose){
     for(let i=0;i<W+40;i+=40){const px=i-(st.dist%40);x.fillRect(px,GROUND+8,18,4);x.fillRect(px+12,GROUND+22,10,4);}
     x.textBaseline='bottom';x.textAlign='left';
     st.obs.forEach(b=>{
+      if(b.k.portico){const c=OSCURO(m)?'#ffd84a':'#d9302b';x.fillStyle='rgba(0,0,0,.3)';x.fillRect(b.x+2,b.y+b.k.h,5,GROUND-b.y-b.k.h);x.fillRect(b.x+b.k.w-7,b.y+b.k.h,5,GROUND-b.y-b.k.h);x.fillStyle=c;x.fillRect(b.x,b.y,b.k.w,b.k.h);x.fillStyle='#fff';for(let i=0;i<b.k.w;i+=14)x.fillRect(b.x+i,b.y+4,7,b.k.h-8);x.strokeStyle='#222';x.lineWidth=2;x.strokeRect(b.x,b.y,b.k.w,b.k.h);x.font='16px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",serif';x.fillStyle='#000';x.fillText('🐜',b.x+b.k.w/2-9,b.y-1);return;}
       if(!b.k.air){x.fillStyle='rgba(0,0,0,.35)';x.beginPath();x.ellipse(b.x+b.k.w/2,GROUND+3,b.k.w/2+2,4,0,0,7);x.fill();}
       x.font=b.k.fs+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",serif';x.fillStyle='#000';
       x.save();x.shadowColor=OSCURO(m)?'#fff':'rgba(255,255,255,.95)';x.shadowBlur=9*st.k;x.fillText(b.k.e,b.x-2,b.y+b.k.h+4);x.fillText(b.k.e,b.x-2,b.y+b.k.h+4);x.restore();
@@ -743,7 +748,7 @@ function openGame(onClose){
     st.rotos.forEach(r=>{x.globalAlpha=Math.max(0,r.t*2);x.font='38px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",serif';x.fillText('💥',r.x,r.y-6);x.globalAlpha=1;});
     const ph=PH*st.sc,py=st.y+PH-ph;
     if(st.pw&&st.pw.id==='escudo'||st.flash>0){x.save();x.globalAlpha=st.flash>0?.5+.5*Math.sin(st.flash*40):.45;x.strokeStyle='#5ad1ff';x.lineWidth=4;x.beginPath();x.ellipse(PX+PW/2,py+ph/2,ph*.62,ph*.62,0,0,7);x.stroke();x.restore();}
-    if(st.pw&&st.pw.m>1){x.fillStyle='rgba(255,255,255,.55)';for(let i=0;i<st.pw.m*2;i++){const ly=py+8+((i*37)%Math.max(10,ph-10));x.fillRect(PX-30-((st.dist*1.5+i*23)%40),ly,24,3);}}
+    if(st.pw&&st.pw.m>1){x.fillStyle='rgba(255,255,255,.55)';for(let i=0;i<st.pw.s*3;i++){const ly=py+8+((i*37)%Math.max(10,ph-10));x.fillRect(PX-30-((st.dist*1.5+i*23)%40),ly,24,3);}}
     if(img&&img.complete&&img.naturalWidth){const h=(PH+10)*st.sc,w=h*img.naturalWidth/img.naturalHeight;x.drawImage(img,PX+PW/2-w/2,py-8*st.sc,w,h);}else{x.fillStyle='#3a3ca6';x.fillRect(PX,py,PW*st.sc,ph);}
     if(st.pw){const fr=Math.max(0,st.pw.t/st.pw.tot);x.fillStyle='rgba(0,0,0,.35)';x.fillRect(12,12,150,22);x.fillStyle=st.pw.m>1?'#ffcf33':'#7be07b';x.fillRect(12,12,150*fr,22);x.font='15px "Apple Color Emoji","Segoe UI Emoji",Verdana,sans-serif';x.textBaseline='middle';x.fillStyle='#fff';x.fillText(st.pw.e+(st.pw.m>1?' x'+st.pw.m:st.pw.id==='grande'?' Gigante':st.pw.id==='peque'?' Pequeñito':st.pw.id==='escudo'?' Escudo':' Lento'),18,24);}
     if(vuelta()>0){x.font='700 14px Lexend,Verdana,sans-serif';x.textAlign='right';x.textBaseline='top';x.fillStyle=OSCURO(m)?'#fff':'#17203a';x.fillText('Vuelta '+(vuelta()+1),W-12,12);x.textAlign='left';}
