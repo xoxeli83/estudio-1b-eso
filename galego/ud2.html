@@ -165,6 +165,18 @@ label.cfg{display:block;margin:10px 0}
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;margin:0 2px;font-weight:500}.frac i{font-style:normal;padding:0 3px}.frac i:first-child{border-bottom:2px solid currentColor}
 .en{color:#1f4fb8;font-weight:500}
 .fact .en{white-space:normal}
+.cz,.dib svg.cz{width:100%;height:auto;max-width:680px;display:block;margin:0 auto;font-family:inherit}.xz{padding:4px}
+.hs{cursor:pointer;outline:none}.hs circle.r{fill:rgba(255,210,31,.6);stroke:#1b1b22;stroke-width:1.5}.hs:hover circle.r,.hs:focus circle.r{fill:rgba(30,136,229,.55)}
+.hs.ok circle.r{fill:#3cb371}.hs.no circle.r{fill:#e04b3c}.hs.pul circle.r,g.pul circle.r{fill:#ffd21f;animation:hsp .8s infinite}
+@keyframes hsp{50%{r:16px;fill:#ff8c1a}}
+.lb{font-size:12.5px;font-weight:800;fill:#14213d;paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
+.xq{font-size:22px}
+.une{display:grid;grid-template-columns:minmax(110px,.6fr) 1.4fr;gap:10px}.une>div{display:flex;flex-direction:column;gap:8px}
+.uw,.ud{background:#fff;border:3px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;font-size:18px;line-height:1.25;min-height:52px}
+.uw{font-weight:800}.uw.sel{border-color:var(--main);background:var(--tint)}.uw.ok,.ud.ok{background:var(--okbg);border-color:var(--ok);opacity:.75}.ud.no{background:var(--nobg);border-color:var(--no)}
+.ap{margin:18px 0 26px}.ap h3{border-bottom:3px solid var(--line);padding-bottom:4px}.ap h4{margin:14px 0 6px}.ap td{vertical-align:top}.lst{line-height:1.8}
+.apidx{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.apidx a{background:var(--tint);color:var(--main);border-radius:20px;padding:6px 12px;text-decoration:none;font-weight:700;font-size:15px}
+@media(max-width:520px){.une{grid-template-columns:1fr 1.5fr}.uw,.ud{font-size:15px;padding:8px}}
 </style>
 </head>
 <body><!--menu--><style>
@@ -923,6 +935,92 @@ function openGame(onClose){
 /* Lingua Galega 1º ESO, Unidade 2 (exame 17 nov). Material da profesora resumido. */
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const P=items=>{let b=[];return()=>{if(!b.length)b=sh(items);const[q,a,w,n]=b.pop();return{q,a,w,n};};};
+/* Vocabulario do corpo: [palabra, definición, castelán, grupo, punto no debuxo] */
+const CORPO=[
+ ['a fronte','Parte de arriba da cara, entre as cellas e onde empeza o pelo','frente','cab','fronte'],
+ ['as tempas (ou sens)','Cada unha das partes dos lados da cabeza, por riba dos ollos e das orellas','sienes','cab','tempas'],
+ ['a meniña','Burato redondo no centro do iris, por onde entra a luz no ollo','pupila','cab','menina'],
+ ['a venta','Cada un dos buratos do nariz (ou do fociño dos animais)','fosa nasal','cab','venta'],
+ ['a meixela','Cada unha das partes da cara que sobresaen debaixo dos ollos','mejilla','cab','meixela'],
+ ['os beizos (ou labios)','As dúas partes carnosas que limitan a abertura da boca','labios','cab','beizos'],
+ ['o queixo','Parte da cara que está entre a boca e o pescozo','barbilla','cab','queixo'],
+ ['o pescozo','Parte do corpo que une a cabeza ao tronco','cuello','cab','pescozo'],
+ ['a caluga','Parte de atrás do pescozo, onde empeza a cabeza','nuca','cab','caluga'],
+ ['o ombreiro','Parte de arriba e do lado do tronco, onde comeza o brazo','hombro','tro','ombreiro'],
+ ['o lombo','Parte de atrás do corpo, dende os ombreiros ata o van','espalda','tro','lombo'],
+ ['o cadril','Parte baixa do lombo, á altura dos riles','cadera / riñones','tro','cadril'],
+ ['o van (ou cintura)','Estreitamento do corpo por riba das cadeiras','cintura','tro','van'],
+ ['o embigo','Cicatriz redonda no medio do ventre, o resto do cordón umbilical','ombligo','tro','embigo'],
+ ['a virilla (ou ingua)','Parte do corpo onde se une a coxa co ventre','ingle','tro','virilla'],
+ ['o cóbado','Parte de fóra da articulación do brazo co antebrazo','codo','tro','cobado'],
+ ['o pulso','Punto onde o brazo se articula coa man','muñeca','tro','pulso'],
+ ['os cotelos','Os nós ou vultos que forman as articulacións dos dedos cando se dobran','nudillos','tro','cotelos'],
+ ['a coxa','Parte da perna que vai dende a cadeira ata o xeonllo; nela está o fémur','muslo','per','coxa'],
+ ['o xeonllo','Parte de fóra da articulación do fémur coa tibia','rodilla','per','xeonllo'],
+ ['a sofraxe','Parte de atrás do xeonllo','corva','per','sofraxe'],
+ ['o papo da perna','Zona avultada de atrás da perna, entre a sofraxe e o talón','pantorrilla','per','papo'],
+ ['o nocello','Os ósos que sobresaen onde a perna se une co pé','tobillo','per','nocello'],
+ ['a empeña','Parte de arriba do pé','empeine','per','empena'],
+ ['pestanexar','Mover as pálpebras abrindo e pechando os ollos','parpadear','acc',''],
+ ['bocexar','Abrir a boca sen querer por sono, aburrimento ou fame','bostezar','acc',''],
+ ['axeonllarse','Poñerse de xeonllos','arrodillarse','acc',''],
+ ['beliscar','Apertar entre dous dedos (polgar e índice) un pouco de pel e carne','pellizcar','acc',''],
+ ['patexar','Golpear algo cos pés','patalear','acc','']
+];
+const cNom=w=>w.replace(/^(o|a|os|as) /,'');
+function corpoPool(gr){
+  const it=[],mine=CORPO.filter(c=>c[3]===gr),others=CORPO.filter(c=>gr==='acc'?c[3]==='acc':c[3]!=='acc');
+  mine.forEach(c=>{
+    const ot=sh(others.filter(o=>o!==c)).slice(0,3);
+    it.push([`Que significa **${cNom(c[0])}**?`,c[1],ot.map(o=>o[1]),`${cNom(c[0])} = ${c[2]}.`]);
+    it.push([`Como se chama? «${c[1]}»`,cNom(c[0]),ot.map(o=>cNom(o[0])),`En castelán: ${c[2]}.`]);
+  });
+  return P(it);
+}
+const FEMS=['acne','análise','árbore','augardente','calor','canle','cor (ou color)','dor (ou dolor)','eclipse','estrea','fraude','fronte','lavalouza','marxe','orde','desorde','orixe','paréntese','ponte','sebe','síndrome','suor','testemuña','vertixe','viruxe'];
+const MASCS=['berce','cárcere','costume','couce','cume','cuspe','diadema','fel','labor','legume','leite','lume','mar','masacre','mel','Nadal','nariz','parasol','sal','sangue','sinal','talle','xiz'];
+const xPool=(l,fem)=>P(l.map(w=>{const ok=(fem?'a ':'o ')+w,ko=(fem?'o ':'a ')+w;return['Como se di en galego?',ok.charAt(0).toUpperCase()+ok.slice(1),[ko.charAt(0).toUpperCase()+ko.slice(1),'Os dous valen'],`«${w}» é ${fem?'feminino':'masculino'} en galego.`];}));
+const ARB=[['a abeleira','a abelá'],['a ameixeira','a ameixa'],['a cerdeira (ou cereixeira)','a cereixa'],['a laranxeira','a laranxa'],['a maceira','a mazá'],['a nogueira (ou noceira)','a noz'],['a oliveira','a oliva'],['a pereira','a pera'],['o marmeleiro','o marmelo'],['o limoeiro','o limón'],['o castiñeiro','a castaña'],['o pexegueiro','o pexego']];
+const arbPool=()=>{const it=[];ARB.forEach(([a,f])=>{const ot=sh(ARB.filter(x=>x[0]!==a)).slice(0,2).map(x=>x[0]);const mal=(a.startsWith('a ')?'o ':'a ')+a.slice(2);
+  it.push([`Que árbore dá **${f}**?`,a,[...ot],a.startsWith('o ')?'Ollo: esta árbore é masculina.':'Árbore froiteira: feminina.']);
+  it.push([`Como se di: árbore que dá ${f.slice(2)}?`,a,[mal,'Os dous valen'],a.startsWith('o ')?'Excepción: masculina.':'A maioría das froiteiras son femininas.']);});return P(it);};
+/* Debuxo do corpo (propio): cara, de fronte e de costas, con puntos para o xogo */
+const HS={fronte:[90,112,90,76,'m'],tempas:[34,142,4,118,'s'],menina:[65,152,4,208,'s'],venta:[96,187,177,140,'e'],meixela:[121,180,177,204,'e'],beizos:[90,212,177,226,'e'],queixo:[90,238,6,252,'s'],pescozo:[90,266,177,272,'e'],
+ ombreiro:[241,80,184,64,'s'],cobado:[222,135,184,120,'s'],pulso:[215,184,184,172,'s'],cotelos:[331,201,356,228,'e'],embigo:[270,138,270,124,'m'],van:[291,153,336,152,'s'],virilla:[255,201,184,216,'s'],coxa:[285,225,298,244,'s'],xeonllo:[255,250,184,264,'s'],nocello:[287,303,300,292,'s'],empena:[246,313,184,332,'s'],
+ caluga:[450,62,470,52,'s'],lombo:[450,105,470,96,'s'],cadril:[437,166,364,150,'s'],sofraxe:[436,250,364,236,'s'],papo:[465,276,470,334,'m']};
+function corpoSVG(opt){opt=opt||{};const lab=opt.lab||{},on=!!opt.hs,cls=opt.cls||{};
+ const sk='#f6cfae',ol='#8a5a3c';
+ const limb=(pts,w)=>`<polyline points="${pts}" fill="none" stroke="${ol}" stroke-width="${w+4}" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="${sk}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+ const body=(cx,back)=>{const d=cx-270,X=x=>x+d;
+  return `${limb(`${X(240)},84 ${X(222)},135 ${X(214)},186`,12)}${limb(`${X(300)},84 ${X(318)},135 ${X(326)},186`,12)}
+  ${limb(`${X(257)},192 ${X(255)},250 ${X(255)},303`,18)}${limb(`${X(283)},192 ${X(286)},250 ${X(287)},303`,18)}
+  <ellipse cx="${X(back?256:248)}" cy="313" rx="13" ry="6" fill="${sk}" stroke="${ol}" stroke-width="2"/><ellipse cx="${X(back?284:292)}" cy="313" rx="13" ry="6" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  <circle cx="${X(212)}" cy="197" r="8" fill="${sk}" stroke="${ol}" stroke-width="2"/><circle cx="${X(328)}" cy="197" r="8" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  <path d="M${X(238)} 79 Q${cx} 70 ${X(302)} 79 L${X(298)} 120 Q${X(292)} 140 ${X(288)} 153 Q${X(297)} 170 ${X(296)} 192 L${X(244)} 192 Q${X(243)} 170 ${X(252)} 153 Q${X(248)} 140 ${X(242)} 120 Z" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  <path d="M${X(245)} 178 L${X(295)} 178 L${X(297)} 204 L${X(274)} 206 L${cx} 196 L${X(266)} 206 L${X(243)} 204 Z" fill="#4a7bd0" stroke="#2c4f8f" stroke-width="2"/>
+  <rect x="${X(262)}" y="56" width="16" height="18" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  <circle cx="${cx}" cy="40" r="20" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  ${back?`<path d="M${X(250)} 38 Q${cx} 8 ${X(290)} 38 Q${X(292)} 54 ${X(282)} 58 L${X(258)} 58 Q${X(248)} 54 ${X(250)} 38Z" fill="#5a3a22"/><line x1="${cx}" y1="90" x2="${cx}" y2="170" stroke="${ol}" stroke-width="1.5" stroke-dasharray="3 4"/>`
+   :`<path d="M${X(250)} 36 Q${cx} 10 ${X(290)} 36 Q${X(280)} 26 ${cx} 27 Q${X(260)} 26 ${X(250)} 36Z" fill="#5a3a22"/><circle cx="${X(263)}" cy="40" r="2.2" fill="#222"/><circle cx="${X(277)}" cy="40" r="2.2" fill="#222"/><path d="M${X(263)} 49 Q${cx} 54 ${X(277)} 49" fill="none" stroke="#a04a3a" stroke-width="2"/><circle cx="${cx}" cy="138" r="2.5" fill="${ol}"/>`}`;};
+ const face=`<ellipse cx="28" cy="170" rx="10" ry="18" fill="${sk}" stroke="${ol}" stroke-width="2"/><ellipse cx="152" cy="170" rx="10" ry="18" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  <rect x="70" y="232" width="40" height="52" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  <ellipse cx="90" cy="165" rx="62" ry="80" fill="${sk}" stroke="${ol}" stroke-width="2"/>
+  <path d="M30 140 Q34 80 90 82 Q146 80 150 140 Q140 104 120 100 Q90 94 60 100 Q40 104 30 140Z" fill="#5a3a22"/>
+  <path d="M50 137 Q65 129 80 136" stroke="#5a3a22" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M100 136 Q115 129 130 137" stroke="#5a3a22" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <ellipse cx="65" cy="152" rx="13" ry="8" fill="#fff" stroke="${ol}" stroke-width="1.5"/><ellipse cx="115" cy="152" rx="13" ry="8" fill="#fff" stroke="${ol}" stroke-width="1.5"/>
+  <circle cx="65" cy="152" r="6" fill="#4f86c6"/><circle cx="115" cy="152" r="6" fill="#4f86c6"/><circle cx="65" cy="152" r="2.6" fill="#111"/><circle cx="115" cy="152" r="2.6" fill="#111"/>
+  <path d="M90 150 L80 184 Q90 190 100 184 Z" fill="#efbf9c" stroke="${ol}" stroke-width="1.5"/><ellipse cx="85" cy="185" rx="3" ry="2" fill="#6b3f2a"/><ellipse cx="96" cy="185" rx="3" ry="2" fill="#6b3f2a"/>
+  <ellipse cx="121" cy="180" rx="12" ry="7" fill="#f2a5a0" opacity=".55"/><ellipse cx="59" cy="180" rx="12" ry="7" fill="#f2a5a0" opacity=".55"/>
+  <path d="M71 211 Q90 201 109 211 Q90 224 71 211Z" fill="#d46a6a" stroke="#9c3c3c" stroke-width="1.5"/><line x1="72" y1="211" x2="108" y2="211" stroke="#9c3c3c" stroke-width="1.5"/>`;
+ let pts='';
+ for(const k in HS){const [x,y,lx,ly,a]=HS[k],c=cls[k]||'',t=lab[k];
+  if(on)pts+=`<g class="hs ${c}" data-k="${k}" tabindex="0" role="button" aria-label="Punto"><circle class="r" cx="${x}" cy="${y}" r="11"/><circle cx="${x}" cy="${y}" r="3.5" fill="#1b1b22"/></g>`;
+  if(t)pts+=`<text class="lb" x="${lx}" y="${ly}" text-anchor="${a==='e'?'end':a==='s'?'start':'middle'}">${t}</text>${on?'':`<line x1="${x}" y1="${y}" x2="${(()=>{const w=t.length*6.9;return a==='s'?(lx<x?lx+w+2:lx-2):a==='e'?(lx>x?lx-w-2:lx+2):lx;})()}" y2="${a==='m'&&ly>y?ly-12:ly-4}" stroke="#1b1b22" stroke-width="1"/><circle cx="${x}" cy="${y}" r="3" fill="#d9352b"/>`}`;}
+ return `<svg viewBox="0 0 540 340" class="cz" role="img" aria-label="Debuxo do corpo: cara, de fronte e de costas"><rect x="0" y="0" width="540" height="340" fill="#f7fbff"/>
+ <line x1="180" y1="10" x2="180" y2="330" stroke="#d8e2ee" stroke-width="2"/><line x1="360" y1="10" x2="360" y2="330" stroke="#d8e2ee" stroke-width="2"/>
+ <g font-size="13" font-weight="800" fill="#3a3ca6"><text x="8" y="22">Cara</text><text x="188" y="22">De fronte</text><text x="368" y="22">De costas</text></g>
+ ${face}${body(270,false)}${body(450,true)}${pts}</svg>`;}
+const corpoLab=k=>{const c=CORPO.find(x=>x[4]===k);return c?cNom(c[0]).replace(/ \(ou .*\)/,''):'';};
 const G={
  xeneros:P([
   ['Cales son os **tres xéneros literarios**?','Narrativo, lírico e dramático',['Narrativo, poético e cómico','Conto, novela e lenda','Oral, escrito e teatral'],'Narrativo, lírico e dramático (ou teatral).'],
@@ -1085,37 +1183,43 @@ const G={
   ['«Ela **é** miña amiga» leva til porque…','É o verbo ser',['É a conxunción','É un artigo','Nunca leva'],'é (ser) / e (conxunción).'],
   ['«Pan **e** leite»:','e, sen til: é conxunción',['é, con til','É o verbo ser','Ningunha'],'e = conxunción.'],
   ['«Vou **á** praia»:','á: é a + a',['a: é artigo','Ás veces si, ás veces non','á: é o verbo'],'á = a (prep.) + a (artigo).'],
-  ['«Teño **máis** libros ca ti»:','máis, con til: adverbio',['mais, sen til: conxunción','Os dous valen','más, coma en castelán'],'máis (adv.) / mais (conx. = pero).'],
+  ['«Vou **ó** cine»:','ó: é a + o',['o: é artigo','Os dous valen','ou'],'ó = a + o. O sen til: artigo ou pronome.'],
+  ['«É máis alta **cá** nai»:','cá: é ca + a',['ca: só conxunción','Os dous valen','que a'],'cá = ca + a. ca = conxunción (que).'],
+  ['«É máis listo **có** irmán»:','có: é ca + o',['co: con + o','Os dous valen','que o'],'có = ca + o. co = con + o.'],
+  ['«Corta o pan **co** coitelo»:','co: é con + o',['có: ca + o','Os dous valen','con o'],'co = con + o.'],
+  ['«A nai **dá** un bico»:','dá: do verbo dar',['da: de + a','Os dous valen','dáa'],'dá (dar) / da (de + a).'],
+  ['«A casa **da** avoa»:','da: de + a',['dá: verbo dar','Os dous valen','de a'],'da = de + a.'],
+  ['«Dáme **dó** velo tan triste»:','dó: compaixón, pena',['do: de + o','Os dous valen','doo'],'dó (compaixón) / do (de + o).'],
+  ['«Xogamos **fóra** da casa»:','fóra: adverbio',['fora: de ser ou ir','Os dous valen','fuera'],'fóra (adv.) / fora (de ser e ir: «se fora rico»).'],
+  ['«Se **fora** rico, viaxaría»:','fora: do verbo ser',['fóra: adverbio','Os dous valen','fuera'],'fora = verbo ser ou ir.'],
+  ['«Unha persoa **má**»:','má: ruín, mala',['ma: me + a','Os dous valen','mala'],'má (ruín) / ma (me + a: «ma deu»).'],
+  ['«Teño **máis** libros ca ti»:','máis, con til: adverbio',['mais, sen til: conxunción','Os dous valen','más, coma en castelán'],'máis (adv. e pron.) / mais (conx. = pero).'],
   ['«Quería ir, **mais** chovía»:','mais, sen til: conxunción (pero)',['máis: adverbio','Os dous valen','mas'],'mais = pero.'],
-  ['«Doeume o **pé**»:','pé: parte do corpo',['pe: a letra','Os dous valen','péi'],'pé (corpo) / pe (letra).'],
+  ['«Un **nó** na corda»:','nó: substantivo',['no: en + o','Os dous valen','noo'],'nó (lazo) / no (en + o).'],
+  ['«Estou **no** parque»:','no: en + o',['nó: lazo','Os dous valen','en o'],'no = en + o.'],
+  ['«**Nós** imos ao cine»:','nós: pronome tónico',['nos: en + os','Os dous valen','nosoutros'],'nós (pronome tónico; plural de nó) / nos (en + os; pronome átono).'],
+  ['«Fixo tres **nós** na corda»:','nós: plural de nó',['nos: en + os','Os dous valen','nóses'],'Tamén nós = plural de nó.'],
   ['«Hai un **óso** na sopa»:','óso: do corpo',['oso: o animal','Os dous valen','ósso'],'óso (do corpo) / oso (animal).'],
+  ['«Doeume o **pé**»:','pé: parte do corpo',['pe: a letra','Os dous valen','péi'],'pé (corpo) / pe (letra).'],
+  ['«Hai que **pór** a mesa»:','pór: verbo poñer',['por: preposición','Os dous valen','poñer non existe'],'pór (poñer) / por (preposición).'],
+  ['«Ten moita **présa**»:','présa: apuro',['presa: prendida','Os dous valen','prisa'],'présa (apuro) / presa (prendida, presada).'],
+  ['«A **Sé** de Santiago»:','Sé: sede eclesiástica',['Se: conxunción','Os dous valen','Seé'],'sé (sede; imperativo de ser) / se (conx., pronome).'],
   ['«Estou **só** na casa»:','só, con til: adverbio ou adxectivo',['so: preposición','Os dous valen','solo'],'só / so (prep.: debaixo de).'],
   ['«Tomamos un **té**»:','té: a infusión',['te: pronome','Os dous valen','thé'],'té (infusión) / te (pronome, letra).'],
-  ['«**Nós** imos ao cine»:','nós: pronome tónico',['nos: en + os','Os dous valen','nosoutros'],'nós / nos (en+os, pron. átono).'],
-  ['«O meu irmán **vén** mañá»:','vén: de vir',['ven: de ver','Os dous valen','vien'],'vén (vir) / ven (ver; imp. de vir).'],
+  ['«O meu irmán **vén** mañá»:','vén: de vir',['ven: de ver','Os dous valen','vien'],'vén (vir) / ven (ver; imperativo de vir).'],
+  ['«Ti **vés** comigo?»:','vés: de vir',['ves: de ver','Os dous valen','vienes'],'vés (vir) / ves (ver).'],
   ['«Ti **ves** a tele»:','ves: de ver',['vés: de vir','Os dous valen','vees'],'ves (ver) / vés (vir).'],
+  ['«**Vós** sodes os mellores»:','vós: pronome tónico',['vos: pronome átono','Os dous valen','vosoutros'],'vós (tónico) / vos (átono: «vos digo»).'],
   ['«Cómpre estudar» significa…','É necesario estudar',['Que merque estudos','Que o compre','Nada'],'cómpre (é mester) / compre (merque).'],
-  ['«Un **nó** na corda»:','nó: substantivo',['no: en + o','Os dous valen','noo'],'nó / no.'],
-  ['«Ten moita **présa**»:','présa: apuro',['presa: prendida','Os dous valen','prisa'],'présa (apuro) / presa (prendida).']
+  ['«Xogamos coa **bóla**»:','bóla: esfera',['bola: peza de pan','Os dous valen','bóola'],'bóla (esfera) / bola (peza de pan).']
  ]),
- corpo:P([
-  ['A **caluga** é…','A parte de atrás do pescozo',['A planta do pé','O dedo gordo','A parte de dentro do cóbado'],'Onde empeza a cabeza.'],
-  ['A **sofraxe** é…','A parte de atrás do xeonllo',['A parte de atrás do pescozo','A parte de arriba do pé','A meixela'],'Detrás do xeonllo.'],
-  ['O **cóbado** é…','A articulación do brazo co antebrazo',['A articulación da perna co pé','A parte de atrás do xeonllo','O dedo pequeno'],'O codo.'],
-  ['O **nocello** é…','Os ósos que sobresaen onde a perna se une co pé',['A parte de atrás do pescozo','A meixela','O embigo'],'O tobillo.'],
-  ['A **meixela** é…','A parte da cara que sobresae debaixo dos ollos',['A parte de arriba do pé','A barbilla','A fronte'],'A mejilla.'],
-  ['O **queixo** (do corpo) é…','A parte da cara entre a boca e o pescozo',['A parte de atrás da cabeza','O ombreiro','A cadeira'],'A barbilla.'],
-  ['A **empeña** é…','A parte de arriba do pé',['A planta do pé','O talón','A parte de atrás do xeonllo'],'O empeine.'],
-  ['O **papo da perna** é…','A parte avultada de atrás da perna',['O xeonllo','A coxa','O nocello'],'Entre a sofraxe e o talón.'],
-  ['As **tempas** (ou sens) son…','Os lados da cabeza entre os ollos e as orellas',['As cellas','As meixelas','Os beizos'],'Las sienes.'],
-  ['Os **cotelos** son…','Os vultos dos dedos ao dobralos',['As uñas','As pálpebras','Os ombreiros'],'Los nudillos.'],
-  ['**Pestanexar** é…','Abrir e pechar os ollos movendo as pálpebras',['Abrir a boca de sono','Poñerse de xeonllos','Golpear cos pés'],'Parpadear.'],
-  ['**Bocexar** é…','Abrir a boca sen querer por sono ou aburrimento',['Pechar os ollos','Morder','Asubiar'],'Bostezar.'],
-  ['**Beliscar** é…','Apertar un pouco de pel entre dous dedos',['Golpear cos pés','Poñerse de xeonllos','Rascar'],'Pellizcar.'],
-  ['**Patexar** é…','Golpear algo cos pés',['Apertar a pel','Abrir a boca','Mover as pálpebras'],'Patalear.'],
-  ['A **meniña** do ollo é…','O burato no centro do iris por onde entra a luz',['A pestana','A cella','A bágoa'],'La pupila.'],
-  ['A **venta** é…','Cada un dos buratos do nariz',['A boca','A orella','O embigo'],'Fosa nasal.']
- ])
+ corpoCab:corpoPool('cab'),
+ corpoTro:corpoPool('tro'),
+ corpoPer:corpoPool('per'),
+ corpoAcc:corpoPool('acc'),
+ listaF:xPool(FEMS,true),
+ listaM:xPool(MASCS,false),
+ arbores:arbPool()
 };
 const NOMBRES=Object.keys(G);
 const Q=NOMBRES.map((k,i)=>({id:i+1,gen:G[k],q:k,a:'',w:[],n:''}));
@@ -1133,13 +1237,19 @@ const M=[
  {t:'O xénero: masculino e feminino',f:[['⚧','O **sexo** teno os seres vivos. O **xénero**, todas as palabras.'],['➕','xogador → xogador**a**; mestre → mestr**a**; avó → avo**a**.'],['🦁','**-ón**: patrón → patro**a**, león → leo**a**. Despectivo: lambón → lambo**na**.'],['🎖️','**-án**: capitán → capit**á**. Despectivo: mentirán → mentira**na**.'],['👑','bailarín → bailar**ina**; alcalde → alcald**esa**; rei → **raíña**.']],q:[I('xenvar'),I('xenvar'),I('xenvar'),I('xenvar'),I('xenvar')]},
  {t:'Trucos do xénero',f:[['🎤','Só co **artigo**: o cantante / a cantante. Unha forma: **a formiga**.'],['🔤','Masculinas: as **letras** (o a, o be) e as en **-ume** (o lume, o legume).'],['🧳','Femininas: en **-axe** (a viaxe), agás **o traxe, o paxe, o garaxe**.'],['🍊','Femininas: a maioría das **árbores froiteiras** (a laranxeira, a maceira).'],['🍋','Pero masculinas: **o limoeiro, o castiñeiro, o pexegueiro, o marmeleiro**.']],q:[I('xeninv'),I('xeninv'),I('xeninv'),I('xeninv'),I('xeninv')]},
  {t:'Ollo: distintas do castelán',f:[['🌳','Femininas: **a** árbore, **a** calor, **a** cor, **a** dor, **a** ponte, **a** orixe, **a** suor, **a** marxe, **a** análise.'],['🥛','Masculinas: **o** leite, **o** sal, **o** mel, **o** sangue, **o** nariz, **o** cume, **o** mar, **o** sinal, **o** costume.']],q:[I('lista'),I('lista'),I('lista'),I('lista'),I('lista'),I('lista')]},
+ {t:'Femininas en galego',f:[['🌳','Son **femininas**: a acne, a análise, a árbore, a augardente, a calor, a canle, a cor (ou color), a dor (ou dolor), a eclipse, a estrea, a fraude, a fronte, a lavalouza.'],['🌉','Tamén: a marxe, a orde, a desorde, a orixe, a paréntese, a ponte, a sebe, a síndrome, a suor, a testemuña, a vertixe, a viruxe.']],q:[I('listaF'),I('listaF'),I('listaF'),I('listaF'),I('listaF'),I('listaF'),I('listaF'),I('listaF')]},
+ {t:'Masculinas en galego',f:[['🥛','Son **masculinas**: o berce, o cárcere, o costume, o couce, o cume, o cuspe, o diadema, o fel, o labor, o legume, o leite, o lume.'],['🧂','Tamén: o mar, o masacre, o mel, o Nadal, o nariz, o parasol, o sal, o sangue, o sinal, o talle, o xiz.']],q:[I('listaM'),I('listaM'),I('listaM'),I('listaM'),I('listaM'),I('listaM'),I('listaM'),I('listaM')]},
+ {t:'Árbores froiteiras',f:[['🍎','Femininas: a abeleira (abelá), a ameixeira (ameixa), a cerdeira ou cereixeira (cereixa), a laranxeira (laranxa).'],['🍐','a maceira (mazá), a nogueira ou noceira (noz), a oliveira (oliva), a pereira (pera).'],['🍋','Pero **masculinas**: o marmeleiro (marmelo), o limoeiro (limón), o castiñeiro (castaña), o pexegueiro (pexego).']],q:[I('arbores'),I('arbores'),I('arbores'),I('arbores'),I('arbores'),I('arbores')]},
  {t:'Singular e plural',f:[['1️⃣','Só **singular**: norte, saúde, ledicia.'],['🤭','Só **plural**: cóxegas, rañaceos.'],['✂️','Os dous: tesoira/tesoiras, pantalón/pantalóns.'],['👓','Cambia o significado: **lente** (da cámara) / **lentes** (para ver).']],q:[I('numero'),I('numero'),I('numero'),I('numero')]},
  {t:'Como se fai o plural',img:'plural',f:[['➕','Vogal ou consoante (non x, r, z, s, l): **-s**. café**s**, xamón**s**.'],['🎯','-r, -z, -s (mono. e agudas), -l (mono. e graves): **-es**. colar**es**, xuíc**es**, mes**es**, gol**es**, móbil**es**.'],['🚦','-l en aguda: **-is**. sina**is**, xabar**ís**.'],['🟰','-x e -s en graves e esdrúxulas: **non varían**. os tórax, os lapis, os luns.']],q:[I('plural'),I('plural'),I('plural'),I('plural'),I('plural')]},
  {t:'Plural das palabras compostas',f:[['🔗','Xuntas: plural ao final. portavoz → portavoc**es**.'],['🌻','Se a 2ª é monosílaba: **-es**. xirasol**es**, parasol**es**.'],['🐗','Substantivo + adxectivo: **as dúas**. porc**os** brav**os**.'],['🚛','Substantivo + substantivo: **só a 1ª**. camión**s** cisterna.']],q:[I('compostos'),I('compostos'),I('compostos'),I('compostos')]},
  {t:'A acentuación',img:'acento',f:[['🎯','**Agudas**: til se rematan en vogal, -n ou -s (mazá, alguén, tabús).'],['🚫','Pero non en ditongo decrecente: bacallau, chapeu, ademais.'],['📱','**Graves**: til en consoante (non -n, -s) ou grupo: móbil, tórax, cómics, bíceps.'],['⚡','**Esdrúxulas**: sempre.']],q:[I('acent'),I('acent'),I('acent'),I('acent'),I('acent')]},
  {t:'Ditongos e hiatos',f:[['🔊','Ditongos e tritongos: **regras xerais** (camión, acuífero, miau).'],['🌊','i/u tónicas xunto a vogal: **til** (río, súa).'],['🧡','iu/ui: til se a forza vai na **segunda** (miúdo, ruín, muíño).'],['🔵','Se vai na primeira, non (azuis, abriu).']],q:[I('vogais'),I('vogais'),I('vogais'),I('vogais')]},
- {t:'O acento diacrítico',f:[['✍️','Distingue palabras que se escriben igual.'],['🅰️','**é** (ser) / e · **á** (a+a) / a · **máis** (cantidade) / mais (pero).'],['🦶','**pé** (corpo) / pe (letra) · **óso** (corpo) / oso (animal) · **té** / te.'],['🙋','**nós** / nos · **vós** / vos · **só** / so · **vén** (vir) / ven (ver).'],['⏰','**cómpre** (é necesario) / compre · **présa** (apuro) / presa.']],q:[I('diacr'),I('diacr'),I('diacr'),I('diacr'),I('diacr'),I('diacr')]},
- {t:'Vocabulario: o corpo',img:'corpo',f:[['🧍','**Caluga**: detrás do pescozo. **Sofraxe**: detrás do xeonllo.'],['💪','**Cóbado**: codo. **Nocello**: tobillo. **Empeña**: parte de arriba do pé.'],['🙂','**Meixela**, **queixo**, **tempas**, **meniña** (pupila), **venta** (do nariz).'],['🤏','**Pestanexar**, **bocexar**, **beliscar**, **patexar**, **axeonllarse**.']],q:[I('corpo'),I('corpo'),I('corpo'),I('corpo'),I('corpo'),I('corpo')]}
+ {t:'O acento diacrítico',f:[['✍️','Distingue palabras que se escriben igual.'],['🅰️','**á** (a+a) / a · **ó** (a+o) / o · **cá** (ca+a) / ca · **có** (ca+o) / co (con+o).'],['🗣️','**é** (ser) / e · **dá** (dar) / da (de+a) · **dó** (pena) / do (de+o) · **fóra** (adv.) / fora (ser, ir).'],['➕','**máis** (cantidade) / mais (pero) · **má** (ruín) / ma (me+a) · **nó** (lazo) / no (en+o).'],['🙋','**nós** / nos · **vós** / vos · **só** / so · **sé** / se · **té** / te · **pór** (poñer) / por.'],['🦶','**pé** (corpo) / pe (letra) · **óso** / oso · **bóla** (esfera) / bola (pan).'],['🚶','**vén, vés** (vir) / ven, ves (ver) · **cómpre** (é necesario) / compre · **présa** (apuro) / presa.']],q:[I('diacr'),I('diacr'),I('diacr'),I('diacr'),I('diacr'),I('diacr'),I('diacr'),I('diacr')]},
+ {t:'O corpo 1: a cabeza',img:'corpo',f:[['🙂','**Fronte**: Parte de arriba da cara, entre as cellas e onde empeza o pelo. ~(frente)~'],['🙂','**Tempas (ou sens)**: Cada unha das partes dos lados da cabeza, por riba dos ollos e das orellas. ~(sienes)~'],['🙂','**Meniña**: Burato redondo no centro do iris, por onde entra a luz no ollo. ~(pupila)~'],['🙂','**Venta**: Cada un dos buratos do nariz (ou do fociño dos animais). ~(fosa nasal)~'],['🙂','**Meixela**: Cada unha das partes da cara que sobresaen debaixo dos ollos. ~(mejilla)~'],['🙂','**Beizos (ou labios)**: As dúas partes carnosas que limitan a abertura da boca. ~(labios)~'],['🙂','**Queixo**: Parte da cara que está entre a boca e o pescozo. ~(barbilla)~'],['🙂','**Pescozo**: Parte do corpo que une a cabeza ao tronco. ~(cuello)~'],['🙂','**Caluga**: Parte de atrás do pescozo, onde empeza a cabeza. ~(nuca)~'],['🧍','Despois practica no **Xogo do corpo** (botón da portada).']],q:[I('corpoCab'),I('corpoCab'),I('corpoCab'),I('corpoCab'),I('corpoCab'),I('corpoCab'),I('corpoCab'),I('corpoCab')]},
+ {t:'O corpo 2: tronco e brazos',img:'corpo',f:[['💪','**Ombreiro**: Parte de arriba e do lado do tronco, onde comeza o brazo. ~(hombro)~'],['💪','**Lombo**: Parte de atrás do corpo, dende os ombreiros ata o van. ~(espalda)~'],['💪','**Cadril**: Parte baixa do lombo, á altura dos riles. ~(cadera / riñones)~'],['💪','**Van (ou cintura)**: Estreitamento do corpo por riba das cadeiras. ~(cintura)~'],['💪','**Embigo**: Cicatriz redonda no medio do ventre, o resto do cordón umbilical. ~(ombligo)~'],['💪','**Virilla (ou ingua)**: Parte do corpo onde se une a coxa co ventre. ~(ingle)~'],['💪','**Cóbado**: Parte de fóra da articulación do brazo co antebrazo. ~(codo)~'],['💪','**Pulso**: Punto onde o brazo se articula coa man. ~(muñeca)~'],['💪','**Cotelos**: Os nós ou vultos que forman as articulacións dos dedos cando se dobran. ~(nudillos)~'],['🧍','Despois practica no **Xogo do corpo** (botón da portada).']],q:[I('corpoTro'),I('corpoTro'),I('corpoTro'),I('corpoTro'),I('corpoTro'),I('corpoTro'),I('corpoTro'),I('corpoTro')]},
+ {t:'O corpo 3: as pernas',img:'corpo',f:[['🦵','**Coxa**: Parte da perna que vai dende a cadeira ata o xeonllo; nela está o fémur. ~(muslo)~'],['🦵','**Xeonllo**: Parte de fóra da articulación do fémur coa tibia. ~(rodilla)~'],['🦵','**Sofraxe**: Parte de atrás do xeonllo. ~(corva)~'],['🦵','**Papo da perna**: Zona avultada de atrás da perna, entre a sofraxe e o talón. ~(pantorrilla)~'],['🦵','**Nocello**: Os ósos que sobresaen onde a perna se une co pé. ~(tobillo)~'],['🦵','**Empeña**: Parte de arriba do pé. ~(empeine)~'],['🧍','Despois practica no **Xogo do corpo** (botón da portada).']],q:[I('corpoPer'),I('corpoPer'),I('corpoPer'),I('corpoPer'),I('corpoPer'),I('corpoPer'),I('corpoPer'),I('corpoPer')]},
+ {t:'O corpo 4: accións',f:[['🤸','**Pestanexar**: Mover as pálpebras abrindo e pechando os ollos. ~(parpadear)~'],['🤸','**Bocexar**: Abrir a boca sen querer por sono, aburrimento ou fame. ~(bostezar)~'],['🤸','**Axeonllarse**: Poñerse de xeonllos. ~(arrodillarse)~'],['🤸','**Beliscar**: Apertar entre dous dedos (polgar e índice) un pouco de pel e carne. ~(pellizcar)~'],['🤸','**Patexar**: Golpear algo cos pés. ~(patalear)~']],q:[I('corpoAcc'),I('corpoAcc'),I('corpoAcc'),I('corpoAcc'),I('corpoAcc'),I('corpoAcc')]}
 ];
 DIB.estrutura=`<svg viewBox="0 0 320 170" role="img" aria-label="Estrutura da narración"><path d="M10 140 Q60 140 90 110 Q160 10 230 90 Q260 125 310 135" fill="none" stroke="#3a3ca6" stroke-width="5"/><circle cx="40" cy="138" r="7" fill="#7bc67b"/><circle cx="160" cy="45" r="9" fill="#e05a47"/><circle cx="285" cy="133" r="7" fill="#f2a541"/><text x="10" y="162" font-size="14" font-weight="700">Introdución</text><text x="118" y="22" font-size="14" font-weight="700">Nó (conflito)</text><text x="238" y="162" font-size="14" font-weight="700">Desenlace</text><text x="128" y="80" font-size="11" fill="#555">a parte máis longa</text></svg>`;
 DIB.plural=`<svg viewBox="0 0 330 200" role="img" aria-label="Regras do plural"><g font-size="13"><rect x="5" y="5" width="320" height="40" rx="8" fill="#e6f4ea"/><text x="15" y="23" font-weight="700">vogal, -n…</text><text x="15" y="38">café → cafés · xamón → xamóns</text><text x="270" y="31" font-size="20" font-weight="800" fill="#1d7a3c">-s</text>
@@ -1149,9 +1259,7 @@ DIB.plural=`<svg viewBox="0 0 330 200" role="img" aria-label="Regras do plural">
 DIB.acento=`<svg viewBox="0 0 330 190" role="img" aria-label="Acentuación"><g font-size="13"><rect x="5" y="5" width="320" height="56" rx="8" fill="#e8eefc"/><text x="15" y="24" font-weight="800">AGUDAS · ca-MIÓN</text><text x="15" y="41">Til se rematan en vogal, -n, -s</text><text x="15" y="56" fill="#555">mazá, alguén · NON: bacallau, chapeu</text>
 <rect x="5" y="68" width="320" height="56" rx="8" fill="#e6f4ea"/><text x="15" y="87" font-weight="800">GRAVES · MÓ-bil</text><text x="15" y="104">Til se NON rematan en vogal, -n, -s</text><text x="15" y="119" fill="#555">móbil, tórax, cómics, bíceps</text>
 <rect x="5" y="131" width="320" height="54" rx="8" fill="#fff2dc"/><text x="15" y="150" font-weight="800">ESDRÚXULAS · ES-drú-xu-la</text><text x="15" y="167">Til SEMPRE</text><text x="15" y="181" fill="#555">acuífero, mércores</text></g></svg>`;
-DIB.corpo=`<svg viewBox="0 0 320 300" role="img" aria-label="Partes do corpo"><g fill="#f3c9a8" stroke="#8a5a3c" stroke-width="2"><circle cx="150" cy="40" r="26"/><rect x="141" y="64" width="18" height="16"/><path d="M118 80 h64 l6 90 h-76z"/><path d="M118 82 l-26 52 l-6 50" fill="none" stroke-width="14" stroke="#f3c9a8"/><path d="M182 82 l26 52 l6 50" fill="none" stroke-width="14" stroke="#f3c9a8"/><path d="M130 170 l-6 60 l2 50" fill="none" stroke-width="18" stroke="#f3c9a8"/><path d="M170 170 l6 60 l-2 50" fill="none" stroke-width="18" stroke="#f3c9a8"/><path d="M118 280 h-22 M182 280 h22" stroke-width="10" stroke="#f3c9a8"/></g>
-<g font-size="12" font-weight="700" fill="#17203a"><text x="196" y="30">tempa</text><text x="196" y="52">meixela</text><text x="196" y="72">queixo</text><text x="230" y="134">cóbado</text><text x="230" y="186">pulso</text><text x="8" y="100">ombreiro</text><text x="8" y="170">van / cintura</text><text x="8" y="232">xeonllo</text><text x="210" y="270">nocello</text><text x="8" y="290">empeña</text></g>
-<g stroke="#17203a" stroke-width="1"><path d="M194 27 L172 34"/><path d="M194 49 L166 46"/><path d="M194 69 L156 63"/><path d="M228 130 L210 134"/><path d="M228 182 L214 182"/><path d="M60 96 L118 84"/><path d="M85 166 L118 166"/><path d="M58 228 L125 228"/><path d="M208 266 L178 272"/><path d="M58 286 L100 280"/></g></svg>`;
+DIB.corpo=corpoSVG({lab:Object.fromEntries(Object.keys(HS).map(k=>[k,corpoLab(k)]))});
 
 
 
@@ -1162,7 +1270,7 @@ const SESSION_GAP=2*3600*1000;
 let BREAK_SECS=30, OPT_DELAY=800, AUTO_NEXT=1100;
 
 /* ===== Estado ===== */
-const KEY='gal.ud2.v1';
+const KEY='gal.ud2.v2';
 let S={done:{},wrong:{},sess:{n:0,since:0,ts:0,ok:false},cfg:{brk:2,per:6,snd:true},best:null,lastDone:null};
 try{const r=localStorage.getItem(KEY);if(r){const j=JSON.parse(r);S=Object.assign(S,j);}}catch(e){}
 function save(){S.ts=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}gAvSube(KEY,S);}
@@ -1210,12 +1318,12 @@ function home(){
   const a=nextAction();
   shell(`<button class="av-home" id="av-open" aria-label="Mi muñeco">${avatarSVG(gLoad().av,52)}<b>⭐ ${gStars()}</b></button><p class="small">${a.small}</p><h1>${a.title}</h1><p class="small">${a.sub}</p>
     <button class="go" id="go">Empezar</button>${dots()}
-    <div class="foot no-print"><a class="link" href="../index.html">Asignaturas</a><button class="link" id="l-map">Ver misiones</button><button class="link" id="l-che">Chuleta</button><button class="link" id="l-jg">🎮 Juego</button>${ligaOn()?'<button class="link" id="l-lg">🏆 Clasificación</button>':''}<button class="link" id="l-par">Para padres</button>${window.parent!==window?'<button class="link" id="l-desk">Volver al escritorio</button>':''}</div>`,{exit:false});
+    <div class="foot no-print"><a class="link" href="../index.html">Asignaturas</a><button class="link" id="l-map">Ver misiones</button><button class="link" id="l-che">📒 Apuntes</button><button class="link" id="l-xc">🧍 Xogo do corpo</button><button class="link" id="l-jg">🎮 Juego</button>${ligaOn()?'<button class="link" id="l-lg">🏆 Clasificación</button>':''}<button class="link" id="l-par">Para padres</button>${window.parent!==window?'<button class="link" id="l-desk">Volver al escritorio</button>':''}</div>`,{exit:false});
   popIndex=null;
   const g=document.getElementById('go');g.onclick=a.fn;g.focus({preventScroll:true});
   document.getElementById('l-jg').onclick=()=>openGame(home);const llg=document.getElementById('l-lg');if(llg)llg.onclick=()=>openLeague(home);
   document.getElementById('av-open').onclick=()=>openAvatarEditor(home);
-  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-par').onclick=parents;
+  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-xc').onclick=xogoMenu;document.getElementById('l-par').onclick=parents;
   const ld=document.getElementById('l-desk');if(ld)ld.onclick=()=>window.parent.postMessage('cerrar-misiones','*');
   keyH=e=>{if(e.key==='Enter'){e.preventDefault();a.fn();}};
 }
@@ -1385,15 +1493,155 @@ function simEnd(){
 function map(){
   clearAll();
   shell(`<div class="page"><h2>Misiones</h2>${M.map((m,i)=>`<button class="mrow ${S.done[i]?'d':''}" data-i="${i}"><span class="s">${S.done[i]?'✓':''}</span>${i+1}. ${m.t}</button>`).join('')}
-   <button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
+   <button class="mrow" id="ap"><span class="s">📒</span>Apuntes completos</button><button class="mrow" id="xc"><span class="s">🧍</span>Xogos do corpo</button><button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
   document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>ready(()=>lesson(+b.dataset.i)));
-  document.getElementById('sim').onclick=()=>ready(simIntro);
+  document.getElementById('sim').onclick=()=>ready(simIntro);document.getElementById('ap').onclick=cheat;document.getElementById('xc').onclick=xogoMenu;
   const v=document.getElementById('rv');if(v)v.onclick=()=>ready(startReview);
 }
 function cheat(){
   clearAll();
-  shell(`<div class="page"><h2>Chuleta: Unidade 2</h2>${fmt(`<table><tr><td><b>Xéneros</b></td><td>Narrativo, lírico e dramático. Narrar: contar feitos de personaxes nun lugar e tempo</td></tr><tr><td><b>Estrutura</b></td><td>Introdución (presentación), nó (conflito, a parte máis longa), desenlace (solución)</td></tr><tr><td><b>Narrador</b></td><td>Interno: 1ª persoa, protagonista. Externo: 3ª persoa, non participa</td></tr><tr><td><b>Personaxes</b></td><td>Principais (protagonista, antagonista) e secundarios</td></tr><tr><td><b>Estilo</b></td><td>Directo: palabras exactas con guión. Indirecto: despois de «dixo»</td></tr><tr><td><b>Espazo e tempo</b></td><td>Espazo realista/fantástico, interior/exterior. Tempo externo (cando) e interno (canto dura)</td></tr><tr><td><b>Substantivos</b></td><td>Comúns/propios, concretos/abstractos, contables/non contables, individuais/colectivos</td></tr><tr><td><b>Xénero</b></td><td>-a (xogadora, mestra, avoa); -ón → -oa ou -ona; -án → -á ou -ana; -ín → -ina; alcaldesa; raíña</td></tr><tr><td><b>Trucos</b></td><td>Masc.: letras, -ume, o traxe/paxe/garaxe. Fem.: -axe, -ite/-se/-te, árbores froiteiras (agás limoeiro, castiñeiro, pexegueiro, marmeleiro)</td></tr><tr><td><b>Ollo</b></td><td>A árbore, a calor, a cor, a dor, a ponte, a orixe, a suor, a marxe. O leite, o sal, o mel, o sangue, o nariz, o cume, o mar, o sinal</td></tr><tr><td><b>Número</b></td><td>Só singular: norte, saúde. Só plural: cóxegas. Lente / lentes</td></tr><tr><td><b>Plural</b></td><td>-s (vogal, -n…); -es (-r, -z, -s e -l mono.); -is (-l aguda); igual (-x; -s graves)</td></tr><tr><td><b>Compostos</b></td><td>portavoces, xirasoles; porcos bravos; camións cisterna</td></tr><tr><td><b>Acentuación</b></td><td>Agudas: vogal, -n, -s (non ditongo decrecente). Graves: o resto. Esdrúxulas: sempre. río, súa, miúdo; azuis, abriu</td></tr><tr><td><b>Diacrítico</b></td><td>é/e, á/a, máis/mais, pé/pe, óso/oso, só/so, té/te, nós/nos, vén/ven, vés/ves, cómpre/compre, présa/presa</td></tr><tr><td><b>Corpo</b></td><td>caluga, sofraxe, cóbado, nocello, empeña, meixela, tempas, cotelos, meniña, venta; pestanexar, bocexar, beliscar, patexar</td></tr></table>`)}<div class="chdib">${['estrutura','plural','acento','corpo'].map(k=>`<div class="dib">${DIB[k]}</div>`).join('')}</div><button class="alt no-print" id="pr">Imprimir</button></div>`);
+  const tb=(rows)=>`<table>${rows.map(r=>`<tr>${r.map((c,j)=>j?`<td>${c}</td>`:`<td><b>${c}</b></td>`).join('')}</tr>`).join('')}</table>`;
+  const sec=(id,t,h)=>`<section class="ap" id="ap-${id}"><h3>${t}</h3>${h}</section>`;
+  const IDX=[['nar','1. O xénero narrativo'],['cla','2. Clasificación dos substantivos'],['xen','3. O xénero do substantivo'],['num','4. O número e o plural'],['ace','5. A acentuación'],['dia','6. O acento diacrítico'],['cor','7. Vocabulario: o corpo']];
+  const html=`<div class="page"><h2>📒 Apuntes completos: Unidade 2</h2>
+  <p class="small">Todo o que entra no exame (17 de novembro). Toca un tema para ir a el.</p>
+  <div class="apidx">${IDX.map(([k,t])=>`<a href="#ap-${k}">${t}</a>`).join('')}</div>
+  ${sec('nar','1. O xénero narrativo',`
+   <p>Hai <b>tres xéneros literarios</b>: <b>narrativo</b>, <b>lírico</b> e <b>dramático</b> (ou teatral).</p>
+   <p><b>Narrar</b> é contar uns feitos que lles ocorren a uns personaxes nun lugar e nun tempo determinados.</p>
+   <p>Exemplos de textos narrativos: a lenda, a novela, a noticia xornalística, a carta, o conto popular, a anécdota e o chiste.</p>
+   <ul><li>Segundo a <b>maneira de narrar</b>: <b>orais</b> ou <b>escritos</b>.</li><li>Segundo os <b>feitos</b> que se contan: <b>literarios</b> ou <b>non literarios</b>.</li></ul>
+   <h4>Estrutura</h4>
+   ${tb([['Introdución','Preséntanse os personaxes e a situación inicial nun espazo e nun tempo.'],['Nó','Desenvólvese un conflito. É a parte máis extensa.'],['Desenlace','Situación final: resólvese o conflito.']])}
+   <div class="dib">${DIB.estrutura}</div>
+   <h4>Elementos da narración</h4>
+   ${tb([['Narrador','Quen conta a historia.<br><b>Interno</b>: en primeira persoa; é o protagonista («Eu abrín a porta…»).<br><b>Externo</b>: en terceira persoa; non participa nos feitos («Lucía abriu a porta…»).'],
+     ['Historia','O conxunto de feitos que lles suceden aos personaxes.'],
+     ['Personaxes','Os seres que realizan as accións.<br><b>Principais</b>: presentes en toda a narración. O <b>protagonista</b> é a clave da historia; o <b>antagonista</b> oponse ao protagonista.<br><b>Secundarios</b>: aparecen de vez en cando e teñen pouca importancia.'],
+     ['Estilo directo','Recóllense as palabras textuais dos personaxes, cun guión: «—Hai alguén aí?»'],
+     ['Estilo indirecto','O narrador conta o que din os personaxes, en terceira persoa, despois dun verbo como «dixo» ou «contestou»: «Berrou se había alguén».'],
+     ['Espazo','O lugar onde suceden os feitos. <b>Realista</b> (existe) ou <b>fantástico</b> (inventado). <b>Interior</b> ou <b>exterior</b>.'],
+     ['Tempo','O momento no que transcorre a acción (pasado, presente ou futuro).<br><b>Tempo externo</b>: cando sucede a historia (ano, mes, día, estación).<br><b>Tempo interno</b>: canto tempo pasa dende o inicio ata o final (unha hora, cinco días, varios anos).']])}`)}
+  ${sec('cla','2. Clasificación dos substantivos',`
+   <p>Clases de palabras: <b>substantivo</b>, adxectivo, verbo, adverbio, preposición, conxunción e interxección. O substantivo é a palabra que nomea seres, cousas, lugares ou ideas.</p>
+   ${tb([['Comúns / propios','Comúns: nomean calquera ser dunha clase (profesora, supermercado). Propios: nomean un ser concreto e levan maiúscula (Raquel, Carrefour, Galicia).'],
+     ['Concretos / abstractos','Concretos: podémolos ver, oír, ulir, tocar ou degustar (paxaro, estoupido). Abstractos: non se perciben cos sentidos (tristeza, inxustiza).'],
+     ['Contables / non contables','Contables: pódense contar (nariz, home). Non contables: non se contan por unidades (auga, azucre, sal, cervexa).'],
+     ['Individuais / colectivos','Individuais: en singular nomean un só ser (mozo). Colectivos: en singular nomean un conxunto (mocidade).']])}`)}
+  ${sec('xen','3. O xénero do substantivo',`
+   <p>O <b>sexo</b> teno os seres vivos (macho ou femia). O <b>xénero</b> (masculino ou feminino) teno todas as palabras: a lavalouza, o mel.</p>
+   <h4>Seres animados: variables (cambian a forma)</h4>
+   ${tb([['Consoante (non -n)','engade -a: xogador → xogadora'],['-e ou -o átonos','cambian a -a: mestre → mestra'],['Vogal tónica','engade -a: avó → avoa'],
+     ['-ón','neutros → -oa: patrón → patroa, león → leoa<br>despectivos ou aumentativos → -ona: mangallón → mangallona, abusón → abusona, lambón → lambona'],
+     ['-án','neutros → -á: capitán → capitá, cidadán → cidadá, fisterrán → fisterrá<br>despectivos ou aumentativos → -ana: papán → papana, mentirán → mentirana, paspán → paspana'],
+     ['-ín','engade -ina: bailarín → bailarina'],['Terminación distinta','alcalde → alcaldesa'],['Palabra distinta','rei → raíña']])}
+   <h4>Seres animados: invariables</h4><p>Marcan o xénero só co artigo (<b>o</b> cantante / <b>a</b> cantante) ou teñen un só xénero (<b>a</b> formiga).</p>
+   <h4>Trucos</h4>
+   <ul><li><b>Masculinas</b>: as letras (o a, o be, o ce) e as rematadas en <b>-ume</b> (o costume, o legume, o lume).</li>
+   <li><b>Femininas</b>: as rematadas en <b>-axe</b> (a viaxe, a paisaxe), <b>agás o traxe, o paxe e o garaxe</b>.</li>
+   <li><b>Femininas</b>: as rematadas en <b>-ite, -se, -te</b> (a bronquite, a paréntese).</li>
+   <li><b>Femininas</b>: a maioría das <b>árbores froiteiras</b> e dos froitos.</li></ul>
+   <h4>Árbores froiteiras</h4>
+   ${tb(ARB.map(([a,f])=>[a,f]))}
+   <p class="small">Ollo: <b>o</b> marmeleiro, <b>o</b> limoeiro, <b>o</b> castiñeiro e <b>o</b> pexegueiro son masculinos.</p>
+   <h4>Femininos en galego (ollo, en castelán son distintos)</h4><p class="lst">${FEMS.map(w=>'a '+w).join(' · ')}</p>
+   <h4>Masculinos en galego</h4><p class="lst">${MASCS.map(w=>'o '+w).join(' · ')}</p>`)}
+  ${sec('num','4. O número e o plural',`
+   ${tb([['Só singular','norte, saúde, ledicia (non se di «saúdes»)'],['Só plural','cóxegas, rañaceos'],['Singular e plural','tesoira/tesoiras, braga/bragas, pantalón/pantalóns'],['Distinto significado','lente (obxectivo dunha cámara) / lentes (obxecto que mellora a visión)']])}
+   <h4>Formación do plural</h4>
+   ${tb([['Vogal ou consoante (non -x, -r, -z, -s, -l)','engaden <b>-s</b>: café → cafés, lei → leis, xamón → xamóns'],
+     ['-r, -z, -s (monosílabas e agudas), -l (monosílabas e graves)','engaden <b>-es</b>: colar → colares, xuíz → xuíces, mes → meses, país → países, gol → goles, móbil → móbiles'],
+     ['-l en palabras agudas','<b>-is</b>: sinal → sinais, xabaril → xabarís'],
+     ['-x; -s en graves e esdrúxulas; -ns','<b>non varían</b>: o tórax → os tórax, o lapis → os lapis, o mércores → os mércores, o luns → os luns']])}
+   <div class="dib">${DIB.plural}</div>
+   <h4>Plural das palabras compostas</h4>
+   ${tb([['Escritas xuntas','plural ao final: portavoz → portavoces. Se o segundo elemento é monosílabo, -es: xirasol → xirasoles, parasol → parasoles, cartafol → cartafoles, ollomol → ollomoles'],
+     ['Separadas: substantivo + adxectivo','plural nas dúas: porco bravo → porcos bravos, garda civil → gardas civís'],
+     ['Separadas: substantivo + substantivo','plural só na primeira: camión cisterna → camións cisterna, coche cama → coches cama, cabalo do demo → cabalos do demo, estrela do mar → estrelas do mar']])}`)}
+  ${sec('ace','5. A acentuación',`
+   ${tb([['Agudas','levan til se rematan en <b>vogal, -n ou -s</b>: mazá, alguén, tabús.<br><b>Non</b> levan se rematan en ditongo decrecente (ai, au, ei, eu, oi, ou), con ou sen -s: ademais, quizais, bacallau, afastei, chapeu.'],
+     ['Graves','levan til se rematan en <b>consoante que non sexa -n ou -s</b>: móbil, escáner, tórax; en <b>grupo de consoantes</b> (cs, ms, chs, ps): cómics, álbums, sándwichs, bíceps; ou en <b>ditongo decrecente</b> con ou sen -s: amábeis, rentábeis, hóckey, jóckey.'],
+     ['Esdrúxulas','levan til <b>sempre</b>.'],
+     ['Ditongos e tritongos','seguen as regras xerais: camión, acuífero, miau, Viéitez, Bueu, Axóuxere.'],
+     ['Hiatos (i, u tónicas)','i ou u <b>tónicas</b> xunto a outra vogal levan til: súa, río. Se non son tónicas, non: suor, piar.'],
+     ['iu / ui','se a forza vai na <b>segunda</b>, leva til: miúdo, ruín, muíño. Se vai na <b>primeira</b>, non: azuis, viu, abriu.']])}
+   <div class="dib">${DIB.acento}</div>`)}
+  ${sec('dia','6. O acento diacrítico',`<p>Distingue palabras que se escriben igual pero significan cousas distintas.</p>
+   ${tb([['á (a + a)','a (artigo, pronome, preposición)'],['bóla (esfera)','bola (peza de pan)'],['cá (ca + a)','ca (conxunción)'],['có (ca + o)','co (con + o)'],['cómpre (é mester)','compre (merque)'],['dá (de dar)','da (de + a)'],['dó (compaixón)','do (de + o)'],['é (de ser)','e (conxunción)'],['fóra (adverbio)','fora (de ser e ir)'],['má (ruín)','ma (me + a)'],['máis (adverbio e pronome)','mais (conxunción = pero)'],['nó (substantivo)','no (en + o)'],['nós (pronome tónico; plural de nó)','nos (en + os; pronome átono)'],['ó (a + o)','o (artigo, pronome)'],['óso (do corpo)','oso (animal)'],['pé (do corpo)','pe (letra)'],['pór (poñer)','por (preposición)'],['présa (apuro)','presa (prendida, presada)'],['sé (sede eclesiástica; imperativo de ser)','se (conxunción, pronome)'],['só (adverbio e adxectivo)','so (preposición)'],['té (infusión)','te (pronome, letra)'],['vén (presente de vir)','ven (presente de ver; imperativo de vir)'],['vés (presente de vir)','ves (presente de ver)'],['vós (pronome tónico)','vos (pronome átono)']])}`)}
+  ${sec('cor','7. Vocabulario: o corpo',`<div class="dib">${corpoSVG({lab:Object.fromEntries(Object.keys(HS).map(k=>[k,corpoLab(k)]))})}</div>
+   ${tb(CORPO.map(c=>[cNom(c[0]),c[1]+` <span class="small">(${c[2]})</span>`]))}
+   <button class="go no-print" id="ap-xogo">🧍 Xogar co corpo</button>`)}
+  <button class="alt no-print" id="pr">Imprimir</button></div>`;
+  shell(html);
   document.getElementById('pr').onclick=()=>window.print();
+  document.getElementById('ap-xogo').onclick=xogoMenu;
+  document.querySelectorAll('.apidx a').forEach(a=>a.onclick=e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});
+}
+/* ===== Xogo do corpo ===== */
+function xogoMenu(){
+  clearAll();
+  shell(`<div class="page"><h2>🧍 Xogos do corpo</h2>
+   <figure class="dib">${corpoSVG({lab:Object.fromEntries(Object.keys(HS).map(k=>[k,corpoLab(k)]))})}</figure>
+   <button class="mrow" id="x1"><span class="s">👆</span>Onde está? Le a definición e toca no debuxo</button>
+   <button class="mrow" id="x2"><span class="s">🔤</span>Como se chama? Mira o punto e elixe o nome</button>
+   <button class="mrow" id="x3"><span class="s">🔗</span>Une palabra e significado (tamén os verbos)</button></div>`);
+  document.getElementById('x1').onclick=()=>xogoCorpo('onde');
+  document.getElementById('x2').onclick=()=>xogoCorpo('nome');
+  document.getElementById('x3').onclick=xogoUne;
+}
+function xogoCorpo(modo){
+  clearAll();
+  const ks=shuffle(Object.keys(HS)),lab={},cls={};let i=0,ok1=0,fallos=0,lock=false,t0=Date.now();
+  const def=k=>CORPO.find(x=>x[4]===k);
+  const fin=()=>{clearAll();const n=ks.length;if(ok1)gAward(Math.max(1,Math.round(ok1/3)),Math.round((Date.now()-t0)/1000)>60?30:0);
+    shell(`<div class="page"><h2>${ok1>=n-3?'🏆 ¡Moi ben!':ok1>=n/2?'👍 Ben feito':'💪 Remataches'}</h2><p class="small">Á primeira: <b>${ok1} de ${n}</b></p>
+     <figure class="dib">${corpoSVG({lab})}</figure><button class="go" id="re">Outra vez</button><button class="alt" id="mn">Outros xogos</button></div>`);
+    document.getElementById('re').onclick=()=>xogoCorpo(modo);document.getElementById('mn').onclick=xogoMenu;};
+  const draw=()=>{
+    if(i>=ks.length)return fin();
+    const k=ks[i],c=def(k);fallos=0;lock=false;const cl={...cls};
+    if(modo==='nome')cl[k]='pul';
+    const prompt=modo==='onde'?`<p class="small">Onde está…?</p><div class="q xq">${fmt(c[1])}</div>`:`<p class="small">Como se chama a parte sinalada?</p>`;
+    shell(`${prompt}<div class="dib xz">${corpoSVG({hs:modo==='onde',lab,cls:cl})}</div>${modo==='nome'?'<div class="opts" id="opts"></div>':''}<div id="fb"></div>`,{pct:Math.round(i/ks.length*100),say:modo==='onde'?c[1]:'Como se chama?'});
+    const acerto=()=>{lock=true;if(!fallos){ok1++;gNota(true);}lab[k]=corpoLab(k);cls[k]='ok';ding(true);
+      document.getElementById('fb').innerHTML=`<div class="fb ok" role="status"><strong>${fallos?'Agora si.':pick(RIGHT)}</strong> ${cNom(c[0])} = ${c[2]}</div>`;
+      later(()=>{i++;draw();},fallos?1600:1100);
+      const z=document.querySelector('.xz');if(z){z.innerHTML=corpoSVG({hs:modo==='onde',lab,cls});}};
+    if(modo==='onde'){
+      document.querySelectorAll('.hs').forEach(g=>{const f=()=>{if(lock)return;const kk=g.dataset.k;
+        if(kk===k)return acerto();
+        if(cls[kk]==='ok')return;fallos++;gNota(false);ding(false);g.classList.add('no');later(()=>g.classList.remove('no'),500);
+        const fb=document.getElementById('fb');fb.innerHTML=`<div class="fb no" role="status"><strong>Aí non.</strong> ${fallos>=2?'Toca o punto que palpita.':'Proba outra vez.'}</div>`;
+        if(fallos>=2){const r=document.querySelector(`.hs[data-k="${k}"]`);if(r)r.classList.add('pul');}};
+        g.onclick=f;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f();}};});
+    }else{
+      const ot=shuffle(Object.keys(HS).filter(x=>x!==k)).slice(0,3),opts=shuffle([k,...ot]);
+      later(()=>{document.getElementById('opts').innerHTML=opts.map((o,j)=>`<button class="opt" data-i="${j}"><span class="n">${j+1}</span><span>${corpoLab(o)}</span></button>`).join('');
+        const ans=j=>{if(lock)return;const b=document.querySelectorAll('.opt')[j];if(opts[j]===k){b.classList.add('ok');document.querySelectorAll('.opt').forEach(x=>x.disabled=true);return acerto();}
+          if(b.disabled)return;b.disabled=true;b.classList.add('no');fallos++;gNota(false);ding(false);
+          document.getElementById('fb').innerHTML=`<div class="fb no" role="status"><strong>Non é.</strong> Proba outra.</div>`;};
+        document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>ans(+b.dataset.i));
+        keyH=e=>{const n=+e.key;if(n>=1&&n<=4){e.preventDefault();ans(n-1);}};},400);
+    }
+  };draw();
+}
+function xogoUne(){
+  clearAll();
+  const all=shuffle(CORPO),rondas=[];for(let j=0;j<all.length;j+=6)rondas.push(all.slice(j,j+6));
+  if(rondas.length>1&&rondas[rondas.length-1].length<3){const u=rondas.pop();rondas[rondas.length-1].push(...u);}
+  let r=0,ok1=0,t0=Date.now();
+  const ronda=()=>{
+    if(r>=rondas.length){if(ok1)gAward(Math.max(1,Math.round(ok1/3)),30);
+      shell(`<div class="page"><h2>🏆 ¡Feito!</h2><p class="small">Parellas á primeira: <b>${ok1} de ${all.length}</b></p><button class="go" id="re">Outra vez</button><button class="alt" id="mn">Outros xogos</button></div>`);
+      document.getElementById('re').onclick=xogoUne;document.getElementById('mn').onclick=xogoMenu;return;}
+    const it=rondas[r],ds=shuffle(it);let sel=null,feitos=0;const mal={};
+    shell(`<p class="small">Ronda ${r+1} de ${rondas.length}: toca unha palabra e despois o seu significado</p><div class="une"><div>${it.map((c,j)=>`<button class="uw" data-j="${j}">${cNom(c[0])}</button>`).join('')}</div><div>${ds.map(c=>`<button class="ud" data-w="${it.indexOf(c)}">${c[1]}</button>`).join('')}</div></div><div id="fb"></div>`,{pct:Math.round(r/rondas.length*100)});
+    document.querySelectorAll('.uw').forEach(b=>b.onclick=()=>{if(b.classList.contains('ok'))return;document.querySelectorAll('.uw').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=+b.dataset.j;});
+    document.querySelectorAll('.ud').forEach(b=>b.onclick=()=>{if(sel===null||b.classList.contains('ok'))return;const w=document.querySelector(`.uw[data-j="${sel}"]`);
+      if(+b.dataset.w===sel){b.classList.add('ok');w.classList.remove('sel');w.classList.add('ok');ding(true);gNota(true);if(!mal[sel])ok1++;feitos++;sel=null;
+        if(feitos===it.length){document.getElementById('fb').innerHTML='<div class="fb ok" role="status"><strong>Ronda feita.</strong></div>';later(()=>{r++;ronda();},1000);}}
+      else{mal[sel]=1;ding(false);gNota(false);b.classList.add('no');later(()=>b.classList.remove('no'),500);}});
+  };ronda();
 }
 function parents(){
   clearAll();
