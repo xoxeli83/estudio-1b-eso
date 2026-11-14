@@ -169,6 +169,7 @@ label.cfg{display:block;margin:10px 0}
 .apidx{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.apidx a{background:var(--tint);color:var(--main);border-radius:20px;padding:6px 12px;text-decoration:none;font-weight:700;font-size:15px}
 .pj{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.pjb{background:#fff;border:3px solid var(--line);border-radius:12px;padding:10px 14px;font-size:20px;font-weight:800;min-width:64px}.pjb.ok{background:var(--okbg);border-color:var(--ok);opacity:.45}.pjb.no{background:var(--nobg);border-color:var(--no)}
 .esc{width:100%;box-sizing:border-box;font-size:20px;padding:12px;border:3px solid var(--line);border-radius:12px;margin:12px 0;font-family:inherit}.esc:focus{border-color:var(--main);outline:none}.modelo{line-height:1.5}.autoev{display:flex;gap:8px;flex-wrap:wrap}.autoev button{flex:1;min-width:110px}
+.cancion{margin:10px 0 14px}.cancion iframe{width:100%;height:200px;border:0;border-radius:14px;display:block;margin:6px 0}
 .pj-hecho{display:flex;flex-wrap:wrap;gap:6px;min-height:34px}.pj-hecho span{background:var(--okbg);border-radius:8px;padding:4px 8px;font-weight:700}.pj-hecho .pj-q{background:var(--tint)}
 </style>
 </head>
@@ -1269,7 +1270,7 @@ function home(){
   const g=document.getElementById('go');g.onclick=a.fn;g.focus({preventScroll:true});
   document.getElementById('l-jg').onclick=()=>openGame(home);const llg=document.getElementById('l-lg');if(llg)llg.onclick=()=>openLeague(home);
   document.getElementById('av-open').onclick=()=>openAvatarEditor(home);
-  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-pj').onclick=prepJuego;document.getElementById('l-esc').onclick=escribirMenu;document.getElementById('l-par').onclick=parents;
+  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-pj').onclick=prepIntro;document.getElementById('l-esc').onclick=escribirMenu;document.getElementById('l-par').onclick=parents;
   const ld=document.getElementById('l-desk');if(ld)ld.onclick=()=>window.parent.postMessage('cerrar-misiones','*');
   keyH=e=>{if(e.key==='Enter'){e.preventDefault();a.fn();}};
 }
@@ -1439,11 +1440,13 @@ function simEnd(){
 function map(){
   clearAll();
   shell(`<div class="page"><h2>Misiones</h2>${M.map((m,i)=>`<button class="mrow ${S.done[i]?'d':''}" data-i="${i}"><span class="s">${S.done[i]?'✓':''}</span>${i+1}. ${m.t}</button>`).join('')}
-   <button class="mrow" id="ap"><span class="s">📒</span>Apuntes del examen</button><button class="mrow" id="esc"><span class="s">✍️</span>Responde escribiendo (como en el examen)</button><button class="mrow" id="pj"><span class="s">🎮</span>Juego: preposiciones en orden</button><button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
+   <button class="mrow" id="ap"><span class="s">📒</span>Apuntes del examen</button><button class="mrow" id="esc"><span class="s">✍️</span>Responde escribiendo (como en el examen)</button><button class="mrow" id="pj"><span class="s">🎮</span>Juego y canción de las preposiciones</button><button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
   document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>ready(()=>lesson(+b.dataset.i)));
-  document.getElementById('sim').onclick=()=>ready(simIntro);document.getElementById('ap').onclick=cheat;document.getElementById('esc').onclick=escribirMenu;document.getElementById('pj').onclick=prepJuego;
+  document.getElementById('sim').onclick=()=>ready(simIntro);document.getElementById('ap').onclick=cheat;document.getElementById('esc').onclick=escribirMenu;document.getElementById('pj').onclick=prepIntro;
   const v=document.getElementById('rv');if(v)v.onclick=()=>ready(startReview);
 }
+const SUNO_PREP='5b7a2401-8a6b-4030-8216-fad2f5457d4f';
+const cancionPrep=()=>`<div class="cancion"><p class="small">🎵 <b>Canción de las preposiciones</b>: escúchala y cántala para aprenderlas en orden.</p><iframe src="https://suno.com/embed/${SUNO_PREP}" title="Canción de las preposiciones" loading="lazy" allow="autoplay; encrypted-media"></iframe><a class="small" href="https://suno.com/song/${SUNO_PREP}" target="_blank" rel="noopener">Abrir en Suno ↗</a></div>`;
 function cheat(){
   clearAll();
   const tb=(rows)=>`<table>${rows.map(r=>`<tr>${r.map((c,j)=>j?`<td>${c}</td>`:`<td><b>${c}</b></td>`).join('')}</tr>`).join('')}</table>`;
@@ -1474,7 +1477,7 @@ function cheat(){
    <h4>INDICATIVO</h4>${HAB.slice(0,10).map(([t,f])=>vt(t,f)).join('')}
    <h4>SUBJUNTIVO</h4>${HAB.slice(10).map(([t,f])=>vt(t,f)).join('')}
    <h4>IMPERATIVO</h4>${tb(IMPER)}`)}
-  ${sec('pre','Las preposiciones',`<p class="lst"><b>${PREPS.join(', ')}</b>.</p><p class="small">Son invariables y relacionan dos palabras (casa <b>de</b> madera).</p><button class="go no-print" id="ap-pj">🎮 Juego de las preposiciones</button>`)}
+  ${sec('pre','Las preposiciones',`<p class="lst"><b>${PREPS.join(', ')}</b>.</p><p class="small">Son invariables y relacionan dos palabras (casa <b>de</b> madera).</p>${cancionPrep()}<button class="go no-print" id="ap-pj">🎮 Juego de las preposiciones</button>`)}
   ${sec('ort','Ortografía',`<div class="dib">${DIB.acento}</div>
    ${tb([['Agudas','Tilde si acaban en vocal, -n o -s: café, camión, compás. Reloj, papel: sin tilde.'],['Llanas','Tilde si NO acaban en vocal, -n o -s: árbol, lápiz, fácil. Mesa, examen: sin tilde.'],['Esdrújulas y sobresdrújulas','Siempre: música, pájaro, dígaselo.'],['Monosílabos','Por norma general, sin tilde: fue, dio, vio, pie.']])}
    ${tb([['Vocales','Abiertas: a, e, o. Cerradas: i, u.'],['Diptongo','Dos vocales en la misma sílaba: abierta + cerrada átona, cerrada + abierta o dos cerradas (cie-lo, cau-sa, rui-do). Tilde según las reglas generales, en la abierta (camión) o en la segunda si son i/u (construí).'],['Hiato','Dos vocales en sílabas distintas: dos abiertas (le-ón, po-e-ta) o cerrada tónica + abierta (dí-a, ba-úl). La cerrada tónica lleva tilde siempre.'],['Triptongo','Tres vocales en una sílaba: cerrada + abierta + cerrada (buey, U-ru-guay, a-ve-ri-guáis).']])}`)}
@@ -1506,6 +1509,13 @@ function prepJuego(){
     shell(`<div class="page"><h2>${fallos===0?'🏆 ¡Perfecto!':'👍 ¡Conseguido!'}</h2><p class="small">Fallos: <b>${fallos}</b> · Tiempo: <b>${s} s</b></p><p class="lst"><b>${PREPS.join(', ')}</b></p><button class="go" id="re">Otra vez</button><button class="alt" id="vu">Volver</button></div>`);
     document.getElementById('re').onclick=prepJuego;document.getElementById('vu').onclick=()=>home();};
   pinta();
+}
+
+function prepIntro(){
+  clearAll();
+  shell(`<div class="page"><h2>🎵 Las preposiciones</h2>${cancionPrep()}<p class="lst"><b>${PREPS.join(', ')}</b></p>
+   <button class="go" id="pjgo">🎮 Jugar: tócalas en orden</button><button class="alt" id="pjvu">Volver</button></div>`);
+  document.getElementById('pjgo').onclick=prepJuego;document.getElementById('pjvu').onclick=()=>home();
 }
 /* ===== Responder escribiendo (no tipo test) ===== */
 const DEFS=[
