@@ -1446,8 +1446,8 @@ function map(){
   const v=document.getElementById('rv');if(v)v.onclick=()=>ready(startReview);
 }
 const SUNO_PREP='5b7a2401-8a6b-4030-8216-fad2f5457d4f';
-/* Canción propia: archivo en la web (lengua/preposiciones.mp3). Si no está, se usa el reproductor de Suno. */
-const PREP_MP3='preposiciones.mp3';let PREP_AUD=null,PREP_OK=null;
+/* Canción propia: archivo en la web (lengua/preposiciones.m4a). Si no está, se usa el reproductor de Suno. */
+const PREP_MP3='preposiciones.m4a';let PREP_AUD=null,PREP_OK=null;
 const sunoFrame=()=>`<iframe src="https://suno.com/embed/${SUNO_PREP}" title="Canción de las preposiciones" loading="lazy" allow="autoplay; encrypted-media"></iframe>`;
 function prepAudio(){if(!PREP_AUD){PREP_AUD=new Audio(PREP_MP3);PREP_AUD.preload='auto';PREP_AUD.loop=true;PREP_AUD.volume=.8;
   PREP_AUD.addEventListener('canplay',()=>{PREP_OK=true;},{once:true});
