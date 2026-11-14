@@ -1446,7 +1446,17 @@ function map(){
   const v=document.getElementById('rv');if(v)v.onclick=()=>ready(startReview);
 }
 const SUNO_PREP='5b7a2401-8a6b-4030-8216-fad2f5457d4f';
-const cancionPrep=()=>`<div class="cancion"><p class="small">🎵 <b>Canción de las preposiciones</b>: escúchala y cántala para aprenderlas en orden.</p><iframe src="https://suno.com/embed/${SUNO_PREP}" title="Canción de las preposiciones" loading="lazy" allow="autoplay; encrypted-media"></iframe><a class="small" href="https://suno.com/song/${SUNO_PREP}" target="_blank" rel="noopener">Abrir en Suno ↗</a></div>`;
+/* Canción propia: archivo en la web (lengua/preposiciones.mp3). Si no está, se usa el reproductor de Suno. */
+const PREP_MP3='preposiciones.mp3';let PREP_AUD=null,PREP_OK=null;
+const sunoFrame=()=>`<iframe src="https://suno.com/embed/${SUNO_PREP}" title="Canción de las preposiciones" loading="lazy" allow="autoplay; encrypted-media"></iframe>`;
+function prepAudio(){if(!PREP_AUD){PREP_AUD=new Audio(PREP_MP3);PREP_AUD.preload='auto';PREP_AUD.loop=true;PREP_AUD.volume=.8;
+  PREP_AUD.addEventListener('canplay',()=>{PREP_OK=true;},{once:true});
+  PREP_AUD.addEventListener('error',()=>{PREP_OK=false;const z=document.getElementById('pj-suno');if(z)z.innerHTML=sunoFrame();});}return PREP_AUD;}
+function prepPlay(desde0){const a=prepAudio();if(PREP_OK===false)return false;if(desde0)a.currentTime=0;const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{});return true;}
+function prepStop(){if(PREP_AUD)PREP_AUD.pause();}
+const cancionPrep=()=>`<div class="cancion"><p class="small">🎵 <b>Canción de las preposiciones</b>: escúchala y cántala para aprenderlas en orden.</p><div id="pj-suno">${PREP_OK===false?sunoFrame():'<button class="alt" id="pj-play">▶️ Escuchar la canción</button>'}</div><a class="small" href="https://suno.com/song/${SUNO_PREP}" target="_blank" rel="noopener">Abrir en Suno ↗</a></div>`;
+function wireCancion(){prepAudio();const b=document.getElementById('pj-play');if(!b)return;const upd=()=>{b.textContent=PREP_AUD.paused?'▶️ Escuchar la canción':'⏸️ Pausar la canción';};
+  b.onclick=()=>{if(PREP_AUD.paused)prepPlay(false);else prepStop();setTimeout(upd,150);};upd();}
 function cheat(){
   clearAll();
   const tb=(rows)=>`<table>${rows.map(r=>`<tr>${r.map((c,j)=>j?`<td>${c}</td>`:`<td><b>${c}</b></td>`).join('')}</tr>`).join('')}</table>`;
@@ -1490,11 +1500,11 @@ function cheat(){
   ${sec('voc','Vocabulario (primer trimestre)',tb(VOC.map(v=>[v[0],v[1]+` <span class="small">(${v[2]})</span>`])))}
   <button class="alt no-print" id="pr">Imprimir</button></div>`);
   document.getElementById('pr').onclick=()=>window.print();
-  document.getElementById('ap-pj').onclick=prepJuego;
+  document.getElementById('ap-pj').onclick=prepJuego;wireCancion();
   document.querySelectorAll('.apidx a').forEach(a=>a.onclick=e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});
 }
 function prepJuego(){
-  clearAll();
+  clearAll();prepPlay(true);
   let k=0,fallos=0,t0=Date.now();const bs=sh(PREPS);
   const pinta=()=>{
     shell(`<p class="small">Toca las preposiciones <b>en orden</b>: a, ante, bajo…</p>
@@ -1507,16 +1517,18 @@ function prepJuego(){
   };
   const fin=()=>{const s=Math.round((Date.now()-t0)/1000);gAward(fallos<=2?5:fallos<=6?3:1,s>40?30:0);
     shell(`<div class="page"><h2>${fallos===0?'🏆 ¡Perfecto!':'👍 ¡Conseguido!'}</h2><p class="small">Fallos: <b>${fallos}</b> · Tiempo: <b>${s} s</b></p><p class="lst"><b>${PREPS.join(', ')}</b></p><button class="go" id="re">Otra vez</button><button class="alt" id="vu">Volver</button></div>`);
-    document.getElementById('re').onclick=prepJuego;document.getElementById('vu').onclick=()=>home();};
+    document.getElementById('re').onclick=prepJuego;document.getElementById('vu').onclick=()=>{prepStop();home();};};
   pinta();
 }
 
 function prepIntro(){
   clearAll();
   shell(`<div class="page"><h2>🎵 Las preposiciones</h2>${cancionPrep()}<p class="lst"><b>${PREPS.join(', ')}</b></p>
-   <button class="go" id="pjgo">🎮 Jugar: tócalas en orden</button><button class="alt" id="pjvu">Volver</button></div>`);
-  document.getElementById('pjgo').onclick=prepJuego;document.getElementById('pjvu').onclick=()=>home();
+   <button class="go" id="pjgo">🎮 Jugar con la canción: tócalas en orden</button><button class="alt" id="pjvu">Volver</button></div>`);
+  wireCancion();document.getElementById('pjgo').onclick=prepJuego;document.getElementById('pjvu').onclick=()=>{prepStop();home();};
 }
+
+const _homeL=home;home=function(){prepStop();return _homeL.apply(this,arguments);};
 /* ===== Responder escribiendo (no tipo test) ===== */
 const DEFS=[
  ['Define **texto**.','Mensaje completo, oral o escrito, con sentido y con una intención comunicativa.'],
