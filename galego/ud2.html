@@ -174,6 +174,10 @@ label.cfg{display:block;margin:10px 0}
 .une{display:grid;grid-template-columns:minmax(110px,.6fr) 1.4fr;gap:10px}.une>div{display:flex;flex-direction:column;gap:8px}
 .uw,.ud{background:#fff;border:3px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;font-size:18px;line-height:1.25;min-height:52px}
 .uw{font-weight:800}.uw.sel{border-color:var(--main);background:var(--tint)}.uw.ok,.ud.ok{background:var(--okbg);border-color:var(--ok);opacity:.75}.ud.no{background:var(--nobg);border-color:var(--no)}
+.esc{width:100%;box-sizing:border-box;font-size:20px;padding:12px;border:3px solid var(--line);border-radius:12px;margin:12px 0;font-family:inherit}.esc:focus{border-color:var(--main);outline:none}.modelo{line-height:1.5}.autoev{display:flex;gap:8px;flex-wrap:wrap}.autoev button{flex:1;min-width:110px}
+.txtex{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px;font-size:18px;line-height:1.55;margin-bottom:10px}
+.sils{display:flex;gap:6px;justify-content:center;margin:10px 0}.sil{font-size:24px;font-weight:800;padding:10px 16px;border:3px solid var(--line);border-radius:12px;background:#fff}.sil.sel{border-color:var(--main);background:var(--tint)}.sil.ok{border-color:var(--ok);background:var(--okbg)}
+.opts2{display:flex;gap:12px;justify-content:center;margin:14px 0}.dop{font-size:26px;font-weight:800;min-width:110px;padding:14px;border:3px solid var(--line);border-radius:14px;background:#fff}.dop.ok{background:var(--okbg);border-color:var(--ok)}.dop.no{background:var(--nobg);border-color:var(--no)}
 .ap{margin:18px 0 26px}.ap h3{border-bottom:3px solid var(--line);padding-bottom:4px}.ap h4{margin:14px 0 6px}.ap td{vertical-align:top}.lst{line-height:1.8}
 .apidx{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.apidx a{background:var(--tint);color:var(--main);border-radius:20px;padding:6px 12px;text-decoration:none;font-weight:700;font-size:15px}
 @media(max-width:520px){.une{grid-template-columns:1fr 1.5fr}.uw,.ud{font-size:15px;padding:8px}}
@@ -1317,13 +1321,13 @@ function home(){
   clearAll();R=null;freshSession();
   const a=nextAction();
   shell(`<button class="av-home" id="av-open" aria-label="Mi muñeco">${avatarSVG(gLoad().av,52)}<b>⭐ ${gStars()}</b></button><p class="small">${a.small}</p><h1>${a.title}</h1><p class="small">${a.sub}</p>
-    <button class="go" id="go">Empezar</button>${dots()}
-    <div class="foot no-print"><a class="link" href="../index.html">Asignaturas</a><button class="link" id="l-map">Ver misiones</button><button class="link" id="l-che">📒 Apuntes</button><button class="link" id="l-xc">🧍 Xogo do corpo</button><button class="link" id="l-jg">🎮 Juego</button>${ligaOn()?'<button class="link" id="l-lg">🏆 Clasificación</button>':''}<button class="link" id="l-par">Para padres</button>${window.parent!==window?'<button class="link" id="l-desk">Volver al escritorio</button>':''}</div>`,{exit:false});
+    <button class="go" id="go">Empezar</button><button class="alt" id="exh">📝 Exame tipo: os exercicios que entran</button>${dots()}
+    <div class="foot no-print"><a class="link" href="../index.html">Asignaturas</a><button class="link" id="l-map">Ver misiones</button><button class="link" id="l-che">📒 Apuntes</button><button class="link" id="l-xc">🧍 Xogo do corpo</button><button class="link" id="l-exm">📝 Exame tipo</button><button class="link" id="l-jg">🎮 Juego</button>${ligaOn()?'<button class="link" id="l-lg">🏆 Clasificación</button>':''}<button class="link" id="l-par">Para padres</button>${window.parent!==window?'<button class="link" id="l-desk">Volver al escritorio</button>':''}</div>`,{exit:false});
   popIndex=null;
   const g=document.getElementById('go');g.onclick=a.fn;g.focus({preventScroll:true});
   document.getElementById('l-jg').onclick=()=>openGame(home);const llg=document.getElementById('l-lg');if(llg)llg.onclick=()=>openLeague(home);
   document.getElementById('av-open').onclick=()=>openAvatarEditor(home);
-  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-xc').onclick=xogoMenu;document.getElementById('l-par').onclick=parents;
+  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-xc').onclick=xogoMenu;document.getElementById('l-exm').onclick=exameMenu;document.getElementById('exh').onclick=exameMenu;document.getElementById('l-par').onclick=parents;
   const ld=document.getElementById('l-desk');if(ld)ld.onclick=()=>window.parent.postMessage('cerrar-misiones','*');
   keyH=e=>{if(e.key==='Enter'){e.preventDefault();a.fn();}};
 }
@@ -1493,9 +1497,9 @@ function simEnd(){
 function map(){
   clearAll();
   shell(`<div class="page"><h2>Misiones</h2>${M.map((m,i)=>`<button class="mrow ${S.done[i]?'d':''}" data-i="${i}"><span class="s">${S.done[i]?'✓':''}</span>${i+1}. ${m.t}</button>`).join('')}
-   <button class="mrow" id="ap"><span class="s">📒</span>Apuntes completos</button><button class="mrow" id="xc"><span class="s">🧍</span>Xogos do corpo</button><button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
+   <button class="mrow" id="exm"><span class="s">📝</span>Exame tipo: os 10 exercicios que entran</button><button class="mrow" id="ap"><span class="s">📒</span>Apuntes completos</button><button class="mrow" id="xc"><span class="s">🧍</span>Xogos do corpo</button><button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
   document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>ready(()=>lesson(+b.dataset.i)));
-  document.getElementById('sim').onclick=()=>ready(simIntro);document.getElementById('ap').onclick=cheat;document.getElementById('xc').onclick=xogoMenu;
+  document.getElementById('sim').onclick=()=>ready(simIntro);document.getElementById('ap').onclick=cheat;document.getElementById('exm').onclick=exameMenu;document.getElementById('xc').onclick=xogoMenu;
   const v=document.getElementById('rv');if(v)v.onclick=()=>ready(startReview);
 }
 function cheat(){
@@ -1642,6 +1646,78 @@ function xogoUne(){
         if(feitos===it.length){document.getElementById('fb').innerHTML='<div class="fb ok" role="status"><strong>Ronda feita.</strong></div>';later(()=>{r++;ronda();},1000);}}
       else{mal[sel]=1;ding(false);gNota(false);b.classList.add('no');later(()=>b.classList.remove('no'),500);}});
   };ronda();
+}
+/* ===== Exame tipo: os exercicios que entran (escribir, non tipo test) ===== */
+const EX_TON=[['cancion',['can','cion'],1,'canción'],['arbore',['ar','bo','re'],0,'árbore'],['cafe',['ca','fe'],1,'café'],['mesa',['me','sa'],0,'mesa'],['reloxo',['re','lo','xo'],1,'reloxo'],['lapis',['la','pis'],0,'lapis'],['facil',['fa','cil'],0,'fácil'],['musica',['mu','si','ca'],0,'música'],['xamon',['xa','mon'],1,'xamón'],['tamen',['ta','men'],1,'tamén'],['cadeira',['ca','dei','ra'],1,'cadeira'],['mercores',['mer','co','res'],0,'mércores'],['mobil',['mo','bil'],0,'móbil'],['ordenador',['or','de','na','dor'],3,'ordenador'],['papel',['pa','pel'],1,'papel'],['lampada',['lam','pa','da'],0,'lámpada'],['sofa',['so','fa'],1,'sofá'],['xoves',['xo','ves'],0,'xoves'],['bacallau',['ba','ca','llau'],2,'bacallau'],['ademais',['a','de','mais'],2,'ademais'],['alguen',['al','guen'],1,'alguén'],['rapido',['ra','pi','do'],0,'rápido'],['azul',['a','zul'],1,'azul'],['pantalon',['pan','ta','lon'],2,'pantalón'],['dia',['di','a'],0,'día'],['pais',['pa','is'],1,'país'],['rua',['ru','a'],0,'rúa'],['comic',['co','mic'],0,'cómic']];
+const EX_FEM=[['o xogador','a xogadora'],['o mestre','a mestra'],['o avó','a avoa'],['o león','a leoa'],['o patrón','a patroa'],['o lambón','a lambona'],['o abusón','a abusona'],['o capitán','a capitá'],['o cidadán','a cidadá'],['o mentirán','a mentirana'],['o bailarín','a bailarina'],['o alcalde','a alcaldesa'],['o rei','a raíña'],['o neno','a nena'],['o profesor','a profesora'],['o galo','a galiña'],['o home','a muller'],['o irmán','a irmá'],['o campión','a campioa'],['o ladrón','a ladroa'],['o actor','a actriz'],['o príncipe','a princesa'],['o tío','a tía'],['o cabalo','a egua']];
+const EX_PLU=[['o café','os cafés'],['a lei','as leis'],['o xamón','os xamóns'],['o colar','os colares'],['o xuíz','os xuíces'],['o mes','os meses'],['o país','os países'],['o gol','os goles'],['o móbil','os móbiles'],['o sinal','os sinais'],['o xabaril','os xabarís'],['o animal','os animais'],['o papel','os papeis'],['o tórax','os tórax'],['o lapis','os lapis'],['o mércores','os mércores'],['o luns','os luns'],['o portavoz','os portavoces'],['o xirasol','os xirasoles'],['o parasol','os parasoles'],['o garda civil','os gardas civís'],['o porco bravo','os porcos bravos'],['o camión cisterna','os camións cisterna'],['o coche cama','os coches cama'],['a estrela do mar','as estrelas do mar'],['o rapaz','os rapaces']];
+const EX_ACE=[['arbore','árbore'],['camion','camión'],['cafe','café'],['facil','fácil'],['mobil','móbil'],['xamon','xamón'],['alguen','alguén'],['mercores','mércores'],['tamen','tamén'],['lampada','lámpada'],['sofa','sofá'],['rapido','rápido'],['dia','día'],['pais','país'],['rua','rúa'],['raina','raíña'],['miudo','miúdo'],['muino','muíño'],['ruin','ruín'],['torax','tórax'],['biceps','bíceps'],['comics','cómics'],['ademais','ademais'],['bacallau','bacallau'],['cadeira','cadeira'],['xoves','xoves'],['azuis','azuis'],['viu','viu'],['reloxo','reloxo'],['papel','papel'],['lapis','lapis'],['heroe','heroe'],['suor','suor']];
+const EX_DIA=[['Vou ___ praia.','á','a'],['___ casa é grande.','A','Á'],['Vou ___ cine.','ó','o'],['___ can ladra.','O','Ó'],['Ela ___ miña amiga.','é','e'],['Pan ___ leite.','e','é'],['É máis alta ___ nai.','cá','ca'],['Corto o pan ___ coitelo.','co','có'],['É máis listo ___ irmán.','có','co'],['A nai ___ un bico.','dá','da'],['A casa ___ avoa.','da','dá'],['Dáme ___ velo tan triste.','dó','do'],['O libro ___ mestre.','do','dó'],['Xogamos ___ da casa.','fóra','fora'],['Se ___ rico, viaxaría.','fora','fóra'],['Teño ___ libros ca ti.','máis','mais'],['Quería ir, ___ chovía.','mais','máis'],['Fixen un ___ na corda.','nó','no'],['Estou ___ parque.','no','nó'],['___ imos ao cine.','Nós','Nos'],['Rompeu un ___ da perna.','óso','oso'],['O ___ come mel.','oso','óso'],['Doeume o ___.','pé','pe'],['Hai que ___ a mesa.','pór','por'],['Pasei ___ túa casa.','por','pór'],['Vou con moita ___.','présa','presa'],['Estou ___ na casa.','só','so'],['Tomamos un ___.','té','te'],['___ quero moito.','Te','Té'],['O meu irmán ___ mañá.','vén','ven'],['Ela ___ a televisión.','ve','vé'],['Ti ___ comigo?','vés','ves'],['Ti ___ a tele.','ves','vés'],['___ sodes os mellores.','Vós','Vos'],['Xogamos coa ___.','bóla','bola'],['___ estudar para o exame.','Cómpre','Compre'],['Unha persoa ___.','má','ma']];
+const EX_TXT=[
+ {t:'Era unha tarde de outono en Vigo. Lucía e o seu avó Manuel camiñaban pola praia de Samil buscando cunchas. De súpeto, Lucía atopou unha botella cunha mensaxe dentro. «Avó, mira!», berrou. Durante toda a semana seguinte, os dous intentaron descubrir quen a escribira. O sábado, a súa veciña Carme contoulles que fora ela, cando era nena, hai cincuenta anos.',
+  q:[['Quen son os personaxes? Cal é a protagonista?','Lucía (protagonista), o seu avó Manuel (principal) e a veciña Carme (secundaria).'],['Cal é o espazo? É realista ou fantástico?','Vigo, a praia de Samil. É un espazo realista e exterior.'],['Cal é o tempo?','Tempo externo: unha tarde de outono. Tempo interno: unha semana (ata o sábado seguinte).'],['Que tipo de narrador ten?','Narrador externo, en terceira persoa.']]},
+ {t:'Cando abrín a porta do faiado, vin un dragón pequeno durmindo enriba dun baúl. Tiña as escamas verdes e brillantes. Eu tiña moito medo, pero achegueime amodo. O dragón abriu un ollo e díxome: «Por fin chegas! Levo cen anos esperando por ti». Aquela noite, mentres a miña familia durmía, voamos xuntos por riba das illas Cíes.',
+  q:[['Quen son os personaxes?','O narrador (protagonista, un neno ou nena) e o dragón (personaxe principal). A familia aparece pouco (secundaria).'],['Cal é o espazo? É realista ou fantástico?','O faiado da casa (interior) e o ceo das illas Cíes (exterior). É fantástico, porque hai un dragón que fala.'],['Cal é o tempo?','Pasa unha noite. Tempo interno: unhas horas.'],['Que tipo de narrador ten?','Narrador interno, en primeira persoa (eu): é o protagonista.']]},
+ {t:'Hai moitos anos, nunha aldea de Lugo, vivía un ferreiro chamado Brais. Todos os días traballaba na súa ferraría, preto do río. Un inverno moi frío, apareceu un lobo ferido á porta. Brais curouno e deulle de comer. Desde aquel día, o lobo acompañouno sempre ao monte e protexeu a aldea durante dez anos.',
+  q:[['Quen son os personaxes?','Brais, o ferreiro (protagonista), e o lobo (principal). A xente da aldea é secundaria.'],['Cal é o espazo?','Unha aldea de Lugo, a ferraría preto do río e o monte. Espazo realista.'],['Cal é o tempo?','Tempo externo: hai moitos anos, nun inverno. Tempo interno: dez anos.'],['Que tipo de narrador ten?','Narrador externo, en terceira persoa.']]}
+];
+const exNrm=s=>s.toLowerCase().trim().replace(/[.!?¡¿,]+$/g,'').replace(/\s+/g,' ');
+const exSinArt=s=>s.replace(/^(o|a|os|as) /,'');
+function exameMenu(){
+  clearAll();
+  const L=[['corpo','1. Partes do corpo (escribe o nome)'],['artigo','3. Pon o artigo diante (o / a)'],['arbore','4. Dáse a froita: escribe a árbore'],['tonica','5. Sinala a tónica e pon o acento se fai falta'],['fem','6. Escribe o feminino'],['plu','7. Escribe o plural'],['ace','8. Acentúa cando sexa necesario'],['dia','9. Escolle a correcta (vou á / a praia)'],['texto','10. Analiza o texto: personaxes, espazo e tempo']];
+  shell(`<div class="page"><h2>📝 Exame tipo: os exercicios que entran</h2><p class="small">Practica cada exercicio como no exame. O 2 é o exercicio que fixestes na clase: repásao no caderno.</p>
+   ${L.map(([k,t])=>`<button class="mrow" data-e="${k}"><span class="s">✍️</span>${t}</button>`).join('')}
+   <button class="go" data-e="todo">🎯 Exame completo (un pouco de todo)</button></div>`);
+  document.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>exame(b.dataset.e));
+}
+function exItems(m){
+  if(m==='corpo')return sh(Object.keys(HS).filter(k=>CORPO.some(x=>x[4]===k))).slice(0,8).map(k=>{const c=CORPO.find(x=>x[4]===k);const base=cNom(c[0]);const alts=[base,...(base.match(/\(ou ([^)]+)\)/)?[base.replace(/ \(ou .*\)/,''),base.match(/\(ou ([^)]+)\)/)[1]]:[])];return{tipo:'corpo',k,q:'Como se chama a parte do corpo sinalada co punto no debuxo?',ok:alts,a:c[0],art:true};});
+  if(m==='artigo'){const W=[...FEMS.map(w=>['a',w]),...MASCS.map(w=>['o',w]),['a','viaxe'],['a','paisaxe'],['o','traxe'],['o','garaxe'],['a','bronquite'],['a','mazá'],['o','leite']].map(([a,w])=>[a,w.replace(/ \(.*\)/,'')]);return sh(W).slice(0,10).map(([a,w])=>({q:`Escribe o artigo (o / a): <b>___ ${w}</b>`,ok:[a,a+' '+w],a:a+' '+w}));}
+  if(m==='arbore')return sh(ARB).slice(0,8).map(([ar,fr])=>({q:`Froita: <b>${fr}</b>. Escribe a árbore co artigo.`,ok:[ar,ar.replace(/ \(ou .*\)/,''),...(ar.match(/\(ou ([^)]+)\)/)?[ar.slice(0,2)+ar.match(/\(ou ([^)]+)\)/)[1]]:[])],a:ar}));
+  if(m==='tonica')return sh(EX_TON).slice(0,8).map(([w,s,i,c])=>({tipo:'tonica',sil:s,ti:i,q:`Palabra: <b>${s.join('-')}</b>. 1) Toca a sílaba tónica. 2) Escribe a palabra co acento se o leva.`,ok:[c],a:c}));
+  if(m==='fem')return sh(EX_FEM).slice(0,10).map(([m_,f])=>({q:`Escribe o feminino: <b>${m_}</b>`,ok:[f,exSinArt(f)],a:f}));
+  if(m==='plu')return sh(EX_PLU).slice(0,10).map(([s,p])=>({q:`Escribe o plural: <b>${s}</b>`,ok:[p,exSinArt(p)],a:p}));
+  if(m==='ace')return sh(EX_ACE).slice(0,10).map(([s,c])=>({q:`Escribe ben a palabra (co acento se o leva): <b>${s}</b>`,ok:[c],a:c}));
+  if(m==='dia')return sh(EX_DIA).slice(0,12).map(([f,ok,ko])=>({tipo:'dia',q:f.replace('___','<b>___</b>'),op:sh([ok,ko]),ok:[ok],a:f.replace('___',ok)}));
+  if(m==='texto'){const T=sh(EX_TXT)[0];return T.q.map(([q,a])=>({tipo:'texto',txt:T.t,q,a,self:true}));}
+  return ['corpo','artigo','arbore','tonica','fem','plu','ace','dia'].flatMap(k=>exItems(k).slice(0,3)).concat(exItems('texto').slice(0,2));
+}
+function exame(m){
+  clearAll();
+  const items=exItems(m);let i=0,bien=0;const malos=[];
+  const fin=()=>{const tot=items.length;if(bien)gAward(Math.max(1,Math.round(bien/2)),30);
+    shell(`<div class="page"><h2>${bien===tot?'🏆 Perfecto!':bien>=tot/2?'👍 Moi ben':'💪 A repasar'}</h2><p class="small">Ben: <b>${bien} de ${tot}</b></p>
+     ${malos.length?`<h3>Repasa</h3><table>${malos.map(x=>`<tr><td>${x.q.replace(/<[^>]+>/g,'')}</td><td><b>${x.a}</b></td></tr>`).join('')}</table>`:''}
+     <button class="go" id="re">Outra vez</button><button class="alt" id="mn">Outros exercicios</button></div>`);
+    document.getElementById('re').onclick=()=>exame(m);document.getElementById('mn').onclick=exameMenu;};
+  const paso=()=>{
+    if(i>=items.length)return fin();
+    const it=items[i];let tonOk=null;
+    const extra=it.tipo==='corpo'?`<div class="dib xz">${corpoSVG({cls:{[it.k]:'pul'},hs:false})}</div>`:it.tipo==='texto'?`<div class="txtex">${it.txt}</div>`:it.tipo==='tonica'?`<div class="sils">${it.sil.map((s,j)=>`<button class="sil" data-j="${j}">${s}</button>`).join('')}</div>`:'';
+    const entrada=it.tipo==='dia'?`<div class="opts2">${it.op.map(o=>`<button class="dop" data-o="${o}">${o}</button>`).join('')}</div>`:it.self?'<textarea id="ans" class="esc" rows="4" placeholder="Escribe aquí a túa resposta…"></textarea><button class="go" id="ok">Ver a resposta</button>':'<input id="ans" class="esc" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí…"><button class="go" id="ok">Comprobar</button>';
+    shell(`<p class="small">${i+1} de ${items.length}</p>${extra}<div class="q">${it.q}</div>${entrada}<div id="fb"></div>`,{pct:Math.round(i/items.length*100)});
+    if(it.tipo==='corpo'){const g=document.querySelector('.xz svg');if(g){const c=HS[it.k];g.insertAdjacentHTML('beforeend',`<g class="hs pul"><circle class="r" cx="${c[0]}" cy="${c[1]}" r="11"/></g>`);}}
+    const sig=()=>{i++;paso();};
+    const bienF=()=>{bien++;gNota(true);ding(true);document.getElementById('fb').innerHTML=`<div class="fb ok" role="status"><strong>${pick(RIGHT)}</strong> ${it.a}</div>`;later(sig,1100);};
+    const malF=()=>{malos.push(it);gNota(false);ding(false);document.getElementById('fb').innerHTML=`<div class="fb no" role="status"><strong>Era:</strong> <b>${it.a}</b></div><button class="go" id="nx">Seguinte</button>`;document.getElementById('nx').onclick=sig;};
+    if(it.tipo==='dia'){document.querySelectorAll('.dop').forEach(b=>b.onclick=()=>{document.querySelectorAll('.dop').forEach(x=>x.disabled=true);if(b.dataset.o===it.ok[0]){b.classList.add('ok');bienF();}else{b.classList.add('no');malF();}});return;}
+    if(it.tipo==='tonica')document.querySelectorAll('.sil').forEach(b=>b.onclick=()=>{document.querySelectorAll('.sil').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');tonOk=+b.dataset.j===it.ti;});
+    const inp=document.getElementById('ans');if(inp&&it.tipo!=='tonica')inp.focus();
+    const check=()=>{
+      if(it.self){document.getElementById('ok').remove();
+        document.getElementById('fb').innerHTML=`<div class="fb ok modelo"><strong>Resposta modelo:</strong> ${it.a}</div><p class="small">Que tal che saíu?</p><div class="autoev"><button class="go" id="sb">✅ Ben</button><button class="alt" id="sr">🤏 A medias</button><button class="alt" id="sm">❌ Mal</button></div>`;
+        document.getElementById('sb').onclick=()=>{bien++;gNota(true);sig();};document.getElementById('sr').onclick=()=>{malos.push(it);gNota(false);sig();};document.getElementById('sm').onclick=()=>{malos.push(it);gNota(false);sig();};return;}
+      const v=inp.value;if(!v.trim())return;
+      if(it.tipo==='tonica'&&tonOk===null){document.getElementById('fb').innerHTML='<div class="fb no" role="status">Primeiro toca a sílaba tónica.</div>';return;}
+      let okk=it.ok.some(o=>exNrm(v)===exNrm(o)||(it.art&&exSinArt(exNrm(v))===exNrm(o)));
+      if(it.tipo==='tonica'){okk=okk&&tonOk;const s=document.querySelectorAll('.sil')[it.ti];if(s)s.classList.add('ok');if(!tonOk&&exNrm(v)===exNrm(it.a))it.a=it.a+' (a tónica é «'+it.sil[it.ti]+'»)';else if(!tonOk)it.a=it.a+' (tónica: «'+it.sil[it.ti]+'»)';}
+      inp.disabled=true;document.getElementById('ok').remove();okk?bienF():malF();
+    };
+    document.getElementById('ok').onclick=check;
+    if(inp&&!it.self)inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();check();}};
+  };
+  paso();
 }
 function parents(){
   clearAll();
