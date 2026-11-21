@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Rescate Gomino</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#dfe6f2;color:#17203a;font-family:Lexend,Verdana,"Segoe UI",sans-serif;font-size:17px;line-height:1.35}
+.av-svg{display:block;overflow:visible}
+.cr-box{max-width:760px;margin:0 auto;padding:14px 16px 40px}.cr-box h1{font-size:28px;margin:6px 0 10px}.cr-box h2{font-size:20px;margin:18px 0 6px}.cr-box h2 small{font-weight:400;font-size:15px;color:#57617a}
+.cr-me{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:8px 12px;margin-bottom:10px}.cr-me small{color:#57617a}
+.cr-go{display:block;width:100%;text-align:center;text-decoration:none;font:inherit;font-weight:700;font-size:21px;background:#3a3ca6;color:#fff;border:0;border-radius:12px;padding:14px;min-height:58px;cursor:pointer}
+.cr-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}.cr-g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.cr-o{font:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:3px solid #c6d0e0;border-radius:12px;padding:8px 4px;min-height:104px;cursor:pointer;color:#17203a;text-align:center}.cr-o span{font-size:32px;line-height:1.15}.cr-o b{font-size:15px;line-height:1.15}.cr-o small{font-size:12px;line-height:1.2;color:#57617a}
+.cr-o.on{border-color:#17783f;background:#dcf5e4}.cr-o.lock{background:#eef1f6;color:#57617a;cursor:default}
+.cr-gift{background:#fff0d6;border-radius:12px;padding:12px;margin:8px 0;font-weight:500}.cr-link{display:block;font:inherit;background:none;border:0;color:#3a3ca6;text-decoration:underline;padding:12px 2px;margin:4px auto;cursor:pointer;text-align:center}
+.cr-l{display:block;font-weight:500;margin:10px 0}.cr-l input{display:block;width:100%;font:inherit;font-size:22px;padding:11px;border:2px solid #c6d0e0;border-radius:10px;margin-top:4px}.cr-e{color:#9a5200;font-weight:500;min-height:1.3em;margin:4px 0}.cr-okm{color:#17783f;font-weight:700;min-height:1.3em}
+.cr-j{max-width:820px;margin:0 auto;padding:8px;user-select:none;-webkit-user-select:none}#cr-c{display:block;width:100%;border-radius:12px;background:#222;touch-action:none}
+.cr-ctl{display:flex;gap:8px;margin-top:8px;touch-action:none}.cr-d{flex:1 1 0;min-height:84px;font-size:34px;border:0;border-radius:14px;background:#3a3ca6;color:#fff;cursor:pointer;touch-action:none}.cr-d:active{background:#262874}
+.cr-at{flex:1.6 1 0;display:flex;gap:6px}.cr-a{position:relative;flex:1 1 0;min-width:0;overflow:hidden;border:0;border-radius:14px;background:#fff;box-shadow:0 3px 0 #c6d0e0;cursor:pointer;touch-action:none;font:inherit;padding:0}.cr-a span{font-size:30px}.cr-a small{position:absolute;right:5px;top:3px;font-size:11px;color:#57617a}.cr-a i{position:absolute;left:0;right:0;bottom:0;background:rgba(23,32,58,.6);pointer-events:none}
+.cr-h{text-align:center;font-size:14px;color:#57617a;margin:8px}.cr-fin{text-align:center;padding-top:8vh;max-width:460px}.cr-pos{font-size:84px;line-height:1}
+body.cr-dark{background:radial-gradient(1200px 700px at 50% -10%,#2a3478,#0c1130);color:#f0f3ff;min-height:100vh}.cr-dark .cr-box h2 small{color:#aab3d6}.cr-dark .cr-me{background:rgba(255,255,255,.1);backdrop-filter:blur(4px)}.cr-dark .cr-me small{color:#c5cce8}.cr-dark .cr-o{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#fff}.cr-dark .cr-o small{color:#c5cce8}.cr-dark .cr-o img{width:84%;margin:2px 0}.cr-dark .cr-o.on{border-color:#ffd43b;background:rgba(255,212,59,.18);box-shadow:0 0 0 2px #ffd43b inset}.cr-dark .cr-o.lock{background:rgba(255,255,255,.05);color:#98a2c9}.cr-dark .cr-ci{justify-content:flex-end;min-height:128px;text-shadow:0 1px 3px #000}.cr-dark .cr-ci small{color:#fff}.cr-dark .cr-ci.lock{filter:grayscale(.75) brightness(.7)}.cr-gc{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.cr-dark .cr-go{background:linear-gradient(180deg,#ffd43b,#f59f00);color:#23150a;box-shadow:0 5px 0 #a86a00}.cr-dark .cr-link{color:#ffe08a}.cr-dark .cr-gift{background:rgba(255,212,59,.18)}.cr-dark .cr-okm{color:#7dffb0}.cr-dark .cr-e{color:#ffc078}.cr-hero{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:18px;padding:14px 18px;margin-bottom:10px;box-shadow:0 8px 24px rgba(0,0,0,.35)}.cr-hero h1{margin:0;font-size:28px;text-shadow:0 2px 6px rgba(0,0,0,.5)}.cr-hero p{margin:4px 0 0;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.6)}.cr-hero img{width:120px;flex:none}
+.cr-dark .cr-d{background:linear-gradient(180deg,#4c4fd0,#2c2e96);box-shadow:0 5px 0 #1a1b66}.cr-dark .cr-a{background:linear-gradient(180deg,#fff,#d8def2);box-shadow:0 5px 0 #7c86b5}.cr-dark .cr-h{color:#aab3d6}#cr-c{box-shadow:0 10px 30px rgba(0,0,0,.5)}.cr-pod{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin:14px 0}.cr-pod div{flex:1;max-width:110px;background:linear-gradient(180deg,#ffd43b,#b77900);border-radius:10px 10px 0 0;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:6px 2px;color:#23150a}.cr-pod b{font-size:13px;overflow-wrap:anywhere}.cr-pod span{font-size:22px;font-weight:800}.cr-c2{color:#c5cce8;margin:2px 0}
+#cr-joy{display:none;position:relative;flex:none;width:136px;height:136px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.1) 40%,rgba(255,255,255,.28));border:3px solid rgba(255,255,255,.45);touch-action:none;cursor:grab}#cr-joy i{position:absolute;inset:27%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#aeb8e6);box-shadow:0 4px 10px rgba(0,0,0,.5);pointer-events:none}
+.cr-ctl{justify-content:center;align-items:center}.cr-at{flex:none;gap:10px;align-items:center}.cr-dark .cr-a{flex:none;width:68px;height:68px;border-radius:50%;box-shadow:0 4px 0 #7c86b5}.cr-dark .cr-a:first-child{width:92px;height:92px;box-shadow:0 0 0 4px #ff6b6b,0 5px 0 4px #a83232}.cr-a:first-child span{font-size:42px}.cr-a small{right:50%;top:4px;transform:translateX(50%)}
+@media(pointer:coarse){.cr-h{display:none}#cr-joy{display:block;width:116px;height:116px}.cr-ctl{justify-content:space-between;padding:6px 8px}.cr-a small{display:none}.cr-at{gap:6px}.cr-dark .cr-a{width:54px;height:54px}.cr-dark .cr-a:first-child{width:78px;height:78px}.cr-a span{font-size:24px}.cr-a:first-child span{font-size:36px}}
+@media(pointer:coarse) and (orientation:landscape){.cr-j{padding:0 8px;max-width:calc((100vh - 50px)*1.6)}.cr-ctl{position:fixed;left:8px;right:8px;bottom:8px;margin:0;padding:0;pointer-events:none}.cr-ctl>*{pointer-events:auto}#cr-joy{background:rgba(255,255,255,.2)}}
+.cr-v{position:relative;width:100%;aspect-ratio:8/5;border-radius:12px;overflow:hidden;background:#222;box-shadow:0 10px 30px rgba(0,0,0,.5)}.cr-v canvas{position:absolute;inset:0;display:block;width:100%!important;height:100%!important}.cr-3d #cr-c{background:transparent;box-shadow:none;border-radius:0}.cr-3d .cr-j{max-width:min(1180px,calc((100vh - 240px)*1.6))}
+@media(pointer:coarse) and (orientation:landscape){.cr-3d .cr-j{max-width:calc((100vh - 50px)*1.6)}}
+#cr-son{position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:rgba(8,12,34,.62);font-size:21px;cursor:pointer}.cr-nope{opacity:.5;cursor:default;filter:grayscale(1)}.cr-mas{text-align:center;font-size:14px;color:#ffe08a;margin:6px 8px 0}
+.cr-dark .cr-go2{margin-top:10px;background:linear-gradient(180deg,#5ec8ff,#2386d8);color:#fff;box-shadow:0 5px 0 #145b9c}.cr-salas{display:grid;gap:8px}.cr-sala{min-height:64px;width:100%}.cr-jug{display:grid;gap:6px}
+body.rs-dark{background:#0b1020;color:#eef2ff}
+.rs-box{max-width:820px;margin:0 auto;padding:14px 16px 40px}
+.rs-hero{border-radius:22px;padding:22px 20px;color:#fff;background:radial-gradient(120% 140% at 80% 0%,#ffb86b 0%,#e8508a 35%,#4b2a8f 70%,#141a3a 100%);box-shadow:0 10px 40px rgba(0,0,0,.35);position:relative;overflow:hidden}
+.rs-hero h1{margin:0 0 6px;font-size:30px;letter-spacing:.5px}.rs-hero p{margin:0;opacity:.92}
+.rs-hero canvas{position:absolute;right:10px;bottom:0;width:150px;height:110px}
+.rs-me{display:flex;gap:12px;align-items:center;background:#18203d;border-radius:16px;padding:12px 14px;margin:14px 0}
+.rs-go{display:block;width:100%;border:0;border-radius:16px;padding:16px;font:700 20px Lexend,Verdana,sans-serif;background:linear-gradient(180deg,#ffd25a,#ff9f1c);color:#2a1600;cursor:pointer;box-shadow:0 6px 0 #b86a00;margin:8px 0;text-align:center;text-decoration:none}
+.rs-go:active{transform:translateY(3px);box-shadow:0 3px 0 #b86a00}.rs-go[disabled]{opacity:.6}
+.rs-gift{background:#25305a;border-radius:14px;padding:12px 14px;margin:10px 0}
+.rs-lv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.rs-l{border:0;border-radius:16px;padding:12px;text-align:left;color:#fff;font:15px Lexend,Verdana,sans-serif;cursor:pointer;min-height:96px;position:relative;box-shadow:inset 0 0 0 2px rgba(255,255,255,.12)}
+.rs-l b{display:block;font-size:17px;margin:4px 0}.rs-l small{opacity:.85}.rs-l.lock{filter:grayscale(1) brightness(.6);cursor:not-allowed}
+.rs-l .n{font-size:13px;opacity:.8}.rs-l .ok{position:absolute;right:10px;top:8px}
+.rs-link{background:none;border:0;color:#9fb4ff;text-decoration:underline;font:15px Lexend,Verdana,sans-serif;cursor:pointer;padding:6px}
+.rs-help{font-size:15px;line-height:1.45;opacity:.9}
+#rs-play{position:fixed;left:0;right:0;bottom:0;top:var(--nf,0px);background:#05070f;display:flex;flex-direction:column;z-index:50;touch-action:none;user-select:none;-webkit-user-select:none}
+#rs-top{display:flex;gap:8px;align-items:center;padding:6px 10px;color:#fff;font:600 14px Lexend,Verdana,sans-serif;background:linear-gradient(180deg,#111834,#0b1020);flex-wrap:wrap}
+#rs-top .p{background:#1d2650;border-radius:10px;padding:4px 9px;white-space:nowrap}
+#rs-top .sp{flex:1}
+#rs-cv{flex:1;min-height:0;width:100%;display:block;cursor:crosshair}
+#rs-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:linear-gradient(0deg,#0b1020,#141c3c)}
+.rs-k{flex:0 0 auto;min-width:58px;height:66px;border:2px solid #2c3870;border-radius:14px;background:linear-gradient(180deg,#24305f,#18203f);color:#fff;font:700 13px Lexend,Verdana,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;position:relative;padding:0 4px}
+.rs-k .i{font-size:24px;line-height:1}.rs-k .c{font-size:13px;opacity:.95}.rs-k .t{font-size:10px;opacity:.75;font-weight:500}
+.rs-k.on{border-color:#ffd25a;box-shadow:0 0 0 2px #ffd25a,0 0 18px rgba(255,210,90,.5);background:linear-gradient(180deg,#3b3f7a,#262b5a)}
+.rs-k.z{opacity:.4}.rs-k.nuke.arm{border-color:#ff5a5a;background:linear-gradient(180deg,#7a1f2a,#4a1018);box-shadow:0 0 16px rgba(255,80,80,.7);animation:rsPulse .5s infinite alternate}@keyframes rsPulse{to{box-shadow:0 0 28px rgba(255,80,80,1)}}
+.rs-sep{flex:0 0 2px;background:#2c3870;margin:6px 2px;border-radius:2px}
+#rs-msg{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);background:rgba(10,14,32,.92);color:#fff;border-radius:22px;padding:22px 24px;max-width:min(92vw,460px);text-align:center;font:16px/1.45 Lexend,Verdana,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,.6);border:2px solid rgba(255,255,255,.08)}
+#rs-msg h2{margin:0 0 8px;font-size:26px}#rs-msg .big{font-size:42px;font-weight:700;margin:6px 0}
+#rs-msg button{margin:6px 4px 0}
+.rs-sm{display:inline-block;border:0;border-radius:12px;padding:12px 18px;font:700 16px Lexend,Verdana,sans-serif;background:#ffd25a;color:#2a1600;cursor:pointer}
+.rs-sm.alt{background:#2c3870;color:#fff}
+@media(max-width:520px){.rs-k{min-width:48px;height:56px}.rs-sep{display:none}.rs-k .i{font-size:21px}#rs-top{font-size:12px;gap:5px}}
+@media(max-width:520px){.rs-hero{padding-bottom:108px}.rs-hero canvas{width:130px;height:95px}}
+</style></head><body><!--menu--><style>
+:root{--nf:calc(46px + env(safe-area-inset-top,0px))}
+html{padding-top:var(--nf)!important}
+#menu-fijo{position:fixed;top:0;left:0;right:0;z-index:10000;display:flex;gap:4px;box-sizing:border-box;height:var(--nf);padding:calc(4px + env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) 4px max(6px,env(safe-area-inset-left,0px));background:#1f2a5c;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#menu-fijo a{flex:1 1 auto;min-width:0;padding:0 3px;display:flex;align-items:center;justify-content:center;gap:5px;border-radius:9px;background:rgba(255,255,255,.14);color:#fff!important;font:600 13.5px/1 Verdana,"Segoe UI",system-ui,sans-serif;text-decoration:none;white-space:nowrap;overflow:hidden}
+#menu-fijo a:hover,#menu-fijo a:focus-visible{background:rgba(255,255,255,.3);outline:0}
+#menu-fijo a[aria-current]{background:#fff;color:#1f2a5c!important}
+#av-editor,#lg,#jg{top:var(--nf)!important}
+#misframe{top:var(--nf)!important;height:calc(100% - var(--nf))!important}
+.tabs,.bar{top:var(--nf)!important}
+.scrim{padding-top:calc(var(--nf) + 12px)!important}
+@media(max-width:340px){#menu-fijo a{font-size:12px;gap:3px}}
+@media print{#menu-fijo{display:none!important}html{padding-top:0!important}}
+</style><nav id="menu-fijo" aria-label="Menú"><a href="index.html" data-p="index">🏠 Inicio</a><a href="calendario.html" data-p="calendario">📅 Calendario</a><a href="juego.html" data-p="juego">🎮 Jugar</a><a href="juego.html#clasificacion" data-p="juego">🏆 Liga</a></nav><script>(function(){var p=(location.pathname.split('/').pop()||'index.html').replace('.html','');document.querySelectorAll('#menu-fijo a').forEach(function(a){if(p===a.dataset.p&&p!=='juego'){a.setAttribute('aria-current','page');}if(p==='juego'&&a.dataset.p==='juego'){a.onclick=function(e){e.preventDefault();location.href=a.getAttribute('href');location.reload();};}});var n=document.getElementById('menu-fijo');if(n&&!n.querySelector('.mf-yo')){var h=(n.querySelector('a').getAttribute('href')||'').replace('index.html','');var ap='';try{var j=JSON.parse(localStorage.getItem('tema2.juego'))||{};ap=j.liga&&j.liga.apodo||'';}catch(e){}var y=document.createElement('a');y.className='mf-yo';y.href=h+'acceso.html';y.textContent='👤 '+(ap||'Entrar');y.title=ap?'Juegas como '+ap:'Entrar o crear cuenta';y.style.cssText='flex:0 1 auto;max-width:34%;display:block;line-height:38px;text-align:center;text-overflow:ellipsis';if(p==='acceso')y.setAttribute('aria-current','page');n.appendChild(y);}})();</script><script>(function(){var K='sb_publishable_5HAc9CN8Wab4n-vyEaeDaA_5hdRvYnX',U='https://jokivxfiowvrxwllefor.supabase.co/rest/v1/rpc/s_vivo',tk='';try{var j=JSON.parse(localStorage.getItem('tema2.juego'))||{};tk=j.liga&&j.liga.token||'';}catch(e){}var n=document.getElementById('menu-fijo');if(n&&window.innerWidth<430)n.querySelectorAll('a[data-p]').forEach(function(a){var t=a.textContent.trim();a.title=t;a.setAttribute('aria-label',t.replace(/^\S+\s*/,''));a.textContent=t.split(' ')[0];});if(!tk||!n||!window.fetch)return;var NOM={matematicas:'Matemáticas',lengua:'Lengua','lingua-galega':'Galego',ingles:'Inglés',frances:'Francés',bioloxia:'Bioloxía',xeografia:'Xeografía',tecnologia:'Tecnología',plastica:'Plástica',ef:'Educación física'};var p=(location.pathname.split('/').pop()||'index.html').replace('.html','');function donde(){if(p==='juego')return '🎮 Jugando';if(p==='carrera')return '🏎️ En la carrera';if(p==='rescate')return '🐾 Rescate Gomino';if(p==='calendario')return '📅 Calendario';if(window.G_SUBJ)return '📚 '+(NOM[window.G_SUBJ]||window.G_SUBJ);return '🏠 En la web';}var b=document.createElement('a');b.href='#';b.className='mf-on';b.textContent='🟢';b.title='Amigos conectados';b.setAttribute('aria-expanded','false');b.style.cssText='flex:0 0 auto;padding:0 9px';var yo=n.querySelector('.mf-yo');n.insertBefore(b,yo||null);var box=document.createElement('div');box.id='mf-onbox';box.setAttribute('role','dialog');box.setAttribute('aria-label','Amigos conectados');box.style.cssText='display:none;position:fixed;top:calc(var(--nf) + 6px);right:8px;z-index:10001;background:#fff;color:#17203a;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.25);padding:12px 16px;min-width:220px;max-width:calc(100vw - 16px);max-height:70vh;overflow:auto;font:15px/1.4 Verdana,"Segoe UI",system-ui,sans-serif';document.body.appendChild(box);var esc=function(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};function pinta(L){var o=L.filter(function(x){return !x.yo;}).length;b.textContent='🟢 '+o;b.title=o===1?'1 amigo conectado':o+' amigos conectados';box.innerHTML='<div style="font-weight:700;font-size:16px;margin-bottom:6px">🟢 Amigos conectados</div>'+(o?'':'<div style="color:#667;margin-bottom:4px">Ahora no hay nadie más.</div>')+L.map(function(x){return '<div style="display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-top:1px solid #e3e8f0"><b>'+esc(x.apodo)+(x.yo?' (tú)':'')+'</b><span style="color:#556;white-space:nowrap">'+esc(x.donde)+'</span></div>';}).join('');}b.onclick=function(e){e.preventDefault();var v=box.style.display==='none';box.style.display=v?'block':'none';b.setAttribute('aria-expanded',v?'true':'false');if(v)ping();};document.addEventListener('click',function(e){if(box.style.display!=='none'&&!box.contains(e.target)&&e.target!==b)box.style.display='none';});document.addEventListener('keydown',function(e){if(e.key==='Escape')box.style.display='none';});function ping(){if(document.hidden)return;fetch(U,{method:'POST',headers:{apikey:K,'Content-Type':'application/json'},body:JSON.stringify({p_token:tk,p_donde:donde()})}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(d&&d.lista)pinta(d.lista);}).catch(function(){});}setTimeout(ping,1500);setInterval(ping,60000);document.addEventListener('visibilitychange',function(){if(!document.hidden)ping();});})();</script><!--/menu-->
+<script src="musica/lista.js"></script>
+<div id="app"></div>
+<script>
+/* Variantes: id de la pregunta -> [enunciado, respuesta correcta, incorrectas...] */
+const VAR={
+1:[['¿Dónde están los iconos de **inicio rápido**?','En la barra de tareas.','En el Panel de control.','En la papelera.','Dentro de Este equipo.'],
+['La **barra de tareas** contiene…','La barra de inicio rápido.','El Panel de control entero.','La papelera de reciclaje.','El desfragmentador.'],
+['La barra de inicio rápido **se encuentra en…**','La barra de tareas.','El menú de Paint.','El árbol del Explorador.','La ventana de la papelera.']],
+2:[['Windows funciona con ventanas e iconos. Por eso es…','De interfaz gráfica.','De solo texto.','De solo teclado.','Un programa de dibujo.'],
+['¿Qué tipo de **programa** es Windows?','Un sistema operativo.','Un navegador web.','Un programa de dibujo.','Una hoja de cálculo.'],
+['**Interfaz gráfica** significa que usamos…','Ventanas e iconos.','Solo líneas de texto.','Solo números.','Solo el micrófono.']],
+3:[['¿Desde dónde llegas a **todo el sistema**?','Desde el menú Inicio.','Desde la papelera.','Desde el reloj.','Desde Paint.'],
+['Para abrir **Inicio** pulso…','La tecla Windows.','La tecla F1.','La tecla SUPR.','La tecla ESC.'],
+['El botón con el **logo de Windows** abre…','El menú Inicio.','La papelera.','La calculadora.','El Mapa de caracteres.']],
+4:[['Una ventana **minimizada**…','Sigue abierta en la barra de tareas.','Se ha cerrado del todo.','Ha ido a la papelera.','Se ha borrado del disco.'],
+['Has minimizado Word. ¿Dónde lo **encuentras**?','En la barra de tareas.','En la papelera.','En el Panel de control.','En Este equipo.'],
+['¿**Minimizar** es lo mismo que cerrar?','No: se recupera en la barra de tareas.','Sí: el programa se cierra del todo.','Sí: se pierde todo lo escrito.','No: se va a la papelera.']],
+5:[['Haces clic con el **botón derecho**. ¿Qué sale?','El menú contextual.','La ayuda de Windows.','El administrador de tareas.','El Panel de control.'],
+['¿Con qué botón sale el **menú contextual**?','Con el derecho.','Con el izquierdo.','Con la rueda.','Con doble clic.'],
+['El menú que cambia según **dónde haces clic derecho** se llama…','Menú contextual.','Menú Inicio.','Panel de control.','Barra de tareas.']],
+6:[['Un **atajo** a un programa es un…','Acceso directo.','Formateo.','Desfragmentador.','Portapapeles.'],
+['¿Para qué sirve un **acceso directo**?','Para abrir rápido un programa.','Para borrar un programa.','Para copiar todo el disco.','Para cambiar de usuario.'],
+['Un **acceso directo** en el escritorio…','Abre rápido un programa.','Es el programa entero.','Ocupa el disco completo.','Solo sirve para imprimir.']],
+7:[['Tienes Word y Paint abiertos. ¿Cómo **saltas** de uno a otro?','ALT + TAB','CTRL + E','CTRL + X','F1'],
+['¿Qué combinación **cambia de ventana**?','ALT + TAB','CTRL + C','CTRL + V','ALT + F1'],
+['Mantienes ALT y pulsas **TAB**. ¿Qué ocurre?','Cambias de ventana.','Se apaga el equipo.','Se copia el archivo.','Se abre la ayuda.']],
+8:[['Quieres ver **dos ventanas** a la vez en Windows 11.','Las arrastras a los bordes.','Pulsas F1 y aceptas.','Las envías a la papelera.','Las copias con CTRL + C.'],
+['En Windows 10, **botón derecho en la barra de tareas** sirve para…','Ver las ventanas en paralelo.','Formatear el disco duro.','Vaciar la papelera.','Instalar fuentes nuevas.'],
+['En Windows 11, **Windows + Z** sirve para…','Elegir cómo colocar las ventanas.','Vaciar la papelera de reciclaje.','Cambiar de cuenta de usuario.','Abrir la ayuda de Windows.']],
+9:[['¿Qué hace **Windows + D**?','Muestra el escritorio.','Abre el Panel de control.','Borra el archivo.','Cierra la sesión.'],
+['Tienes muchas ventanas y quieres **ver el escritorio**.','Uso Mostrar escritorio.','Las borro una a una.','Vacío la papelera.','Formateo el disco.'],
+['**Mostrar escritorio** hace que las ventanas…','Se minimicen de golpe.','Se cierren y se borren.','Vayan a la papelera.','Cambien de color.']],
+10:[['El acceso directo del **escritorio** se abre con…','Doble clic.','Un solo clic.','Tres clics.','La tecla F1.'],
+['¿Cuál se abre con **un solo clic**?','El de inicio rápido.','El del escritorio.','El Panel de control.','El Mapa de caracteres.'],
+['¿En qué se diferencia un icono de **inicio rápido** de un acceso directo?','Se abre con un solo clic.','No se puede borrar nunca.','Solo abre carpetas.','Ocupa todo el disco.']],
+11:[['Quieres cambiar el **fondo de pantalla**.','Botón derecho en el escritorio.','CTRL + E en el escritorio.','Doble clic en la papelera.','F1 en el escritorio.'],
+['**Personalizar** aparece si hago…','Clic derecho en el escritorio.','Doble clic en el reloj.','ALT + TAB dos veces.','Clic en la papelera.'],
+['¿Por dónde empiezo para **personalizar** el escritorio?','Por el botón derecho.','Por la tecla F1.','Por la calculadora.','Por la papelera.']],
+12:[['La **resolución de pantalla** se cambia en…','Configuración de pantalla.','Configuración de la papelera.','El Mapa de caracteres.','El liberador de espacio.'],
+['Clic derecho en el escritorio. ¿Qué eliges para la **pantalla**?','Configuración de pantalla.','Formatear el escritorio.','Desfragmentar la pantalla.','Restaurar la papelera.'],
+['Para configurar la **pantalla** empiezo por…','Botón derecho en el escritorio.','Doble clic en la papelera.','ALT + TAB en la barra.','F1 en el Explorador.']],
+13:[['**ClearType** sirve para…','Leer mejor en pantalla.','Comprobar errores del disco.','Borrar archivos temporales.','Cambiar de usuario.'],
+['Las letras se ven **borrosas**. ¿Qué ajustas?','ClearType.','Paint.','Desfragmentador.','Papelera.'],
+['¿Cuál **mejora la lectura** en pantalla?','ClearType','Scandisk','Paint','Liberador']],
+14:[['Si dos personas usan el ordenador, **Documentos**…','Es distinto para cada una.','Es el mismo para las dos.','Solo lo ve el administrador.','Está en la papelera.'],
+['¿De quién es la carpeta **Documentos**?','De cada usuario.','Solo del administrador.','De todos a la vez.','Del Panel de control.'],
+['Tu hermano entra con su cuenta. Sus **documentos**…','Están en su carpeta.','Están en tu carpeta.','Están en la papelera.','Se borran al salir.']],
+15:[['Un programa **se ha colgado**. ¿Qué pulsas?','CTRL + ALT + SUPR','CTRL + ALT + C','ALT + TAB + F1','CTRL + MAYÚS + E'],
+['**CTRL + ALT + SUPR** permite abrir…','El administrador de tareas.','El Mapa de caracteres.','El liberador de espacio.','La papelera de reciclaje.'],
+['El **administrador de tareas** sirve para…','Cerrar un programa colgado.','Cambiar el fondo de pantalla.','Escribir la eñe.','Vaciar la papelera.']],
+16:[['¿Qué tecla abre la **ayuda**?','F1','F2','ESC','SUPR'],
+['¿Cómo **pides ayuda** a Windows desde el escritorio?','Pulso F1.','Pulso F2.','Pulso SUPR.','Pulso ESC.'],
+['**F1** en el escritorio abre…','La ayuda de Windows.','El Explorador.','La calculadora.','El Panel de control.']],
+17:[['A la **izquierda** del Explorador está…','El árbol de carpetas.','El Mapa de caracteres.','La calculadora.','El Panel de control.'],
+['A la **derecha** del Explorador se ve…','El contenido de la carpeta.','El reloj del sistema.','La lista de usuarios.','La ayuda de Windows.'],
+['¿Cuántas zonas principales tiene el **Explorador**?','Dos: árbol y contenido.','Una: solo contenido.','Tres: árbol, reloj y dibujo.','Cuatro: una en cada esquina.']],
+18:[['**Mi PC** ahora se llama…','Este equipo.','Mi escritorio.','Mi papelera.','Panel de control.'],
+['¿Dónde ves **todas las unidades** del ordenador?','En Este equipo.','En la papelera.','En la calculadora.','En Paint.'],
+['Para entrar en el **disco C:** voy a…','Este equipo.','Mapa de caracteres.','Liberador de espacio.','Administrador de tareas.']],
+19:[['Junto a una carpeta ves una **flechita**. Significa…','Que hay más carpetas dentro.','Que está en la papelera.','Que está oculta.','Que es un programa.'],
+['¿Qué indica el **+** en el árbol del Explorador?','Que tiene subcarpetas.','Que está comprimida.','Que está oculta.','Que es de otro usuario.'],
+['Para ver las carpetas **que hay dentro**, pulso…','La flechita (antes, el +).','La tecla F1 del teclado.','La tecla SUPR del teclado.','La papelera de reciclaje.']],
+20:[['Quiero ver el **tamaño** de cada archivo. ¿Qué vista uso?','Detalles.','Iconos grandes.','Iconos pequeños.','Miniaturas.'],
+['La vista que muestra **fecha y tamaño** es…','La de detalle.','La de miniaturas.','La de iconos grandes.','La de iconos pequeños.'],
+['**Vista de detalle**: ¿qué información da?','Extensión, fecha, tamaño…','Solo el dibujo del icono.','Solo la hora actual.','Solo el nombre del usuario.']],
+21:[['**Formatear** un pendrive hace que…','Se borre todo su contenido.','Se copie al disco duro.','Aumente su tamaño.','Se oculten sus archivos.'],
+['Clic derecho en el pendrive. ¿Qué eliges para **dejarlo vacío**?','Formatear.','Propiedades.','Expulsar.','Cambiar nombre.'],
+['¿Por dónde se **formatea** una unidad?','Botón derecho en la unidad.','Doble clic en la papelera.','Menú de la calculadora.','Panel de control: fuentes.']],
+22:[['Quiero una **carpeta nueva** en el pendrive.','Clic derecho: nuevo, carpeta.','Clic derecho: formatear.','CTRL + V: carpeta.','F1: carpeta.'],
+['En el menú contextual, **Nuevo** sirve para…','Crear una carpeta.','Formatear la unidad.','Vaciar la papelera.','Cambiar de usuario.'],
+['Después de clic derecho y **nuevo**, ¿qué eliges?','Carpeta.','Formatear.','Restaurar.','Propiedades.']],
+23:[['**MAYÚS** + clic sirve para seleccionar…','Objetos seguidos.','Objetos saltados.','Solo un objeto.','Ningún objeto.'],
+['Quiero seleccionar del archivo 1 **al 10, todos seguidos**.','Clic en el 1 y MAYÚS + clic en el 10.','Clic en el 1 y CTRL + clic en el 10.','Doble clic en el 1 y en el 10.','ALT + TAB en el 1 y en el 10.'],
+['¿Qué tecla usas para **objetos continuos**?','MAYÚS','CTRL','ALT','F1']],
+24:[['**CTRL** + clic sirve para seleccionar…','Objetos saltados.','Objetos seguidos.','Todo el disco.','Solo el primero.'],
+['Quiero el archivo 2, el 5 y **el 9**, sin los demás.','Clic y CTRL + clic en los demás.','Clic y MAYÚS + clic en el último.','Doble clic en cada uno.','ALT + TAB en cada uno.'],
+['¿Qué tecla usas para **objetos no continuos**?','CTRL','MAYÚS','ALT','F2']],
+25:[['**CTRL + E** sirve para…','Seleccionar todo.','Cortar.','Pegar.','Cambiar de ventana.'],
+['Hay 200 archivos y los quieres **todos**.','CTRL + E','CTRL + V','CTRL + X','ALT + TAB'],
+['Según los apuntes, **seleccionar todo** es…','CTRL + E','ALT + E','CTRL + T','F2']],
+26:[['**CTRL + X** sirve para…','Cortar.','Copiar.','Pegar.','Seleccionar todo.'],
+['Quieres **mover** un archivo. Primero pulsas…','CTRL + X','CTRL + E','ALT + TAB','CTRL + ALT + SUPR'],
+['Clic derecho en un archivo. ¿Qué opción es **CTRL + X**?','Cortar.','Copiar.','Pegar.','Propiedades.']],
+27:[['**CTRL + C** sirve para…','Copiar.','Cortar.','Pegar.','Buscar.'],
+['Quieres **duplicar** un archivo. Primero pulsas…','CTRL + C','CTRL + X','CTRL + E','ALT + TAB'],
+['Clic derecho. ¿Qué opción es **CTRL + C**?','Copiar.','Cortar.','Pegar.','Eliminar.']],
+28:[['**CTRL + V** sirve para…','Pegar.','Copiar.','Cortar.','Ver la ayuda.'],
+['Ya has copiado. Para **ponerlo** en otra carpeta…','CTRL + V','CTRL + C','CTRL + X','CTRL + E'],
+['Clic derecho. ¿Qué opción es **CTRL + V**?','Pegar.','Copiar.','Cortar.','Formatear.']],
+29:[['No ves si una foto es **jpg o bmp**. ¿Qué activas?','Extensiones de nombre de archivo.','Configuración de pantalla.','Configuración regional.','Selector de tamaño.'],
+['En el Explorador de Windows 11, ¿dónde están las **extensiones**?','En Ver, Mostrar.','En Inicio, Apagar.','En Papelera, Vaciar.','En Reloj, Fecha.'],
+['En Windows 10, las **extensiones** se activan en…','La pestaña Vista.','La papelera.','El reloj.','La calculadora.']],
+30:[['En **foto.jpg**, la extensión es…','jpg','foto','foto.jpg','el punto'],
+['¿Qué **dice** la extensión de un archivo?','Qué tipo es.','Quién lo hizo.','Cuánto costó.','Si tiene virus.'],
+['Windows sabe **con qué programa** abrir un archivo por…','Su extensión.','Su fecha.','Su color.','Su usuario.']],
+31:[['juego.**exe** es un archivo…','Ejecutable.','De imagen.','De texto.','Comprimido.'],
+['¿Cuál se puede **ejecutar**?','programa.exe','foto.jpg','carta.doc','fotos.zip'],
+['Un programa que se pone en marcha con **doble clic** suele ser…','EXE','JPG','DOC','ZIP']],
+e7:[['¿Qué extensión es de **imagen**?','bmp','doc','zip','exe'],['¿Cuál abrirías con **Paint**?','dibujo.bmp','carta.doc','fotos.zip','juego.exe']],
+e8:[['¿Qué extensión es de **texto**?','doc','jpg','rar','exe'],['¿Cuál es una **redacción**?','redaccion.odt','foto.bmp','todo.rar','juego.exe']],
+e9:[['¿Qué extensión es de **comprimido**?','rar','jpg','odt','exe'],['Para enviar **muchos archivos en uno**, uso…','Un zip.','Un jpg.','Un bmp.','Un doc.']],
+32:[['No encuentras un archivo. ¿Por dónde **buscas**?','Por Inicio, buscar.','Por la calculadora.','Por la papelera.','Por Paint.'],
+['¿Cuál es el camino para **buscar** un archivo?','Inicio / buscar','Papelera / vaciar','Reloj / fecha','Paint / atributos'],
+['Para encontrar **trabajo.doc**…','Lo escribo en Inicio.','Formateo el disco.','Vacío la papelera.','Abro la calculadora.']],
+33:[['¿Cuánto **espacio queda** en el pendrive? Lo miro en…','Propiedades de la unidad.','Formatear la unidad.','La calculadora.','El Mapa de caracteres.'],
+['Clic derecho en el pendrive. ¿Cuál dice su **espacio libre**?','Propiedades.','Formatear.','Expulsar.','Nuevo.'],
+['**Propiedades** de una unidad me dice…','El espacio disponible.','La hora del reloj.','El usuario del equipo.','El fondo de pantalla.']],
+34:[['¿Las carpetas pueden abrirse con **un clic**?','Sí, se puede elegir.','No, nunca.','Solo en la papelera.','Solo en Paint.'],
+['Abrir carpetas **con un solo clic** es…','Posible.','Imposible.','Solo de la papelera.','Solo del reloj.'],
+['Verdadero o falso: una carpeta puede abrirse **con un clic**.','Verdadero','Falso']],
+35:[['Desde **Este equipo** veo…','Todas las unidades.','Solo la papelera.','Solo el reloj.','Solo Paint.'],
+['¿Cómo se llama hoy **Mi PC**?','Este equipo.','Mi carpeta.','Mis carpetas.','Mis documentos.'],
+['Para abrir el **pendrive** entro en…','Este equipo.','La papelera.','La calculadora.','El Panel de control.']],
+36:[['¿Todo lo **borrado** se recupera siempre?','No siempre.','Sí, siempre.','Solo las fotos.','Solo con F1.'],
+['Si borras de un **pendrive**, normalmente…','No pasa por la papelera.','Va siempre a la papelera.','Se queda en Documentos.','Se copia al escritorio.'],
+['Al **eliminar** un archivo, la papelera…','No siempre lo guarda.','Siempre lo guarda.','Lo comprime.','Lo imprime.']],
+37:[['La casilla **Oculto** está en…','Las propiedades de la carpeta.','La papelera de reciclaje.','El menú de la calculadora.','El reloj de la barra.'],
+['Quieres que una carpeta **no se vea**.','Propiedades: oculto.','Formatear: oculto.','Papelera: oculto.','F1: oculto.'],
+['Para **ocultar** una carpeta empiezo por…','Botón derecho sobre ella.','Doble clic en la papelera.','ALT + TAB dos veces.','F1 en el escritorio.']],
+38:[['Has borrado un archivo **sin querer**. ¿Qué haces?','Lo restauro de la papelera.','Vacío la papelera.','Formateo el disco.','Pulso F1 y acepto.'],
+['**Restaurar** en la papelera hace que el archivo…','Vuelva a su sitio.','Se borre del todo.','Se comprima.','Se imprima.'],
+['¿Qué opción **devuelve** el archivo a su sitio?','Restaurar.','Vaciar.','Formatear.','Propiedades.']],
+39:[['El disco está lleno y la **papelera también**. ¿Ocupa espacio?','Sí, sigue ocupando.','No, nada.','Solo en la RAM.','Solo al apagar.'],
+['Para **liberar** el espacio de lo borrado…','Vacío la papelera.','Minimizo la papelera.','Cambio de usuario.','Abro la calculadora.'],
+['¿Lo que está en la **papelera** sigue en el disco?','Sí, sigue en el disco.','No, ya no existe.','No, está en internet.','No, está en Paint.']],
+40:[['Clic derecho en la papelera. Para **borrarlo todo**…','Vaciar papelera.','Restaurar.','Formatear.','Copiar.'],
+['**Vaciar** la papelera hace que…','Se borre de verdad.','Todo vuelva a su sitio.','Se copie al pendrive.','Se haga un zip.'],
+['¿Con qué botón del ratón se **vacía** la papelera?','Con el derecho.','Con la rueda.','Con los dos a la vez.','Con ninguno: con F1.']],
+41:[['**Propiedades** de la papelera: ¿cómo llego?','Clic derecho encima: propiedades.','Doble clic encima: restaurar.','F1 encima: ayuda.','CTRL + E encima: todo.'],
+['Clic derecho sobre la papelera. ¿Cuál enseña sus **ajustes**?','Propiedades.','Vaciar.','Abrir.','Crear acceso directo.'],
+['¿Qué botón uso para ver las **propiedades** de la papelera?','El derecho.','El izquierdo.','La rueda.','Ninguno: F1.']],
+42:[['¿Dónde elijo **cuánto ocupa** la papelera?','En sus propiedades.','En Paint.','En la calculadora.','En Este equipo.'],
+['El **selector de tamaño** de la papelera está en…','Propiedades.','Restaurar.','Vaciar.','Abrir.'],
+['Clic derecho en la papelera y **propiedades**. ¿Para qué?','Para escoger su tamaño.','Para escribir eñes.','Para dibujar algo.','Para cambiar la hora.']],
+43:[['¿Cuál es un **tipo de cuenta** actual?','Estándar.','Profesor.','Rápida.','Alumno.'],
+['En Windows 10 y 11, la cuenta de **invitado**…','Ya no está.','Es la que más manda.','Es obligatoria.','Instala programas.'],
+['La antigua cuenta **limitada** hoy se llama…','Estándar.','Administrador.','Invitado.','Profesor.']],
+44:[['Cuando cambias de usuario, **el escritorio**…','Es el de ese usuario.','Es siempre el mismo.','Desaparece para siempre.','Se formatea.'],
+['Cada usuario tiene **sus propias**…','Descargas y documentos.','Discos duros físicos.','Teclas y ratones.','Pantallas y altavoces.'],
+['Tú y tu madre con **dos cuentas**: ¿compartís escritorio?','No, cada uno el suyo.','Sí, siempre el mismo.','Solo en la papelera.','Solo el administrador.']],
+45:[['¿Qué cuenta puede **cambiar toda la configuración**?','Administrador.','Limitada.','Invitado.','Ninguna.'],
+['Quien puede **acceder a todo** es…','El administrador.','El invitado.','El usuario limitado.','Nadie.'],
+['Para **crear cuentas** nuevas hace falta ser…','Administrador.','Invitado.','Usuario limitado.','Dueño de la papelera.']],
+46:[['Con una cuenta limitada, ¿puedes **instalar** un juego?','No, no puede instalar.','Sí, todo lo que quiera.','Sí, si vacía la papelera.','Sí, pulsando F1.'],
+['¿Qué **no puede** hacer la cuenta limitada?','Instalar hardware ni software.','Abrir programas instalados.','Escribir un texto.','Usar la calculadora.'],
+['¿Cuál **usa programas pero no instala**?','Limitada.','Administrador.','Propietario.','Técnico.']],
+47:[['Para **entrar con otra cuenta**…','Inicio: cerrar sesión.','Inicio: reiniciar.','Papelera: vaciar.','Reloj: fecha.'],
+['**Cerrar sesión** sirve para…','Cambiar de usuario.','Formatear el disco.','Borrar el programa.','Apagar la pantalla.'],
+['Tu hermana quiere usar **su cuenta**. ¿Qué hacéis?','Cerrar sesión y escoger.','Formatear y empezar.','Vaciar la papelera.','Pulsar CTRL + C.']],
+48:[['Quitas un icono del **menú Inicio**. El programa…','Sigue instalado.','Se desinstala.','Va a la papelera.','Se formatea.'],
+['Un icono del **menú Inicio** es un…','Acceso directo.','Programa completo.','Archivo comprimido.','Disco duro.'],
+['Para **desinstalar** de verdad, ¿basta con borrar el icono?','No, solo borra el acceso.','Sí, desaparece todo.','Sí, si vacías la papelera.','Sí, pulsando F1.']],
+49:[['Buscas el programa en Inicio y haces clic derecho. ¿Qué eliges para **llegar a él**?','Abrir ubicación de archivo.','Formatear la unidad.','Vaciar papelera.','Configuración de pantalla.'],
+['Para poner un programa en el escritorio, eliges **Enviar a**…','Escritorio.','Papelera.','Calculadora.','Panel de control.'],
+['En **Windows 11**, «Enviar a» sale en…','Mostrar más opciones.','La ayuda de Windows.','La papelera.','El reloj.']],
+50:[['¿Dónde escribo **«panel»** para abrirlo?','En el buscador de Inicio.','En la calculadora.','En Paint.','En la papelera.'],
+['El **Panel de control** se abre hoy…','Buscándolo en Inicio.','Con CTRL + V.','Con doble clic en el reloj.','Vaciando la papelera.'],
+['¿Cómo llegas **más rápido** al Panel de control?','Lo escribo en Inicio.','Formateo el disco.','Abro Paint.','Pulso F2.']],
+51:[['Borrar sus carpetas, ¿**desinstala** bien un programa?','No: hay que ir al Panel.','Sí: es lo correcto.','Sí: con la papelera.','Sí: con Paint.'],
+['**Agregar o quitar programas** sirve para…','Desinstalar.','Cambiar la hora.','Ver las fuentes.','Escribir eñes.'],
+['¿Dónde **quitas un juego** que ya no usas?','Panel de control: programas.','Papelera de reciclaje: vaciar.','Reloj de la barra: fecha.','Paint, menú Imagen: atributos.']],
+52:[['El reloj del ordenador **va mal**. ¿Dónde lo arreglas?','En fecha y hora.','En fuentes.','En la papelera.','En el Mapa de caracteres.'],
+['Además del Panel de control, **la hora** se cambia…','Desde el reloj de la barra.','Desde la papelera.','Desde Paint.','Desde el pendrive.'],
+['**Fecha y hora** está en…','El Panel de control.','La calculadora.','La papelera.','El Explorador.']],
+53:[['Pulsas la **ñ** y sale otra cosa.','Configuración regional e idioma.','Configuración de fecha y hora.','Configuración de las fuentes.','Configuración de la papelera.'],
+['**Configuración regional y de idioma** arregla…','El teclado sin eñe ni acentos.','Un reloj que va parado.','Una papelera muy llena.','Una carpeta que está oculta.'],
+['Los **acentos** no salen bien. ¿Qué miro?','El idioma del teclado.','El tamaño de la papelera.','El modo de la calculadora.','La extensión del archivo.']],
+54:[['**Fuentes** significa…','Tipos de letra.','Tipos de archivo.','Tipos de cuenta.','Tipos de ventana.'],
+['Quieres una **letra nueva** para tu trabajo.','Panel de control: fuentes.','Panel de control: fecha.','Papelera: restaurar.','Paint: atributos.'],
+['¿Dónde ves las **letras instaladas**?','En fuentes.','En la papelera.','En la calculadora.','En el liberador.']],
+55:[['¿Con qué programa **dibujas**?','Paint.','Calculadora.','Scandisk.','Liberador.'],
+['**Paint** trabaja con imágenes de…','Mapa de bits.','Mapa de caracteres.','Mapa de carreteras.','Mapa de usuarios.'],
+['Para retocar una **imagen bmp**…','Paint.','Panel de control.','Mapa de caracteres.','Administrador de tareas.']],
+56:[['Calculas algo y quieres **pasarlo a Word**.','Copias y pegas el resultado.','Lo formateas sin más.','Lo envías a la papelera.','Lo desfragmentas.'],
+['¿Qué ventaja da la **calculadora del ordenador**?','Copiar y pegar resultados.','Dibujar en colores.','Instalar programas.','Borrar temporales.'],
+['El resultado de la **calculadora** va a otro programa con…','Copiar-pegar.','Formatear.','Restaurar.','Vaciar.']],
+57:[['¿Cuál es un **modo** de la calculadora?','Científica.','Invitada.','Comprimida.','Oculta.'],
+['Para **operaciones avanzadas**, la calculadora en modo…','Científica.','Invitada.','Pequeña.','Oculta.'],
+['La **calculadora** de Windows 10 y 11 tiene…','Varios modos.','Un solo modo.','Ningún modo.','Solo un botón.']],
+58:[['Necesitas un **símbolo raro**. ¿Qué abres?','Mapa de caracteres.','Liberador de espacio.','Administrador de tareas.','Selector de tamaño.'],
+['**Mapa de caracteres** sirve para…','Incluir símbolos especiales.','Cambiar la hora del reloj.','Vaciar la papelera.','Borrar temporales.'],
+['Ya has elegido el símbolo en el mapa. ¿Cómo lo **llevas a tu texto**?','Con copiar-pegar.','Con formatear.','Con restaurar.','Con vaciar.']],
+59:[['Los archivos están **repartidos a trozos** por el disco. Uso…','El desfragmentador.','El liberador.','La calculadora.','Paint.'],
+['¿Qué herramienta **organiza** el disco duro?','Desfragmentador.','Mapa de caracteres.','Paint.','Papelera.'],
+['**Desfragmentar** hace que los programas…','Vayan más rápido.','Se borren solos.','Cambien de nombre.','Se oculten.']],
+60:[['El disco **está casi lleno**. ¿Qué uso?','El liberador de espacio.','El Mapa de caracteres.','La calculadora.','ClearType.'],
+['El **liberador** borra…','Temporales y papelera.','Todos tus documentos.','Todos tus programas.','Las cuentas de usuario.'],
+['¿Qué herramienta **deja más sitio** en el disco?','Liberador de espacio.','Mapa de caracteres.','Configuración regional.','Mostrar escritorio.']],
+61:[['**Scandisk** sirve para…','Comprobar errores del disco.','Dibujar imágenes nuevas.','Cambiar de usuario.','Escribir la eñe.'],
+['Camino para **comprobar errores**:','Unidad, propiedades, herramientas.','Papelera, vaciar, aceptar.','Reloj, fecha, aceptar.','Paint, imagen, atributos.'],
+['El disco **da errores**. ¿Qué haces?','Comprobarlo en Herramientas.','Cambiar el fondo.','Abrir la calculadora.','Cambiar de usuario.']],
+62:[['¿Cuánta **memoria RAM** tengo? Lo miro en…','Propiedades de Este equipo.','Propiedades de la papelera.','Menú de la calculadora.','Fecha y hora.'],
+['Clic derecho en **Este equipo** y propiedades me dice…','Procesador y memoria RAM.','La hora y la fecha.','Los tipos de letra.','Lo que hay en la papelera.'],
+['¿Dónde miro **qué procesador** tengo?','Propiedades de Este equipo.','Papelera de reciclaje.','Mapa de caracteres.','Paint.']],
+63:[['Instalaste algo y el ordenador **va mal**. Para volver atrás…','Restaurar sistema.','Mapa de caracteres.','Liberador de espacio.','Mostrar escritorio.'],
+['**Restaurar sistema**, ¿borra tus documentos?','No, no se pierden.','Sí, todos.','Sí, solo fotos.','Sí, los textos.'],
+['**Restaurar sistema** devuelve el equipo a…','Una situación anterior.','Cuando se fabricó.','Una cuenta de invitado.','Una carpeta oculta.']]
+};
+/* Bonus del manual: no están en los apuntes del examen */
+const BONUS=[
+ ['b1','La barra de título de una ventana indica…','El nombre del programa.','La hora y la fecha.','El espacio libre.','El tipo de cuenta.','Está arriba del todo.'],
+ ['b2','Las barras de desplazamiento sirven para…','Moverte por el documento.','Cambiar el fondo.','Borrar el documento.','Cerrar el programa.','Están a la derecha y abajo.'],
+ ['b3','Al maximizar una ventana…','Ocupa toda la pantalla.','Se cierra del todo.','Va a la papelera.','Se copia sola.','Máximo tamaño.'],
+ ['b4','Un cuadro de diálogo sirve para…','Dar información al programa.','Dibujar una imagen.','Vaciar la papelera.','Apagar la pantalla.','El programa te pregunta y tú contestas.'],
+ ['b5','Una casilla de verificación sirve para…','Activar o desactivar opciones.','Escribir un texto largo.','Mover una ventana.','Cerrar el programa.','Marcada o sin marcar.'],
+ ['b6','Con botones de opción puedes elegir…','Solo una opción.','Todas las opciones.','Ninguna opción.','Tres opciones.','Son excluyentes.'],
+ ['b7','Tres puntos (…) tras una opción de menú indican…','Que abre un cuadro de diálogo.','Que el programa está roto.','Que se borrará algo.','Que está oculta.','Te pedirá más datos.'],
+ ['b8','Un triángulo junto a una opción de menú indica…','Que tiene un submenú.','Que hay un error.','Que está borrada.','Que es un programa.','Se despliega otro menú.'],
+ ['b9','La tecla ESC con un menú contextual abierto…','Cierra el menú.','Apaga el equipo.','Borra el archivo.','Abre la ayuda.','Escape: salir.'],
+ ['b10','CTRL + ESC sirve para…','Abrir el menú Inicio.','Cerrar la ventana.','Copiar un archivo.','Vaciar la papelera.','Igual que la tecla Windows.'],
+ ['b11','1 byte equivale a…','Un carácter.','Una página.','Una carpeta.','Un programa.','Una letra, por ejemplo.'],
+ ['b12','1 megabyte (MB) son…','1024 KB','10 KB','100 KB','1024 GB','Y 1 GB son 1024 MB.'],
+ ['b13','1 gigabyte (GB) son…','1024 MB','10 MB','100 KB','1024 TB','Cada salto, 1024.'],
+ ['b14','Al buscar, el comodín * sustituye a…','Cualquier texto.','Una sola letra.','Una carpeta.','Un usuario.','*.doc son todos los doc.'],
+ ['b15','Al buscar, el comodín ? sustituye a…','Un solo carácter.','Cualquier texto.','Una carpeta.','Un usuario.','tema?.doc encuentra tema1.doc.'],
+ ['b16','Un archivo de sólo lectura…','Se lee, pero no se modifica.','Se modifica, pero no se lee.','No se puede abrir nunca.','Está en la papelera.','Es un atributo del archivo.'],
+ ['b17','El Bloc de notas guarda archivos con extensión…','TXT','JPG','EXE','ZIP','Solo texto, sin formato.'],
+ ['b18','En Paint, MAYÚS mientras dibujas una elipse hace…','Un círculo perfecto.','Un cuadrado perfecto.','Una línea recta.','Un texto.','Y con el rectángulo, un cuadrado.'],
+ ['b19','En Paint, MAYÚS mientras dibujas un rectángulo hace…','Un cuadrado perfecto.','Un círculo perfecto.','Una línea curva.','Un texto.','Lados iguales.'],
+ ['b20','Multimedia significa…','Texto, imagen, sonido y vídeo.','Solo texto y números.','Solo copiar y pegar.','Solo cuentas de usuario.','Varios medios a la vez.'],
+ ['b21','El protector de pantalla se activa…','Cuando detecta inactividad.','Al pulsar F1.','Al vaciar la papelera.','Al copiar un archivo.','Si llevas un rato sin tocar nada.'],
+ ['b22','Arrastrar con el botón derecho…','Abre un menú al soltar.','Borra el archivo.','Formatea la unidad.','Abre la calculadora.','Eliges copiar o mover.'],
+ ['b23','Arrastrar con el izquierdo a otra unidad…','Copia el archivo.','Borra el archivo.','Formatea la unidad.','Oculta el archivo.','Dentro de la misma unidad, mueve.'],
+ ['b24','Los iconos de acceso directo llevan…','Una flecha en una esquina.','Un signo + en el centro.','Un fondo de color rojo.','Una papelera pequeña.','Fíjate en el escritorio.'],
+ ['b25','Doble clic en la barra de título…','Maximiza la ventana.','Cierra el programa.','Borra el archivo.','Abre la ayuda.','Otra vez, y vuelve a su tamaño.']
+].map(x=>({id:x[0],b:'extra',c:'g',q:x[1],a:x[2],w:x.slice(3,6),n:x[6]}));
+function pickVar(base){
+  const vs=VAR[String(base.id)];
+  if(!vs||!vs.length)return base;
+  const i=Math.floor(Math.random()*(vs.length+1));
+  if(i===vs.length)return base;
+  const c=vs[i];
+  return {id:base.id,b:base.b,c:base.c,n:base.n,q:c[0],a:c[1],w:c.slice(2)};
+}
+const gB=s=>s.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+
+/* Muñeco y estrellas: compartido por el escritorio y las misiones */
+const G_KEY='tema2.juego';
+const G_START=180,G_CAP=180;
+let G_mem=null;
+const gDef=()=>({stars:0,edit:G_START,fresh:[],fichas:3,fichaT:0,juegoBest:0,sub:{},st:{ok:{},days:[],best:null,first:null},av:{shape:'r',skin:0,eyes:'puntos',mouth:'sonrisa',nose:'no',hair:'corto',hc:0,glass:'no',acc:'no'}});
+const G_FMAX=3,G_FPASO=2*3600*1000,G_FESP=3600*1000;
+function gGana(g){if(g.fBloq&&Date.now()<g.fBloq)g.fRes=Math.min(G_FMAX,(g.fRes||0)+1);else g.fichas=Math.min(G_FMAX,g.fichas+1);}
+function gFichas(g){const now=Date.now();if(g.prueba){g.fichas=G_FMAX;g.fBloq=0;g.fRes=0;return g;}if(g.fichas>G_FMAX)g.fichas=G_FMAX;if(g.fichas<=0&&!g.fBloq){g.fichas=0;g.fBloq=now+G_FESP;g.fRes=0;gSave(g);}if(g.fBloq){if(now<g.fBloq)return g;g.fichas=Math.min(G_FMAX,Math.max(1,g.fRes||0));g.fBloq=0;g.fRes=0;g.fichaT=now;gSave(g);}if(g.fichas>=G_FMAX){g.fichaT=now;return g;}if(!g.fichaT)g.fichaT=now;const n=Math.floor((now-g.fichaT)/G_FPASO);if(n>0){g.fichas=Math.min(G_FMAX,g.fichas+n);g.fichaT=g.fichas>=G_FMAX?now:g.fichaT+n*G_FPASO;}return g;}
+function gLoad(){try{const r=localStorage.getItem(G_KEY);if(r){const j=JSON.parse(r),d=gDef();return gFichas(Object.assign(d,j,{av:Object.assign(d.av,j.av),st:Object.assign(d.st,j.st)}));}}catch(e){}return gFichas(G_mem||gDef());}
+function gSave(g){G_mem=g;try{localStorage.setItem(G_KEY,JSON.stringify(g));}catch(e){}}
+const C_K='#1b1b22',C_W='#ffffff',C_Y='#ffd21f',C_R='#d9352b',C_B='#1e88e5',C_V='#5e35b1',C_GR='#7a8794';
+const SKINS=['#ffd9b8','#f1c27d','#d9a066','#a86f3f','#6f4526','#7ec8e3'];
+const gSkin=av=>typeof av.skin==='string'?av.skin:(SKINS[av.skin]||SKINS[0]);
+const PALETA=(()=>{const lv=[0,51,102,153,204,255],c=[];lv.forEach(r=>lv.forEach(g=>lv.forEach(b=>c.push([r,g,b]))));
+ for(let i=1;i<=16;i++){const v=Math.round(i*255/17);c.push([v,v,v]);}
+ for(let i=0;i<24;i++){const t=i/23;c.push([Math.round(255-t*150),Math.round(225-t*160),Math.round(195-t*165)]);}
+ const hsl=([r,g,b])=>{const M=Math.max(r,g,b),m=Math.min(r,g,b),d=M-m;let h=0;if(d){if(M===r)h=((g-b)/d+6)%6;else if(M===g)h=(b-r)/d+2;else h=(r-g)/d+4;}return{h:d<12?-1:Math.floor(h*2),l:M+m};};
+ return c.map(x=>({x,k:hsl(x)})).sort((a,b)=>a.k.h-b.k.h||a.k.l-b.k.l).map(o=>'#'+o.x.map(v=>v.toString(16).padStart(2,'0')).join(''));})();
+const HAIRC=['#2b1d14','#6b3e1c','#d9a441','#b5341f','#26262c','#7a4dd8','#22a6a6','#e85d9e','#eeeeee'];
+const PARTS={
+ eyes:{t:'Ojos',o:{
+  puntos:{n:'Puntos',d:[[32,44,7,7,C_K],[61,44,7,7,C_K]]},
+  grandes:{n:'Grandes',d:[[29,40,13,13,C_W],[58,40,13,13,C_W],[34,44,6,6,C_K],[63,44,6,6,C_K]]},
+  guino:{n:'Guiño',d:[[29,41,13,11,C_W],[33,44,6,6,C_K],[58,47,13,3,C_K]]},
+  enfado:{n:'Enfadados',d:[[29,38,7,3,C_K],[36,41,6,3,C_K],[58,41,6,3,C_K],[64,38,7,3,C_K],[32,46,7,6,C_K],[61,46,7,6,C_K]]},
+  sueno:{n:'Con sueño',d:[[29,47,13,3,C_K],[58,47,13,3,C_K]]},
+  robot:{n:'Robot',d:[[28,42,14,9,'#27d3e6'],[58,42,14,9,'#27d3e6'],[28,45,14,2,C_W],[58,45,14,2,C_W]]},
+  estrella:{n:'Estrellas',d:[[33,39,5,14,C_Y],[29,44,13,5,C_Y],[62,39,5,14,C_Y],[58,44,13,5,C_Y]]}}},
+ mouth:{t:'Boca',o:{
+  sonrisa:{n:'Sonrisa',d:[[38,68,24,3,C_K],[35,65,3,3,C_K],[62,65,3,3,C_K]]},
+  recta:{n:'Seria',d:[[38,68,24,3,C_K]]},
+  abierta:{n:'Abierta',d:[[39,63,22,11,'#6b1d2a'],[39,63,22,3,C_W]]},
+  lengua:{n:'Lengua',d:[[38,66,24,3,C_K],[46,69,8,8,'#e8607a']]},
+  dientes:{n:'Dientes',d:[[37,64,26,9,C_W],[37,64,26,1.5,C_K],[37,73,26,1.5,C_K],[45,64,1.5,9,C_K],[53,64,1.5,9,C_K]]},
+  colmillos:{n:'Colmillos',d:[[38,67,24,3,C_K],[41,70,4,6,C_W],[55,70,4,6,C_W]]},
+  bigote:{n:'Bigote',d:[[34,62,32,4,'H'],[30,64,6,4,'H'],[64,64,6,4,'H'],[42,70,16,3,C_K]]}}},
+ nose:{t:'Nariz',o:{
+  no:{n:'Sin nariz',d:[]},
+  punto:{n:'Pequeña',d:[[47,55,6,4,'S']]},
+  grande:{n:'Grande',d:[[47,50,6,8,'S'],[44,57,12,4,'S']]},
+  cerdo:{n:'Cerdito',d:[[43,52,14,9,'#f09aa8'],[46,55,2,3,C_K],[52,55,2,3,C_K]]},
+  payaso:{n:'Payaso',d:[[44,51,12,11,C_R]]}}},
+ hair:{t:'Pelo',o:{
+  no:{n:'Sin pelo',d:[]},
+  corto:{n:'Corto',d:[[10,10,80,18,'H'],[10,10,7,26,'H'],[83,10,7,26,'H']]},
+  flequillo:{n:'Flequillo',d:[[10,10,80,20,'H'],[10,28,34,8,'H'],[10,10,7,30,'H'],[83,10,7,30,'H']]},
+  largo:{n:'Largo',d:[[10,10,80,18,'H'],[4,14,12,66,'H'],[84,14,12,66,'H']],top:1},
+  pinchos:{n:'Pinchos',d:[[12,14,76,14,'H'],[14,4,12,14,'H'],[32,0,12,18,'H'],[50,-3,12,20,'H'],[70,4,12,14,'H']],top:1},
+  cresta:{n:'Cresta',d:[[43,-4,14,30,'H']],top:1},
+  afro:{n:'Afro',d:[[6,-2,88,28,'H'],[0,8,14,44,'H'],[86,8,14,44,'H']],top:1},
+  mono:{n:'Moño',d:[[12,12,76,16,'H'],[38,-3,24,16,'H']],top:1},
+  coleta:{n:'Coleta',d:[[12,12,76,16,'H'],[86,24,10,8,'H'],[90,30,9,30,'H']],top:1}}},
+ glass:{t:'Gafas',o:{
+  no:{n:'Sin gafas',d:[]},
+  redondas:{n:'De ver',d:[[27,40,17,15,'none',C_K],[56,40,17,15,'none',C_K],[44,45,12,2,C_K]]},
+  sol:{n:'De sol',d:[[26,41,18,12,C_K],[56,41,18,12,C_K],[44,44,12,2,C_K],[29,43,5,2,'#666'],[59,43,5,2,'#666']]},
+  tresd:{n:'3D',d:[[26,41,18,12,C_R],[56,41,18,12,'#2d9cff'],[44,44,12,2,C_K]]},
+  visor:{n:'Visor',d:[[22,41,56,12,'#ffb300'],[22,41,56,3,'#ffe082']]},
+  monoculo:{n:'Monóculo',d:[[56,39,17,16,'none','#c79a2a'],[71,54,2,24,'#c79a2a']]},
+  antifaz:{n:'Antifaz',d:[[20,38,60,17,C_K],[29,43,12,7,'#fff'],[59,43,12,7,'#fff']]}}},
+ acc:{t:'Extras',o:{
+  no:{n:'Nada',d:[]},
+  pajarita:{n:'Pajarita',d:[[36,93,11,11,C_R],[53,93,11,11,C_R],[46,96,8,6,'#8e1f18']]},
+  gorra:{n:'Gorra',d:[[12,6,76,16,C_R],[12,18,96,6,'#8e1f18']]},
+  auri:{n:'Auriculares',d:[[6,36,10,28,'#26262c'],[84,36,10,28,'#26262c'],[10,6,80,6,'#26262c'],[10,6,6,32,'#26262c'],[84,6,6,32,'#26262c']]},
+  parche:{n:'Pirata',d:[[56,40,18,15,C_K],[14,34,72,2.5,C_K]]},
+  pendiente:{n:'Pendiente',d:[[86,60,5,5,C_Y],[85,65,7,7,C_Y]]},
+  bufanda:{n:'Bufanda',d:[[20,90,60,10,C_B],[58,98,12,14,'#1565c0']]},
+  antena:{n:'Antena',d:[[48,-4,4,24,C_GR],[44,-12,12,9,C_R]]},
+  casco:{n:'Casco',d:[[10,6,80,22,C_GR],[44,6,12,22,'#aab6c2'],[10,24,80,4,'#56616c']]},
+  cuernos:{n:'Cuernos',d:[[12,6,9,16,'#efe6d0'],[79,6,9,16,'#efe6d0'],[12,-2,6,9,'#efe6d0'],[82,-2,6,9,'#efe6d0']]},
+  mago:{n:'Mago',d:[[44,-13,12,9,C_V],[36,-5,28,9,C_V],[26,3,48,12,C_V],[12,14,76,7,'#311b92'],[47,5,6,6,C_Y]]},
+  capa:{n:'Capa',back:1,d:[[4,40,92,72,'#b71c1c'],[10,90,80,22,'#8e1f18']]},
+  rayos:{n:'Rayos',d:[[2,20,6,6,C_Y],[5,26,6,6,C_Y],[92,20,6,6,C_Y],[89,26,6,6,C_Y],[2,62,6,6,C_Y],[92,62,6,6,C_Y]]}}}
+};
+const G_UMBRAL=[10,30,60,100];
+const TRACKS=[
+ {id:'matematicas',sub:'Matemáticas',slot:'veh',t:'Vehículo',x:50,y:133,s:36,items:[['patin','🛹','Monopatín'],['bici','🚲','Bici'],['coche','🏎️','Coche de carreras'],['nave','🚀','Cohete']]},
+ {id:'lengua',sub:'Lengua Castellana',slot:'baston',t:'Bastón de poder',x:110,y:68,s:34,items:[['varita','🪄','Varita'],['cristal','🔮','Bola de cristal'],['rayo','⚡','Bastón de rayo'],['estrella','🌟','Bastón estelar']]},
+ {id:'lingua-galega',sub:'Lingua Galega',slot:'mascota',t:'Mascota',x:-8,y:112,s:30,items:[['pulpo','🐙','Pulpo'],['can','🐕','Can'],['gato','🐈','Gato'],['dragon','🐉','Dragón']]},
+ {id:'ingles',sub:'Inglés',slot:'volador',t:'Compañero volador',x:-8,y:10,s:28,items:[['globo','🎈','Globo'],['cometa','🪁','Cometa'],['loro','🦜','Loro'],['ovni','🛸','Ovni']]},
+ {id:'frances',sub:'Français',slot:'merienda',t:'Merienda',x:110,y:112,s:26,items:[['croissant','🥐','Croissant'],['queso','🧀','Queso'],['tarta','🍰','Pastel'],['choco','🍫','Chocolate']]},
+ {id:'bioloxia',sub:'Bioloxía e Xeoloxía',slot:'bicho',t:'Bicho',x:110,y:12,s:26,items:[['brote','🌱','Brote'],['mariposa','🦋','Bolboreta'],['lagarto','🦎','Lagarto'],['dino','🦖','Dinosaurio']]},
+ {id:'xeografia',sub:'Xeografía e Historia',slot:'explora',t:'Explorador',x:-10,y:64,s:30,items:[['mapa','🗺️','Mapa'],['brujula','🧭','Compás'],['castillo','🏰','Castelo'],['mundo','🌍','Mundo']]},
+ {id:'plastica',sub:'Plástica',slot:'fondo',t:'Fondo',bg:true,items:[['cielo','🌤️','Ceo','#bfe3ff'],['selva','🌴','Selva','#b7e8a8'],['noche','🌃','Noche','#2b2f6b'],['arcoiris','🌈','Arcoíris','#ffd6f0']]},
+ {id:'ef',sub:'Educación Física',slot:'deporte',t:'Deporte',x:88,y:128,s:22,items:[['balon','⚽','Balón'],['basket','🏀','Baloncesto'],['patines','🛼','Patines'],['copa','🏆','Copa']]}
+];
+const gSubStars=(g,id)=>g.prueba?999:((g.sub&&g.sub[id])||0);
+const G_ORDER=['eyes:grandes','hair:flequillo','mouth:lengua','glass:redondas','acc:pajarita','nose:punto','eyes:guino','hair:pinchos','glass:sol','acc:gorra','mouth:abierta','nose:grande','hair:largo','acc:auri','eyes:enfado','glass:tresd','acc:parche','hair:cresta','mouth:dientes','nose:cerdo','acc:pendiente','eyes:sueno','hair:mono','glass:monoculo','acc:bufanda','mouth:colmillos','hair:coleta','acc:antena','eyes:robot','glass:antifaz','nose:payaso','acc:casco','hair:afro','mouth:bigote','acc:cuernos','glass:visor','acc:rayos','eyes:estrella','acc:mago','acc:capa'];
+const G_FREE={eyes:['puntos'],mouth:['sonrisa','recta'],nose:['no'],hair:['no','corto'],glass:['no'],acc:['no']};
+const gCost=key=>{const i=G_ORDER.indexOf(key);return i<0?0:5+i*8;};
+const gHas=(p,id,g)=>g.prueba||G_FREE[p].includes(id)||g.stars>=gCost(p+':'+id);
+function gRects(list,av,hair,rx){
+  const col=c=>c==='H'?hair:c==='S'?gShade(gSkin(av)):c;
+  return list.map(r=>r[4]==='none'
+   ?`<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" rx="${rx}" fill="rgba(255,255,255,.18)" stroke="${r[5]}" stroke-width="2.5"/>`
+   :`<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" rx="${rx}" fill="${col(r[4])}"/>`).join('');
+}
+function gShade(hex){const n=parseInt(hex.slice(1),16),f=.78;return `rgb(${Math.round((n>>16)*f)},${Math.round(((n>>8)&255)*f)},${Math.round((n&255)*f)})`;}
+let G_uid=0;
+function avatarSVG(av,size){
+  const rx=av.shape==='r'?1.5:0,skin=gSkin(av),hair=HAIRC[av.hc],id='gc'+(++G_uid);
+  const part=(p,k)=>PARTS[p].o[k]||{d:[]};
+  const acc=part('acc',av.acc),h=part('hair',av.hair);
+  const head=av.shape==='r'?`<circle cx="50" cy="54" r="36" fill="${skin}"/>`:`<rect x="14" y="18" width="72" height="72" fill="${skin}"/><rect x="14" y="84" width="72" height="6" fill="${gShade(skin)}"/>`;
+  const clip=av.shape==='r'?`<clipPath id="${id}"><circle cx="50" cy="54" r="38"/></clipPath>`:`<clipPath id="${id}"><rect x="12" y="10" width="76" height="80"/></clipPath>`;
+  const hairG=h.top?gRects(h.d,av,hair,rx):`<g clip-path="url(#${id})">${gRects(h.d,av,hair,rx)}</g>`;
+  const eq=TRACKS.filter(t=>av[t.slot]&&t.items.some(i=>i[0]===av[t.slot]));
+  const vb=eq.length?'-26 -16 152 168':'0 -14 100 126',ratio=eq.length?168/152:1.26;
+  const fondo=eq.filter(t=>t.bg).map(t=>`<rect x="-26" y="-16" width="152" height="168" rx="8" fill="${t.items.find(i=>i[0]===av[t.slot])[3]}"/>`).join('');
+  const emo=eq.filter(t=>!t.bg).map(t=>`<text x="${t.x}" y="${t.y}" font-size="${t.s}" text-anchor="middle" dominant-baseline="central">${t.items.find(i=>i[0]===av[t.slot])[1]}</text>`).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="av-svg" viewBox="${vb}" width="${size}" height="${Math.round(size*ratio)}" role="img" aria-label="Muñeco">${fondo}${clip}${acc.back?gRects(acc.d,av,hair,rx):''}${head}${hairG}${gRects(part('eyes',av.eyes).d,av,hair,rx)}${gRects(part('nose',av.nose).d,av,hair,rx)}${gRects(part('mouth',av.mouth).d,av,hair,rx)}${gRects(part('glass',av.glass).d,av,hair,rx)}${acc.back?'':gRects(acc.d,av,hair,rx)}${emo}</svg>`;
+}
+/* Estrellas: nunca bajan */
+function gAward(n,time){
+  const g=gLoad();if(g.prueba)return;const before=g.stars;g.stars+=n;
+  if(time){g.edit=Math.min(G_CAP,g.edit+time);gGana(g);}
+  const sj=typeof window!=='undefined'&&window.G_SUBJ;
+  if(sj){const b4=gSubStars(g,sj);g.sub[sj]=b4+n;const tr=TRACKS.find(t=>t.id===sj);
+    if(tr)tr.items.forEach((it,i)=>{if(b4<G_UMBRAL[i]&&g.sub[sj]>=G_UMBRAL[i]){g.fresh.push('@'+tr.id+':'+it[0]);g.av[tr.slot]=it[0];}});}
+  G_ORDER.forEach(k=>{const c=gCost(k);if(before<c&&g.stars>=c){const [p,id]=k.split(':');g.fresh.push(k);g.av[p]=id;}});
+  if(g.liga)(g.pend=g.pend||[]).push([sj||null,n,!!time]);
+  gSave(g);gFlush();
+}
+const gStars=()=>gLoad().stars;
+const gHoy=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+function gCorrect(id){const g=gLoad();if(typeof id==='number'&&(!window.G_SUBJ||window.G_SUBJ==='tecnologia'))g.st.ok[id]=1;const h=gHoy();if(!g.st.days.includes(h)){g.st.days.push(h);g.st.days=g.st.days.slice(-60);}gSave(g);}
+function gRacha(g){let n=0;const d=new Date();for(;;){const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(g.st.days.includes(k)){n++;d.setDate(d.getDate()-1);}else{if(n===0&&k===gHoy()){d.setDate(d.getDate()-1);continue;}break;}}return n;}
+function gSim(ok){const g=gLoad();if(g.st.first===null)g.st.first=ok;g.st.best=Math.max(g.st.best??0,ok);gSave(g);}
+function gNext(g){const k=G_ORDER.find(x=>g.stars<gCost(x));if(!k)return null;const [p,id]=k.split(':');return{name:PARTS[p].o[id].n,left:gCost(k)-g.stars,part:PARTS[p].t};}
+/* Bloque de premio tras una misión o test */
+function gBanner(){
+  const g=gLoad(),fresh=g.fresh;g.fresh=[];gSave(g);if(typeof ligaSync==='function')ligaSync();
+  const names=fresh.map(k=>{const [p,id]=k.split(':');if(p[0]==='@'){const t=TRACKS.find(x=>x.id===p.slice(1));return t.t+': '+t.items.find(i=>i[0]===id)[2].toLowerCase();}return PARTS[p].t+': '+PARTS[p].o[id].n.toLowerCase();});
+  const nx=gNext(g);
+  return `<div class="av-banner">${avatarSVG(g.av,84)}<div><div class="av-st">⭐ ${g.stars}</div>${names.length?`<div class="av-new">¡Nuevo: ${names.join(', ')}!</div>`:''}<div class="av-next">🎮 ${g.fichas} de 3 fichas para el juego</div>${nx?`<div class="av-next">Te faltan ${nx.left} ⭐ para: ${nx.part.toLowerCase()}, ${nx.name.toLowerCase()}</div>`:'<div class="av-next">¡Lo tienes todo!</div>'}</div></div>`;
+}
+/* Editor con tiempo limitado: se recarga terminando misiones */
+function openAvatarEditor(onClose){
+  {const g0=gLoad();if(ligaOn()&&!g0.liga&&!g0.prueba){const v=document.createElement('div');v.id='av-editor';v.innerHTML=`<div class="lg-box" style="max-width:520px;margin:30px auto;background:#fff;color:#17203a;padding:20px;border-radius:16px"><h2>Tu muñeco</h2><p>Para crear tu muñeco tienes que entrar con tu correo. Tu padre o tu madre te da de alta desde su cuenta. Para estudiar no hace falta.</p><a class="lg-go" style="display:block;text-align:center;text-decoration:none" href="acceso.html?volver=juego.html">Entrar con mi correo</a><button class="lg-x" id="av-v" style="position:static;margin-top:12px">Volver</button></div>`;document.body.appendChild(v);v.querySelector('#av-v').onclick=()=>{v.remove();onClose&&onClose();};return;}}
+  const TABS=[['shape','Cara'],['skin','Color cara'],['eyes','Ojos'],['mouth','Boca'],['nose','Nariz'],['hair','Pelo'],['hc','Color pelo'],['glass','Gafas'],['acc','Extras'],['premios','Premios']];
+  let tab='shape',iv=null;
+  const o=document.createElement('div');o.id='av-editor';document.body.appendChild(o);
+  const close=()=>{clearInterval(iv);o.remove();onClose&&onClose();};
+  const fmtT=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  const options=g=>{
+    if(tab==='premios')return[];
+    if(tab==='shape')return[['r','Redonda',true],['c','Cuadrada',true]].map(([id,n])=>({id,n,ok:true,set:{shape:id}}));
+    if(tab==='skin')return SKINS.map((_,i)=>({id:i,n:'',ok:true,set:{skin:i}}));
+    if(tab==='hc')return HAIRC.map((_,i)=>({id:i,n:'',ok:true,set:{hc:i,hair:g.av.hair==='no'?'corto':g.av.hair}}));
+    const P=PARTS[tab];return Object.keys(P.o).map(id=>({id,n:P.o[id].n,ok:gHas(tab,id,g),cost:gCost(tab+':'+id),set:{[tab]:id}}));
+  };
+  const draw=()=>{
+    const g=gLoad();
+    const opts=options(g);
+    const cur=g.av[tab];
+    o.innerHTML=`<div class="av-box">
+      <div class="av-head"><div class="av-big">${avatarSVG(g.av,140)}</div><div class="av-info"><div class="av-st">⭐ ${g.stars}</div><div class="av-time" id="av-t">Tiempo: ${fmtT(g.edit)}</div><button class="av-done" id="av-done">Listo</button></div></div>
+      <div class="av-tabs">${TABS.map(([k,n])=>`<button class="${k===tab?'on':''}" data-t="${k}">${n}</button>`).join('')}</div>
+      ${tab==='skin'?`<div class="av-pal" aria-label="Paleta de 256 colores">${PALETA.map(c=>`<button class="${g.av.skin===c?'on':''}" data-c="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}</div>`:''}${tab==='premios'?TRACKS.map(t=>`<h4 class="av-tr">${t.t}: ${t.sub} <small>⭐ ${gSubStars(g,t.id)}</small></h4><div class="av-prem">${t.items.map((it,i)=>{const ok=gSubStars(g,t.id)>=G_UMBRAL[i],on=g.av[t.slot]===it[0];return `<button class="av-pr ${on?'on':''} ${ok?'':'lock'}" data-sl="${t.slot}" data-it="${it[0]}" ${ok?'':'disabled'}><span>${ok?it[1]:'🔒'}</span><small>${it[2]}${ok?'':`<br>${G_UMBRAL[i]} ⭐`}</small></button>`;}).join('')}</div>`).join(''):''}<div class="av-grid">${opts.map(x=>{const prev=Object.assign({},g.av,x.set);return `<button class="av-opt ${String(cur)===String(x.id)?'on':''} ${x.ok?'':'lock'}" data-v="${x.id}" ${x.ok?'':'disabled'}>${x.ok?avatarSVG(prev,62):`<span class="av-lock">🔒</span>`}<span class="av-n">${x.n}${x.ok?'':`<br>${x.cost} ⭐`}</span></button>`;}).join('')}</div>
+    </div>`;
+    o.querySelector('#av-done').onclick=close;
+    o.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{const gg=gLoad();gg.av.skin=b.dataset.c;gSave(gg);draw();});
+    o.querySelectorAll('.av-pr:not(.lock)').forEach(b=>b.onclick=()=>{const gg=gLoad();gg.av[b.dataset.sl]=gg.av[b.dataset.sl]===b.dataset.it?null:b.dataset.it;gSave(gg);draw();});
+    o.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{tab=b.dataset.t;draw();});
+    o.querySelectorAll('.av-opt:not(.lock)').forEach(b=>b.onclick=()=>{
+      const x=opts.find(y=>String(y.id)===b.dataset.v);const gg=gLoad();Object.assign(gg.av,x.set);gSave(gg);draw();});
+  };
+  const out=()=>{o.innerHTML=`<div class="av-box av-out">${avatarSVG(gLoad().av,140)}<h2>Se acabó el tiempo del muñeco</h2><p>Terminas una misión y ganas un minuto más.</p><button class="av-done" id="av-done">Seguir</button></div>`;o.querySelector('#av-done').onclick=close;};
+  if(gLoad().edit<=0){out();return;}
+  draw();
+  iv=setInterval(()=>{const g=gLoad();g.edit=Math.max(0,g.edit-1);gSave(g);const t=document.getElementById('av-t');if(t)t.textContent='Tiempo: '+fmtT(g.edit);if(g.edit<=0){clearInterval(iv);out();}},1000);
+}
+
+/* ===== Fase 2: clasificación y duelos. Se activa al rellenar url y key ===== */
+const LIGA={url:'https://jokivxfiowvrxwllefor.supabase.co',key:'sb_publishable_5HAc9CN8Wab4n-vyEaeDaA_5hdRvYnX'};
+const ligaOn=()=>!!(LIGA.url&&LIGA.key);
+const TROFEOS={corona:{e:'👑',n:'Corona',d:[[30,3,40,12,C_Y],[30,-6,8,10,C_Y],[46,-9,8,13,C_Y],[62,-6,8,10,C_Y],[47,6,6,6,C_R]]},capa:{e:'🦸',n:'Capa de oro',back:1,d:[[3,38,94,74,'#e0a800'],[10,92,80,20,'#b58900']]},rayo:{e:'⚡',n:'Rayo',d:[[84,-8,10,14,C_Y],[78,4,12,10,C_Y],[84,12,6,14,C_Y]]}};
+function avatarConTrofeos(av,size,list){
+  const svg=avatarSVG(av,size);if(!list||!list.length)return svg;
+  const rx=av.shape==='r'?1.5:0;
+  const front=list.filter(t=>!TROFEOS[t].back).map(t=>gRects(TROFEOS[t].d,av,'#000',rx)).join('');
+  const back=list.filter(t=>TROFEOS[t].back).map(t=>gRects(TROFEOS[t].d,av,'#000',rx)).join('');
+  return svg.replace(/(<clipPath.*?<\/clipPath>)/,'$1'+back).replace('</svg>',front+'</svg>');
+}
+async function ligaRpc(fn,args){
+  const r=await fetch(LIGA.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:LIGA.key,'Content-Type':'application/json'},body:JSON.stringify(args)});
+  const j=await r.json().catch(()=>null);
+  if(!r.ok)throw new Error((j&&j.message)||'No se ha podido conectar');
+  return j;
+}
+function gEstudio(g){return Math.round(Object.keys(g.st.ok).length/63*100);}
+function ligaSync(){
+  const g=gLoad();if(!ligaOn()||!g.liga)return Promise.resolve();
+  return ligaRpc('actualizar',{p_token:g.liga.token,p_avatar:g.av,p_estrellas:g.stars,p_estudio:gEstudio(g),p_mejor:g.st.best,p_primero:g.st.first,p_racha:gRacha(g)}).catch(()=>{});
+}
+function ligaSubirJuego(){const g=gLoad();if(!ligaOn()||!g.liga||!g.juegoBest)return Promise.resolve();return ligaRpc('puntuar_juego',{p_token:g.liga.token,p_pts:g.juegoBest}).catch(()=>{});}
+function rng32(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function dueloPreguntas(seed){
+  const r=rng32(seed),ids=Object.keys(VAR).filter(k=>/^\d+$/.test(k)&&VAR[k].every(v=>v.length>=5));
+  const out=[];
+  while(out.length<5){const id=ids[Math.floor(r()*ids.length)];if(out.some(x=>x.id===id))continue;
+    const v=VAR[id][Math.floor(r()*VAR[id].length)],opts=[v[1],v[2],v[3],v[4]];
+    for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[opts[i],opts[j]]=[opts[j],opts[i]];}
+    out.push({id,q:v[0],a:v[1],opts});}
+  return out;
+}
+function openLeague(onClose){
+  const o=document.createElement('div');o.id='lg';document.body.appendChild(o);
+  let tab='estudio',data=null;
+  const close=()=>{o.remove();onClose&&onClose();};
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const showErr=(id,m)=>{const e=o.querySelector('#'+id);if(e)e.textContent=m;};
+  function join(){
+    o.innerHTML=`<div class="lg-box"><button class="lg-x" id="lg-x">Volver</button><h2>Entra para ver la Liga</h2><p class="lg-s">Tu padre o tu madre te da de alta desde su cuenta y te llega un correo para crear tu contraseña.</p><a class="lg-go" style="display:block;text-align:center;text-decoration:none" href="acceso.html?volver=juego.html">Entrar con mi correo</a></div>`;
+    o.querySelector('#lg-x').onclick=close;
+  }
+  async function load(){
+    o.innerHTML='<div class="lg-box"><p>Cargando…</p></div>';
+    const g=gLoad();
+    try{await gSync();await ligaSync();await ligaSubirJuego();data=await ligaRpc('clasificacion',{p_token:g.liga.token});main();}
+    catch(e){
+      if(/no encontrado/.test(e.message)){delete g.liga;gSave(g);return join();}
+      o.innerHTML=`<div class="lg-box"><h2>Ahora no hay conexión</h2><p>${esc(e.message)}</p><button class="lg-go" id="lg-x">Volver</button></div>`;o.querySelector('#lg-x').onclick=close;}
+  }
+  const COLS={estudio:['Estudio',x=>x.estudio,x=>x.estudio+' %'],estrellas:['Estrellas',x=>x.estrellas,x=>'⭐ '+x.estrellas],juego:['Juego',x=>x.juego,x=>'🎮 '+(x.juego||0)],simulacro:['Simulacro',x=>x.simulacro,x=>x.simulacro==null?'–':x.simulacro+' de 50'],mejora:['Mejora',x=>x.mejora,x=>x.mejora==null?'–':'+'+x.mejora],racha:['Días seguidos',x=>x.racha,x=>x.racha+(x.racha===1?' día':' días')]};
+  function main(){
+    const me=data.jugadores.find(x=>x.id===data.yo);
+    const trof=id=>data.trofeos.filter(t=>t.dueno===id).map(t=>t.trofeo);
+    const c=COLS[tab];
+    const rows=[...data.jugadores].sort((a,b)=>(c[1](b)??-1)-(c[1](a)??-1));
+    let pos=0,prev=null;
+    const list=rows.map((x,i)=>{const v=c[1](x)??-1;if(v!==prev){pos=i+1;prev=v;}
+      return `<div class="lg-row ${x.id===data.yo?'me':''}"><span class="lg-pos">${pos}</span>${avatarConTrofeos(Object.assign(gDef().av,x.avatar),38,trof(x.id))}<span class="lg-name">${esc(x.apodo)} ${trof(x.id).map(t=>TROFEOS[t].e).join('')}</span><b>${c[2](x)}</b></div>`;}).join('');
+    const nameOf=id=>{const j=data.jugadores.find(x=>x.id===id);return j?j.apodo:null;};
+    const cards=['corona','capa','rayo'].map(k=>{const t=data.trofeos.find(x=>x.trofeo===k);const own=t&&t.dueno===data.yo;const who=t&&nameOf(t.dueno);
+      return `<div class="lg-t"><div class="lg-te">${TROFEOS[k].e}</div><b>${TROFEOS[k].n}</b><span class="lg-s">${own?'¡Es tuyo!':who?esc(who):'Sin dueño'}</span>${own?'':`<button class="lg-mini" data-r="${k}">${who?'Retar':'Conseguir'}</button>`}</div>`;}).join('');
+    const retos=data.retos.map(r=>`<div class="lg-reto"><span>${TROFEOS[r.trofeo].e} <b>${esc(r.retador)}</b> te reta por tu ${TROFEOS[r.trofeo].n.toLowerCase()}. Tienes 48 horas.</span><button class="lg-mini" data-d="${r.id}">Defender</button></div>`).join('');
+    o.innerHTML=`<div class="lg-box"><div class="lg-top"><button class="lg-x" id="lg-x">Volver</button><div class="lg-me">${avatarConTrofeos(gLoad().av,44,trof(data.yo))}<div><b>${esc(me.apodo)}</b><div class="lg-s">Has estudiado el ${me.estudio} %</div></div></div></div>
+      ${retos}<h3>Trofeos</h3><p class="lg-s">Se ganan en duelos de 5 preguntas. Lo que has ganado con estrellas nunca se pierde.</p><div class="lg-ts">${cards}</div><div class="lg-err" id="lg-e" role="alert"></div>
+      <h3>Clasificación</h3><div class="lg-tabs">${Object.keys(COLS).map(k=>`<button class="${k===tab?'on':''}" data-k="${k}">${COLS[k][0]}</button>`).join('')}</div>${tab==='estudio'?'<p class="lg-s">Si todos estudiáis todo, todos llegáis al 100 %.</p>':''}${list}
+      <button class="lg-del" id="lg-del">Borrar mi perfil</button></div>`;
+    o.querySelector('#lg-x').onclick=close;
+    o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{tab=b.dataset.k;main();});
+    o.querySelectorAll('[data-r]').forEach(b=>b.onclick=async()=>{try{const t=gLoad().liga.token;const r=await ligaRpc('retar',{p_token:t,p_trofeo:b.dataset.r});play(r.semilla,async p=>{const x=await ligaRpc('enviar_reto',{p_token:t,p_duelo:r.id,p_pts:p});return x.resultado==='ganado'?`¡${p} de 5! El trofeo es tuyo.`:x.resultado==='no_llega'?`${p} de 5. Hacen falta 3 aciertos para conseguirlo.`:`${p} de 5. Ahora le toca responder a tu rival.`;});}catch(e){showErr('lg-e',e.message);}});
+    o.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const r=data.retos.find(x=>x.id===b.dataset.d),t=gLoad().liga.token;play(r.semilla,async p=>{const x=await ligaRpc('enviar_defensa',{p_token:t,p_duelo:r.id,p_pts:p});return x.gane?`Has defendido el trofeo: ${x.def} a ${x.ret}.`:`Esta vez lo pierdes: ${x.def} a ${x.ret}. Puedes retarle para recuperarlo.`;});});
+    const del=o.querySelector('#lg-del');let armed=false;
+    del.onclick=async()=>{if(!armed){armed=true;del.textContent='Pulsa otra vez para borrarlo';return;}
+      try{await ligaRpc('borrar_perfil',{p_token:gLoad().liga.token});}catch(e){}const g=gLoad();delete g.liga;gSave(g);close();};
+  }
+  function play(seed,finish){
+    const qs=dueloPreguntas(seed);let i=0,pts=0;
+    const next=()=>{
+      if(i>=qs.length)return end();
+      const q=qs[i],t0=Date.now();
+      o.innerHTML=`<div class="lg-box"><p class="lg-s">Duelo: pregunta ${i+1} de 5</p><div class="lg-q">${gB(q.q)}</div>${q.opts.map((t,k)=>`<button class="lg-opt" data-o="${k}">${esc(t)}</button>`).join('')}</div>`;
+      o.querySelectorAll('.lg-opt').forEach(b=>b.onclick=()=>{const t=q.opts[+b.dataset.o],ok=t===q.a;if(ok)pts++;
+        o.querySelectorAll('.lg-opt').forEach((x,k)=>{x.disabled=true;if(q.opts[k]===q.a)x.classList.add('ok');else if(x===b)x.classList.add('no');});
+        i++;gSig(o.querySelector('.lg-box'),t0,next,'lg-go');});
+    };
+    const end=async()=>{let m;try{m=await finish(pts);}catch(e){m=e.message;}
+      gAward(2);o.innerHTML=`<div class="lg-box lg-end"><h2>${esc(m)}</h2><button class="lg-go" id="lg-b">Ver la clasificación</button></div>`;o.querySelector('#lg-b').onclick=load;};
+    next();
+  }
+  if(gLoad().liga)load();else join();
+}
+
+
+</script>
+<script>
+/* ===== Tiempo de estudio, aciertos y progreso en el servidor ===== */
+const G_EK='gest.pend';
+const gEstudia=()=>!/(juego|carrera|rescate)\.html/.test(location.pathname);
+const gEstLee=()=>{try{return JSON.parse(localStorage.getItem(G_EK))||{};}catch(e){return {};}};
+function gEstSuma(s,p,o){if(!gEstudia())return;const k=gHoy2()+'|'+(window.G_SUBJ||'tecnologia'),m=gEstLee(),a=m[k]||[0,0,0];a[0]+=s;a[1]+=p;a[2]+=o;m[k]=a;try{localStorage.setItem(G_EK,JSON.stringify(m));}catch(e){}}
+function gHoy2(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function gNota(ok){gEstSuma(0,1,ok?1:0);}
+const gRpcK=(fn,a)=>fetch(LIGA.url+'/rest/v1/rpc/'+fn,{method:'POST',keepalive:true,headers:{apikey:LIGA.key,'Content-Type':'application/json'},body:JSON.stringify(a)});
+async function gEstEnvia(){const g=gLoad();if(!ligaOn()||!g.liga)return;const m=gEstLee(),ks=Object.keys(m);if(!ks.length)return;try{localStorage.removeItem(G_EK);}catch(e){}
+  for(const k of ks){const [dia,sub]=k.split('|'),a=m[k];try{const r=await gRpcK('s_estudio',{p_token:g.liga.token,p_dia:dia,p_sub:sub,p_seg:a[0],p_preg:a[1],p_ok:a[2]});if(!r.ok&&r.status>=500)throw 0;}catch(e){const n=gEstLee(),b=n[k]||[0,0,0];n[k]=[b[0]+a[0],b[1]+a[1],b[2]+a[2]];try{localStorage.setItem(G_EK,JSON.stringify(n));}catch(x){}}}}
+(function(){if(!gEstudia())return;let ult=Date.now();['pointerdown','keydown','touchstart','scroll'].forEach(e=>addEventListener(e,()=>{ult=Date.now();},{passive:true,capture:true}));
+  setInterval(()=>{if(document.hidden||Date.now()-ult>90000)return;if([...document.querySelectorAll('iframe')].some(f=>f.offsetWidth>0))return;gEstSuma(5,0,0);},5000);
+  setInterval(gEstEnvia,60000);addEventListener('pagehide',gEstEnvia);setTimeout(gEstEnvia,4000);})();
+let G_avT={};
+function gAvSube(k,S){const g=gLoad();if(!ligaOn()||!g.liga)return;clearTimeout(G_avT[k]);G_avT[k]=setTimeout(()=>{const M0=typeof M!=='undefined'?M.length:null;const r={titulo:document.title.slice(0,50),sub:window.G_SUBJ||'tecnologia',done:Object.keys(S.done||S.st||{}).length,total:M0,best:S.best==null?null:S.best,fallos:Object.keys(S.wrong||{}).length};gRpcK('s_avance_guardar',{p_token:g.liga.token,p_tema:k,p_datos:S,p_resumen:r}).catch(()=>{});},2500);}
+async function gAvBaja(k,S,fn){const g=gLoad();if(!ligaOn()||!g.liga)return;try{const r=await ligaRpc('s_avance_ver',{p_token:g.liga.token,p_tema:k});const d=r&&r.datos;if(!d){if(S.ts)gAvSube(k,S);return;}
+  if(d.done)S.done=Object.assign(S.done||{},d.done);if(d.seen)S.seen=Object.assign(S.seen||{},d.seen);if(d.st){S.st=S.st||{};Object.keys(d.st).forEach(i=>{S.st[i]=Math.max(S.st[i]||0,d.st[i]);});}
+  if(d.best!=null)S.best=S.best==null?d.best:Math.max(S.best,d.best);if((d.ts||0)>(S.ts||0)){if(d.wrong)S.wrong=d.wrong;if(d.sess)S.sess=d.sess;S.ts=d.ts;}
+  try{localStorage.setItem(k,JSON.stringify(S));}catch(e){}fn&&fn();gAvSube(k,S);}catch(e){}}
+function gAviso(t){const a=document.createElement('div');a.setAttribute('role','alert');a.style.cssText='position:fixed;left:50%;top:70px;transform:translateX(-50%);z-index:100000;max-width:90vw;background:#1f2a5c;color:#fff;padding:14px 18px;border-radius:12px;font:600 17px system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.35)';a.textContent=t;document.body.appendChild(a);setTimeout(()=>a.remove(),6000);}
+const G_MOT={padres:'Tu padre o tu madre tiene el juego desactivado.',horario:'Ahora no es hora de jugar. Lo ha decidido tu familia.',sin_padre:'Para jugar, tu padre o tu madre tiene que darte de alta.'};
+
+/* ===== Tiempo mínimo por pregunta y respuestas en otro orden ===== */
+const G_TMIN=10000;
+function gSigB(b,t0,nx,txt){txt=txt||'Siguiente';let hecho=false,sin=false;try{sin=!!gLoad().prueba;}catch(e){}
+  const go=()=>{if(hecho||b.disabled)return;hecho=true;nx();};
+  const tic=()=>{if(!b.isConnected)return;const r=sin?0:t0+G_TMIN-Date.now();if(r>0){b.disabled=true;b.style.opacity='.55';b.textContent=txt+' ('+Math.ceil(r/1000)+')';setTimeout(tic,Math.min(r,250));}else{b.disabled=false;b.style.opacity='';b.textContent=txt;b.focus({preventScroll:true});}};
+  b.onclick=go;tic();return go;}
+function gSig(c,t0,nx,cls){const b=document.createElement('button');b.className=cls||'go';b.type='button';c.appendChild(b);const go=gSigB(b,t0,nx);b.scrollIntoView({block:'nearest'});return go;}
+function gOrden(a,w,id){let o=[],m={};const k='gpos.'+(location.pathname.split('/').pop()||'x');try{m=JSON.parse(localStorage.getItem(k))||{};}catch(e){}
+  for(let n=0;n<12;n++){o=[a,...w];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}if(o.indexOf(a)!==m[id])break;}
+  m[id]=o.indexOf(a);try{localStorage.setItem(k,JSON.stringify(m));}catch(e){}return o;}
+
+/* ===== Fichas, estrellas y premios guardados en el servidor ===== */
+function gAplica(e){const g=gLoad(),C0=g.carrera||{},old=C0.tickets||0;g.fichas=e.fichas;g.fBloq=e.espera>0?Date.now()+e.espera*1000:0;g.fRes=e.reserva;g.fichaT=Date.now()-e.edad*1000;g.stars=e.estrellas;g.sub=e.sub||{};if(e.prueba)g.prueba=1;else delete g.prueba;g.clave=e.clave;g.carrera=Object.assign(C0,{tickets:e.tickets,pinSrv:!!e.tiene_pin,nuevo:(C0.nuevo||0)+Math.max(0,e.tickets-old)});gSave(g);return g;}
+let G_flush=false;
+async function gFlush(){const g0=gLoad();if(G_flush||!ligaOn()||!g0.liga||!g0.srvOk)return;G_flush=true;try{for(;;){const g=gLoad(),p=(g.pend||[])[0];if(!p)break;const e=await ligaRpc('s_ganar',{p_token:g.liga.token,p_sub:p[0],p_n:p[1],p_ficha:p[2]});const h=gLoad();h.pend.shift();gSave(h);if(!h.pend.length)gAplica(e);}}catch(e){}G_flush=false;}
+async function gSync(){const g=gLoad();if(!ligaOn()||!g.liga)return null;try{if(!g.srvOk){const e=await ligaRpc('s_estado',{p_token:g.liga.token,p_local:{estrellas:g.stars,sub:g.sub}});const h=gLoad();h.srvOk=1;h.pend=[];gSave(h);return gAplica(e);}await gFlush();const e=await ligaRpc('s_estado',{p_token:gLoad().liga.token,p_local:null});return (gLoad().pend||[]).length?gLoad():gAplica(e);}catch(e){if(/no encontrado/.test(e.message||'')){const h=gLoad();delete h.liga;delete h.srvOk;gSave(h);}return null;}}
+async function gGastar(){const g=gLoad();if(!ligaOn()||!g.liga)return false;if(!g.srvOk)await gSync();await gFlush();const e=await ligaRpc('s_gastar',{p_token:g.liga.token});gAplica(e);if(e.motivo)gAviso(G_MOT[e.motivo]||'Ahora no se puede jugar.');return !!e.ok;}
+/* ===== Sonido: música en mp3 y efectos generados por el navegador ===== */
+const SND=(()=>{const K='tema2.sonido',MUS=window.MUSICA||[];let ac=null,ma=null,nb=null,aud=null,suena=false,vivos=0;
+ const on=()=>{try{return localStorage.getItem(K)!=='0';}catch(e){return true;}};
+ const C=()=>{try{if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ac=new A();ma=ac.createGain();ma.gain.value=on()?1:0;const cp=ac.createDynamicsCompressor();ma.connect(cp);cp.connect(ac.destination);}if(ac.state==='suspended')ac.resume();return ac;}catch(e){return null;}};
+ const T=(f0,f1,d,ti,v,t0=0)=>{const c=C();if(!c||v<=0)return;const t=c.currentTime+t0,o=c.createOscillator(),g=c.createGain();o.type=ti;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.012,d/4));g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ma);o.start(t);o.stop(t+d+.02);};
+ const R=(d,v,f0,f1,t0=0,q=1)=>{const c=C();if(!c||v<=0)return;if(!nb){nb=c.createBuffer(1,c.sampleRate,c.sampleRate);const a=nb.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1;}const t=c.currentTime+t0,s=c.createBufferSource(),b=c.createBiquadFilter(),g=c.createGain();s.buffer=nb;s.loop=true;b.type='bandpass';b.Q.value=q;b.frequency.setValueAtTime(f0,t);b.frequency.exponentialRampToValueAtTime(Math.max(30,f1),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.015,d/4));g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(b);b.connect(g);g.connect(ma);s.start(t);s.stop(t+d+.02);};
+ const ART={
+  bola:v=>{T(980,170,.24,'square',.34*v);R(.14,.18*v,2600,500);},
+  libro:v=>{for(let i=0;i<4;i++)R(.07,.42*v,1500+i*500,700,i*.06,2);T(520,300,.2,'triangle',.14*v);},
+  divide:v=>{[0,.08,.16].forEach((t,i)=>{T(1250-i*170,420,.11,'sawtooth',.2*v,t);R(.09,.14*v,4200,1500,t);});},
+  polbo:v=>{T(130,460,.17,'sine',.55*v);T(210,620,.15,'sine',.36*v,.15);T(150,70,.2,'sine',.4*v,.3);},
+  ovni:v=>{for(let i=0;i<7;i++)T(650+(i%2?420:0),860+(i%2?0:420),.09,'sine',.3*v,i*.08);},
+  crois:v=>{T(760,220,.09,'triangle',.45*v);R(.08,.3*v,3000,1200,.04,3);T(420,780,.11,'sine',.24*v,.1);},
+  abella:v=>{T(190,240,.46,'sawtooth',.26*v);T(203,258,.46,'square',.13*v);},
+  volcan:v=>{T(95,34,.65,'sawtooth',.46*v);R(.7,.52*v,420,75);R(.28,.28*v,2200,450,.06);},
+  pintura:v=>{R(.17,.6*v,1700,260,0,1.6);T(330,90,.17,'sine',.42*v);R(.08,.26*v,3000,900,.14);},
+  balon:v=>{T(250,520,.1,'sine',.5*v);T(330,660,.09,'sine',.34*v,.12);T(420,800,.08,'sine',.22*v,.22);},
+  rayo:v=>{R(.1,.8*v,6500,2500,0,.7);T(1900,70,.22,'sawtooth',.46*v);R(.42,.5*v,1100,120,.05,.7);}
+ };
+ const FX={
+  cuenta:v=>T(540,540,.17,'square',.26*v),ya:v=>{T(1080,1080,.45,'square',.32*v);T(540,540,.45,'triangle',.28*v);},
+  turbo:v=>{T(190,1250,.5,'sawtooth',.28*v);R(.55,.26*v,700,4800);},
+  caja:v=>{[880,1175,1568].forEach((f,i)=>T(f,f,.11,'triangle',.32*v,i*.07));},
+  escudo:v=>{T(300,950,.38,'sine',.38*v);T(600,1900,.38,'triangle',.16*v,.05);},
+  campana:v=>{[1319,1760,2637].forEach((f,i)=>T(f,f*.99,.75,'sine',.3*v/(i+1),i*.02));},
+  bloqueo:v=>{T(1500,700,.16,'square',.2*v);R(.12,.3*v,3000,900);},
+  estrella:v=>{[784,988,1175,1568,1319,1568,1976].forEach((f,i)=>T(f,f,.09,'square',.2*v,i*.07));},
+  golpe:v=>{R(.34,.9*v,1500,110,0,.6);T(210,45,.38,'square',.56*v);[0,.1,.2].forEach((t,i)=>T(1300-i*260,820-i*180,.1,'triangle',.22*v,.14+t));},
+  impacto:v=>{R(.2,.7*v,1300,170,0,.7);T(170,55,.2,'triangle',.46*v);},
+  vuelta:v=>{T(784,784,.12,'triangle',.34*v);T(1175,1175,.24,'triangle',.34*v,.12);},
+  ultima:v=>{[523,659,784,1047,784,1047,1319].forEach((f,i)=>{const d=i>5?.5:.13;T(f,f,d,'square',.25*v,i*.13);T(f/2,f/2,d,'triangle',.28*v,i*.13);});},
+  meta:v=>{[523,659,784,1047,1319,1568].forEach((f,i)=>{T(f,f,i>4?.65:.16,'square',.25*v,i*.13);T(f/2,f/2,i>4?.65:.16,'triangle',.25*v,i*.13);});},
+  salto:v=>T(330,760,.15,'square',.2*v),choque:v=>{R(.34,.7*v,1200,100,0,.7);T(200,50,.34,'square',.42*v);}
+ };
+ const CFG={bola:['triangle',260,8,14,1500],libro:['triangle',310,12,40,1000],divide:['sawtooth',360,20,90,1900],polbo:['sine',170,5,28,900],ovni:['sine',620,6,170,1800],crois:['triangle',420,9,35,1200],abella:['sawtooth',205,31,26,1300],volcan:['sawtooth',85,7,12,500],pintura:['sine',290,10,55,900],balon:['sine',230,6,70,800],rayo:['sawtooth',760,41,130,2600]};
+ function bucle(k){const c=C();const nada={set(){},stop(){}};if(!c||vivos>=6)return nada;vivos++;const q=CFG[k]||CFG.bola,o=c.createOscillator(),l=c.createOscillator(),lg=c.createGain(),f=c.createBiquadFilter(),g=c.createGain(),p=c.createStereoPanner?c.createStereoPanner():null;o.type=q[0];o.frequency.value=q[1];l.frequency.value=q[2];lg.gain.value=q[3];l.connect(lg);lg.connect(o.frequency);f.type='lowpass';f.frequency.value=q[4];g.gain.value=.0001;o.connect(f);f.connect(g);if(p){g.connect(p);p.connect(ma);}else g.connect(ma);o.start();l.start();let fin=false;
+  return{set(v,pan){if(fin)return;const t=c.currentTime;g.gain.setTargetAtTime(Math.max(.0001,v),t,.06);if(p)p.pan.setTargetAtTime(Math.max(-1,Math.min(1,pan||0)),t,.06);},stop(){if(fin)return;fin=true;vivos--;const t=c.currentTime;g.gain.setTargetAtTime(.0001,t,.04);o.stop(t+.25);l.stop(t+.25);}};}
+ function musica(){para();C();if(!MUS.length)return;const az=p=>{if(MUS.length<2)return 0;let k;do k=Math.floor(Math.random()*MUS.length);while(k===p);return k;},gm=v=>{try{localStorage.setItem(K+'.m',v);}catch(e){}};let i=-1;try{const v=localStorage.getItem(K+'.m');if(v!==null)i=+v;}catch(e){}i=az(i);gm(i);const pon=()=>{if(!aud)return;aud.src=MUS[i%MUS.length];aud.playbackRate=1;const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{});};aud=new Audio();aud.preload='auto';aud.volume=.42;aud.muted=!on();aud.addEventListener('ended',()=>{i=az(i);gm(i);pon();});suena=true;pon();}
+ function para(){suena=false;if(aud){const a=aud;aud=null;let v=a.volume;const h=setInterval(()=>{v-=.07;if(v<=0){clearInterval(h);a.pause();a.removeAttribute('src');a.load();}else a.volume=v;},40);}}
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){if(aud)aud.pause();if(ac)ac.suspend();}else{if(ac)ac.resume();if(aud&&suena){const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{});}}});
+ return{on,art:(k,v=1)=>{const f=ART[k];if(f&&v>.005&&on())f(v);},sfx:(k,v=1)=>{const f=FX[k];if(f&&v>.005&&on())f(v);},bucle,musica,para,rate:r=>{if(aud)aud.playbackRate=r;},
+  alterna(){const n=!on();try{localStorage.setItem(K,n?'1':'0');}catch(e){}C();if(ma)ma.gain.value=n?1:0;if(aud)aud.muted=!n;return n;},icono:()=>on()?'🔊':'🔇',_e:()=>({ac:ac&&ac.state,vivos,src:aud&&aud.src,on:on()})};
+})();
+/* ===== Rescate Gomino: juego de puzles propio (personajes, niveles y gráficos hechos por código) ===== */
+(function(){
+const $=(s,r=document)=>r.querySelector(s);const app=$('#app');
+const W=1600,H=600,TICK=1000/30,SPLAT=110,SES_MIN=10;
+const RK='rescate.v1',TEST=!!window.RS_TEST;
+const prog=()=>{try{return JSON.parse(localStorage.getItem(RK))||{best:{}};}catch(e){return {best:{}};}};
+const progSave=p=>{try{localStorage.setItem(RK,JSON.stringify(p));}catch(e){}};
+const sesFin=()=>{try{return +localStorage.getItem(RK+'.ses')||0;}catch(e){return 0;}};
+const sesPon=t=>{try{localStorage.setItem(RK+'.ses',String(t));}catch(e){}};
+const SK={
+ climb:{i:'🧗',n:'Escalar',d:'Sube paredes. Lo guarda para siempre.'},
+ float:{i:'☂️',n:'Paraguas',d:'Cae despacio desde cualquier altura.'},
+ bomb:{i:'💣',n:'Bomba',d:'Explota a los 5 segundos y abre un agujero.'},
+ block:{i:'✋',n:'Parar',d:'Se queda quieto y los demás se dan la vuelta.'},
+ build:{i:'🧱',n:'Escalera',d:'Construye 12 escalones hacia arriba.'},
+ bash:{i:'👊',n:'Túnel',d:'Excava en horizontal.'},
+ dig:{i:'⛏️',n:'Cavar',d:'Excava hacia abajo.'}
+};
+const SKO=['climb','float','bomb','block','build','bash','dig'];
+/* Temas visuales */
+const TH={
+ alba:{sky:['#2b1d5c','#c2527a','#ffb36b'],far:'#5a2f6e',mid:'#3a2150',dirt:['#7a4b2a','#a0663a','#5c3720'],top:'#6fd16b',rock:['#6c7488','#8d95a8','#4b5163'],fog:'rgba(255,170,120,.10)',stars:0,sun:'#ffd9a0'},
+ bosque:{sky:['#0f2a3a','#1f6b6b','#9fd6a0'],far:'#1c4a45',mid:'#143a33',dirt:['#5b3b25','#7c5233','#3f2818'],top:'#58c95a',rock:['#5f6b70','#7f8b90','#454e52'],fog:'rgba(160,255,200,.08)',stars:0,sun:'#eaffd0'},
+ cueva:{sky:['#07060f','#1a1036','#2c1a52'],far:'#1c1436',mid:'#140e28',dirt:['#4a3a6e','#6a55a0','#2f2448'],top:'#b07cff',rock:['#3d4256','#596079','#2a2e3d'],fog:'rgba(170,120,255,.10)',stars:1,sun:null},
+ noche:{sky:['#050816','#0f1d45','#28407a'],far:'#16244a',mid:'#0e1834',dirt:['#3c4a5e','#56677e','#28323f'],top:'#7fd3ff',rock:['#5a6070','#7a8294','#3c414e'],fog:'rgba(120,180,255,.08)',stars:1,sun:'#e8f0ff'},
+ volcan:{sky:['#12060a','#4a1010','#c8461c'],far:'#3a0f0f',mid:'#250808',dirt:['#4a2a22','#6e3b2c','#2e1813'],top:'#ff8a3a',rock:['#3f3a3a','#5e5656','#2a2626'],fog:'rgba(255,90,40,.10)',stars:0,sun:'#ffb070'}
+};
+/* Niveles: r=[x,y,w,h] tierra, s=acero (no se rompe), e=elipse tierra, q=agua/lava */
+const LV=[
+ {n:'Primer agujero',t:'alba',tip:'Elige ⛏️ Cavar y toca a un gomino encima de la plataforma.',N:10,need:80,time:240,rate:50,sk:{dig:2},
+  ent:[400,205],ext:[1100,400],dir:1,
+  r:[[250,300,1000,40],[150,400,1300,200]],s:[[230,220,20,120],[1250,220,20,120],[130,300,20,300],[1450,300,20,300]],e:[],q:[]},
+ {n:'El muro',t:'bosque',tip:'👊 Túnel rompe la pared de tierra. Dáselo a uno que camine hacia ella.',N:10,need:80,time:240,rate:50,sk:{bash:2},
+  ent:[300,372],ext:[1300,470],dir:1,
+  r:[[100,470,1400,130],[780,300,90,170]],s:[[80,250,20,350],[1500,250,20,350]],e:[[820,300,50,40]],q:[]},
+ {n:'El río',t:'alba',tip:'🧱 Escalera para cruzar. Cuando termine un escalón, dale otra.',N:12,need:75,time:300,rate:45,sk:{build:4,block:1,bomb:1},
+  ent:[250,372],ext:[1350,470],dir:1,
+  r:[[80,470,620,130],[820,470,700,130]],s:[[60,280,20,320],[1520,280,20,320]],e:[[300,600,300,40],[1200,600,300,40]],q:[[700,530,120,70,'agua']]},
+ {n:'Salto al vacío',t:'noche',tip:'☂️ Paraguas para todos antes de que salten.',N:8,need:75,time:240,rate:60,sk:{float:8},
+  ent:[200,90],ext:[1300,520],dir:1,
+  r:[[60,180,640,60],[60,520,1480,80]],s:[[40,60,20,180],[1540,380,20,220]],e:[[380,240,300,50]],q:[]},
+ {n:'¡Alto ahí!',t:'bosque',tip:'✋ Parar delante de la entrada para que vayan hacia la izquierda.',N:12,need:80,time:240,rate:45,sk:{block:2,bomb:1},
+  ent:[700,372],ext:[260,470],dir:1,
+  r:[[120,470,880,130]],s:[[100,300,20,300]],e:[[560,600,500,50]],q:[[1000,540,600,60,'agua']]},
+ {n:'Escaladores',t:'cueva',tip:'🧗 Escalar para subir a la meseta.',N:10,need:70,time:300,rate:50,sk:{climb:10},
+  ent:[300,382],ext:[1250,330],dir:1,
+  r:[[80,480,1440,120]],s:[[60,250,20,350],[1000,330,400,150],[1520,250,20,350],[1400,230,20,100]],e:[[300,600,500,40]],q:[]},
+ {n:'Puente y túnel',t:'volcan',tip:'Primero 🧱 sobre la lava, luego 👊 en la roca blanda.',N:15,need:70,time:330,rate:45,sk:{build:4,bash:2,block:1,bomb:1},
+  ent:[220,372],ext:[1420,470],dir:1,
+  r:[[60,470,640,130],[800,470,760,130],[1050,290,110,180]],s:[[40,250,20,350],[1560,250,20,350]],e:[[1105,290,55,40]],q:[[700,520,100,80,'lava']]},
+ {n:'Gran descenso',t:'cueva',tip:'✋ en la plataforma del medio, luego ⛏️ hacia la repisa de abajo.',N:16,need:65,time:360,rate:45,sk:{block:2,dig:2,float:2},
+  ent:[200,110],ext:[1450,395],dir:1,
+  r:[[80,200,620,40],[620,300,600,30],[820,395,740,40]],s:[[60,60,20,180],[1200,150,20,180],[1560,300,20,160]],e:[],q:[[0,540,1600,60,'agua']]},
+ {n:'Todo en uno',t:'volcan',tip:'Puente, parar, túnel, bomba y cavar… ¡en ese orden!',N:20,need:60,time:420,rate:40,sk:{climb:2,float:2,bomb:1,block:1,build:3,bash:2,dig:2},
+  ent:[160,120],ext:[1300,415],dir:1,
+  r:[[60,220,500,40],[60,320,620,280],[800,320,760,60],[800,415,760,185],[1000,170,80,150]],s:[[40,60,20,540],[1560,150,20,450],[788,380,12,220]],e:[],q:[[680,380,108,220,'lava']]}
+];
+/* ---------- Texturas ---------- */
+function rnd(seed){let a=seed|0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const hex=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+function texture(cols,kind,seed){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d'),R=rnd(seed);
+ x.fillStyle=cols[0];x.fillRect(0,0,256,256);
+ if(kind==='rock'){for(let i=0;i<4;i++)for(let j=0;j<4;j++){const g=x.createLinearGradient(i*64,j*64,i*64+64,j*64+64);g.addColorStop(0,cols[1]);g.addColorStop(1,cols[2]);x.fillStyle=g;x.fillRect(i*64+1,j*64+1,62,62);x.fillStyle='rgba(255,255,255,.25)';x.fillRect(i*64+1,j*64+1,62,2);x.fillStyle='rgba(0,0,0,.35)';x.fillRect(i*64+1,j*64+61,62,2);x.fillStyle='rgba(0,0,0,.45)';[[6,6],[56,6],[6,56],[56,56]].forEach(([a,b])=>{x.beginPath();x.arc(i*64+a,j*64+b,2.2,0,7);x.fill();});x.fillStyle='rgba(255,255,255,.35)';[[6,6],[56,6],[6,56],[56,56]].forEach(([a,b])=>{x.beginPath();x.arc(i*64+a-.6,j*64+b-.6,.9,0,7);x.fill();});}return c;}
+ for(let i=0;i<900;i++){const r=1+R()*5;x.fillStyle=R()<.5?cols[1]:cols[2];x.globalAlpha=.25+R()*.35;x.beginPath();x.ellipse(R()*256,R()*256,r*1.6,r,R()*3,0,7);x.fill();}
+ x.globalAlpha=1;for(let i=0;i<60;i++){const px=R()*256,py=R()*256,r=2+R()*4;const g=x.createRadialGradient(px-r/3,py-r/3,0,px,py,r);g.addColorStop(0,'rgba(255,255,255,.55)');g.addColorStop(.4,cols[1]);g.addColorStop(1,cols[2]);x.fillStyle=g;x.beginPath();x.arc(px,py,r,0,7);x.fill();}
+ for(let i=0;i<14;i++){x.strokeStyle='rgba(0,0,0,.18)';x.lineWidth=1;x.beginPath();let px=R()*256,py=R()*256;x.moveTo(px,py);for(let k=0;k<5;k++){px+=R()*30-15;py+=R()*30-15;x.lineTo(px,py);}x.stroke();}
+ return c;}
+/* ---------- Fondo con profundidad ---------- */
+function fondo(th,seed){const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d'),R=rnd(seed);
+ const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,th.sky[0]);g.addColorStop(.6,th.sky[1]);g.addColorStop(1,th.sky[2]);x.fillStyle=g;x.fillRect(0,0,W,H);
+ if(th.stars)for(let i=0;i<260;i++){x.fillStyle=`rgba(255,255,255,${.2+R()*.7})`;const s=R()*1.6+.3;x.fillRect(R()*W,R()*H*.7,s,s);}
+ if(th.sun){const sx=W*.72,sy=H*.28,sg=x.createRadialGradient(sx,sy,0,sx,sy,260);sg.addColorStop(0,th.sun);sg.addColorStop(.12,th.sun+'cc');sg.addColorStop(.35,th.sun+'33');sg.addColorStop(1,th.sun+'00');x.fillStyle=sg;x.fillRect(0,0,W,H);}
+ const capa=(col,base,amp,fr,al)=>{x.fillStyle=col;x.globalAlpha=al;x.beginPath();x.moveTo(0,H);let y=base;for(let px=0;px<=W;px+=8){y=base-amp*(Math.sin(px*fr+seed)*.6+Math.sin(px*fr*2.7+seed*3)*.3+Math.sin(px*fr*7.1)*.1);x.lineTo(px,y);}x.lineTo(W,H);x.fill();x.globalAlpha=1;};
+ capa(th.far,H*.55,90,.004,.7);capa(th.mid,H*.72,60,.007,.85);
+ for(let i=0;i<7;i++){const cx=R()*W,cy=60+R()*150,cw=120+R()*200;const cg=x.createRadialGradient(cx,cy,0,cx,cy,cw);cg.addColorStop(0,'rgba(255,255,255,.10)');cg.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=cg;x.beginPath();x.ellipse(cx,cy,cw,cw*.3,0,0,7);x.fill();}
+ return c;}
+/* ---------- Partida ---------- */
+let S=null,raf=0;
+function crearNivel(li){
+ const L=LV[li],th=TH[L.t];
+ const mask=new Uint8Array(W*H);
+ const mc=document.createElement('canvas');mc.width=W;mc.height=H;const mx=mc.getContext('2d');
+ const tex=texture(th.dirt,'dirt',li*7+3),rk=texture(th.rock,'rock',li*5+1);
+ // tierra
+ const dc=document.createElement('canvas');dc.width=W;dc.height=H;const dx=dc.getContext('2d');
+ dx.fillStyle='#fff';L.r.forEach(r=>dx.fillRect(...r));L.e.forEach(e=>{dx.beginPath();dx.ellipse(e[0],e[1],e[2],e[3],0,0,7);dx.fill();});
+ // relieve irregular en los bordes de arriba
+ const R=rnd(li*13+5);
+ for(let i=0;i<180;i++){const r=L.r[Math.floor(R()*L.r.length)];if(!r)break;const px=r[0]+6+R()*(r[2]-12);dx.beginPath();dx.arc(px,r[1]+1,1+R()*3,Math.PI,0);dx.fill();}
+ const sc=document.createElement('canvas');sc.width=W;sc.height=H;const sx=sc.getContext('2d');sx.fillStyle='#fff';L.s.forEach(r=>sx.fillRect(...r));
+ const dd=dx.getImageData(0,0,W,H).data,sd=sx.getImageData(0,0,W,H).data;
+ for(let i=0;i<W*H;i++){if(sd[i*4+3]>128)mask[i]=2;else if(dd[i*4+3]>128)mask[i]=1;}
+ // imagen del terreno
+ const tc=document.createElement('canvas');tc.width=W;tc.height=H;const tx=tc.getContext('2d');
+ tx.fillStyle=tx.createPattern(tex,'repeat');tx.fillRect(0,0,W,H);const td=tx.getImageData(0,0,W,H);
+ const rc=document.createElement('canvas');rc.width=W;rc.height=H;const rx=rc.getContext('2d');rx.fillStyle=rx.createPattern(rk,'repeat');rx.fillRect(0,0,W,H);const rd=rx.getImageData(0,0,W,H).data;
+ const P=td.data,top=hex(th.top);
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,p=i*4;const m=mask[i];if(!m){P[p+3]=0;continue;}
+  if(m===2){P[p]=rd[p];P[p+1]=rd[p+1];P[p+2]=rd[p+2];P[p+3]=255;continue;}
+  let up=0;while(up<10&&y-up-1>=0&&mask[i-(up+1)*W])up++;
+  let dn=0;while(dn<8&&y+dn+1<H&&mask[i+(dn+1)*W])dn++;
+  let lf=0;while(lf<4&&x-lf-1>=0&&mask[i-lf-1])lf++;let rt=0;while(rt<4&&x+rt+1<W&&mask[i+rt+1])rt++;
+  let r=P[p],g=P[p+1],b=P[p+2];
+  if(up<3){const k=up===0?.95:up===1?.85:.6;r=r+(top[0]-r)*k;g=g+(top[1]-g)*k;b=b+(top[2]-b)*k;if(up===0){r=Math.min(255,r+40);g=Math.min(255,g+40);b=Math.min(255,b+40);}}
+  else if(up<10){const k=.25*(1-(up-3)/7);r*=1+k;g*=1+k;b*=1+k;}
+  if(dn<8){const k=.45*(1-dn/8);r*=1-k;g*=1-k;b*=1-k;}
+  if(lf<4||rt<4){const k=.18*(1-Math.min(lf,rt)/4);r*=1-k;g*=1-k;b*=1-k;}
+  P[p]=Math.min(255,r);P[p+1]=Math.min(255,g);P[p+2]=Math.min(255,b);P[p+3]=255;}
+ tx.putImageData(td,0,0);
+ // hierba
+ if(L.t!=='volcan'&&L.t!=='cueva'){tx.strokeStyle=th.top;tx.lineWidth=1.2;for(let x=0;x<W;x+=2)for(let y=1;y<H;y++){const i=y*W+x;if(mask[i]===1&&!mask[i-W]){if(R()<.55){tx.globalAlpha=.6+R()*.4;tx.beginPath();tx.moveTo(x,y+1);tx.quadraticCurveTo(x+R()*3-1.5,y-3,x+R()*4-2,y-3-R()*5);tx.stroke();}y+=6;}}tx.globalAlpha=1;}
+ else{for(let x=0;x<W;x+=3)for(let y=1;y<H;y++){const i=y*W+x;if(mask[i]===1&&!mask[i-W]){if(R()<.12){const gg=tx.createRadialGradient(x,y,0,x,y,4);gg.addColorStop(0,th.top);gg.addColorStop(1,th.top+'00');tx.fillStyle=gg;tx.fillRect(x-4,y-4,8,8);}y+=6;}}}
+ const tdata=tx.getImageData(0,0,W,H);
+ const s={li,L,th,mask,tc,tx,tdata,bg:fondo(th,li*3+2),cr:[],out:0,saved:0,dead:0,left:L.N,rate:L.rate,minRate:L.rate,relT:30,tick:0,
+  sk:Object.assign({},L.sk),sel:SKO.find(k=>L.sk[k])||null,time:L.time*30,cam:0,zoom:1,pause:false,fast:false,fx:[],nuke:false,nukeArm:0,fin:false,hover:null,shake:0};
+ return s;}
+const solid=(x,y)=>{x|=0;y|=0;if(x<0||x>=W)return 2;if(y<0)return 0;if(y>=H)return 0;return S.mask[y*W+x];};
+function carve(fn,x0,y0,x1,y1,noSteel=true){x0=Math.max(0,x0|0);y0=Math.max(0,y0|0);x1=Math.min(W-1,x1|0);y1=Math.min(H-1,y1|0);if(x1<x0||y1<y0)return 0;
+ const M=S.mask,P=S.tdata.data;let n=0;
+ for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const i=y*W+x;if(M[i]===1&&fn(x,y)){M[i]=0;P[i*4+3]=0;n++;if(Math.random()<.035)chip(x,y,P[i*4],P[i*4+1],P[i*4+2]);}}
+ if(n){for(let y=y0-2;y<=y1+2;y++)for(let x=x0-2;x<=x1+2;x++){if(x<0||y<0||x>=W||y>=H)continue;const i=y*W+x;if(M[i]!==1)continue;const ar=!M[i-1]||!M[i+1]||!M[i-W]||!M[i+W];if(ar&&!fn(x,y)){const p=i*4;P[p]*=.62;P[p+1]*=.62;P[p+2]*=.62;}}
+  const bx=Math.max(0,x0-2),by=Math.max(0,y0-2),bw=Math.min(W,x1+3)-bx,bh=Math.min(H,y1+3)-by;S.tx.putImageData(S.tdata,0,0,bx,by,bw,bh);}
+ return n;}
+function brick(x0,y0,w,h,col){const M=S.mask,P=S.tdata.data;for(let y=y0;y<y0+h;y++)for(let x=x0;x<x0+w;x++){if(x<0||y<0||x>=W||y>=H)continue;const i=y*W+x;if(M[i])continue;M[i]=1;const p=i*4,sh=y===y0?1.25:y===y0+h-1?.7:1;P[p]=Math.min(255,col[0]*sh);P[p+1]=Math.min(255,col[1]*sh);P[p+2]=Math.min(255,col[2]*sh);P[p+3]=255;}
+ S.tx.putImageData(S.tdata,0,0,Math.max(0,Math.min(x0,x0+w)),Math.max(0,y0),Math.abs(w)+1,h);}
+function chip(x,y,r,g,b){if(S.fx.length>900)return;S.fx.push({k:'p',x,y,vx:(Math.random()-.5)*3,vy:-Math.random()*3,l:30+Math.random()*20,c:`rgb(${r|0},${g|0},${b|0})`,s:1.5+Math.random()*1.5});}
+function burst(x,y,c,n,sp=4,l=40,glow=false){for(let i=0;i<n;i++){const a=Math.random()*7,v=Math.random()*sp;S.fx.push({k:'p',x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,l:l*(.5+Math.random()*.7),c,s:1+Math.random()*2.5,g:glow});}}
+const enAgua=(x,y)=>S.L.q.find(q=>x>=q[0]&&x<q[0]+q[2]&&y>=q[1]+4&&y<q[1]+q[3]);
+/* Gomino: x,y = pies */
+function nuevo(){const [ex,ey]=S.L.ent;S.cr.push({x:ex,y:ey+18,d:S.L.dir,st:'fall',fd:0,t:0,climb:false,float:false,bomb:-1,f:0,hue:[18,330,195,45,280,150][S.out%6]});S.out++;S.left--;SND.sfx('salto',.25);}
+function blockers(){return S.cr.filter(c=>c.st==='block');}
+function step(c){c.t++;c.f++;
+ if(c.bomb>=0){c.bomb--;if(c.bomb<0){explota(c);return;}}
+ if(c.st==='dead'||c.st==='saved'||c.st==='gone')return;
+ if(c.y>=H-1){muere(c,'cae');return;}
+ const w=enAgua(c.x,c.y);if(w&&c.st!=='dying'){muere(c,w[4]);return;}
+ switch(c.st){
+ case 'fall':{
+   if(c.float&&c.fd>16){c.y+=1.1;}else c.y+=3;c.fd+=c.float&&c.fd>16?0:3;
+   if(c.float&&c.fd>16)c.um=Math.min(1,(c.um||0)+.15);
+   for(let k=0;k<4;k++){if(solid(c.x,Math.ceil(c.y))){let yy=Math.ceil(c.y);while(yy>0&&solid(c.x,yy-1))yy--;c.y=yy;
+     if(c.fd>SPLAT&&!c.float){c.st='splat';c.t=0;SND.sfx('golpe',.6);burst(c.x,c.y-4,'#ff7aa8',18,3,30);}else{c.st='walk';c.t=0;c.um=0;}break;}break;}
+   break;}
+ case 'walk':{
+   if(!solid(c.x,c.y)){let ok=false;for(let k=1;k<=3;k++)if(solid(c.x,c.y+k)){c.y+=k-1;ok=true;break;}if(!ok){c.st='fall';c.fd=0;return;}}
+   if(c.t%1===0){const nx=c.x+c.d;
+    for(const b of blockers())if(b!==c&&Math.abs(b.y-c.y)<16&&((c.d>0&&b.x>c.x&&b.x-c.x<=6)||(c.d<0&&b.x<c.x&&c.x-b.x<=6))){c.d=-c.d;return;}
+    if(solid(nx,c.y-1)){let up=0;while(up<7&&solid(nx,c.y-1-up))up++;
+      if(up<6&&!solid(nx,c.y-1-up-8)){c.x=nx;c.y=c.y-up;}
+      else if(c.climb){c.st='climb';c.t=0;}
+      else c.d=-c.d;}
+    else{c.x=nx;let dn=0;while(dn<4&&!solid(c.x,c.y+dn))dn++;if(dn<4)c.y+=dn;else{c.st='fall';c.fd=0;}}}
+   const [ex,ey]=S.L.ext;if(Math.abs(c.x-ex)<9&&Math.abs(c.y-ey)<10){c.st='saved';c.t=0;S.saved++;SND.sfx('estrella',.5);burst(ex,ey-14,'#fff6a8',22,3,40,true);}
+   break;}
+ case 'climb':{
+   if(solid(c.x,c.y-20)||solid(c.x-c.d,c.y-20)){c.d=-c.d;c.x+=c.d*2;c.st='fall';c.fd=0;break;}
+   if(c.t%2===0)c.y-=1;
+   if(!solid(c.x+c.d,c.y-1)&&!solid(c.x+c.d,c.y)){c.x+=c.d*2;let yy=c.y;while(!solid(c.x,yy)&&yy<c.y+3)yy++;c.y=yy;c.st='walk';c.t=0;}
+   break;}
+ case 'block':break;
+ case 'build':{
+   if(c.t%10===0){
+    if(c.bk>=12){c.st='shrug';c.t=0;break;}
+    if(solid(c.x+c.d*3,c.y-10)||solid(c.x+c.d*6,c.y-10)){c.st='walk';c.d=-c.d;c.t=0;break;}
+    const bx=c.d>0?c.x-1:c.x-12;brick(bx,c.y-2,14,2,[230,170,60]);c.bk++;SND.sfx('caja',.15);
+    c.x+=c.d*6;c.y-=2;
+    if(c.bk>=10)c.warn=1;}
+   break;}
+ case 'shrug':if(c.t>24){c.st='walk';c.t=0;c.warn=0;}break;
+ case 'bash':{
+   if(c.t%3===0){
+    const fx=c.x+c.d*6;let any=0,st=0;
+    for(let k=0;k<14;k++)for(let yy=c.y-15;yy<c.y;yy++){const m=solid(c.x+c.d*(3+k),yy);if(m===1)any=1;if(m===2&&k<5)st=1;}
+    if(st){c.st='walk';c.d=-c.d;SND.sfx('bloqueo',.4);break;}
+    if(!any){c.st='walk';c.t=0;break;}
+    const cx0=c.d>0?c.x:c.x-10,cx1=c.d>0?c.x+10:c.x;
+    carve((x,y)=>{const dy=(y-(c.y-8));return dy*dy/64+((x-fx)*(x-fx))/36<=1.2;},cx0,c.y-16,cx1,c.y-1);
+    c.x+=c.d;if(!solid(c.x,c.y)&&!solid(c.x,c.y+1)&&!solid(c.x,c.y+2)){c.st='fall';c.fd=0;}
+    if(c.t%9===0)SND.sfx('golpe',.12);}
+   break;}
+ case 'dig':{
+   if(c.t%4===0){
+    let st=0;for(let xx=c.x-6;xx<=c.x+6;xx++)if(solid(xx,c.y)===2||solid(xx,c.y+1)===2)st=1;
+    if(st){c.st='walk';SND.sfx('bloqueo',.4);break;}
+    const n=carve((x,y)=>Math.abs(x-c.x)<=7,c.x-7,c.y-1,c.x+7,c.y+1);
+    c.y+=2;let below=0;for(let xx=c.x-3;xx<=c.x+3;xx++)if(solid(xx,c.y)||solid(xx,c.y+1))below=1;
+    if(!below){c.st='fall';c.fd=0;}
+    if(c.t%12===0)SND.sfx('golpe',.1);}
+   break;}
+ case 'splat':if(c.t>18){c.st='dead';S.dead++;}break;
+ case 'dying':if(c.t>24){c.st='dead';S.dead++;}break;
+ }
+}
+function muere(c,k){if(k==='lava'||k==='agua'){c.st='dying';c.t=0;c.how=k;SND.sfx(k==='lava'?'impacto':'choque',.4);burst(c.x,c.y,k==='lava'?'#ffb040':'#9be3ff',16,3,30,k==='lava');}else{c.st='dead';S.dead++;}}
+function explota(c){if(c.st==='dead'||c.st==='saved'){return;}const x=c.x,y=c.y-12;
+ carve((px,py)=>(px-x)*(px-x)+(py-y)*(py-y)<=18*18,x-18,y-18,x+18,y+18);
+ burst(x,y,'#ffd25a',40,6,40,true);burst(x,y,'#ff6a3d',30,4,30,true);S.fx.push({k:'f',x,y,l:14});S.shake=10;SND.sfx('impacto',.8);
+ const was=c.st;c.st='dead';S.dead++;}
+function asigna(c,k){if(!S.sk[k]||c.st==='dead'||c.st==='saved'||c.st==='dying'||c.st==='splat')return false;
+ if(k==='climb'){if(c.climb)return false;c.climb=true;}
+ else if(k==='float'){if(c.float)return false;c.float=true;}
+ else if(k==='bomb'){if(c.bomb>=0)return false;c.bomb=150;}
+ else{if(!(c.st==='walk'||(k!=='block'&&(c.st==='build'||c.st==='bash'||c.st==='dig'||c.st==='shrug'))))return false;if(c.st===k)return false;
+  if(k==='build')c.bk=0;c.st=k;c.t=0;}
+ S.sk[k]--;SND.sfx('caja',.5);burst(c.x,c.y-10,'#ffffff',8,2,20,true);upd();return true;}
+/* ---------- Dibujo ---------- */
+function dibGomino(x,c,f){const y=0;const hue=c.hue;x.save();
+ const bob=c.st==='walk'?Math.abs(Math.sin(c.f*.35))*1.4:0;
+ // sombra
+ x.fillStyle='rgba(0,0,0,.28)';x.beginPath();x.ellipse(0,0,6,1.6,0,0,7);x.fill();
+ if(c.st==='splat'){x.fillStyle=`hsl(${hue},85%,60%)`;x.beginPath();x.ellipse(0,-1,10,2.5,0,0,7);x.fill();x.restore();return;}
+ if(c.st==='dying'){x.globalAlpha=Math.max(0,1-c.t/24);x.translate(0,c.t*.4);}
+ const d=c.d;
+ // paraguas
+ if(c.float&&c.st==='fall'&&(c.um||0)>0){const u=c.um;x.save();x.translate(0,-26);x.scale(u,u);const ug=x.createLinearGradient(-12,0,12,0);ug.addColorStop(0,'#ff4f7a');ug.addColorStop(.5,'#ffd25a');ug.addColorStop(1,'#4fd1ff');x.fillStyle=ug;x.beginPath();x.moveTo(-13,0);x.quadraticCurveTo(0,-15,13,0);x.quadraticCurveTo(6.5,-3,0,0);x.quadraticCurveTo(-6.5,-3,-13,0);x.fill();x.strokeStyle='#eee';x.lineWidth=.8;x.beginPath();x.moveTo(0,-7);x.lineTo(0,12);x.stroke();x.restore();}
+ // pies
+ const ph=c.st==='walk'?Math.sin(c.f*.7):0;
+ x.fillStyle=`hsl(${hue},60%,28%)`;x.beginPath();x.ellipse(-2.6+ph*1.8,-1.2,2.6,1.6,0,0,7);x.fill();x.beginPath();x.ellipse(2.6-ph*1.8,-1.2,2.6,1.6,0,0,7);x.fill();
+ // cuerpo de gominola
+ const cy=-9-bob;const bg=x.createRadialGradient(-2*d,cy-4,1,0,cy,10);bg.addColorStop(0,`hsl(${hue},95%,80%)`);bg.addColorStop(.55,`hsl(${hue},85%,58%)`);bg.addColorStop(1,`hsl(${hue},75%,38%)`);
+ x.fillStyle=bg;x.beginPath();const sq=c.st==='block'?1.1:1;x.ellipse(0,cy,6.6*sq,8,0,0,7);x.fill();
+ x.fillStyle='rgba(255,255,255,.55)';x.beginPath();x.ellipse(-2.4,cy-4.2,1.8,2.6,-.4,0,7);x.fill();
+ // antena
+ x.strokeStyle=`hsl(${hue},70%,35%)`;x.lineWidth=1;x.beginPath();x.moveTo(0,cy-7.5);x.quadraticCurveTo(d*3,cy-12,d*2,cy-14);x.stroke();
+ const glow=x.createRadialGradient(d*2,cy-14,0,d*2,cy-14,4);glow.addColorStop(0,'#fff8c0');glow.addColorStop(1,'rgba(255,230,120,0)');x.fillStyle=glow;x.beginPath();x.arc(d*2,cy-14,4,0,7);x.fill();
+ // ojos
+ const ex=d*1.6;x.fillStyle='#fff';x.beginPath();x.ellipse(ex-2,cy-1.5,1.9,2.4,0,0,7);x.ellipse(ex+2.2,cy-1.5,1.9,2.4,0,0,7);x.fill();
+ x.fillStyle='#14182e';const lk=c.st==='dig'?1.2:0;x.beginPath();x.arc(ex-2+d*.7,cy-1.2+lk,1,0,7);x.arc(ex+2.2+d*.7,cy-1.2+lk,1,0,7);x.fill();
+ if(c.st==='shrug'){x.strokeStyle='#14182e';x.lineWidth=.8;x.beginPath();x.arc(ex,cy+2.6,1.6,Math.PI,0);x.stroke();}
+ else{x.strokeStyle='#14182e';x.lineWidth=.8;x.beginPath();x.arc(ex,cy+1.6,1.4,0,Math.PI);x.stroke();}
+ // brazos y herramientas
+ x.strokeStyle=`hsl(${hue},75%,42%)`;x.lineWidth=1.6;x.lineCap='round';
+ if(c.st==='block'){x.beginPath();x.moveTo(-5,cy);x.lineTo(-10,cy-6);x.moveTo(5,cy);x.lineTo(10,cy-6);x.stroke();x.fillStyle='#fff';x.beginPath();x.arc(-10,cy-6,1.6,0,7);x.arc(10,cy-6,1.6,0,7);x.fill();}
+ else if(c.st==='climb'){x.beginPath();x.moveTo(d*4,cy-2);x.lineTo(d*7,cy-6-Math.abs(Math.sin(c.f*.3))*3);x.stroke();}
+ else if(c.st==='build'){const a=Math.sin(c.t*.6)*.8;x.save();x.translate(d*5,cy);x.rotate(d*a);x.fillStyle='#8a5a2b';x.fillRect(0,-1,d*6,2);x.fillStyle='#c0c6d4';x.fillRect(d*5-1.5,-3,3,6);x.restore();}
+ else if(c.st==='bash'){const p=Math.sin(c.t*.9)*3;x.fillStyle=`hsl(${hue},85%,55%)`;x.beginPath();x.arc(d*(7+p),cy+1,2.4,0,7);x.fill();}
+ else if(c.st==='dig'){const a=Math.sin(c.t*.5);x.save();x.translate(0,cy+4);x.rotate(a*.6);x.strokeStyle='#8a5a2b';x.lineWidth=1.4;x.beginPath();x.moveTo(-6,-2);x.lineTo(6,2);x.stroke();x.strokeStyle='#c0c6d4';x.beginPath();x.moveTo(5,-1);x.quadraticCurveTo(9,2,6,5);x.stroke();x.restore();}
+ else if(c.st==='fall'&&!(c.float&&c.um)){x.beginPath();x.moveTo(-5,cy-1);x.lineTo(-8,cy-6);x.moveTo(5,cy-1);x.lineTo(8,cy-6);x.stroke();}
+ if(c.climb){x.fillStyle='#ffd25a';x.beginPath();x.arc(-d*5,cy+3,1.3,0,7);x.fill();}
+ if(c.bomb>=0){const n=Math.ceil(c.bomb/30);x.font='bold 11px Lexend,Verdana,sans-serif';x.textAlign='center';x.fillStyle=n<=2&&c.f%10<5?'#ff5050':'#fff';x.strokeStyle='#000';x.lineWidth=2.5;x.strokeText(n,0,cy-17);x.fillText(n,0,cy-17);}
+ x.restore();}
+function draw(){const cv=$('#rs-cv');if(!cv||!S)return;const x=cv.getContext('2d');const dpr=Math.min(2,window.devicePixelRatio||1);
+ const cw=cv.clientWidth,ch=cv.clientHeight;if(cv.width!==Math.round(cw*dpr)||cv.height!==Math.round(ch*dpr)){cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);}
+ const sc=Math.max(ch/H,cw/W)*S.zoom;S.sc=sc;const vw=cw/sc;S.vw=vw;S.cam=Math.max(0,Math.min(W-vw,S.cam));if(vw>=W)S.cam=-(vw-W)/2;
+ const vh=ch/sc;if(vh>=H){S.camY=0;S.oy=(ch-H*sc)/2;}else{S.camY=Math.max(0,Math.min(H-vh,S.camY||0));S.oy=-S.camY*sc;}
+ x.setTransform(dpr,0,0,dpr,0,0);x.fillStyle='#05070f';x.fillRect(0,0,cw,ch);
+ const shx=S.shake?(Math.random()-.5)*S.shake:0,shy=S.shake?(Math.random()-.5)*S.shake:0;
+ x.setTransform(dpr*sc,0,0,dpr*sc,dpr*(-S.cam*sc+shx),dpr*(shy+S.oy));
+ // fondo con parallax
+ x.drawImage(S.bg,S.cam*.35,0,W-S.cam*.35,H,S.cam*.35,0,W-S.cam*.35,H);x.drawImage(S.bg,0,0,S.cam*.35,H,S.cam,0,S.cam*.35,H);
+ const T=S.tick;
+ // haces de luz
+ x.save();x.globalCompositeOperation='lighter';for(let i=0;i<4;i++){const lx=200+i*420+Math.sin(T*.01+i)*40;const g=x.createLinearGradient(lx,0,lx+120,H);g.addColorStop(0,'rgba(255,240,200,.07)');g.addColorStop(1,'rgba(255,240,200,0)');x.fillStyle=g;x.beginPath();x.moveTo(lx,0);x.lineTo(lx+60,0);x.lineTo(lx+260,H);x.lineTo(lx+120,H);x.fill();}x.restore();
+ // entrada
+ const [ex0,ey0]=S.L.ent;x.save();x.translate(ex0,ey0);const og=x.createRadialGradient(0,0,2,0,0,34);og.addColorStop(0,'rgba(180,140,255,.9)');og.addColorStop(.6,'rgba(120,80,255,.35)');og.addColorStop(1,'rgba(80,40,200,0)');x.fillStyle=og;x.beginPath();x.ellipse(0,0,34,20,0,0,7);x.fill();
+ x.strokeStyle='#d9c6ff';x.lineWidth=2;x.beginPath();x.ellipse(0,0,20,9,0,0,7);x.stroke();x.fillStyle='#1a0f3a';x.beginPath();x.ellipse(0,0,17,7,0,0,7);x.fill();
+ for(let i=0;i<6;i++){const a=T*.05+i*1.05;x.fillStyle='rgba(230,210,255,.8)';x.beginPath();x.arc(Math.cos(a)*22,Math.sin(a)*10,1.3,0,7);x.fill();}x.restore();
+ // terreno
+ x.drawImage(S.tc,0,0);
+ // salida
+ const [sx0,sy0]=S.L.ext;x.save();x.translate(sx0,sy0);
+ x.globalCompositeOperation='lighter';const pg=x.createRadialGradient(0,-16,0,0,-16,46);pg.addColorStop(0,'rgba(255,250,200,.9)');pg.addColorStop(.3,'rgba(120,255,200,.45)');pg.addColorStop(1,'rgba(60,200,255,0)');x.fillStyle=pg;x.beginPath();x.arc(0,-16,46,0,7);x.fill();x.globalCompositeOperation='source-over';
+ x.fillStyle='#3a2a20';x.fillRect(-16,-34,4,34);x.fillRect(12,-34,4,34);x.fillStyle='#6a4a30';x.beginPath();x.moveTo(-22,-32);x.lineTo(0,-46);x.lineTo(22,-32);x.fill();
+ const dg=x.createLinearGradient(0,-32,0,0);dg.addColorStop(0,'#fffbd0');dg.addColorStop(1,'#6fffd6');x.fillStyle=dg;x.globalAlpha=.75+Math.sin(T*.15)*.2;x.fillRect(-12,-32,24,32);x.globalAlpha=1;
+ for(let i=0;i<5;i++){const yy=-((T*1.5+i*13)%40);x.fillStyle=`rgba(255,255,255,${.8-(-yy)/50})`;x.beginPath();x.arc(Math.sin(T*.1+i*2)*8,yy,1.3,0,7);x.fill();}
+ x.restore();
+ // agua y lava
+ S.L.q.forEach(q=>{const [qx,qy,qw,qh,k]=q;const lava=k==='lava';x.save();const g=x.createLinearGradient(0,qy,0,qy+qh);if(lava){g.addColorStop(0,'#ffe36a');g.addColorStop(.15,'#ff7a1a');g.addColorStop(1,'#7a1205');}else{g.addColorStop(0,'rgba(170,240,255,.9)');g.addColorStop(.2,'rgba(40,140,220,.85)');g.addColorStop(1,'rgba(10,40,90,.95)');}
+  x.fillStyle=g;x.beginPath();x.moveTo(qx,qy+qh);for(let px=qx;px<=qx+qw;px+=4)x.lineTo(px,qy+Math.sin(px*.05+T*.12)*2.5+Math.sin(px*.13-T*.07)*1.2);x.lineTo(qx+qw,qy+qh);x.fill();
+  if(lava){x.globalCompositeOperation='lighter';const lg=x.createLinearGradient(0,qy-60,0,qy);lg.addColorStop(0,'rgba(255,90,20,0)');lg.addColorStop(1,'rgba(255,120,30,.35)');x.fillStyle=lg;x.fillRect(qx-30,qy-60,qw+60,60);if(T%6===0)S.fx.push({k:'p',x:qx+Math.random()*qw,y:qy,vx:0,vy:-1-Math.random(),l:40,c:'#ffb040',s:1.5,g:true});}
+  else{x.strokeStyle='rgba(255,255,255,.5)';x.lineWidth=1;x.beginPath();for(let px=qx;px<=qx+qw;px+=4)x.lineTo(px,qy+Math.sin(px*.05+T*.12)*2.5+Math.sin(px*.13-T*.07)*1.2);x.stroke();}
+  x.restore();});
+ // gominos
+ S.cr.forEach(c=>{if(c.st==='dead'||c.st==='gone')return;if(c.st==='saved'){if(c.t<20){x.save();x.translate(c.x,c.y-c.t*.8);x.globalAlpha=1-c.t/20;x.scale(1-c.t/30,1-c.t/30);dibGomino(x,c);x.restore();}else c.st='gone';return;}
+  x.save();x.translate(Math.round(c.x),Math.round(c.y));dibGomino(x,c);x.restore();});
+ // selección
+ if(S.hover){const c=S.hover;x.strokeStyle='#ffd25a';x.lineWidth=1.5/S.zoom;x.setLineDash([3,2]);x.strokeRect(c.x-9,c.y-22,18,24);x.setLineDash([]);}
+ // partículas
+ x.save();S.fx.forEach(p=>{if(p.k==='f'){x.globalCompositeOperation='lighter';const g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,60);g.addColorStop(0,`rgba(255,255,220,${p.l/14})`);g.addColorStop(1,'rgba(255,140,40,0)');x.fillStyle=g;x.beginPath();x.arc(p.x,p.y,60,0,7);x.fill();x.globalCompositeOperation='source-over';return;}
+  x.globalAlpha=Math.min(1,p.l/20);if(p.g)x.globalCompositeOperation='lighter';x.fillStyle=p.c;x.fillRect(p.x-p.s/2,p.y-p.s/2,p.s,p.s);x.globalCompositeOperation='source-over';});x.restore();
+ // niebla
+ x.fillStyle=S.th.fog;x.fillRect(0,H*.7,W,H*.3);
+ // viñeta en pantalla
+ x.setTransform(dpr,0,0,dpr,0,0);const vg=x.createRadialGradient(cw/2,ch/2,Math.min(cw,ch)*.35,cw/2,ch/2,Math.max(cw,ch)*.75);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.5)');x.fillStyle=vg;x.fillRect(0,0,cw,ch);
+ // minimapa
+ if(S.vw<W||S.zoom>1){const mw=Math.min(180,cw*.32),mh=mw*H/W,mx=cw-mw-8,my=8;x.globalAlpha=.85;x.fillStyle='rgba(5,8,20,.75)';x.fillRect(mx-2,my-2,mw+4,mh+4);x.drawImage(S.tc,mx,my,mw,mh);x.fillStyle='#ffd25a';S.cr.forEach(c=>{if(c.st!=='dead'&&c.st!=='gone'&&c.st!=='saved')x.fillRect(mx+c.x/W*mw-1,my+c.y/H*mh-1,2,2);});
+  x.strokeStyle='#fff';x.lineWidth=1;x.strokeRect(mx+Math.max(0,S.cam)/W*mw,my+(S.camY||0)/H*mh,Math.min(W,S.vw)/W*mw,Math.min(H,cv.clientHeight/S.sc)/H*mh);x.globalAlpha=1;S.mini=[mx,my,mw,mh];}else S.mini=null;
+ if(S.pause&&!S.fin){x.fillStyle='rgba(0,0,0,.35)';x.fillRect(0,0,cw,ch);x.fillStyle='#fff';x.font='700 28px Lexend,Verdana,sans-serif';x.textAlign='center';x.fillText('⏸ Pausa',cw/2,ch/2);}
+}
+/* ---------- Bucle ---------- */
+let acc=0,last=0;
+function loop(t){if(!S)return;raf=requestAnimationFrame(loop);const dt=Math.min(100,t-(last||t));last=t;
+ if(!S.pause&&!S.fin){acc+=dt*(S.fast?3:1);let n=0;while(acc>=TICK&&n<12){tick();acc-=TICK;n++;}}else acc=0;
+ draw();}
+function tick(){S.tick++;
+ if(S.left>0&&!S.nuke){S.relT--;if(S.relT<=0){nuevo();S.relT=Math.round(10+(100-S.rate)*1.1);}}
+ S.cr.forEach(step);
+ S.fx.forEach(p=>{if(p.k==='p'){p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.vx*=.98;}p.l--;});S.fx=S.fx.filter(p=>p.l>0);
+ if(S.shake)S.shake=Math.max(0,S.shake-1);
+ if(S.time>0)S.time--;
+ if(S.tick%15===0)upd();
+ const vivos=S.cr.filter(c=>!['dead','saved','gone','block'].includes(c.st)).length;
+ if((S.left<=0||S.nuke)&&vivos===0&&!S.fin)terminar();
+ else if(S.time<=0&&!S.fin)terminar(true);}
+function pct(){return Math.round(S.saved/S.L.N*100);}
+function upd(){const t=$('#rs-top');if(!t||!S)return;const m=Math.floor(S.time/30/60),s=Math.floor(S.time/30)%60;const p=pct();
+ t.querySelector('#rs-st').innerHTML=`<span class="p">🚪 ${S.out}/${S.L.N}</span><span class="p">🏠 <b style="color:${p>=S.L.need?'#7dff9a':'#fff'}">${p}%</b> de ${S.L.need}%</span><span class="p">⏱ ${m}:${String(s).padStart(2,'0')}</span>`;
+ document.querySelectorAll('.rs-k[data-k]').forEach(b=>{const k=b.dataset.k;b.querySelector('.c').textContent=S.sk[k];b.classList.toggle('z',!S.sk[k]);b.classList.toggle('on',S.sel===k);});
+ const rr=$('#rs-rate');if(rr)rr.textContent=S.rate;}
+function terminar(tiempo){S.fin=true;const p=pct(),ok=p>=S.L.need;const pr=prog();const prev=pr.best[S.li]||0;if(p>prev){pr.best[S.li]=p;progSave(pr);}
+ SND.sfx(ok?'meta':'choque',.7);
+ const fin=sesFin(),quedan=Math.max(0,fin-Date.now()),g=gLoad(),hay=TEST||g.prueba||quedan>0;
+ const m=document.createElement('div');m.id='rs-msg';
+ m.innerHTML=`<h2>${ok?'🎉 ¡Nivel superado!':tiempo?'⏰ Se acabó el tiempo':'😢 No ha sido suficiente'}</h2><div class="big">${p}%</div><p>Has salvado a ${S.saved} de ${S.L.N} gominos. Hacía falta el ${S.L.need}%.</p>
+ ${hay?'':'<p>Se acabaron tus 10 minutos de juego.</p>'}
+ ${hay&&ok&&S.li+1<LV.length?'<button class="rs-sm" id="rs-n">Siguiente nivel ▶</button>':''}${hay?'<button class="rs-sm '+(ok?'alt':'')+'" id="rs-r">↻ Repetir</button>':''}<button class="rs-sm alt" id="rs-m">Niveles</button>`;
+ $('#rs-play').appendChild(m);
+ const n=$('#rs-n');if(n)n.onclick=()=>jugar(S.li+1);const r=$('#rs-r');if(r)r.onclick=()=>jugar(S.li);$('#rs-m').onclick=salir;}
+function salir(){cancelAnimationFrame(raf);S=null;SND.para();const p=$('#rs-play');if(p)p.remove();document.body.style.overflow='';menu();}
+/* ---------- Pantalla de juego ---------- */
+function jugar(li){cancelAnimationFrame(raf);const old=$('#rs-play');if(old)old.remove();
+ S=crearNivel(li);S.cam=Math.max(0,S.L.ent[0]-300);S.camY=Math.max(0,S.L.ent[1]-120);
+ const d=document.createElement('div');d.id='rs-play';
+ d.innerHTML=`<div id="rs-top"><button class="rs-sm alt" id="rs-x" style="padding:6px 10px;font-size:14px">✕</button><b>${li+1}. ${S.L.n}</b><span class="sp"></span><span id="rs-st"></span></div><canvas id="rs-cv"></canvas>
+ <div id="rs-bar">${SKO.filter(k=>S.L.sk[k]!==undefined).map((k,i)=>`<button class="rs-k" data-k="${k}" title="${SK[k].n}: ${SK[k].d} (tecla ${i+1})"><span class="i">${SK[k].i}</span><span class="c">0</span><span class="t">${SK[k].n}</span></button>`).join('')}
+ <span class="rs-sep"></span><button class="rs-k" id="rs-rm" title="Salen más despacio"><span class="i">➖</span><span class="t">Salida</span></button><button class="rs-k" id="rs-rp" title="Salen más deprisa"><span class="i">➕</span><span class="c" id="rs-rate"></span><span class="t">Salida</span></button>
+ <button class="rs-k" id="rs-z" title="Acercar o alejar (Z)"><span class="i">🔍</span><span class="c" id="rs-zv">×1</span><span class="t">Zoom</span></button><button class="rs-k" id="rs-p" title="Pausa (P)"><span class="i">⏸</span><span class="t">Pausa</span></button><button class="rs-k" id="rs-f" title="Rápido (F)"><span class="i">⏩</span><span class="t">Rápido</span></button><button class="rs-k nuke" id="rs-nk" title="Todos explotan (toca dos veces)"><span class="i">💥</span><span class="t">Todos</span></button><button class="rs-k" id="rs-s" title="Sonido"><span class="i">${SND.icono()}</span><span class="t">Sonido</span></button></div>`;
+ document.body.appendChild(d);document.body.style.overflow='hidden';
+ const nf=getComputedStyle(document.documentElement).getPropertyValue('--nf');if(!nf){const mf=$('#menu-fijo');if(mf)d.style.top=mf.offsetHeight+'px';}
+ d.querySelectorAll('.rs-k[data-k]').forEach(b=>b.onclick=()=>{S.sel=b.dataset.k;upd();SND.sfx('caja',.2);});
+ $('#rs-x').onclick=salir;
+ $('#rs-rm').onclick=()=>{S.rate=Math.max(S.minRate,S.rate-5);upd();};$('#rs-rp').onclick=()=>{S.rate=Math.min(99,S.rate+5);upd();};
+ $('#rs-p').onclick=()=>{S.pause=!S.pause;$('#rs-p').classList.toggle('on',S.pause);};
+ $('#rs-f').onclick=()=>{S.fast=!S.fast;$('#rs-f').classList.toggle('on',S.fast);};
+ $('#rs-z').onclick=()=>{const Z=[1,1.6,2.4],i=(Z.indexOf(S.zoom)+1)%Z.length,cx=S.cam+S.vw/2,cy=(S.camY||0)+($('#rs-cv').clientHeight/S.sc)/2;S.zoom=Z[i];const cvv=$('#rs-cv'),nsc=Math.max(cvv.clientHeight/H,cvv.clientWidth/W)*S.zoom;S.cam=cx-$('#rs-cv').clientWidth/nsc/2;S.camY=cy-cvv.clientHeight/nsc/2;$('#rs-zv').textContent='×'+S.zoom;};
+ $('#rs-s').onclick=()=>{SND.alterna();$('#rs-s .i').textContent=SND.icono();};
+ $('#rs-nk').onclick=()=>{const b=$('#rs-nk'),t=b.querySelector('.t');if(S.nuke||S.fin)return;if(!S.nukeArm){S.nukeArm=1;b.classList.add('arm');t.textContent='¿Seguro?';SND.sfx('bloqueo',.3);clearTimeout(S.nkT);S.nkT=setTimeout(()=>{if(S&&!S.nuke){S.nukeArm=0;b.classList.remove('arm');t.textContent='Todos';}},3500);return;}
+  clearTimeout(S.nkT);S.nuke=true;S.left=0;S.pause=false;$('#rs-p').classList.remove('on');let k=0;S.cr.forEach(c=>{if(['walk','fall','climb','block','build','bash','dig','shrug'].includes(c.st)&&c.bomb<0){c.bomb=90+(k++)*4;}});b.classList.remove('arm');b.classList.add('z');t.textContent='¡Boom!';SND.sfx('campana',.6);};
+ const cv=$('#rs-cv');
+ const aMundo=(e)=>{const r=cv.getBoundingClientRect();const px=(e.clientX-r.left),py=(e.clientY-r.top);return [px/S.sc+S.cam,(py-S.oy)/S.sc];};
+ const cerca=(wx,wy)=>{let best=null,bd=1e9;S.cr.forEach(c=>{if(['dead','saved','gone','dying','splat'].includes(c.st))return;const dx=c.x-wx,dy=(c.y-9)-wy,dd=dx*dx+dy*dy;const pen=S.sel&&!['climb','float','bomb'].includes(S.sel)&&c.st!=='walk'?400:0;if(dd+pen<bd){bd=dd+pen;best=c;}});const lim=Math.max(16,22/S.sc*.6);return bd<=lim*lim+400?best:null;};
+ let drag=null;
+ cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY,cam:S.cam,camY:S.camY||0,mv:false};
+  if(S.mini){const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top,[mx,my,mw,mh]=S.mini;if(px>=mx&&px<=mx+mw&&py>=my&&py<=my+mh){S.cam=(px-mx)/mw*W-S.vw/2;drag.mini=true;}}});
+ cv.addEventListener('pointermove',e=>{if(drag){if(drag.mini){const r=cv.getBoundingClientRect(),[mx,,mw]=S.mini;S.cam=(e.clientX-r.left-mx)/mw*W-S.vw/2;return;}const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)>8||Math.abs(dy)>8)drag.mv=true;if(drag.mv){S.cam=drag.cam-dx/S.sc;S.camY=drag.camY-dy/S.sc;}}
+  else if(e.pointerType==='mouse'){const [wx,wy]=aMundo(e);S.hover=cerca(wx,wy);}});
+ cv.addEventListener('pointerup',e=>{const dr=drag;drag=null;if(!dr||dr.mv||dr.mini||S.fin)return;const [wx,wy]=aMundo(e);const c=cerca(wx,wy);if(c&&S.sel){if(!asigna(c,S.sel)){if(!S.sk[S.sel])SND.sfx('bloqueo',.3);}}});
+ cv.addEventListener('wheel',e=>{e.preventDefault();S.cam+=(e.deltaX||e.deltaY)/S.sc;},{passive:false});
+ document.onkeydown=e=>{if(!S)return;const ks=SKO.filter(k=>S.L.sk[k]!==undefined);const n=+e.key;if(n>=1&&n<=ks.length){S.sel=ks[n-1];upd();}
+  if(e.key==='p'||e.key==='P'||e.key===' '){e.preventDefault();$('#rs-p').click();}if(e.key==='f'||e.key==='F')$('#rs-f').click();if(e.key==='z'||e.key==='Z')$('#rs-z').click();if(e.key==='ArrowUp')S.camY=(S.camY||0)-60;if(e.key==='ArrowDown')S.camY=(S.camY||0)+60;
+  if(e.key==='ArrowLeft')S.cam-=60;if(e.key==='ArrowRight')S.cam+=60;};
+ upd();acc=0;last=0;raf=requestAnimationFrame(loop);
+ // aviso inicial
+ S.pause=true;const m=document.createElement('div');m.id='rs-msg';
+ m.innerHTML=`<h2>${li+1}. ${S.L.n}</h2><p>Salen <b>${S.L.N}</b> gominos. Tienes que salvar al menos el <b>${S.L.need}%</b>.</p><p>💡 ${S.L.tip}</p><p style="font-size:14px;opacity:.8">${Object.keys(S.L.sk).map(k=>SK[k].i+' '+SK[k].n+' ×'+S.L.sk[k]).join(' · ')}</p><button class="rs-sm" id="rs-go">¡Vamos!</button>`;
+ d.appendChild(m);$('#rs-go').onclick=()=>{m.remove();S.pause=false;SND.sfx('ya',.6);SND.musica();};}
+/* ---------- Menú ---------- */
+function heroCanvas(){const c=document.createElement('canvas');c.width=300;c.height=220;const x=c.getContext('2d');x.scale(4,4);[[12,52,18],[28,52,195],[44,52,330],[60,52,45]].forEach(([px,py,h],i)=>{x.save();x.translate(px,py);dibGomino(x,{hue:h,d:i%2?-1:1,st:'walk',f:i*7,t:0,climb:false,float:false,bomb:-1});x.restore();});return c;}
+function menu(){document.body.classList.add('rs-dark');const g=gLoad(),pr=prog();if(TEST)g.prueba=true;
+ const fin=sesFin(),quedan=Math.max(0,fin-Date.now());
+ const espera=()=>{const m=Math.max(1,Math.ceil(((g.fBloq>Date.now()?g.fBloq:g.fichaT+G_FPASO)-Date.now())/60000));return m>=60?`${Math.floor(m/60)} h ${m%60} min`:`${m} min`;};
+ if(!TEST&&ligaOn()&&!g.liga){app.innerHTML=`<div class="rs-box"><div class="rs-hero"><h1>Rescate Gomino</h1><p>Guía a los gominos hasta la salida.</p></div><div class="rs-gift"><b>Para jugar tienes que entrar con tu correo.</b><br>Tu padre o tu madre te da de alta desde su cuenta. Para estudiar no hace falta.</div><a class="rs-go" href="acceso.html?volver=rescate.html">Entrar con mi correo</a></div>`;return;}
+ const hay=g.prueba||quedan>0;const abierto=i=>TEST||i===0||(pr.best[i-1]||0)>=LV[i-1].need;
+ app.innerHTML=`<div class="rs-box"><div class="rs-hero"><h1>Rescate Gomino</h1><p>Los gominos caminan sin parar. Dales habilidades para que lleguen a casa sanos y salvos.</p></div>
+ ${TEST?'<div class="rs-gift">🧪 <b>Versión de prueba.</b> Todos los niveles abiertos y sin fichas. En la web de verdad, 1 ficha = '+SES_MIN+' minutos.</div>':g.prueba?'<div class="rs-gift">🧪 <b>Modo de pruebas.</b> Tiempo de juego sin límite.</div>':''}
+ <div class="rs-me">${avatarSVG(g.av,56)}<div><b>${hay&&!g.prueba?`⏱ Te quedan ${Math.ceil(quedan/60000)} min de juego`:`🎮 ${g.fichas} de 3 fichas`}</b><br><small>${hay?'Elige un nivel.':g.fichas>0?'1 ficha = '+SES_MIN+' minutos para jugar a los niveles que quieras.':`Podrás jugar dentro de ${espera()}.`}</small></div></div>
+ ${hay?'':g.fichas>0?`<button class="rs-go" id="rs-start">Empezar (1 ficha = ${SES_MIN} min)</button>`:`<div class="rs-gift">Te has quedado sin fichas. Podrás volver a jugar dentro de ${espera()}. Terminando misiones consigues más.</div><a class="rs-go" href="index.html">Ir a estudiar</a>`}
+ <h2>Niveles</h2><div class="rs-lv">${LV.map((l,i)=>{const ok=abierto(i),b=pr.best[i]||0,th=TH[l.t];return`<button class="rs-l ${ok?'':'lock'}" data-l="${i}" ${ok&&hay?'':'disabled'} style="background:linear-gradient(160deg,${th.sky[2]},${th.sky[1]} 55%,${th.sky[0]})"><span class="n">Nivel ${i+1}</span>${b>=l.need?'<span class="ok">⭐</span>':''}<b>${ok?l.n:'🔒'}</b><small>${ok?(b?'Mejor: '+b+'%':'Salva el '+l.need+'%'):'Supera el anterior'}</small></button>`;}).join('')}</div>
+ <h2>Habilidades</h2><div class="rs-help">${SKO.map(k=>`${SK[k].i} <b>${SK[k].n}</b>: ${SK[k].d}`).join('<br>')}<br><br>Elige una habilidad abajo y toca a un gomino. Arrastra para mover la vista. Con ➖ ➕ cambias lo rápido que salen. 💥 (dos toques) hace explotar a todos.</div>
+ ${TEST?'':'<p><a class="rs-link" href="juego.html">← Volver a la zona de juego</a></p>'}</div>`;
+ const hc=$('.rs-hero');if(hc)hc.appendChild(heroCanvas());
+ document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{const fin=sesFin();if(!TEST&&!gLoad().prueba&&fin<Date.now())return menu();jugar(+b.dataset.l);});
+ const go=$('#rs-start');if(go)go.onclick=async()=>{go.disabled=true;let okF=false;try{okF=await gGastar();}catch(e){go.disabled=false;go.textContent='Sin conexión. Inténtalo otra vez';return;}if(!okF)return menu();sesPon(Date.now()+SES_MIN*60000);menu();};
+ if(hay&&!g.prueba)setTimeout(()=>{if($('.rs-box')&&sesFin()<Date.now())menu();},quedan+500);}
+menu();if(!TEST)gSync().then(x=>{if(x&&$('.rs-box'))menu();}).catch(()=>{});
+window.__R={LV,jugar,get S(){return S;},asigna,tick:()=>tick(),menu,sesPon};
+})();
+
+</script></body></html>

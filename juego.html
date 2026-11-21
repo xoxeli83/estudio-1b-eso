@@ -831,7 +831,7 @@ const hub=document.getElementById('hub');
 const OPEN={jugar:openGame,clasificacion:openLeague,muneco:openAvatarEditor};
 function casa(){if(location.hash)history.replaceState(null,'',location.pathname);const g=gLoad();
  hub.innerHTML=`<h1>Tu zona de juego</h1><div class="me">${avatarSVG(g.av,90)}<div><div class="av-st">⭐ ${g.stars}</div><div class="av-next">🎮 ${g.fichas} ${g.fichas===1?'ficha':'fichas'}, récord ${g.juegoBest}</div></div></div>
- <a class="b" href="carrera.html" style="display:block;text-decoration:none;color:inherit">🏁 Carrera de vehículos</a><button class="b" data-a="jugar">🎮 Jugar a saltar</button><button class="b" data-a="clasificacion">🏆 Clasificación y duelos</button><button class="b" data-a="muneco">🧑 Mi muñeco y premios</button><a class="back" href="index.html">Volver a las asignaturas</a>`;
+ <a class="b" href="carrera.html" style="display:block;text-decoration:none;color:inherit">🏁 Carrera de vehículos</a><a class="b" href="rescate.html" style="display:block;text-decoration:none;color:inherit">🐾 Rescate Gomino (puzles)</a><button class="b" data-a="jugar">🎮 Jugar a saltar</button><button class="b" data-a="clasificacion">🏆 Clasificación y duelos</button><button class="b" data-a="muneco">🧑 Mi muñeco y premios</button><a class="back" href="index.html">Volver a las asignaturas</a>`;
  hub.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>OPEN[b.dataset.a](casa));}
 const h=location.hash.slice(1);casa();if(OPEN[h])OPEN[h](casa);gSync().then(x=>{if(x&&!document.getElementById('jg')&&!document.getElementById('lg')&&!document.getElementById('av-editor'))casa();});
 </script></body></html>
