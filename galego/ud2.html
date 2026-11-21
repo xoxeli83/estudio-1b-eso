@@ -177,7 +177,7 @@ label.cfg{display:block;margin:10px 0}
 .esc{width:100%;box-sizing:border-box;font-size:20px;padding:12px;border:3px solid var(--line);border-radius:12px;margin:12px 0;font-family:inherit}.esc:focus{border-color:var(--main);outline:none}.modelo{line-height:1.5}.autoev{display:flex;gap:8px;flex-wrap:wrap}.autoev button{flex:1;min-width:110px}
 .txtex{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px;font-size:18px;line-height:1.55;margin-bottom:10px}
 .sils{display:flex;gap:6px;justify-content:center;margin:10px 0}.sil{font-size:24px;font-weight:800;padding:10px 16px;border:3px solid var(--line);border-radius:12px;background:#fff}.sil.sel{border-color:var(--main);background:var(--tint)}.sil.ok{border-color:var(--ok);background:var(--okbg)}
-.opts2{display:flex;gap:12px;justify-content:center;margin:14px 0}.dop{font-size:26px;font-weight:800;min-width:110px;padding:14px;border:3px solid var(--line);border-radius:14px;background:#fff}.dop.ok{background:var(--okbg);border-color:var(--ok)}.dop.no{background:var(--nobg);border-color:var(--no)}
+.opts2{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px 0}.dop{font-size:clamp(18px,5vw,26px);font-weight:800;min-width:110px;padding:14px;border:3px solid var(--line);border-radius:14px;background:#fff}.dop.ok{background:var(--okbg);border-color:var(--ok)}.dop.no{background:var(--nobg);border-color:var(--no)}
 .ap{margin:18px 0 26px}.ap h3{border-bottom:3px solid var(--line);padding-bottom:4px}.ap h4{margin:14px 0 6px}.ap td{vertical-align:top}.lst{line-height:1.8}
 .apidx{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.apidx a{background:var(--tint);color:var(--main);border-radius:20px;padding:6px 12px;text-decoration:none;font-weight:700;font-size:15px}
 @media(max-width:520px){.une{grid-template-columns:1fr 1.5fr}.uw,.ud{font-size:15px;padding:8px}}
@@ -1661,12 +1661,21 @@ const EX_TXT=[
  {t:'Hai moitos anos, nunha aldea de Lugo, vivía un ferreiro chamado Brais. Todos os días traballaba na súa ferraría, preto do río. Un inverno moi frío, apareceu un lobo ferido á porta. Brais curouno e deulle de comer. Desde aquel día, o lobo acompañouno sempre ao monte e protexeu a aldea durante dez anos.',
   q:[['Quen son os personaxes?','Brais, o ferreiro (protagonista), e o lobo (principal). A xente da aldea é secundaria.'],['Cal é o espazo?','Unha aldea de Lugo, a ferraría preto do río e o monte. Espazo realista.'],['Cal é o tempo?','Tempo externo: hai moitos anos, nun inverno. Tempo interno: dez anos.'],['Que tipo de narrador ten?','Narrador externo, en terceira persoa.']]}
 ];
+const EX_CLA=[['Raquel','común','propio','propio'],['Galicia','común','propio','propio'],['Miño','común','propio','propio'],['profesora','común','propio','común'],['cidade','común','propio','común'],['río','común','propio','común'],
+ ['tristeza','concreto','abstracto','abstracto'],['inxustiza','concreto','abstracto','abstracto'],['amizade','concreto','abstracto','abstracto'],['medo','concreto','abstracto','abstracto'],['paxaro','concreto','abstracto','concreto'],['estoupido','concreto','abstracto','concreto'],['perfume','concreto','abstracto','concreto'],
+ ['auga','contable','non contable','non contable'],['sal','contable','non contable','non contable'],['azucre','contable','non contable','non contable'],['area','contable','non contable','non contable'],['nariz','contable','non contable','contable'],['libro','contable','non contable','contable'],
+ ['mocidade','individual','colectivo','colectivo'],['rabaño','individual','colectivo','colectivo'],['enxame','individual','colectivo','colectivo'],['alumnado','individual','colectivo','colectivo'],['mozo','individual','colectivo','individual'],['ovella','individual','colectivo','individual'],['abella','individual','colectivo','individual']];
+const EX_COL=[['ovella','rabaño'],['árbore','arboredo'],['abella','enxame'],['alumno','alumnado'],['barco','frota'],['mozo','mocidade'],['soldado','exército'],['estrela','constelación'],['piñeiro','piñeiral'],['carballo','carballeira']];
+const EX_NAR=[['«—Hai alguén aí? —preguntou Lucía.»','estilo directo','estilo indirecto'],['«Lucía preguntou se había alguén alí.»','estilo indirecto','estilo directo'],['«—Vou contigo! —berrou o avó.»','estilo directo','estilo indirecto'],['«O avó dixo que ía con ela.»','estilo indirecto','estilo directo'],
+ ['«Eu abrín a porta do faiado e vin un dragón.»','narrador interno','narrador externo'],['«Brais abriu a porta da ferraría.»','narrador externo','narrador interno'],['«Aquela noite non puiden durmir.»','narrador interno','narrador externo'],['«Os nenos correron cara á praia.»','narrador externo','narrador interno'],
+ ['Preséntanse os personaxes e a situación inicial.','introdución','nó'],['Desenvólvese o conflito; é a parte máis longa.','nó','desenlace'],['Resólvese o conflito: situación final.','desenlace','introdución'],
+ ['Personaxe que se opón ao protagonista.','antagonista','secundario'],['Personaxe que aparece pouco e ten pouca importancia.','secundario','protagonista'],['Canto tempo pasa dende o inicio ata o final da historia.','tempo interno','tempo externo'],['Cando sucede a historia (ano, estación, día).','tempo externo','tempo interno'],['Un lugar inventado, que non existe.','espazo fantástico','espazo realista']];
 const exNrm=s=>s.toLowerCase().trim().replace(/[.!?¡¿,]+$/g,'').replace(/\s+/g,' ');
 const exSinArt=s=>s.replace(/^(o|a|os|as) /,'');
 function exameMenu(){
   clearAll();
-  const L=[['corpo','1. Partes do corpo (escribe o nome)'],['artigo','3. Pon o artigo diante (o / a)'],['arbore','4. Dáse a froita: escribe a árbore'],['tonica','5. Sinala a tónica e pon o acento se fai falta'],['fem','6. Escribe o feminino'],['plu','7. Escribe o plural'],['ace','8. Acentúa cando sexa necesario'],['dia','9. Escolle a correcta (vou á / a praia)'],['texto','10. Analiza o texto: personaxes, espazo e tempo']];
-  shell(`<div class="page"><h2>📝 Exame tipo: os exercicios que entran</h2><p class="small">Practica cada exercicio como no exame. O 2 é o exercicio que fixestes na clase: repásao no caderno.</p>
+  const L=[['corpo','1. Partes do corpo (escribe o nome)'],['clase','2. Exercicio da clase: repaso (substantivos e narración)'],['artigo','3. Pon o artigo diante (o / a)'],['arbore','4. Dáse a froita: escribe a árbore'],['tonica','5. Sinala a tónica e pon o acento se fai falta'],['fem','6. Escribe o feminino'],['plu','7. Escribe o plural'],['ace','8. Acentúa cando sexa necesario'],['dia','9. Escolle a correcta (vou á / a praia)'],['texto','10. Analiza o texto: personaxes, espazo e tempo']];
+  shell(`<div class="page"><h2>📝 Exame tipo: os exercicios que entran</h2><p class="small">Practica cada exercicio como no exame. O 2 é un dos exercicios que fixestes na clase (a mestra non dixo cal): aquí tes un repaso das clases de substantivos e da narración, e mira tamén o caderno.</p>
    ${L.map(([k,t])=>`<button class="mrow" data-e="${k}"><span class="s">✍️</span>${t}</button>`).join('')}
    <button class="go" data-e="todo">🎯 Exame completo (un pouco de todo)</button></div>`);
   document.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>exame(b.dataset.e));
@@ -1680,8 +1689,11 @@ function exItems(m){
   if(m==='plu')return sh(EX_PLU).slice(0,10).map(([s,p])=>({q:`Escribe o plural: <b>${s}</b>`,ok:[p,exSinArt(p)],a:p}));
   if(m==='ace')return sh(EX_ACE).slice(0,10).map(([s,c])=>({q:`Escribe ben a palabra (co acento se o leva): <b>${s}</b>`,ok:[c],a:c}));
   if(m==='dia')return sh(EX_DIA).slice(0,12).map(([f,ok,ko])=>({tipo:'dia',q:f.replace('___','<b>___</b>'),op:sh([ok,ko]),ok:[ok],a:f.replace('___',ok)}));
+  if(m==='clase'){const A=sh(EX_CLA).slice(0,8).map(([w,a,b,ok])=>({tipo:'dia',q:`<b>${w}</b>: é un substantivo…`,op:sh([a,b]),ok:[ok],a:w+': '+ok}));
+    const B=sh(EX_COL).slice(0,3).map(([i,c])=>({q:`Escribe o substantivo colectivo de <b>${i}</b>`,ok:[c,'o '+c,'a '+c],a:c}));
+    const C=sh(EX_NAR).slice(0,5).map(([f,ok,ko])=>({tipo:'dia',q:f,op:sh([ok,ko]),ok:[ok],a:ok}));return sh(A.concat(C)).concat(B);}
   if(m==='texto'){const T=sh(EX_TXT)[0];return T.q.map(([q,a])=>({tipo:'texto',txt:T.t,q,a,self:true}));}
-  return ['corpo','artigo','arbore','tonica','fem','plu','ace','dia'].flatMap(k=>exItems(k).slice(0,3)).concat(exItems('texto').slice(0,2));
+  return ['corpo','clase','artigo','arbore','tonica','fem','plu','ace','dia'].flatMap(k=>exItems(k).slice(0,3)).concat(exItems('texto').slice(0,2));
 }
 function exame(m){
   clearAll();
