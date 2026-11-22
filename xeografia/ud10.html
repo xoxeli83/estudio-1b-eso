@@ -164,6 +164,12 @@ label.cfg{display:block;margin:10px 0}
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;margin:0 2px;font-weight:500}.frac i{font-style:normal;padding:0 3px}.frac i:first-child{border-bottom:2px solid currentColor}
 .en{color:#1f4fb8;font-weight:500}
 .fact .en{white-space:normal}
+.xim{margin:0 0 12px}.xs{width:100%;height:auto;display:block;border-radius:12px;max-width:560px;margin:0 auto}.xesc{max-width:170px}.xcap{max-width:260px}
+.xnum circle{fill:#fff;stroke:#17203a;stroke-width:2.5}.xnum text{font:800 14px Lexend,sans-serif;fill:#17203a}.xnum.pul circle{fill:#ffd21f;stroke:#c2410c;stroke-width:3.5;animation:xnp .9s infinite}@keyframes xnp{50%{fill:#ff8c1a}}
+.xpir{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 14px}.xpn{background:#f3e3b5;border:3px solid #c9a75a;border-radius:8px;text-align:center;padding:10px 4px;font-weight:800;font-size:18px}.xpn.ok,.xord li.ok{background:var(--okbg);border-color:var(--ok)}.xpn.no,.xord li.no{background:var(--nobg);border-color:var(--no)}
+.xord{font-size:20px;font-weight:700;padding-left:28px}.xord li{border:2px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;background:#fff}
+.esc{width:100%;box-sizing:border-box;font-size:20px;padding:12px;border:3px solid var(--line);border-radius:12px;margin:12px 0;font-family:inherit}.esc:focus{border-color:var(--main);outline:none}.modelo{line-height:1.5}.autoev{display:flex;gap:8px;flex-wrap:wrap}.autoev button{flex:1;min-width:110px}
+.opts2{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px 0}.dop{font-size:clamp(17px,4.6vw,23px);font-weight:800;min-width:110px;padding:14px;border:3px solid var(--line);border-radius:14px;background:#fff}.dop:disabled{opacity:.6}.dop.ok{background:var(--okbg);border-color:var(--ok);opacity:1}.dop.no{background:var(--nobg);border-color:var(--no);opacity:1}
 </style>
 </head>
 <body><!--menu--><style>
@@ -1166,13 +1172,13 @@ function home(){
   clearAll();R=null;freshSession();
   const a=nextAction();
   shell(`<button class="av-home" id="av-open" aria-label="Mi muñeco">${avatarSVG(gLoad().av,52)}<b>⭐ ${gStars()}</b></button><p class="small">${a.small}</p><h1>${a.title}</h1><p class="small">${a.sub}</p>
-    <button class="go" id="go">Empezar</button>${dots()}
-    <div class="foot no-print"><a class="link" href="../index.html">Asignaturas</a><button class="link" id="l-map">Ver misiones</button><button class="link" id="l-che">Chuleta</button><button class="link" id="l-jg">🎮 Juego</button>${ligaOn()?'<button class="link" id="l-lg">🏆 Clasificación</button>':''}<button class="link" id="l-par">Para padres</button>${window.parent!==window?'<button class="link" id="l-desk">Volver al escritorio</button>':''}</div>`,{exit:false});
+    <button class="go" id="go">Empezar</button><button class="alt" id="exh">📝 Exame tipo: prepara o exame de Grecia</button>${dots()}
+    <div class="foot no-print"><a class="link" href="../index.html">Asignaturas</a><button class="link" id="l-map">Ver misiones</button><button class="link" id="l-che">Chuleta</button><button class="link" id="l-exm">📝 Exame tipo</button><button class="link" id="l-jg">🎮 Juego</button>${ligaOn()?'<button class="link" id="l-lg">🏆 Clasificación</button>':''}<button class="link" id="l-par">Para padres</button>${window.parent!==window?'<button class="link" id="l-desk">Volver al escritorio</button>':''}</div>`,{exit:false});
   popIndex=null;
   const g=document.getElementById('go');g.onclick=a.fn;g.focus({preventScroll:true});
   document.getElementById('l-jg').onclick=()=>openGame(home);const llg=document.getElementById('l-lg');if(llg)llg.onclick=()=>openLeague(home);
   document.getElementById('av-open').onclick=()=>openAvatarEditor(home);
-  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-par').onclick=parents;
+  document.getElementById('l-map').onclick=map;document.getElementById('l-che').onclick=cheat;document.getElementById('l-exm').onclick=exameMenu;{const e=document.getElementById('exh');if(e)e.onclick=exameMenu;}document.getElementById('l-par').onclick=parents;
   const ld=document.getElementById('l-desk');if(ld)ld.onclick=()=>window.parent.postMessage('cerrar-misiones','*');
   keyH=e=>{if(e.key==='Enter'){e.preventDefault();a.fn();}};
 }
@@ -1342,15 +1348,228 @@ function simEnd(){
 function map(){
   clearAll();
   shell(`<div class="page"><h2>Misiones</h2>${M.map((m,i)=>`<button class="mrow ${S.done[i]?'d':''}" data-i="${i}"><span class="s">${S.done[i]?'✓':''}</span>${i+1}. ${m.t}</button>`).join('')}
-   <button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
+   <button class="mrow" id="exm"><span class="s">🏛️</span>Exame tipo de Grecia (como o primeiro exame)</button><button class="mrow" id="sim"><span class="s">📝</span>Simulacro de examen</button>${wrongIds().length?`<button class="mrow" id="rv"><span class="s">🔁</span>Repasar lo que costó (${wrongIds().length})</button>`:''}</div>`);
   document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>ready(()=>lesson(+b.dataset.i)));
-  document.getElementById('sim').onclick=()=>ready(simIntro);
+  document.getElementById('sim').onclick=()=>ready(simIntro);document.getElementById('exm').onclick=exameMenu;
   const v=document.getElementById('rv');if(v)v.onclick=()=>ready(startReview);
 }
 function cheat(){
   clearAll();
   shell(`<div class="page"><h2>Chuleta: a civilización grega</h2>${fmt(`<table><tr><td><b>Etapas</b></td><td>Arcaica (IX-VI a.C.), clásica (V e comezos do IV), helenística (mediados do IV ao I)</td></tr><tr><td><b>Orixes</b></td><td>Minoicos en Creta (Cnosos). Micénicos na Grecia continental (Micenas)</td></tr><tr><td><b>Polis</b></td><td>Cidade-estado. Aristoi: «os mellores». Aristocracia</td></tr><tr><td><b>Colonias</b></td><td>Séculos VIII-VI a.C. Oeste: Sicilia, Italia, Francia, Ibérica. Leste: mar Negro</td></tr><tr><td><b>Atenas</b></td><td>Democracia. Ekklesia, Bulé, estrategos, arcontes e tribunais</td></tr><tr><td><b>Esparta</b></td><td>Oligarquía. Dous reis, Xerusía, éforos e Apella. Espartiatas, periecos e ilotas</td></tr><tr><td><b>Guerras médicas</b></td><td>Persas contra gregos. Maratón, Termópilas, Salamina e Platea</td></tr><tr><td><b>Peloponeso</b></td><td>Atenas contra Esparta. Gaña Esparta en 404 a.C.</td></tr><tr><td><b>Alexandre</b></td><td>Filipo II, falanxe, imperio ata o Indo. Morre en 323 a.C.</td></tr><tr><td><b>Helenismo</b></td><td>Fusión grega e oriental. Pérgamo e Alexandría. Diádocos e ptolemaicos</td></tr><tr><td><b>Economía</b></td><td>Trigo, vide e oliveira. Comercio. Dracmas</td></tr><tr><td><b>Deuses</b></td><td>Zeus ceo, Hera familia, Poseidón mar, Hades inferno, Deméter agricultura, Dionisos viño, Hermes comercio, Atenea sabedoría, Ares guerra, Apolo música, Afrodita amor</td></tr><tr><td><b>Templo</b></td><td>Pronaos, naos e opistodomo. Dórica, xónica e corintia</td></tr><tr><td><b>Escultura</b></td><td>Mirón: Discóbolo. Policleto: Diadúmeno. Fidias: friso do Partenón. Lisipo: Apoxiómeno. Praxíteles: Afrodita de Cnido</td></tr><tr><td><b>Cidade</b></td><td>Ágora: mercado. Acrópole: no alto e amurallada</td></tr><tr><td><b>Saber</b></td><td>Sócrates, Platón, Aristóteles, Safo, Teano, Aspasia, Hipatia, Pitágoras, Arquímedes, Herodoto</td></tr><tr><td><b>Literatura</b></td><td>Homero: Ilíada e Odisea. Píndaro. Sófocles e Eurípides: traxedia. Aristófanes: comedia</td></tr></table>`)}<button class="alt no-print" id="pr">Imprimir</button></div>`);
   document.getElementById('pr').onclick=()=>window.print();
+}
+/* ===== Exame tipo de Grecia: como o primeiro exame (escribir, imaxes, pirámide, definicións, templo) ===== */
+const XN=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim().replace(/[.!?¡¿,;:]+$/g,'').replace(/\s+/g,' ').replace(/^(o|a|os|as|el|la|los|las) /,'');
+const XNUM=(x,y,n,hi)=>`<g class="xnum${hi?' pul':''}"><circle cx="${x}" cy="${y}" r="12"/><text x="${x}" y="${y+5}" text-anchor="middle">${n}</text></g>`;
+
+/* --- Debuxos propios --- */
+function xTemplo(hi){
+  const cs=[76,126,176,224,274,324];
+  let col='';cs.forEach(x=>{col+=`<rect x="${x-12}" y="105" width="24" height="137" fill="#efe4c8" stroke="#8a7a58"/>`;for(let k=-7;k<=7;k+=5)col+=`<line x1="${x+k}" y1="107" x2="${x+k}" y2="240" stroke="#c9b78e"/>`;col+=`<path d="M${x-14} 98 L${x+14} 98 L${x+11} 105 L${x-11} 105Z" fill="#e6d8b4" stroke="#8a7a58"/><rect x="${x-18}" y="92" width="36" height="6" fill="#e6d8b4" stroke="#8a7a58"/>`;});
+  let fr='';for(let x=56;x<344;x+=36){fr+=`<rect x="${x}" y="50" width="14" height="22" fill="#cdbb92" stroke="#8a7a58"/><line x1="${x+5}" y1="52" x2="${x+5}" y2="70" stroke="#8a7a58"/><line x1="${x+9}" y1="52" x2="${x+9}" y2="70" stroke="#8a7a58"/>`;if(x+36<344)fr+=`<circle cx="${x+25}" cy="61" r="6" fill="#d9c79f"/>`;}
+  const N=hi||0;
+  return `<svg viewBox="0 0 400 300" class="xs" role="img" aria-label="Fachada dun templo grego con números">
+  <rect width="400" height="300" fill="#dcefff"/>
+  <path d="M44 42 L200 4 L356 42Z" fill="#efe4c8" stroke="#8a7a58" stroke-width="2"/><path d="M70 38 L200 10 L330 38Z" fill="#e3d4ae"/>
+  <g fill="#b9a37a"><circle cx="160" cy="28" r="5"/><rect x="156" y="31" width="8" height="8"/><circle cx="200" cy="20" r="6"/><rect x="195" y="24" width="10" height="14"/><circle cx="240" cy="28" r="5"/><rect x="236" y="31" width="8" height="8"/></g>
+  <rect x="44" y="42" width="312" height="7" fill="#e6d8b4" stroke="#8a7a58"/>
+  <rect x="50" y="49" width="300" height="24" fill="#e9dcbb" stroke="#8a7a58"/>${fr}
+  <rect x="50" y="73" width="300" height="19" fill="#efe4c8" stroke="#8a7a58"/>
+  ${col}
+  <rect x="50" y="242" width="300" height="13" fill="#e6d8b4" stroke="#8a7a58"/><rect x="40" y="255" width="320" height="14" fill="#ddcda6" stroke="#8a7a58"/><rect x="30" y="269" width="340" height="18" fill="#d2c096" stroke="#8a7a58"/>
+  ${XNUM(200,32,1,N===1)}${XNUM(117,61,2,N===2)}${XNUM(250,82,3,N===3)}${XNUM(126,99,4,N===4)}${XNUM(201,175,5,N===5)}${XNUM(200,262,6,N===6)}
+  </svg>`;
+}
+const X_TEMPLO=[[1,'frontón',['fronton'],'O frontón: o triángulo de arriba, adornado con esculturas.'],[2,'friso',['friso'],'O friso: a banda decorada; no orde dórico alterna tríglifos e metopas.'],[3,'arquitrabe',['arquitrabe'],'A arquitrabe: a viga lisa que descansa sobre as columnas.'],[4,'capitel',['capitel'],'O capitel: a parte de arriba da columna.'],[5,'fuste',['fuste','columna'],'O fuste: o corpo da columna, con acanaladuras.'],[6,'estilóbato',['estilobato','crepidoma','escalinata','gradas','chanzos'],'O estilóbato: o último chanzo, onde se apoian as columnas (os chanzos xuntos son o crepidoma).']];
+function xPlanta(hi){
+  let c='';for(let x=60;x<=340;x+=28){c+=`<circle cx="${x}" cy="38" r="6" fill="#efe4c8" stroke="#8a7a58"/><circle cx="${x}" cy="182" r="6" fill="#efe4c8" stroke="#8a7a58"/>`;}
+  for(let y=66;y<=154;y+=29){c+=`<circle cx="60" cy="${y}" r="6" fill="#efe4c8" stroke="#8a7a58"/><circle cx="340" cy="${y}" r="6" fill="#efe4c8" stroke="#8a7a58"/>`;}
+  const N=hi||0;
+  return `<svg viewBox="0 0 400 220" class="xs" role="img" aria-label="Planta dun templo grego con números">
+  <rect width="400" height="220" fill="#f4efe2"/><rect x="40" y="22" width="320" height="176" fill="#e9dcbb" stroke="#8a7a58"/>
+  ${c}
+  <g fill="none" stroke="#5c4b2e" stroke-width="7"><path d="M92 62 L308 62 L308 158 L92 158"/><path d="M135 62 L135 98 M135 122 L135 158"/><path d="M262 62 L262 158"/></g>
+  <rect x="190" y="96" width="22" height="28" fill="#c79a3a"/><circle cx="201" cy="92" r="6" fill="#c79a3a"/>
+  <path d="M8 110 L30 110 M22 103 L30 110 L22 117" stroke="#3a3ca6" stroke-width="3" fill="none"/><text x="6" y="98" font-size="11" fill="#3a3ca6">entrada</text>
+  ${XNUM(114,110,1,N===1)}${XNUM(170,110,2,N===2)}${XNUM(285,110,3,N===3)}${XNUM(116,38,4,N===4)}
+  </svg>`;
+}
+const X_PLANTA=[[1,'pronaos',['pronaos','pronao','vestibulo'],'A pronaos: o vestíbulo da entrada.'],[2,'naos',['naos','cela','cella'],'A naos (ou cela): a sala onde estaba a estatua do deus.'],[3,'opistodomo',['opistodomo'],'O opistodomo: a sala de atrás, onde se gardaba o tesouro e as ofrendas.'],[4,'columnata',['columnata','peristilo','columnas'],'A columnata (peristilo): as columnas que rodean o templo.']];
+function xCapitel(k){
+  const fuste=`<rect x="70" y="80" width="60" height="70" fill="#efe4c8" stroke="#8a7a58"/>${[80,92,104,116].map(x=>`<line x1="${x}" y1="82" x2="${x}" y2="150" stroke="#c9b78e"/>`).join('')}`;
+  let top='';
+  if(k==='dórico')top=`<path d="M64 66 L136 66 L130 80 L70 80Z" fill="#e6d8b4" stroke="#8a7a58"/><rect x="58" y="54" width="84" height="12" fill="#e6d8b4" stroke="#8a7a58"/>`;
+  if(k==='xónico')top=`<rect x="52" y="54" width="96" height="10" fill="#e6d8b4" stroke="#8a7a58"/><rect x="66" y="64" width="68" height="16" fill="#e6d8b4" stroke="#8a7a58"/><g fill="none" stroke="#8a7a58" stroke-width="2.5"><path d="M66 64 a14 14 0 1 0 0 24 a9 9 0 1 0 0-15 a4 4 0 1 0 0 7"/><path d="M134 64 a14 14 0 1 1 0 24 a9 9 0 1 1 0-15 a4 4 0 1 1 0 7"/></g>`;
+  if(k==='corintio')top=`<path d="M60 26 L140 26 L136 34 L64 34Z" fill="#e6d8b4" stroke="#8a7a58"/><path d="M70 80 L66 34 L134 34 L130 80Z" fill="#e6d8b4" stroke="#8a7a58"/>${[74,90,106,122].map(x=>`<path d="M${x} 80 q-8 -18 4 -30 q10 12 4 30Z" fill="#b5c98a" stroke="#6f8a45"/>`).join('')}${[82,100,118].map(x=>`<path d="M${x} 62 q-7 -14 2 -26 q9 10 4 26Z" fill="#c6d69e" stroke="#6f8a45"/>`).join('')}<g fill="none" stroke="#8a7a58" stroke-width="2"><path d="M66 36 q-8 4 -4 10"/><path d="M134 36 q8 4 4 10"/></g>`;
+  return `<svg viewBox="0 0 200 150" class="xs xcap" role="img" aria-label="Capitel dunha columna grega"><rect width="200" height="150" fill="#dcefff"/>${fuste}${top}</svg>`;
+}
+/* figuras de escultura feitas con trazos */
+function xEscultura(k){
+  const st='stroke="#cfc3a4" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" fill="none"';
+  const base=`<rect x="25" y="214" width="90" height="16" fill="#9d9078"/>`;
+  let f='';
+  if(k==='arcaica')f=`<path d="M70 70 L70 140" ${st} stroke-width="26"/><path d="M58 76 L54 140 M82 76 L86 140" ${st}/><path d="M63 140 L60 212 M77 140 L84 212" ${st}/><circle cx="70" cy="46" r="17" fill="#cfc3a4"/><path d="M62 50 q8 6 16 0" stroke="#8a7d62" stroke-width="2" fill="none"/><path d="M53 40 q17 -20 34 0 l0 16 l-34 0Z" fill="#b5a888"/>`;
+  if(k==='clasica')f=`<path d="M48 82 Q66 118 78 140" ${st} stroke-width="24"/><path d="M52 86 Q30 70 22 42" ${st}/><circle cx="20" cy="34" r="13" fill="#bdb193" stroke="#9d9078" stroke-width="2"/><path d="M56 90 Q76 104 96 112" ${st}/><path d="M78 140 L58 176 L64 212" ${st}/><path d="M80 140 L104 168 L104 212" ${st}/><circle cx="40" cy="70" r="15" fill="#cfc3a4"/>`;
+  if(k==='helenistica')f=`<path d="M72 84 Q60 120 70 150" ${st} stroke-width="24"/><path d="M76 88 Q98 60 92 22" ${st}/><path d="M66 92 Q40 104 34 132" ${st}/><path d="M70 150 L46 182 L40 212" ${st}/><path d="M72 150 L96 178 L104 212" ${st}/><circle cx="84" cy="64" r="15" fill="#cfc3a4"/><path d="M78 68 q6 -5 12 0" stroke="#8a7d62" stroke-width="2" fill="none"/><path d="M100 30 C120 70 40 70 50 110 C60 150 110 120 100 170 C94 196 60 190 54 206" stroke="#7f9a5a" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="100" cy="28" r="6" fill="#7f9a5a"/>`;
+  return `<svg viewBox="0 0 140 240" class="xs xesc" role="img" aria-label="Escultura grega"><rect width="140" height="240" fill="#2f3446"/>${f}${base}</svg>`;
+}
+const X_ESC={arcaica:['Época arcaica','Figura ríxida e de fronte, simétrica, cos brazos pegados ao corpo e unha perna un pouco adiantada. Ten o «sorriso arcaico». Exemplo: os kuroi (mozos) e as korai (mozas).'],
+ clasica:['Época clásica','Busca a beleza ideal: corpo proporcionado e en equilibrio, con movemento natural e cara serena. Exemplo: o Discóbolo de Mirón (un atleta lanzando o disco).'],
+ helenistica:['Época helenística','Moito movemento e dramatismo: corpos retorcidos, caras con dor ou emoción forte. Exemplo: o Laocoonte (un sacerdote e os seus fillos atacados por serpes).']};
+function xAtenas(hi){
+  const N=hi||0;let gr='';for(let r=0;r<6;r++)gr+=`<path d="M${150-r*9} ${222-r*5} A${30+r*9} ${14+r*5} 0 0 1 ${210+r*9} ${222-r*5}" stroke="#a89a7a" stroke-width="3" fill="none"/>`;
+  let pe='';for(let i=0;i<14;i++)pe+=`<circle cx="${260+((i*37)%110)}" cy="${232+((i*13)%26)}" r="2.6" fill="#5b4a3a"/>`;
+  let co='';for(let x=186;x<=246;x+=10)co+=`<rect x="${x}" y="88" width="5" height="22" fill="#f4ecd6"/>`;
+  return `<svg viewBox="0 0 420 280" class="xs" role="img" aria-label="Debuxo dunha cidade grega antiga con números">
+  <defs><linearGradient id="xc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fc6ef"/><stop offset="1" stop-color="#e8f4ff"/></linearGradient></defs>
+  <rect width="420" height="280" fill="url(#xc)"/>
+  <path d="M330 120 L420 104 L420 150 L330 150Z" fill="#3f86c4"/><path d="M360 128 l14 0 l-4 5 l-8 0Z M392 118 l12 0 l-3 4 l-7 0Z" fill="#6b4a2a"/>
+  <path d="M250 160 L360 130 M256 170 L366 140" stroke="#b6a47e" stroke-width="3"/>
+  <rect x="0" y="150" width="420" height="130" fill="#d9c79a"/>
+  <path d="M90 180 C110 120 150 108 170 104 L270 104 C300 110 320 140 330 180Z" fill="#b39c6e"/>
+  <path d="M168 104 L272 104 L272 98 L168 98Z" fill="#9a8458"/>
+  <path d="M182 88 L250 88 L216 74Z" fill="#f4ecd6" stroke="#8a7a58"/>${co}<rect x="180" y="108" width="72" height="5" fill="#e9dcbb"/>
+  <rect x="150" y="92" width="16" height="16" fill="#efe4c8"/><rect x="262" y="94" width="10" height="12" fill="#efe4c8"/>
+  <path d="M120 222 L240 222 A60 30 0 0 0 120 222Z" fill="#cdbd94"/>${gr}<rect x="160" y="222" width="40" height="6" fill="#efe4c8"/>
+  <rect x="250" y="222" width="140" height="44" fill="#e6d6ad" stroke="#a89a7a"/><rect x="250" y="212" width="140" height="10" fill="#c9b78e"/>${[...Array(12)].map((_,i)=>`<rect x="${254+i*11.5}" y="214" width="3" height="8" fill="#f4ecd6"/>`).join('')}${pe}
+  <path d="M10 200 l12 -10 l12 10Z M40 210 l10 -9 l10 9Z M60 190 l12 -10 l12 10Z" fill="#a86e4a"/><path d="M10 200 h24 v14 h-24Z M40 210 h20 v12 h-20Z M60 190 h24 v14 h-24Z" fill="#e3d2a8"/>
+  ${XNUM(118,150,1,N===1)}${XNUM(216,64,2,N===2)}${XNUM(180,250,3,N===3)}${XNUM(320,256,4,N===4)}${XNUM(392,104,5,N===5)}
+  </svg>`;
+}
+const X_ATENAS=[[1,'acrópole',['acropole'],'A acrópole: o outeiro alto e amurallado onde estaban os templos.'],[2,'Partenón',['partenon','templo','templo de atenea'],'O Partenón: o templo de Atenea na acrópole.'],[3,'teatro',['teatro','teatro de dioniso'],'O teatro: ao aire libre, aproveitando a ladeira do outeiro.'],[4,'ágora',['agora','mercado','praza'],'A ágora: a praza pública e o mercado, centro da vida da cidade.'],[5,'porto (o Pireo)',['porto','pireo','o pireo','porto do pireo'],'O porto do Pireo, unido a Atenas polos Muros Longos.']];
+
+/* --- Datos --- */
+const X_ETAPAS=[['Época arcaica','séculos IX ao VI a.C. (arredor do 800 ao 500 a.C.)','Nacen as polis, fúndanse colonias por todo o Mediterráneo e escríbense os poemas de Homero.'],
+ ['Época clásica','século V e comezos do IV a.C. (arredor do 500 ao 338 a.C.)','Máximo esplendor: democracia en Atenas, Guerras Médicas, Guerra do Peloponeso, Partenón.'],
+ ['Época helenística','mediados do século IV ao I a.C. (arredor do 336 ao 31 a.C.)','Imperio de Alexandre Magno e reinos dos seus sucesores; mestura da cultura grega coa oriental. Remata cando Roma conquista o último reino (Exipto).']];
+const X_CAL=[['Nacen as polis (cidades-estado)','arcaica'],['Os gregos fundan colonias por todo o Mediterráneo','arcaica'],['Homero e os seus poemas (Ilíada e Odisea)','arcaica'],['As Guerras Médicas contra os persas','clásica'],['Pericles e a democracia de Atenas','clásica'],['Constrúese o Partenón','clásica'],['A Guerra do Peloponeso entre Atenas e Esparta','clásica'],['Os reinos dos sucesores de Alexandre','helenística'],['A gran biblioteca de Alexandría','helenística'],['A cultura grega mestúrase coa oriental','helenística']];
+const X_DEF=[
+ ['polis','Cidade-estado grega: unha cidade co seu territorio, independente, con leis, goberno e exército propios.','cidade-estado · independente · leis propias'],
+ ['democracia','«Goberno do pobo». En Atenas os cidadáns votaban as leis na Asemblea (ekklesia). Mulleres, metecos e escravos non votaban.','goberno do pobo · Atenas · cidadáns votan'],
+ ['oligarquía','Goberno dun grupo pequeno de persoas poderosas. Exemplo: Esparta.','goberno duns poucos · Esparta'],
+ ['acrópole','Parte alta e amurallada da polis, onde estaban os templos. En Atenas, alí está o Partenón.','parte alta · amurallada · templos'],
+ ['ágora','Praza pública da polis: mercado e lugar de reunión dos cidadáns.','praza · mercado · reunión'],
+ ['Partenón','Templo de orde dórico na acrópole de Atenas, dedicado á deusa Atenea. Construíuse no século V a.C., na época de Pericles.','templo · Atenea · acrópole de Atenas'],
+ ['Zeus','Rei dos deuses gregos, deus do ceo e do raio. Vivía no monte Olimpo.','rei dos deuses · ceo e raio · Olimpo'],
+ ['Atenea','Deusa da sabedoría e protectora da cidade de Atenas. O Partenón era o seu templo.','sabedoría · protectora de Atenas'],
+ ['Poseidón','Deus do mar, irmán de Zeus.','deus do mar'],
+ ['Alexandre Magno','Rei de Macedonia, fillo de Filipo II. Conquistou o Imperio persa e chegou ata o río Indo. Morreu no 323 a.C. e o imperio dividiuse entre os seus xenerais.','Macedonia · conquistou Persia · ata o Indo'],
+ ['helenismo','Época despois de Alexandre Magno en que a cultura grega se mesturou coa oriental. Cidades importantes: Alexandría e Pérgamo.','despois de Alexandre · grego + oriental'],
+ ['colonia','Cidade fundada polos gregos fóra de Grecia (séculos VIII-VI a.C.) para comerciar e conseguir terras. Exemplo: Emporion (Empúries), en Hispania.','cidade fóra de Grecia · comercio'],
+ ['Guerras Médicas','Guerras entre os gregos e os persas no século V a.C. (batallas de Maratón, Termópilas e Salamina). Gañaron os gregos.','gregos contra persas · gañan os gregos'],
+ ['Guerra do Peloponeso','Guerra entre Atenas e Esparta (431-404 a.C.). Gañou Esparta.','Atenas contra Esparta · gaña Esparta'],
+ ['ekklesia','Asemblea dos cidadáns de Atenas: votaba as leis e decidía a guerra e a paz.','asemblea · cidadáns · leis'],
+ ['metecos','Estranxeiros libres que vivían en Atenas. Traballaban no comercio e na artesanía, pagaban impostos, pero non podían votar.','estranxeiros libres · non votan'],
+ ['ilotas','Escravos do Estado en Esparta. Traballaban as terras dos espartiatas.','escravos · Esparta · terras'],
+ ['hoplita','Soldado de infantería grego, cun escudo redondo, lanza, casco e coraza. Loitaban en filas moi xuntas (falanxe).','soldado de infantería · escudo e lanza'],
+ ['Homero','Poeta grego ao que se lle atribúen a Ilíada (a guerra de Troia) e a Odisea (a viaxe de Ulises).','poeta · Ilíada · Odisea'],
+ ['Xogos Olímpicos','Competicións deportivas en Olimpia en honra a Zeus, cada catro anos. Durante os xogos facíase unha tregua.','Olimpia · Zeus · cada catro anos'],
+ ['Pericles','Político ateniense do século V a.C. Impulsou a democracia e mandou construír o Partenón.','Atenas · democracia · Partenón'],
+ ['teatro grego','Edificio ao aire libre, en semicírculo, aproveitando a ladeira dun outeiro. Representábanse traxedias e comedias.','aire libre · semicírculo · traxedia e comedia'],
+ ['Sócrates','Filósofo de Atenas. Ensinaba facendo preguntas para que a xente pensase por si mesma. Foi discípulo seu Platón.','filósofo · Atenas · preguntas'],
+ ['Aristóteles','Filósofo e científico grego, alumno de Platón e mestre de Alexandre Magno.','filósofo · mestre de Alexandre'],
+ ['oráculo','Mensaxe dun deus que interpretaban os adiviños. O máis famoso era o oráculo de Delfos, onde se consultaba ao deus Apolo.','mensaxe dun deus · Delfos · Apolo'],
+ ['heroe','Fillo dun deus e dun ser humano. Era mortal. Exemplos: Aquiles, Ulises, Hércules e Orfeo.','fillo de deus e humano · mortal · Aquiles'],
+ ['Liga de Delos','Alianza de polis gregas formada no século V a.C. e dominada por Atenas.','alianza de polis · Atenas'],
+ ['aristoi','«Os mellores»: os nobres ricos que gobernaban as primeiras polis (aristocracia).','os mellores · nobres · gobernaban'],
+ ['éforos','En Esparta, cinco maxistrados que vixiaban os reis e o goberno.','Esparta · vixiaban os reis'],
+ ['Xerusía','En Esparta, o Consello de Anciáns que axudaba aos dous reis.','Esparta · consello de anciáns'],
+ ['diarquía','Goberno de dous reis ao mesmo tempo, como en Esparta.','dous reis · Esparta'],
+ ['Hélade','«Territorio dos gregos»: así chamaban os gregos ao seu mundo. Non era un Estado unido, pero tiñan a mesma lingua e os mesmos deuses.','territorio dos gregos · mesma lingua e deuses'],
+ ['falanxe','Formación do exército macedonio de Filipo II: 16 filas de 16 homes con lanzas longas.','exército · Macedonia · filas de soldados'],
+ ['diádocos','Os xenerais de Alexandre Magno que repartiron o seu imperio cando morreu e fundaron as monarquías helenísticas.','xenerais de Alexandre · repartiron o imperio'],
+ ['Palacio de Cnosos','Gran palacio da civilización minoica, na illa de Creta. Segundo o mito, alí estaba o labirinto do Minotauro.','Creta · minoicos · Minotauro'],
+ ['canon','Regra coas proporcións ideais do corpo humano que seguían os escultores gregos.','regra · proporcións · corpo ideal'],
+ ['estoa (stoa)','Pórtico longo con columnas na ágora, para resgardarse e pasear.','pórtico · columnas · ágora'],
+ ['mito','Relato marabilloso sobre deuses e heroes que explicaba o mundo. Exemplo: Hércules e os seus doce traballos.','relato · deuses e heroes']];
+const X_PIR=[{c:'Atenas',o:['cidadáns','metecos','escravos'],p:['cidadáns'],a:'Arriba os cidadáns (minoría privilexiada: participaban na política e no exército e pagaban impostos). No medio os non cidadáns libres: os metecos (estranxeiros). Abaixo os escravos (non eran persoas libres). As mulleres tampouco eran cidadás.'},
+ {c:'Esparta',o:['espartiatas','periecos','ilotas'],p:['espartiatas'],a:'Arriba os espartiatas (privilexiados: cidadáns libres, adicados á guerra e á política). No medio os periecos (homes libres das cidades veciñas, artesáns e comerciantes, sen dereitos políticos). Abaixo os ilotas (escravos, descendentes dos vencidos nas guerras, que traballaban as terras).'}];
+const X_CURTAS=[
+ ['Que cidade-estado tiña democracia?','Atenas','Esparta'],['Que cidade-estado era unha oligarquía con dous reis?','Esparta','Atenas'],
+ ['Onde educaban os nenos para ser soldados dende os 7 anos?','Esparta','Atenas'],['Quen gañou as Guerras Médicas?','os gregos','os persas'],
+ ['Quen gañou a Guerra do Peloponeso?','Esparta','Atenas'],['A que deusa estaba dedicado o Partenón?','Atenea','Afrodita'],
+ ['Deus do mar','Poseidón','Hades'],['Deus do inferno (mundo dos mortos)','Hades','Ares'],['Deusa do amor e da beleza','Afrodita','Hera'],['Deus da guerra','Ares','Hermes'],
+ ['Deus do comercio e mensaxeiro dos deuses','Hermes','Apolo'],['Deus do viño e do teatro','Dionisos','Zeus'],['Deusa da agricultura','Deméter','Atenea'],['Deusa da familia e esposa de Zeus','Hera','Deméter'],['Deus da música, a luz e as artes','Apolo','Dionisos'],
+ ['Onde vivían os deuses gregos?','no monte Olimpo','en Delfos'],['Os primeiros gregos de Creta eran os…','minoicos','micénicos'],['A civilización de Micenas estaba en…','a Grecia continental','Creta'],
+ ['Cultivos da tríade mediterránea','trigo, vide e oliveira','arroz, millo e pataca'],['A moeda grega chamábase…','dracma','denario'],['Quen escribiu a Ilíada e a Odisea?','Homero','Sófocles'],
+ ['A traxedia (obras tristes): Sófocles ou Aristófanes?','Sófocles','Aristófanes'],['A comedia: Aristófanes ou Eurípides?','Aristófanes','Eurípides'],['O Discóbolo é de…','Mirón','Fidias'],['O friso do Partenón é de…','Fidias','Lisipo'],
+ ['Matemático do teorema dos triángulos','Pitágoras','Arquímedes'],['Historiador grego, «pai da historia»','Herodoto','Homero'],['Rei de Macedonia pai de Alexandre','Filipo II','Pericles'],
+ ['Orde de columna máis sinxela, sen basa','dórico','corintio'],['Orde con volutas (espirais) no capitel','xónico','dórico'],['Orde con follas de acanto no capitel','corintio','xónico'],
+ ['Templo rodeado por unha fila de columnas','períptero','díptero'],['Templo rodeado por dúas filas de columnas','díptero','próstilo'],['Templo redondo de columnas','monóptero','anfipróstilo'],['Templo con columnas só na fachada de diante','próstilo','períptero'],['Templo con columnas nas dúas fachadas','anfipróstilo','monóptero'],
+ ['Onde se gardaba a estatua do deus?','na naos','no opistodomo'],['Onde se gardaba o tesouro do templo?','no opistodomo','na pronaos'],
+ ['Edificio para as carreiras de cabalos e carros','hipódromo','estadio'],['Edificio onde adestraban os atletas','ximnasio','odeón'],['Edificio onde se reunía o Consello','bouleuterion','teatro'],
+ ['Onde estaba o palacio de Cnosos?','en Creta','en Micenas'],['A máscara de Agamenón e a Porta dos Leóns son da civilización…','micénica','minoica'],['Monstro do labirinto de Cnosos segundo o mito','o Minotauro','a Medusa'],
+ ['Rei persa da 2.ª guerra médica, detido nas Termópilas','Xerxes I','Darío I'],['Batalla da 1.ª guerra médica','Maratón','Salamina'],['Quen detivo aos persas nas Termópilas?','os espartanos','os atenienses'],
+ ['Ata onde chegou Alexandre Magno?','ao río Indo','a Hispania'],['Ano da morte de Alexandre Magno','323 a.C.','404 a.C.'],['Ano do fin da Guerra do Peloponeso','404 a.C.','323 a.C.'],
+ ['Cidade con biblioteca famosa (Exipto)','Alexandría','Esparta'],['Os reis helenísticos de Exipto eran os…','ptolemaicos','persas'],
+ ['O Diadúmeno é de…','Policleto','Mirón'],['O Apoxiómeno é de…','Lisipo','Fidias'],['A Afrodita de Cnido é de…','Praxíteles','Policleto'],['Materiais das esculturas gregas','bronce e mármore','ouro e madeira'],['As esculturas gregas estaban…','pintadas (policromadas)','sempre brancas'],
+ ['Sabia matemática e astrónoma de Alexandría','Hipatia','Safo'],['Poeta grega da illa de Lesbos','Safo','Aspasia'],['Considerado o primeiro historiador','Herodoto','Pitágoras'],['Poeta dos atletas vencedores dos Xogos Olímpicos','Píndaro','Homero'],['Teatro grego moi famoso e ben conservado','Epidauro','Cnosos'],
+ ['Os deuses gregos tiñan aspecto…','humano, pero eran inmortais','de animal'],['Criaturas fantásticas cun só ollo','cíclopes','centauros'],['Metade home e metade cabalo','centauro','gorgona']];
+
+function exItemsX(m){
+  if(m==='etapas'){const A=X_ETAPAS.map(([e,d,c])=>({self:true,q:`Escribe o inicio e o final da <b>${e}</b> e unha cousa que pasou nela.`,a:`<b>${e}:</b> ${d}. ${c}`}));
+    const B=sh(X_CAL).slice(0,6).map(([f,ok])=>({tipo:'dia',q:`${f}: a que etapa pertence?`,op:['arcaica','clásica','helenística'],ok:[ok],a:f+' → época '+ok}));
+    return [{tipo:'orde',q:'Toca as tres etapas da historia de Grecia en orde, da máis antiga á máis moderna.',o:['época arcaica','época clásica','época helenística'],a:'Arcaica → clásica → helenística'}].concat(A,B);}
+  if(m==='esc'){const ks=sh(['arcaica','clasica','helenistica']);return ks.flatMap(k=>[{tipo:'dia',img:xEscultura(k),q:'A que etapa pertence esta escultura?',op:['arcaica','clásica','helenística'],ok:[X_ESC[k][0].replace('Época ','')],a:X_ESC[k][0]},{self:true,img:xEscultura(k),q:`Explica as características desta escultura (${X_ESC[k][0].toLowerCase()}).`,a:X_ESC[k][1]}]);}
+  if(m==='cidade'){const A=[{tipo:'dia',img:xAtenas(0),q:'Que cidade-estado grega aparece neste debuxo? (Pista: o templo do outeiro é o Partenón)',op:sh(['Atenas','Esparta','Babilonia']),ok:['Atenas'],a:'Atenas'}];
+    return A.concat(sh(X_ATENAS).slice(0,4).map(([n,nom,ok,ex])=>({img:xAtenas(n),q:`Identifica o elemento número <b>${n}</b>.`,ok:[nom,...ok],a:ex})));}
+  if(m==='pir')return sh(X_PIR).flatMap(P=>[{tipo:'pir',P,q:`Completa a pirámide social de <b>${P.c}</b>: toca os grupos de arriba abaixo.`,a:P.o.join(' → ')},{tipo:'dia',q:`En ${P.c}, que grupo era o privilexiado?`,op:sh(P.o),ok:P.p,a:P.a}]);
+  if(m==='def')return sh(X_DEF).slice(0,8).map(([w,d,k])=>({self:true,q:`Define: <b>${w}</b>`,a:d,k}));
+  if(m==='templo'){const A=sh(X_TEMPLO).slice(0,4).map(([n,nom,ok,ex])=>({img:xTemplo(n),q:`Templo grego: como se chama a parte número <b>${n}</b>?`,ok:[nom,...ok],a:ex}));
+    const B=sh(X_PLANTA).slice(0,3).map(([n,nom,ok,ex])=>({img:xPlanta(n),q:`Planta do templo: que é o número <b>${n}</b>?`,ok:[nom,...ok],a:ex}));
+    const C=sh(['dórico','xónico','corintio']).slice(0,2).map(k=>({tipo:'dia',img:xCapitel(k),q:'De que orde é este capitel?',op:['dórico','xónico','corintio'],ok:[k],a:'Orde '+k+(k==='dórico'?': sinxelo, sen adornos.':k==='xónico'?': ten volutas (espirais).':': ten follas de acanto.')}));
+    return A.concat(B,C,[{self:true,q:'Cal era a función dun templo grego?',a:'Era a casa do deus: na naos gardábase a súa estatua. A xente non entraba dentro; as cerimonias e os sacrificios facíanse fóra, nun altar diante do templo.',k:'casa do deus · estatua · ritos fóra'}]);}
+  if(m==='curtas')return sh(X_CURTAS).slice(0,15).map(([q,ok,ko])=>({tipo:'dia',q,op:sh([ok,ko]),ok:[ok],a:ok}));
+  return ['etapas','esc','cidade','pir','def','templo','curtas'].flatMap(k=>sh(exItemsX(k)).slice(0,k==='pir'?2:3));
+}
+function exameMenu(){
+  clearAll();
+  const L=[['etapas','1. Etapas da historia de Grecia e as súas datas'],['esc','2. Observa as esculturas: a que etapa pertencen? Explica'],['cidade','3. Observa a cidade e identifica os elementos'],['pir','4. Pirámide social de Atenas e Esparta: privilexiados'],['def','5. Define os conceptos'],['templo','6. Partes do templo grego e a súa función'],['curtas','➕ Preguntas rápidas: deuses, guerras, Atenas e Esparta']];
+  shell(`<div class="page"><h2>📝 Exame tipo: Grecia</h2><p class="small">Os mesmos tipos de exercicio que no primeiro exame (etapas e datas, imaxes, pirámide social, definicións e templo), pero coa civilización grega. Escribe a resposta como no exame e despois compara.</p>
+   ${L.map(([k,t])=>`<button class="mrow" data-e="${k}"><span class="s">✍️</span>${t}</button>`).join('')}
+   <button class="go" data-e="todo">🎯 Exame completo (un pouco de todo)</button></div>`);
+  document.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>exameX(b.dataset.e));
+}
+function exameX(m){
+  clearAll();
+  const items=exItemsX(m);let i=0,bien=0;const malos=[];
+  const fin=()=>{const tot=items.length;if(bien)gAward(Math.max(1,Math.round(bien/2)),30);
+    shell(`<div class="page"><h2>${bien===tot?'🏆 Perfecto!':bien>=tot/2?'👍 Moi ben':'💪 A repasar'}</h2><p class="small">Ben: <b>${bien} de ${tot}</b></p>
+     ${malos.length?`<h3>Repasa</h3><table>${malos.map(x=>`<tr><td>${x.q.replace(/<[^>]+>/g,'')}</td><td><b>${x.a}</b></td></tr>`).join('')}</table>`:''}
+     <button class="go" id="re">Outra vez</button><button class="alt" id="mn">Outros exercicios</button></div>`);
+    document.getElementById('re').onclick=()=>exameX(m);document.getElementById('mn').onclick=exameMenu;};
+  const paso=()=>{
+    if(i>=items.length)return fin();
+    const it=items[i];
+    let extra=it.img?`<div class="xim">${it.img}</div>`:'';
+    let entrada;
+    if(it.tipo==='dia')entrada=`<div class="opts2">${it.op.map(o=>`<button class="dop" data-o="${o}">${o}</button>`).join('')}</div>`;
+    else if(it.tipo==='orde'||it.tipo==='pir'){const ops=sh(it.tipo==='pir'?it.P.o:it.o);
+      extra=it.tipo==='pir'?`<div class="xpir">${it.P.o.map((_,j)=>`<div class="xpn" style="width:${46+j*27}%" data-j="${j}">?</div>`).join('')}</div>`:`<ol class="xord">${it.o.map((_,j)=>`<li data-j="${j}">…</li>`).join('')}</ol>`;
+      entrada=`<div class="opts2">${ops.map(o=>`<button class="dop" data-o="${o}">${o}</button>`).join('')}</div>`;}
+    else if(it.self)entrada=`<textarea id="ans" class="esc" rows="4" placeholder="Escribe aquí a túa resposta…"></textarea><button class="go" id="ok">Ver a resposta</button>`;
+    else entrada='<input id="ans" class="esc" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí…"><button class="go" id="ok">Comprobar</button>';
+    shell(`<p class="small">${i+1} de ${items.length}</p>${extra}<div class="q">${it.q}</div>${entrada}<div id="fb"></div>`,{pct:Math.round(i/items.length*100)});
+    const sig=()=>{i++;paso();};
+    const bienF=()=>{bien++;gNota(true);ding(true);document.getElementById('fb').innerHTML=`<div class="fb ok" role="status"><strong>${pick(RIGHT)}</strong> ${it.a}</div><button class="go" id="nx">Seguinte</button>`;document.getElementById('nx').onclick=sig;};
+    const malF=()=>{malos.push(it);gNota(false);ding(false);document.getElementById('fb').innerHTML=`<div class="fb no" role="status"><strong>Era:</strong> ${it.a}</div><button class="go" id="nx">Seguinte</button>`;document.getElementById('nx').onclick=sig;};
+    if(it.tipo==='dia'){document.querySelectorAll('.dop').forEach(b=>b.onclick=()=>{document.querySelectorAll('.dop').forEach(x=>x.disabled=true);if(it.ok.includes(b.dataset.o)){b.classList.add('ok');bienF();}else{b.classList.add('no');malF();}});return;}
+    if(it.tipo==='orde'||it.tipo==='pir'){const ord=it.tipo==='pir'?it.P.o:it.o;const sel=[];const slots=[...document.querySelectorAll(it.tipo==='pir'?'.xpn':'.xord li')];
+      document.querySelectorAll('.dop').forEach(b=>b.onclick=()=>{b.disabled=true;const k=sel.length;sel.push(b.dataset.o);slots[k].textContent=b.dataset.o;slots[k].classList.add(b.dataset.o===ord[k]?'ok':'no');
+        if(sel.length===ord.length){const okk=sel.every((x,j)=>x===ord[j]);slots.forEach((s,j)=>{if(!okk){s.textContent=ord[j];}});okk?bienF():malF();}});return;}
+    const inp=document.getElementById('ans');if(inp)inp.focus();
+    const check=()=>{
+      if(it.self){document.getElementById('ok').remove();
+        document.getElementById('fb').innerHTML=`<div class="fb ok modelo"><strong>Resposta modelo:</strong> ${it.a}</div>${it.k?`<p class="small">Palabras clave que deberías poñer: <b>${it.k}</b></p>`:''}<p class="small">Que tal che saíu?</p><div class="autoev"><button class="go" id="sb">✅ Ben</button><button class="alt" id="sr">🤏 A medias</button><button class="alt" id="sm">❌ Mal</button></div>`;
+        document.getElementById('sb').onclick=()=>{bien++;gNota(true);sig();};document.getElementById('sr').onclick=()=>{malos.push(it);gNota(false);sig();};document.getElementById('sm').onclick=()=>{malos.push(it);gNota(false);sig();};return;}
+      const v=inp.value;if(!v.trim())return;
+      const okk=it.ok.some(o=>XN(v)===XN(o));
+      inp.disabled=true;document.getElementById('ok').remove();okk?bienF():malF();
+    };
+    document.getElementById('ok').onclick=check;
+    if(inp&&!it.self)inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();check();}};
+  };
+  paso();
 }
 function parents(){
   clearAll();
