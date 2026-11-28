@@ -162,7 +162,7 @@ label.cfg{display:block;margin:10px 0}
 .jg-over{background:#fff;border-radius:14px;padding:14px 18px;margin-top:10px;text-align:center}.jg-over h2{margin:0}.jg-over p{margin:6px 0}
 
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;margin:0 2px;font-weight:500}.frac i{font-style:normal;padding:0 3px}.frac i:first-child{border-bottom:2px solid currentColor}
-</style>
+.res{line-height:1.7;background:#fff8e1;color:#222;border-radius:14px;padding:12px 12px 12px 30px;margin:8px 0 16px}.res li{margin:2px 0}.resh{margin:10px 0 2px}</style>
 </head>
 <body><!--menu--><style>
 :root{--nf:calc(46px + env(safe-area-inset-top,0px))}
@@ -1232,7 +1232,7 @@ function map(){
 }
 function cheat(){
   clearAll();
-  shell(`<div class="page"><h2>Chuleta de fracciones</h2>${fmt(`<table>
+  shell(`<div class="page"><h2>📒 Apuntes de fracciones (Unidad 3)</h2>${fmt(`<h3 class="resh">⚡ Resumen en 1 minuto</h3><ul class="res"><li>En una fracción como {3/5}, el <b>denominador</b> (abajo) dice en cuántas partes iguales se divide; el <b>numerador</b> (arriba), cuántas se cogen.</li><li><b>Fracción de un número</b>: se divide entre el denominador y se multiplica por el numerador. {3/4} de 20 = 20 : 4 · 3 = 15.</li><li><b>Equivalentes</b>: valen lo mismo. Se comprueba en cruz: {2/3} = {4/6} porque 2 · 6 = 3 · 4.</li><li><b>Simplificar</b>: dividir arriba y abajo por el mismo número hasta la <b>irreducible</b>. {12/18} = {2/3}.</li><li><b>Comparar</b>: con el mismo denominador, es mayor la de mayor numerador. Si no, se reducen a común denominador (m.c.m.).</li><li><b>Sumar y restar</b>: primero común denominador, después se opera arriba.</li><li><b>Multiplicar</b>: en línea (arriba por arriba, abajo por abajo). <b>Dividir</b>: en cruz (por la inversa).</li><li><b>Orden</b>: paréntesis → potencias → multiplicar y dividir → sumar y restar. Simplifica al final.</li><li><b>Problemas</b>: si te dan el <b>total</b>, calcula la parte (fracción de un número). Si te dan <b>una parte</b>, saca el total: divide entre el numerador y multiplica por el denominador.</li></ul><table>
    <tr><td><b>Partes</b></td><td>Numerador arriba, denominador abajo</td></tr>
    <tr><td><b>Fracción de un número</b></td><td>{2/3} de 12: 12 : 3 · 2 = 8</td></tr>
    <tr><td><b>Propia e impropia</b></td><td>{2/5} vale menos de 1; {7/5} vale más de 1</td></tr>
@@ -1244,6 +1244,13 @@ function cheat(){
    <tr><td><b>Potencia</b></td><td>({2/3})² = {4/9}</td></tr>
    <tr><td><b>Dividir</b></td><td>Por la inversa: {2/3} : {4/5} = {2/3} · {5/4} = {5/6}</td></tr>
    <tr><td><b>Orden</b></td><td>Paréntesis, potencias, multiplicar y dividir, sumar y restar</td></tr>
+   <tr><td><b>Fracción y decimal</b></td><td>Una fracción es una división: {3/4} = 3 : 4 = 0,75</td></tr>
+   <tr><td><b>Amplificar</b></td><td>Multiplicar arriba y abajo por el mismo número: {2/3} = {8/12}</td></tr>
+   <tr><td><b>Comparar</b></td><td>{3/4} y {5/6} → m.c.m. 12 → {9/12} &lt; {10/12}</td></tr>
+   <tr><td><b>Problema: parte del total</b></td><td>De 30 alumnos, {2/5} van en bus: 30 : 5 · 2 = 12 alumnos</td></tr>
+   <tr><td><b>Problema: total desde una parte</b></td><td>{3/4} de un depósito son 18 L. Total: 18 : 3 · 4 = 24 L</td></tr>
+   <tr><td><b>Lo que queda</b></td><td>Si gasto {2/5}, me queda 1 − {2/5} = {3/5}</td></tr>
+   <tr><td><b>Fracción de fracción</b></td><td>La mitad de {2/3} es {1/2} · {2/3} = {1/3}</td></tr>
    </table>`)}<button class="alt no-print" id="pr">Imprimir</button></div>`);
   document.getElementById('pr').onclick=()=>window.print();
 }
