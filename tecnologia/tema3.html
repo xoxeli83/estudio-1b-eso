@@ -174,7 +174,7 @@ label.cfg{display:block;margin:10px 0}
 .uw,.ud{background:#fff;border:3px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;font-size:18px;line-height:1.25;min-height:52px}
 .uw{font-weight:800}.uw.sel{border-color:var(--main);background:var(--tint)}.uw.ok,.ud.ok{background:var(--okbg);border-color:var(--ok);opacity:.75}.ud.no{background:var(--nobg);border-color:var(--no)}
 @media(max-width:520px){.uw,.ud{font-size:15px;padding:8px}}
-</style>
+.res{line-height:1.7;background:#fff8e1;color:#222;border-radius:14px;padding:12px 12px 12px 30px;margin:8px 0 16px}.res li{margin:2px 0}.resh{margin:10px 0 2px}</style>
 </head>
 <body><!--menu--><style>
 :root{--nf:calc(46px + env(safe-area-inset-top,0px))}
@@ -1274,7 +1274,7 @@ function cheat(){
   const IDX=[['red','Qué es una red'],['tcp','1. TCP'],['ip','2. IP'],['rj','3. RJ45'],['lan','4. LAN y WLAN'],['sw','5. Switch'],['ro','6. Router'],['mas','Más del tema']];
   shell(`<div class="page"><h2>📒 Apuntes: Tema 3, Redes de ordenadores</h2>
   <p class="small">Examen: 4 de diciembre. Preguntará sobre todo: <b>TCP, IP, RJ45, LAN y WLAN, switch y router</b>.</p>
-  <div class="apidx">${IDX.map(([k,t])=>`<a href="#ap-${k}">${t}</a>`).join('')}</div>
+  ${`<h3 class="resh">⚡ Resumen en 1 minuto</h3><ul class="res"><li>Una <b>red</b> une ordenadores para <b>compartir</b> datos, impresoras e Internet. Hace falta hardware (tarjeta de red, cables, switch, router) y unas reglas: los <b>protocolos</b>.</li><li><b>TCP</b> <b>trocea</b> la información en paquetes, los <b>numera</b> y al llegar los <b>ordena</b>.</li><li><b>IP</b> <b>lleva</b> cada paquete por el camino que pueda. La <b>dirección IP</b> son 4 números del 0 al 255 (ej. 192.168.1.20).</li><li>IP <b>pública</b>: la del router hacia Internet. IP <b>privada</b>: la de cada equipo dentro de casa.</li><li><b>RJ45</b> es el conector del cable de red (par trenzado, 8 hilos). Por cable va más rápido y seguro que por wifi.</li><li><b>LAN</b> = red local (casa, aula). <b>WLAN</b> = red local <b>sin cables</b> (wifi). Por tamaño: PAN &lt; LAN &lt; MAN &lt; WAN (Internet).</li><li><b>Switch</b>: une equipos de la <b>misma red</b> y envía a la <b>MAC</b>. Se enchufa y ya.</li><li><b>Router</b>: une <b>redes distintas</b> (casa con Internet), envía a la <b>IP</b>, reparte IP (DHCP) y suele dar wifi.</li></ul>`}<div class="apidx">${IDX.map(([k,t])=>`<a href="#ap-${k}">${t}</a>`).join('')}</div>
   ${sec('red','Qué es una red',`<p>Una <b>red informática</b> es un conjunto de ordenadores conectados entre sí para <b>compartir datos y recursos</b> (impresora, archivos, Internet). Necesita <b>hardware</b> que una los equipos (tarjetas de red, cables, switch, router) y <b>software</b> con las reglas para entenderse (los <b>protocolos</b>).</p><div class="dib">${SVG_RED}</div>`)}
   ${sec('tcp','1. TCP',`${tb([['Siglas','<b>T</b>ransmission <b>C</b>ontrol <b>P</b>rotocol (protocolo de control de la transmisión)'],['Qué hace','<b>Divide</b> la información en paquetes, los <b>numera</b> y, cuando llegan, los <b>ordena</b>.'],['Con quién trabaja','Con IP. Juntos forman <b>TCP/IP</b>, el protocolo de Internet.']])}
    <p><b>Protocolo</b> = lenguaje y reglas para que el emisor y el receptor se entiendan.</p>
